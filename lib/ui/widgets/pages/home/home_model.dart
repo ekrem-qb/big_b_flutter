@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 
-import '../api/recording.dart';
-import '../api/text_line.dart';
-import '../constants.dart';
+import '../../../../api/recording.dart';
+import '../../../../api/text_line.dart';
+import '../../../../constants.dart';
 
 class Home extends ChangeNotifier {
   Home() {

@@ -1,12 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
 
 final bool isDesktop = !kIsWeb && (Platform.isLinux || Platform.isMacOS || Platform.isWindows);
-
-const scrollDuration = Duration(milliseconds: 500);
-const scrollCurve = Curves.easeOutExpo;
 
 const callText = [
   '[00:00.00] Merhaba, siz sisteme kayıt etmemiz için sizin bilgilerinizi almam gerekiyor.',

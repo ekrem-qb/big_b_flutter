@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../constants.dart';
+import '../../../theme.dart';
 import 'smooth_scroll_model.dart';
 
 class SmoothScroll extends StatelessWidget {

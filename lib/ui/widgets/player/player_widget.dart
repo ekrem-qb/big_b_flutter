@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import '../api/recording.dart';
-import '../api/text_line.dart';
-import '../constants.dart';
-import '../separator.dart';
-import '../smooth_scroll/positioned_smooth_scroll.dart';
+import '../../../api/recording.dart';
+import '../../../api/text_line.dart';
+import '../../../constants.dart';
+import '../extensions/separator.dart';
+import '../extensions/smooth_scroll/positioned_smooth_scroll.dart';
 import 'player_model.dart';
 
 class PlayerWidget extends StatelessWidget {

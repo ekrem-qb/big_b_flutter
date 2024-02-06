@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import '../api/recording.dart';
-import '../api/text_line.dart';
-import '../constants.dart';
+import '../../../api/recording.dart';
+import '../../../api/text_line.dart';
+import '../../../ui/theme.dart';
 
 class Player extends ChangeNotifier {
   Player({required final Recording recording}) {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../api/recording.dart';
-import '../constants.dart';
-import '../player/player_widget.dart';
-import '../smooth_scroll/smooth_scroll_widget.dart';
+import '../../../../api/recording.dart';
+import '../../../../constants.dart';
+import '../../player/player_widget.dart';
+import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
 import 'home_model.dart';
 
 class HomeWidget extends StatelessWidget {
