@@ -8,6 +8,16 @@ final bool isDesktop = !kIsWeb && (Platform.isLinux || Platform.isMacOS || Platf
 const scrollDuration = Duration(milliseconds: 500);
 const scrollCurve = Curves.easeOutExpo;
 
+const callText = [
+  '[00:00.00] Merhaba, siz sisteme kayıt etmemiz için sizin bilgilerinizi almam gerekiyor.',
+  '[00:07.00] Öncelikle doğum yerinizi söyler misiniz?',
+  '[00:10.00] Doğum yerim Kazakistan.',
+  '[00:12.00] Tamam, şu an ne işle ilgileniyorsunuz? Çalışıyor musunuz ya da üniversitede öğrenci misiniz?',
+  "[00:18.00] Akdeniz Üniversitesi'nde Uluslararası Tikaret ve Logistik Öğreni öğrencisiyim.",
+  '[00:24.00] 2003 doğumluyum. 3. sınıftayım. 2.69 ortalamayla devam ediyorum.',
+  '[00:32.00] Tamam, bu bilgileriniz yeterli.',
+];
+
 const lrcLyrics = [
   '[00:08.38] Vibes',
   '[00:15.60] Another banger',

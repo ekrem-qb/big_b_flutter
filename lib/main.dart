@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'player/player_widget.dart';
+import 'home/home_widget.dart';
 
 void main() {
   runApp(const MyApp());

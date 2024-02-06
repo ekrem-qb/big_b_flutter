@@ -2,31 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
+import '../api/recording.dart';
+import '../api/text_line.dart';
 import '../constants.dart';
-import '../positioned_smooth_scroll.dart';
-import '../text_line.dart';
+import '../separator.dart';
+import '../smooth_scroll/positioned_smooth_scroll.dart';
 import 'player_model.dart';
 
-class HomeWidget extends StatelessWidget {
-  const HomeWidget({super.key});
+class PlayerWidget extends StatelessWidget {
+  const PlayerWidget({
+    required this.recording,
+    super.key,
+  });
+
+  final Recording recording;
 
   @override
   Widget build(final BuildContext context) {
     return ChangeNotifierProvider(
-      create: (final context) => Home(),
-      child: const Scaffold(
-        body: Center(
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _Text(),
-                _Slider(),
-                _Time(),
-                _PlayButton(),
-              ],
-            ),
+      create: (final context) => Player(recording: recording),
+      child: const Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _Text(),
+              _Slider(),
+              _Time(),
+              _PlayButton(),
+            ],
           ),
         ),
       ),
@@ -37,9 +42,7 @@ class HomeWidget extends StatelessWidget {
 class _Text extends StatelessWidget {
   const _Text();
 
-  Widget _separator(final BuildContext context, final int index) => const Divider(height: 1);
-
-  Widget _item(final Home model, final int index) {
+  Widget _item(final Player model, final int index) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
@@ -75,9 +78,9 @@ class _Text extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Home model;
+    late final Player model;
     var isInitialized = false;
-    context.select<Home, List<TextLine>?>((final newModel) {
+    context.select<Player, List<TextLine>?>((final newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -99,7 +102,7 @@ class _Text extends StatelessWidget {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: model.textLines!.length,
                         padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.5),
-                        separatorBuilder: _separator,
+                        separatorBuilder: separatorBuilder,
                         itemBuilder: (final context, final index) => _item(model, index),
                       ),
                     )
@@ -108,7 +111,7 @@ class _Text extends StatelessWidget {
                       scrollOffsetController: model.offsetController,
                       itemCount: model.textLines!.length,
                       padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.5),
-                      separatorBuilder: _separator,
+                      separatorBuilder: separatorBuilder,
                       itemBuilder: (final context, final index) => _item(model, index),
                     ),
             )
@@ -139,9 +142,9 @@ class _TextLine extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Home model;
+    late final Player model;
     var isInitialized = false;
-    context.select<Home, int>((final newModel) {
+    context.select<Player, int>((final newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -190,9 +193,9 @@ class _CurrentTime extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Home model;
+    late final Player model;
     var isInitialized = false;
-    context.select<Home, Duration>((final newModel) {
+    context.select<Player, Duration>((final newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -209,9 +212,9 @@ class _TotalTime extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Home model;
+    late final Player model;
     var isInitialized = false;
-    context.select<Home, Duration>((final newModel) {
+    context.select<Player, Duration>((final newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -228,9 +231,9 @@ class _Slider extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Home model;
+    late final Player model;
     var isInitialized = false;
-    context.select<Home, Duration>((final newModel) {
+    context.select<Player, Duration>((final newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -253,9 +256,9 @@ class _PlayButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Home model;
+    late final Player model;
     var isInitialized = false;
-    context.select<Home, bool>((final newModel) {
+    context.select<Player, bool>((final newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
