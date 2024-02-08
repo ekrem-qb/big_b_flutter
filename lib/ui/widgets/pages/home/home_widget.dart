@@ -7,15 +7,21 @@ import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
 import '../../player/player_widget.dart';
 import 'home_model.dart';
 
-class HomeWidget extends StatelessWidget {
-  const HomeWidget({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(final BuildContext context) {
     return ChangeNotifierProvider(
-      create: (final context) => Home(),
-      child: const Scaffold(
-        body: Row(
+      create: Home.new,
+      child: Scaffold(
+        appBar: AppBar(
+          actions: const [
+            _LogoutButton(),
+          ],
+          elevation: 4,
+        ),
+        body: const Row(
           children: [
             Flexible(
               child: _RecordingsList(),
@@ -28,6 +34,20 @@ class HomeWidget extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _LogoutButton extends StatelessWidget {
+  const _LogoutButton();
+
+  @override
+  Widget build(final BuildContext context) {
+    final model = context.read<Home>();
+
+    return ElevatedButton(
+      onPressed: model.logout,
+      child: const Text('Çıkış'),
     );
   }
 }

@@ -1,13 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../../api/database.dart';
 import '../../../../api/recording.dart';
 import '../../../../api/text_line.dart';
 import '../../../../constants.dart';
+import '../login/login_model.dart';
 
 class Home extends ChangeNotifier {
-  Home() {
+  Home(this._context) {
+    _checkAuth();
+
     recordings = [
       Recording(
         audioUrl: Uri.parse('https://cdn.latestnaijamusic.com/wp-content/uploads/2022/12/Rema_Selena_Gomez_-_Calm_Down_Latestnaijamusic.com.mp3?_=1'),
@@ -22,6 +27,10 @@ class Home extends ChangeNotifier {
     Future.microtask(_loadLyrics);
   }
 
+  static const String route = '/';
+
+  final BuildContext _context;
+  late final StreamSubscription? _authSubscription;
   final ScrollController scrollController = ScrollController();
 
   List<Recording>? _recordings;
@@ -40,6 +49,17 @@ class Home extends ChangeNotifier {
 
     _selectedRecordingIndex = value;
     notifyListeners();
+  }
+
+  bool _checkAuth() {
+    final isLoggedIn = db.auth.currentSession == null || db.auth.currentSession!.isExpired;
+    if (isLoggedIn) {
+      _goToLoginPage();
+    } else {
+      _authSubscription = db.auth.onAuthStateChange.listen(_onAuthStateChange);
+    }
+
+    return isLoggedIn;
   }
 
   FutureOr _loadLyrics() {
@@ -73,5 +93,28 @@ class Home extends ChangeNotifier {
           )
           .toList(),
     );
+  }
+
+  void _onAuthStateChange(final AuthState state) {
+    switch (state.event) {
+      case AuthChangeEvent.signedOut:
+      case AuthChangeEvent.userDeleted:
+        _goToLoginPage();
+      default:
+    }
+  }
+
+  void logout() {
+    db.auth.signOut();
+  }
+
+  void _goToLoginPage() {
+    Navigator.pushReplacementNamed(_context, Login.route);
+  }
+
+  @override
+  void dispose() {
+    _authSubscription?.cancel();
+    super.dispose();
   }
 }

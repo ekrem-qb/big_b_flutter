@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'api/database.dart';
+import 'ui/widgets/pages/home/home_model.dart';
 import 'ui/widgets/pages/home/home_widget.dart';
+import 'ui/widgets/pages/login/login_model.dart';
+import 'ui/widgets/pages/login/login_widget.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +20,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       darkTheme: ThemeData.dark(),
-      home: const HomeWidget(),
+      initialRoute: Home.route,
+      routes: {
+        Home.route: (final context) => const HomePage(),
+        Login.route: (final context) => const LoginWidget(),
+      },
     );
   }
 }
