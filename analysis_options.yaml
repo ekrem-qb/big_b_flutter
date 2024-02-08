@@ -92,7 +92,6 @@ linter:
     dangling_library_doc_comments: true
     deprecated_consistency: true
     directives_ordering: true
-    do_not_use_environment: true
     empty_catches: true
     empty_constructor_bodies: true
     eol_at_end_of_file: true
@@ -109,7 +108,6 @@ linter:
     library_private_types_in_public_api: true
     matching_super_parameters: true
     missing_whitespace_between_adjacent_strings: true
-    no_default_cases: true
     no_leading_underscores_for_library_prefixes: true
     no_leading_underscores_for_local_identifiers: true
     no_literal_bool_comparisons: true
