@@ -8,9 +8,10 @@ import '../../../api/database.dart';
 import '../../../api/recording.dart';
 import '../../../api/text_line.dart';
 import '../../../ui/theme.dart';
+import '../extensions/snackbar.dart';
 
 class Player extends ChangeNotifier {
-  Player({required this.recording}) {
+  Player(this._context, {required final Recording recording}) : _recording = recording {
     durationSubscription = _player.durationStream.listen(_onDurationChanged);
     positionSubscription = _player.positionStream.listen(_onPositionChanged);
     playingSubscription = _player.playingStream.listen(_onPlayingChanged);
@@ -18,20 +19,20 @@ class Player extends ChangeNotifier {
     Future.microtask(_load);
   }
 
+  final BuildContext _context;
+  final Recording _recording;
   final _player = AudioPlayer();
   final scrollController = ItemScrollController();
   final offsetController = ScrollOffsetController();
-  final Recording recording;
 
   late final StreamSubscription durationSubscription;
-
   late final StreamSubscription positionSubscription;
   late final StreamSubscription playingSubscription;
+
   bool isSeeking = false;
 
   Duration _position = Duration.zero;
   Duration get position => _position;
-
   set position(final Duration value) {
     if (_position == value) return;
 
@@ -40,7 +41,6 @@ class Player extends ChangeNotifier {
   }
 
   Duration _duration = const Duration(seconds: 1);
-
   Duration get duration => _duration;
   set duration(final Duration value) {
     if (_duration == value) return;
@@ -50,7 +50,6 @@ class Player extends ChangeNotifier {
   }
 
   bool _isPlaying = false;
-
   bool get isPlaying => _isPlaying;
   set isPlaying(final bool value) {
     if (_isPlaying == value) return;
@@ -59,8 +58,16 @@ class Player extends ChangeNotifier {
     notifyListeners();
   }
 
-  int _currentTextLine = 0;
+  bool? _isAudioLoaded;
+  bool? get isAudioLoaded => _isAudioLoaded;
+  set isAudioLoaded(final bool? value) {
+    if (_isAudioLoaded == value) return;
 
+    _isAudioLoaded = value;
+    notifyListeners();
+  }
+
+  int _currentTextLine = 0;
   int get currentTextLine => _currentTextLine;
   set currentTextLine(final int value) {
     if (_currentTextLine == value) return;
@@ -70,7 +77,6 @@ class Player extends ChangeNotifier {
   }
 
   List<TextLine>? _textLines;
-
   List<TextLine>? get textLines => _textLines;
   set textLines(final List<TextLine>? value) {
     if (_textLines == value) return;
@@ -81,15 +87,30 @@ class Player extends ChangeNotifier {
 
   Future<void> _load() async {
     await Future.wait([
-      _player.setAudioSource(
-        AudioSource.uri(recording.audioUrl),
-      ),
+      _loadAudio(),
       _loadText(),
     ]);
   }
 
+  Future<void> _loadAudio() async {
+    try {
+      await _player.setAudioSource(
+        AudioSource.uri(_recording.audioUrl),
+      );
+      isAudioLoaded = true;
+    } on Exception catch (e) {
+      isAudioLoaded = false;
+      showSnackbar(text: e.toString(), context: _context);
+    }
+  }
+
   Future<void> _loadText() async {
-    textLines = await db.from(TextLine.tableName).select(TextLine.fieldNames).eq('record', recording.id).order('time', ascending: true).withConverter(TextLine.converter);
+    try {
+      textLines = await db.from(TextLine.tableName).select(TextLine.fieldNames).eq('record', _recording.id).order('time', ascending: true).withConverter(TextLine.converter);
+    } on Exception catch (e) {
+      textLines = [];
+      showSnackbar(text: e.toString(), context: _context);
+    }
   }
 
   void _onDurationChanged(final Duration? newDuration) {
@@ -105,7 +126,7 @@ class Player extends ChangeNotifier {
 
     position = newPosition;
 
-    if (_textLines == null) return;
+    if (textLines == null) return;
 
     final list = textLines!.map((final e) => e.time).toList();
     for (var i = list.length - 1; i >= 0; i--) {

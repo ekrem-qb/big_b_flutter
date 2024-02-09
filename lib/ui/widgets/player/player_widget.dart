@@ -20,7 +20,7 @@ class PlayerWidget extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return ChangeNotifierProvider(
-      create: (final context) => Player(recording: recording),
+      create: (final context) => Player(context, recording: recording),
       child: const Center(
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 16),
@@ -258,6 +258,44 @@ class _PlayButton extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final Player model;
     var isInitialized = false;
+    context.select<Player, bool?>((final newModel) {
+      if (!isInitialized) {
+        model = newModel;
+        isInitialized = true;
+      }
+      return model.isAudioLoaded;
+    });
+
+    return model.isAudioLoaded != null
+        ? IconButton.filled(
+            visualDensity: const VisualDensity(
+              horizontal: 2,
+              vertical: 2,
+            ),
+            onPressed: model.isAudioLoaded! ? model.play : null,
+            icon: const _PlayButtonIcon(),
+          )
+        : const IconButton.filled(
+            visualDensity: VisualDensity(
+              horizontal: 2,
+              vertical: 2,
+            ),
+            onPressed: null,
+            icon: SizedBox.square(
+              dimension: 24,
+              child: CircularProgressIndicator(),
+            ),
+          );
+  }
+}
+
+class _PlayButtonIcon extends StatelessWidget {
+  const _PlayButtonIcon();
+
+  @override
+  Widget build(final BuildContext context) {
+    late final Player model;
+    var isInitialized = false;
     context.select<Player, bool>((final newModel) {
       if (!isInitialized) {
         model = newModel;
@@ -266,11 +304,8 @@ class _PlayButton extends StatelessWidget {
       return model.isPlaying;
     });
 
-    return FloatingActionButton(
-      onPressed: model.play,
-      child: Icon(
-        model.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
-      ),
+    return Icon(
+      model.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
     );
   }
 }
