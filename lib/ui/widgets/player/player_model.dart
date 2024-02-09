@@ -4,24 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
+import '../../../api/database.dart';
 import '../../../api/recording.dart';
 import '../../../api/text_line.dart';
 import '../../../ui/theme.dart';
 
 class Player extends ChangeNotifier {
-  Player({required final Recording recording}) {
-    _player.setAudioSource(
-      AudioSource.uri(recording.audioUrl),
-    );
-    textLines = recording.textLines;
+  Player({required this.recording}) {
     durationSubscription = _player.durationStream.listen(_onDurationChanged);
     positionSubscription = _player.positionStream.listen(_onPositionChanged);
     playingSubscription = _player.playingStream.listen(_onPlayingChanged);
+
+    Future.microtask(_load);
   }
 
   final _player = AudioPlayer();
   final scrollController = ItemScrollController();
   final offsetController = ScrollOffsetController();
+  final Recording recording;
 
   late final StreamSubscription durationSubscription;
 
@@ -77,6 +77,19 @@ class Player extends ChangeNotifier {
 
     _textLines = value;
     notifyListeners();
+  }
+
+  Future<void> _load() async {
+    await Future.wait([
+      _player.setAudioSource(
+        AudioSource.uri(recording.audioUrl),
+      ),
+      _loadText(),
+    ]);
+  }
+
+  Future<void> _loadText() async {
+    textLines = await db.from(TextLine.tableName).select(TextLine.fieldNames).eq('record', recording.id).order('time', ascending: true).withConverter(TextLine.converter);
   }
 
   void _onDurationChanged(final Duration? newDuration) {

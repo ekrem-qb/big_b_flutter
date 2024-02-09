@@ -153,7 +153,7 @@ class _TextLine extends StatelessWidget {
     });
 
     return Text(
-      model.textLines![index].content,
+      model.textLines![index].text,
       style: TextStyle(
         color: model.currentTextLine == index ? Theme.of(context).colorScheme.primary : null,
         fontWeight: FontWeight.w700,
