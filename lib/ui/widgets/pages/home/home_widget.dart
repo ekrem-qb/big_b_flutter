@@ -98,7 +98,22 @@ class _RecordingsList extends StatelessWidget {
 
     if (model.recordings == null) {
       return const Center(
-        child: Text('No recordings'),
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    if (model.recordings!.isEmpty) {
+      return const Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.sentiment_very_dissatisfied,
+              size: 64,
+            ),
+            Text('No recordings'),
+          ],
+        ),
       );
     }
 
@@ -153,7 +168,16 @@ class _Item extends StatelessWidget {
         child: ListTile(
           mouseCursor: SystemMouseCursors.click,
           title: Text(
-            'Recording $index',
+            model.recordings?[index].createdAt.toLocal().toString() ?? '',
+          ),
+          trailing: SizedBox.square(
+            dimension: 24,
+            child: !model.recordings![index].hasLines
+                ? const Icon(
+                    Icons.font_download_off_outlined,
+                    size: 24,
+                  )
+                : null,
           ),
         ),
       ),
