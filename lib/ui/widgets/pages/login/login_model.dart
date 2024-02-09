@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../api/database.dart';
+import '../../extensions/snackbar.dart';
 import '../home/home_model.dart';
 
 class Login extends ChangeNotifier {
@@ -24,7 +25,7 @@ class Login extends ChangeNotifier {
 
       await Navigator.pushReplacementNamed(context, Home.route);
     } on Exception catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      showSnackbar(text: e.toString(), context: context);
     }
   }
 }
