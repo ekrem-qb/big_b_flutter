@@ -128,13 +128,13 @@ class Player extends ChangeNotifier {
 
     if (textLines == null) return;
 
-    final list = textLines!.map((final e) => e.time).toList();
-    for (var i = list.length - 1; i >= 0; i--) {
-      if (newPosition.inMilliseconds >= list[i].inMilliseconds) {
+    for (var i = textLines!.length - 1; i >= 0; i--) {
+      if (newPosition.inMilliseconds >= textLines![i].time.inMilliseconds) {
         jumpToLine(i, seekPlayer: false);
-        break;
+        return;
       }
     }
+    jumpToLine(0, seekPlayer: false);
   }
 
   void _onPlayingChanged(final bool? newState) {
