@@ -11,7 +11,7 @@ import '../login/login_model.dart';
 
 class Home extends ChangeNotifier {
   Home(this._context) {
-    _checkAuth();
+    _authSubscription = db.auth.onAuthStateChange.listen(_onAuthStateChange);
 
     recordings = [
       Recording(
@@ -27,11 +27,11 @@ class Home extends ChangeNotifier {
     Future.microtask(_loadLyrics);
   }
 
-  static const String route = '/';
+  static const String route = '/home';
 
   final BuildContext _context;
   late final StreamSubscription? _authSubscription;
-  final ScrollController scrollController = ScrollController();
+  final scrollController = ScrollController();
 
   List<Recording>? _recordings;
   List<Recording>? get recordings => _recordings;
@@ -49,17 +49,6 @@ class Home extends ChangeNotifier {
 
     _selectedRecordingIndex = value;
     notifyListeners();
-  }
-
-  bool _checkAuth() {
-    final isLoggedIn = db.auth.currentSession == null || db.auth.currentSession!.isExpired;
-    if (isLoggedIn) {
-      _goToLoginPage();
-    } else {
-      _authSubscription = db.auth.onAuthStateChange.listen(_onAuthStateChange);
-    }
-
-    return isLoggedIn;
   }
 
   FutureOr _loadLyrics() {
