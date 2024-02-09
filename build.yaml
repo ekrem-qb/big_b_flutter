@@ -1,0 +1,13 @@
+targets:
+  $default:
+    builders:
+      freezed:
+        options:
+          to_json: false
+      json_serializable:
+        options:
+          # Options configure how source code is generated for every
+          # `@JsonSerializable`-annotated class in the package.
+          create_to_json: false
+          create_field_map: true
+          field_rename: snake
