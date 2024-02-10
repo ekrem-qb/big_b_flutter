@@ -161,6 +161,8 @@ class Player extends ChangeNotifier {
     final bool seekPlayer = true,
   }) {
     if (currentTextLine == index) return;
+    if (index < 0) return;
+    if (index >= textLines!.length) return;
 
     currentTextLine = index;
 

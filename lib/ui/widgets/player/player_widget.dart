@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -21,8 +22,25 @@ class PlayerWidget extends StatelessWidget {
   Widget build(final BuildContext context) {
     return ChangeNotifierProvider(
       create: (final context) => Player(context, recording: recording),
-      child: const Center(
-        child: Padding(
+      child: const _Player(),
+    );
+  }
+}
+
+class _Player extends StatelessWidget {
+  const _Player();
+
+  @override
+  Widget build(final BuildContext context) {
+    final model = context.read<Player>();
+
+    return CallbackShortcuts(
+      bindings: {
+        const SingleActivator(LogicalKeyboardKey.arrowUp): () => model.jumpToLine(model.currentTextLine - 1),
+        const SingleActivator(LogicalKeyboardKey.arrowDown): () => model.jumpToLine(model.currentTextLine + 1),
+        const SingleActivator(LogicalKeyboardKey.space, includeRepeats: false): model.play,
+      },
+      child: const Padding(
           padding: EdgeInsets.symmetric(vertical: 16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -34,7 +52,6 @@ class PlayerWidget extends StatelessWidget {
             ],
           ),
         ),
-      ),
     );
   }
 }
@@ -241,12 +258,15 @@ class _Slider extends StatelessWidget {
       return model.position;
     });
 
-    return Slider(
+    return MediaQuery(
+      data: const MediaQueryData(navigationMode: NavigationMode.directional),
+      child: Slider(
       max: model.duration.inMilliseconds.toDouble(),
       value: model.position.inMilliseconds.toDouble(),
       onChangeStart: (final _) => model.isSeeking = true,
       onChanged: (final newValue) => model.position = Duration(milliseconds: newValue.toInt()),
       onChangeEnd: (final newValue) => model.seek(Duration(milliseconds: newValue.toInt())),
+      ),
     );
   }
 }
