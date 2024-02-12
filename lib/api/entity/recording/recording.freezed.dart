@@ -11,8 +11,7 @@ part of 'recording.dart';
 
 T _$identity<T>(T value) => value;
 
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+final _privateConstructorUsedError = UnsupportedError('It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Recording _$RecordingFromJson(Map<String, dynamic> json) {
   return _Recording.fromJson(json);
@@ -27,25 +26,18 @@ mixin _$Recording {
   DateTime get createdAt => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $RecordingCopyWith<Recording> get copyWith =>
-      throw _privateConstructorUsedError;
+  $RecordingCopyWith<Recording> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $RecordingCopyWith<$Res> {
-  factory $RecordingCopyWith(Recording value, $Res Function(Recording) then) =
-      _$RecordingCopyWithImpl<$Res, Recording>;
+  factory $RecordingCopyWith(Recording value, $Res Function(Recording) then) = _$RecordingCopyWithImpl<$Res, Recording>;
   @useResult
-  $Res call(
-      {int id,
-      @JsonKey(name: 'url') Uri audioUrl,
-      bool hasLines,
-      DateTime createdAt});
+  $Res call({int id, @JsonKey(name: 'url') Uri audioUrl, bool hasLines, DateTime createdAt});
 }
 
 /// @nodoc
-class _$RecordingCopyWithImpl<$Res, $Val extends Recording>
-    implements $RecordingCopyWith<$Res> {
+class _$RecordingCopyWithImpl<$Res, $Val extends Recording> implements $RecordingCopyWith<$Res> {
   _$RecordingCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -83,27 +75,16 @@ class _$RecordingCopyWithImpl<$Res, $Val extends Recording>
 }
 
 /// @nodoc
-abstract class _$$RecordingImplCopyWith<$Res>
-    implements $RecordingCopyWith<$Res> {
-  factory _$$RecordingImplCopyWith(
-          _$RecordingImpl value, $Res Function(_$RecordingImpl) then) =
-      __$$RecordingImplCopyWithImpl<$Res>;
+abstract class _$$RecordingImplCopyWith<$Res> implements $RecordingCopyWith<$Res> {
+  factory _$$RecordingImplCopyWith(_$RecordingImpl value, $Res Function(_$RecordingImpl) then) = __$$RecordingImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int id,
-      @JsonKey(name: 'url') Uri audioUrl,
-      bool hasLines,
-      DateTime createdAt});
+  $Res call({int id, @JsonKey(name: 'url') Uri audioUrl, bool hasLines, DateTime createdAt});
 }
 
 /// @nodoc
-class __$$RecordingImplCopyWithImpl<$Res>
-    extends _$RecordingCopyWithImpl<$Res, _$RecordingImpl>
-    implements _$$RecordingImplCopyWith<$Res> {
-  __$$RecordingImplCopyWithImpl(
-      _$RecordingImpl _value, $Res Function(_$RecordingImpl) _then)
-      : super(_value, _then);
+class __$$RecordingImplCopyWithImpl<$Res> extends _$RecordingCopyWithImpl<$Res, _$RecordingImpl> implements _$$RecordingImplCopyWith<$Res> {
+  __$$RecordingImplCopyWithImpl(_$RecordingImpl _value, $Res Function(_$RecordingImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -137,14 +118,9 @@ class __$$RecordingImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable(createToJson: false)
 class _$RecordingImpl implements _Recording {
-  const _$RecordingImpl(
-      {required this.id,
-      @JsonKey(name: 'url') required this.audioUrl,
-      required this.hasLines,
-      required this.createdAt});
+  const _$RecordingImpl({required this.id, @JsonKey(name: 'url') required this.audioUrl, required this.hasLines, required this.createdAt});
 
-  factory _$RecordingImpl.fromJson(Map<String, dynamic> json) =>
-      _$$RecordingImplFromJson(json);
+  factory _$RecordingImpl.fromJson(Map<String, dynamic> json) => _$$RecordingImplFromJson(json);
 
   @override
   final int id;
@@ -163,39 +139,23 @@ class _$RecordingImpl implements _Recording {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$RecordingImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.audioUrl, audioUrl) ||
-                other.audioUrl == audioUrl) &&
-            (identical(other.hasLines, hasLines) ||
-                other.hasLines == hasLines) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$RecordingImpl && (identical(other.id, id) || other.id == id) && (identical(other.audioUrl, audioUrl) || other.audioUrl == audioUrl) && (identical(other.hasLines, hasLines) || other.hasLines == hasLines) && (identical(other.createdAt, createdAt) || other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, audioUrl, hasLines, createdAt);
+  int get hashCode => Object.hash(runtimeType, id, audioUrl, hasLines, createdAt);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$RecordingImplCopyWith<_$RecordingImpl> get copyWith =>
-      __$$RecordingImplCopyWithImpl<_$RecordingImpl>(this, _$identity);
+  _$$RecordingImplCopyWith<_$RecordingImpl> get copyWith => __$$RecordingImplCopyWithImpl<_$RecordingImpl>(this, _$identity);
 }
 
 abstract class _Recording implements Recording {
-  const factory _Recording(
-      {required final int id,
-      @JsonKey(name: 'url') required final Uri audioUrl,
-      required final bool hasLines,
-      required final DateTime createdAt}) = _$RecordingImpl;
+  const factory _Recording({required final int id, @JsonKey(name: 'url') required final Uri audioUrl, required final bool hasLines, required final DateTime createdAt}) = _$RecordingImpl;
 
-  factory _Recording.fromJson(Map<String, dynamic> json) =
-      _$RecordingImpl.fromJson;
+  factory _Recording.fromJson(Map<String, dynamic> json) = _$RecordingImpl.fromJson;
 
   @override
   int get id;
@@ -208,6 +168,5 @@ abstract class _Recording implements Recording {
   DateTime get createdAt;
   @override
   @JsonKey(ignore: true)
-  _$$RecordingImplCopyWith<_$RecordingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$RecordingImplCopyWith<_$RecordingImpl> get copyWith => throw _privateConstructorUsedError;
 }

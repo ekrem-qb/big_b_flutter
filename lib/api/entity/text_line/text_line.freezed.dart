@@ -11,8 +11,7 @@ part of 'text_line.dart';
 
 T _$identity<T>(T value) => value;
 
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+final _privateConstructorUsedError = UnsupportedError('It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 TextLine _$TextLineFromJson(Map<String, dynamic> json) {
   return _TextLine.fromJson(json);
@@ -29,21 +28,18 @@ mixin _$TextLine {
   List<int> get highlights => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $TextLineCopyWith<TextLine> get copyWith =>
-      throw _privateConstructorUsedError;
+  $TextLineCopyWith<TextLine> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $TextLineCopyWith<$Res> {
-  factory $TextLineCopyWith(TextLine value, $Res Function(TextLine) then) =
-      _$TextLineCopyWithImpl<$Res, TextLine>;
+  factory $TextLineCopyWith(TextLine value, $Res Function(TextLine) then) = _$TextLineCopyWithImpl<$Res, TextLine>;
   @useResult
   $Res call({Duration time, String text, int partsCount, List<int> highlights});
 }
 
 /// @nodoc
-class _$TextLineCopyWithImpl<$Res, $Val extends TextLine>
-    implements $TextLineCopyWith<$Res> {
+class _$TextLineCopyWithImpl<$Res, $Val extends TextLine> implements $TextLineCopyWith<$Res> {
   _$TextLineCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -81,23 +77,16 @@ class _$TextLineCopyWithImpl<$Res, $Val extends TextLine>
 }
 
 /// @nodoc
-abstract class _$$TextLineImplCopyWith<$Res>
-    implements $TextLineCopyWith<$Res> {
-  factory _$$TextLineImplCopyWith(
-          _$TextLineImpl value, $Res Function(_$TextLineImpl) then) =
-      __$$TextLineImplCopyWithImpl<$Res>;
+abstract class _$$TextLineImplCopyWith<$Res> implements $TextLineCopyWith<$Res> {
+  factory _$$TextLineImplCopyWith(_$TextLineImpl value, $Res Function(_$TextLineImpl) then) = __$$TextLineImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Duration time, String text, int partsCount, List<int> highlights});
 }
 
 /// @nodoc
-class __$$TextLineImplCopyWithImpl<$Res>
-    extends _$TextLineCopyWithImpl<$Res, _$TextLineImpl>
-    implements _$$TextLineImplCopyWith<$Res> {
-  __$$TextLineImplCopyWithImpl(
-      _$TextLineImpl _value, $Res Function(_$TextLineImpl) _then)
-      : super(_value, _then);
+class __$$TextLineImplCopyWithImpl<$Res> extends _$TextLineCopyWithImpl<$Res, _$TextLineImpl> implements _$$TextLineImplCopyWith<$Res> {
+  __$$TextLineImplCopyWithImpl(_$TextLineImpl _value, $Res Function(_$TextLineImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -131,15 +120,9 @@ class __$$TextLineImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable(createToJson: false)
 class _$TextLineImpl implements _TextLine {
-  const _$TextLineImpl(
-      {required this.time,
-      required this.text,
-      required this.partsCount,
-      required final List<int> highlights})
-      : _highlights = highlights;
+  const _$TextLineImpl({required this.time, required this.text, required this.partsCount, required final List<int> highlights}) : _highlights = highlights;
 
-  factory _$TextLineImpl.fromJson(Map<String, dynamic> json) =>
-      _$$TextLineImplFromJson(json);
+  factory _$TextLineImpl.fromJson(Map<String, dynamic> json) => _$$TextLineImplFromJson(json);
 
   /// Duration at which the line should be displayed
   @override
@@ -165,38 +148,23 @@ class _$TextLineImpl implements _TextLine {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$TextLineImpl &&
-            (identical(other.time, time) || other.time == time) &&
-            (identical(other.text, text) || other.text == text) &&
-            (identical(other.partsCount, partsCount) ||
-                other.partsCount == partsCount) &&
-            const DeepCollectionEquality()
-                .equals(other._highlights, _highlights));
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$TextLineImpl && (identical(other.time, time) || other.time == time) && (identical(other.text, text) || other.text == text) && (identical(other.partsCount, partsCount) || other.partsCount == partsCount) && const DeepCollectionEquality().equals(other._highlights, _highlights));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, time, text, partsCount,
-      const DeepCollectionEquality().hash(_highlights));
+  int get hashCode => Object.hash(runtimeType, time, text, partsCount, const DeepCollectionEquality().hash(_highlights));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$TextLineImplCopyWith<_$TextLineImpl> get copyWith =>
-      __$$TextLineImplCopyWithImpl<_$TextLineImpl>(this, _$identity);
+  _$$TextLineImplCopyWith<_$TextLineImpl> get copyWith => __$$TextLineImplCopyWithImpl<_$TextLineImpl>(this, _$identity);
 }
 
 abstract class _TextLine implements TextLine {
-  const factory _TextLine(
-      {required final Duration time,
-      required final String text,
-      required final int partsCount,
-      required final List<int> highlights}) = _$TextLineImpl;
+  const factory _TextLine({required final Duration time, required final String text, required final int partsCount, required final List<int> highlights}) = _$TextLineImpl;
 
-  factory _TextLine.fromJson(Map<String, dynamic> json) =
-      _$TextLineImpl.fromJson;
+  factory _TextLine.fromJson(Map<String, dynamic> json) = _$TextLineImpl.fromJson;
 
   @override
 
@@ -212,6 +180,5 @@ abstract class _TextLine implements TextLine {
   List<int> get highlights;
   @override
   @JsonKey(ignore: true)
-  _$$TextLineImplCopyWith<_$TextLineImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$TextLineImplCopyWith<_$TextLineImpl> get copyWith => throw _privateConstructorUsedError;
 }

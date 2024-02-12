@@ -6,8 +6,7 @@ part of 'recording.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$RecordingImpl _$$RecordingImplFromJson(Map<String, dynamic> json) =>
-    _$RecordingImpl(
+_$RecordingImpl _$$RecordingImplFromJson(Map<String, dynamic> json) => _$RecordingImpl(
       id: json['id'] as int,
       audioUrl: Uri.parse(json['url'] as String),
       hasLines: json['has_lines'] as bool,

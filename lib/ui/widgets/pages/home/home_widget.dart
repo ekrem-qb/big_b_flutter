@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../api/recording.dart';
+import '../../../../api/entity/recording/recording.dart';
 import '../../../../constants.dart';
 import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
 import '../../player/player_widget.dart';

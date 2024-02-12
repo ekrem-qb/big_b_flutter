@@ -6,13 +6,11 @@ part of 'text_line.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TextLineImpl _$$TextLineImplFromJson(Map<String, dynamic> json) =>
-    _$TextLineImpl(
+_$TextLineImpl _$$TextLineImplFromJson(Map<String, dynamic> json) => _$TextLineImpl(
       time: Duration(microseconds: json['time'] as int),
       text: json['text'] as String,
       partsCount: json['parts_count'] as int,
-      highlights:
-          (json['highlights'] as List<dynamic>).map((e) => e as int).toList(),
+      highlights: (json['highlights'] as List<dynamic>).map((e) => e as int).toList(),
     );
 
 const _$$TextLineImplFieldMap = <String, String>{

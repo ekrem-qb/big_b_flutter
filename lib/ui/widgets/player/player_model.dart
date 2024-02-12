@@ -5,8 +5,8 @@ import 'package:just_audio/just_audio.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../api/database.dart';
-import '../../../api/recording.dart';
-import '../../../api/text_line.dart';
+import '../../../api/entity/recording/recording.dart';
+import '../../../api/entity/text_line/text_line.dart';
 import '../../../ui/theme.dart';
 import '../extensions/snackbar.dart';
 

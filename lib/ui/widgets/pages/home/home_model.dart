@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../api/database.dart';
-import '../../../../api/recording.dart';
+import '../../../../api/entity/recording/recording.dart';
 import '../login/login_model.dart';
 
 class Home extends ChangeNotifier {
