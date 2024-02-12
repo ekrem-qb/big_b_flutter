@@ -25,6 +25,8 @@ mixin _$TextLine {
 
   /// Content of the line
   String get text => throw _privateConstructorUsedError;
+  int get partsCount => throw _privateConstructorUsedError;
+  List<int> get highlights => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TextLineCopyWith<TextLine> get copyWith =>
@@ -36,7 +38,7 @@ abstract class $TextLineCopyWith<$Res> {
   factory $TextLineCopyWith(TextLine value, $Res Function(TextLine) then) =
       _$TextLineCopyWithImpl<$Res, TextLine>;
   @useResult
-  $Res call({Duration time, String text});
+  $Res call({Duration time, String text, int partsCount, List<int> highlights});
 }
 
 /// @nodoc
@@ -54,6 +56,8 @@ class _$TextLineCopyWithImpl<$Res, $Val extends TextLine>
   $Res call({
     Object? time = null,
     Object? text = null,
+    Object? partsCount = null,
+    Object? highlights = null,
   }) {
     return _then(_value.copyWith(
       time: null == time
@@ -64,6 +68,14 @@ class _$TextLineCopyWithImpl<$Res, $Val extends TextLine>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      partsCount: null == partsCount
+          ? _value.partsCount
+          : partsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      highlights: null == highlights
+          ? _value.highlights
+          : highlights // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ) as $Val);
   }
 }
@@ -76,7 +88,7 @@ abstract class _$$TextLineImplCopyWith<$Res>
       __$$TextLineImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Duration time, String text});
+  $Res call({Duration time, String text, int partsCount, List<int> highlights});
 }
 
 /// @nodoc
@@ -92,6 +104,8 @@ class __$$TextLineImplCopyWithImpl<$Res>
   $Res call({
     Object? time = null,
     Object? text = null,
+    Object? partsCount = null,
+    Object? highlights = null,
   }) {
     return _then(_$TextLineImpl(
       time: null == time
@@ -102,6 +116,14 @@ class __$$TextLineImplCopyWithImpl<$Res>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      partsCount: null == partsCount
+          ? _value.partsCount
+          : partsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      highlights: null == highlights
+          ? _value._highlights
+          : highlights // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ));
   }
 }
@@ -109,7 +131,12 @@ class __$$TextLineImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable(createToJson: false)
 class _$TextLineImpl implements _TextLine {
-  const _$TextLineImpl({required this.time, required this.text});
+  const _$TextLineImpl(
+      {required this.time,
+      required this.text,
+      required this.partsCount,
+      required final List<int> highlights})
+      : _highlights = highlights;
 
   factory _$TextLineImpl.fromJson(Map<String, dynamic> json) =>
       _$$TextLineImplFromJson(json);
@@ -121,10 +148,19 @@ class _$TextLineImpl implements _TextLine {
   /// Content of the line
   @override
   final String text;
+  @override
+  final int partsCount;
+  final List<int> _highlights;
+  @override
+  List<int> get highlights {
+    if (_highlights is EqualUnmodifiableListView) return _highlights;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_highlights);
+  }
 
   @override
   String toString() {
-    return 'TextLine(time: $time, text: $text)';
+    return 'TextLine(time: $time, text: $text, partsCount: $partsCount, highlights: $highlights)';
   }
 
   @override
@@ -133,12 +169,17 @@ class _$TextLineImpl implements _TextLine {
         (other.runtimeType == runtimeType &&
             other is _$TextLineImpl &&
             (identical(other.time, time) || other.time == time) &&
-            (identical(other.text, text) || other.text == text));
+            (identical(other.text, text) || other.text == text) &&
+            (identical(other.partsCount, partsCount) ||
+                other.partsCount == partsCount) &&
+            const DeepCollectionEquality()
+                .equals(other._highlights, _highlights));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, time, text);
+  int get hashCode => Object.hash(runtimeType, time, text, partsCount,
+      const DeepCollectionEquality().hash(_highlights));
 
   @JsonKey(ignore: true)
   @override
@@ -150,7 +191,9 @@ class _$TextLineImpl implements _TextLine {
 abstract class _TextLine implements TextLine {
   const factory _TextLine(
       {required final Duration time,
-      required final String text}) = _$TextLineImpl;
+      required final String text,
+      required final int partsCount,
+      required final List<int> highlights}) = _$TextLineImpl;
 
   factory _TextLine.fromJson(Map<String, dynamic> json) =
       _$TextLineImpl.fromJson;
@@ -163,6 +206,10 @@ abstract class _TextLine implements TextLine {
 
   /// Content of the line
   String get text;
+  @override
+  int get partsCount;
+  @override
+  List<int> get highlights;
   @override
   @JsonKey(ignore: true)
   _$$TextLineImplCopyWith<_$TextLineImpl> get copyWith =>

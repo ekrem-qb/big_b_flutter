@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../api/recording.dart';
-import '../../../api/text_line.dart';
 import '../../../constants.dart';
 import '../extensions/separator.dart';
 import '../extensions/smooth_scroll/positioned_smooth_scroll.dart';
@@ -41,17 +40,17 @@ class _Player extends StatelessWidget {
         const SingleActivator(LogicalKeyboardKey.space, includeRepeats: false): model.play,
       },
       child: const Padding(
-          padding: EdgeInsets.symmetric(vertical: 16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _Text(),
-              _Slider(),
-              _Time(),
-              _PlayButton(),
-            ],
-          ),
+        padding: EdgeInsets.symmetric(vertical: 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _Text(),
+            _Slider(),
+            _Time(),
+            _PlayButton(),
+          ],
         ),
+      ),
     );
   }
 }
@@ -97,16 +96,16 @@ class _Text extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final Player model;
     var isInitialized = false;
-    context.select<Player, List<TextLine>?>((final newModel) {
+    context.select<Player, List<TextSpan>?>((final newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
       }
-      return model.textLines;
+      return model.textSpans;
     });
 
     return Expanded(
-      child: model.textLines != null
+      child: model.textSpans != null
           ? ShaderMask(
               shaderCallback: _shader,
               blendMode: BlendMode.dstIn,
@@ -117,7 +116,7 @@ class _Text extends StatelessWidget {
                         itemScrollController: model.scrollController,
                         scrollOffsetController: model.offsetController,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: model.textLines!.length,
+                        itemCount: model.textSpans!.length,
                         padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.5),
                         separatorBuilder: separatorBuilder,
                         itemBuilder: (final context, final index) => _item(model, index),
@@ -126,7 +125,7 @@ class _Text extends StatelessWidget {
                   : ScrollablePositionedList.separated(
                       itemScrollController: model.scrollController,
                       scrollOffsetController: model.offsetController,
-                      itemCount: model.textLines!.length,
+                      itemCount: model.textSpans!.length,
                       padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.5),
                       separatorBuilder: separatorBuilder,
                       itemBuilder: (final context, final index) => _item(model, index),
@@ -169,14 +168,18 @@ class _TextLine extends StatelessWidget {
       return model.currentTextLine;
     });
 
-    return Text(
-      model.textLines![index].text,
-      style: TextStyle(
-        color: model.currentTextLine == index ? Theme.of(context).colorScheme.primary : null,
-        fontWeight: FontWeight.w700,
-        fontSize: 24,
-      ),
-    );
+    return model.currentTextLine != index
+        ? Opacity(
+            opacity: 0.5,
+            child: Text.rich(
+              model.textSpans![index],
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+          )
+        : Text.rich(
+            model.textSpans![index],
+            style: Theme.of(context).textTheme.headlineSmall,
+          );
   }
 }
 
@@ -261,11 +264,11 @@ class _Slider extends StatelessWidget {
     return MediaQuery(
       data: const MediaQueryData(navigationMode: NavigationMode.directional),
       child: Slider(
-      max: model.duration.inMilliseconds.toDouble(),
-      value: model.position.inMilliseconds.toDouble(),
-      onChangeStart: (final _) => model.isSeeking = true,
-      onChanged: (final newValue) => model.position = Duration(milliseconds: newValue.toInt()),
-      onChangeEnd: (final newValue) => model.seek(Duration(milliseconds: newValue.toInt())),
+        max: model.duration.inMilliseconds.toDouble(),
+        value: model.position.inMilliseconds.toDouble(),
+        onChangeStart: (final _) => model.isSeeking = true,
+        onChanged: (final newValue) => model.position = Duration(milliseconds: newValue.toInt()),
+        onChangeEnd: (final newValue) => model.seek(Duration(milliseconds: newValue.toInt())),
       ),
     );
   }

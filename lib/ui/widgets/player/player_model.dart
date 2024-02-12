@@ -76,14 +76,16 @@ class Player extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<TextLine>? _textLines;
-  List<TextLine>? get textLines => _textLines;
-  set textLines(final List<TextLine>? value) {
-    if (_textLines == value) return;
+  List<TextSpan>? _textSpans;
+  List<TextSpan>? get textSpans => _textSpans;
+  set textSpans(final List<TextSpan>? value) {
+    if (_textSpans == value) return;
 
-    _textLines = value;
+    _textSpans = value;
     notifyListeners();
   }
+
+  List<TextLine>? _textLines;
 
   Future<void> _load() async {
     await Future.wait([
@@ -106,9 +108,47 @@ class Player extends ChangeNotifier {
 
   Future<void> _loadText() async {
     try {
-      textLines = await db.from(TextLine.tableName).select(TextLine.fieldNames).eq('record', _recording.id).order('time', ascending: true).withConverter(TextLine.converter);
+      _textLines = await db.from(TextLine.tableName).select(TextLine.fieldNames).eq('record', _recording.id).order('time', ascending: true).withConverter(TextLine.converter);
+
+      if (_textLines == null) return;
+
+      textSpans = List.generate(
+        _textLines!.length,
+        (final i) {
+          if (_textLines![i].partsCount < 2) return TextSpan(text: _textLines![i].text);
+
+          final parts = List<TextSpan?>.filled(_textLines![i].partsCount, null);
+
+          var charIndex = 0;
+          var partIndex = 0;
+          for (var j = 0; j < _textLines![i].highlights.length; j += 2) {
+            if (charIndex < _textLines![i].highlights[j]) {
+              final substring = _textLines![i].text.substring(charIndex, _textLines![i].highlights[j]);
+              parts[partIndex] = TextSpan(text: substring);
+              partIndex++;
+            }
+
+            final substring2 = _textLines![i].text.substring(_textLines![i].highlights[j], _textLines![i].highlights[j + 1]);
+            parts[partIndex] = TextSpan(
+              text: substring2,
+              style: const TextStyle(color: Colors.red),
+            );
+            partIndex++;
+
+            charIndex = _textLines![i].highlights[j + 1];
+          }
+
+          if (charIndex < _textLines![i].text.length) {
+            final substring = _textLines![i].text.substring(charIndex);
+            parts[partIndex] = TextSpan(text: substring);
+          }
+
+          return TextSpan(children: List.castFrom(parts));
+        },
+        growable: false,
+      );
     } on Exception catch (e) {
-      textLines = [];
+      textSpans = [];
       showSnackbar(text: e.toString(), context: _context);
     }
   }
@@ -126,10 +166,10 @@ class Player extends ChangeNotifier {
 
     position = newPosition;
 
-    if (textLines == null) return;
+    if (_textLines == null) return;
 
-    for (var i = textLines!.length - 1; i >= 0; i--) {
-      if (newPosition.inMilliseconds >= textLines![i].time.inMilliseconds) {
+    for (var i = _textLines!.length - 1; i >= 0; i--) {
+      if (newPosition.inMilliseconds >= _textLines![i].time.inMilliseconds) {
         jumpToLine(i, seekPlayer: false);
         return;
       }
@@ -162,7 +202,7 @@ class Player extends ChangeNotifier {
   }) {
     if (currentTextLine == index) return;
     if (index < 0) return;
-    if (index >= textLines!.length) return;
+    if (index >= _textLines!.length) return;
 
     currentTextLine = index;
 
@@ -175,8 +215,8 @@ class Player extends ChangeNotifier {
       );
     }
 
-    if (textLines != null && seekPlayer) {
-      seek(textLines![index].time);
+    if (_textLines != null && seekPlayer) {
+      seek(_textLines![index].time);
     }
   }
 

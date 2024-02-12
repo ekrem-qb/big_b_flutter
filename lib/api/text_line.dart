@@ -11,6 +11,8 @@ class TextLine with _$TextLine {
 
     /// Content of the line
     required final String text,
+    required final int partsCount,
+    required final List<int> highlights,
   }) = _TextLine;
 
   factory TextLine.fromJson(final Map<String, dynamic> json) => _$TextLineFromJson(json);
