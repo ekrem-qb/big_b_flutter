@@ -26,6 +26,7 @@ mixin _$TextLine {
   String get text => throw _privateConstructorUsedError;
   int get partsCount => throw _privateConstructorUsedError;
   List<int> get highlights => throw _privateConstructorUsedError;
+  List<int> get highlightColors => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TextLineCopyWith<TextLine> get copyWith => throw _privateConstructorUsedError;
@@ -35,7 +36,7 @@ mixin _$TextLine {
 abstract class $TextLineCopyWith<$Res> {
   factory $TextLineCopyWith(TextLine value, $Res Function(TextLine) then) = _$TextLineCopyWithImpl<$Res, TextLine>;
   @useResult
-  $Res call({Duration time, String text, int partsCount, List<int> highlights});
+  $Res call({Duration time, String text, int partsCount, List<int> highlights, List<int> highlightColors});
 }
 
 /// @nodoc
@@ -54,6 +55,7 @@ class _$TextLineCopyWithImpl<$Res, $Val extends TextLine> implements $TextLineCo
     Object? text = null,
     Object? partsCount = null,
     Object? highlights = null,
+    Object? highlightColors = null,
   }) {
     return _then(_value.copyWith(
       time: null == time
@@ -72,6 +74,10 @@ class _$TextLineCopyWithImpl<$Res, $Val extends TextLine> implements $TextLineCo
           ? _value.highlights
           : highlights // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      highlightColors: null == highlightColors
+          ? _value.highlightColors
+          : highlightColors // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ) as $Val);
   }
 }
@@ -81,7 +87,7 @@ abstract class _$$TextLineImplCopyWith<$Res> implements $TextLineCopyWith<$Res> 
   factory _$$TextLineImplCopyWith(_$TextLineImpl value, $Res Function(_$TextLineImpl) then) = __$$TextLineImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Duration time, String text, int partsCount, List<int> highlights});
+  $Res call({Duration time, String text, int partsCount, List<int> highlights, List<int> highlightColors});
 }
 
 /// @nodoc
@@ -95,6 +101,7 @@ class __$$TextLineImplCopyWithImpl<$Res> extends _$TextLineCopyWithImpl<$Res, _$
     Object? text = null,
     Object? partsCount = null,
     Object? highlights = null,
+    Object? highlightColors = null,
   }) {
     return _then(_$TextLineImpl(
       time: null == time
@@ -113,6 +120,10 @@ class __$$TextLineImplCopyWithImpl<$Res> extends _$TextLineCopyWithImpl<$Res, _$
           ? _value._highlights
           : highlights // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      highlightColors: null == highlightColors
+          ? _value._highlightColors
+          : highlightColors // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ));
   }
 }
@@ -120,7 +131,9 @@ class __$$TextLineImplCopyWithImpl<$Res> extends _$TextLineCopyWithImpl<$Res, _$
 /// @nodoc
 @JsonSerializable(createToJson: false)
 class _$TextLineImpl implements _TextLine {
-  const _$TextLineImpl({required this.time, required this.text, required this.partsCount, required final List<int> highlights}) : _highlights = highlights;
+  const _$TextLineImpl({required this.time, required this.text, required this.partsCount, required final List<int> highlights, required final List<int> highlightColors})
+      : _highlights = highlights,
+        _highlightColors = highlightColors;
 
   factory _$TextLineImpl.fromJson(Map<String, dynamic> json) => _$$TextLineImplFromJson(json);
 
@@ -141,19 +154,27 @@ class _$TextLineImpl implements _TextLine {
     return EqualUnmodifiableListView(_highlights);
   }
 
+  final List<int> _highlightColors;
+  @override
+  List<int> get highlightColors {
+    if (_highlightColors is EqualUnmodifiableListView) return _highlightColors;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_highlightColors);
+  }
+
   @override
   String toString() {
-    return 'TextLine(time: $time, text: $text, partsCount: $partsCount, highlights: $highlights)';
+    return 'TextLine(time: $time, text: $text, partsCount: $partsCount, highlights: $highlights, highlightColors: $highlightColors)';
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$TextLineImpl && (identical(other.time, time) || other.time == time) && (identical(other.text, text) || other.text == text) && (identical(other.partsCount, partsCount) || other.partsCount == partsCount) && const DeepCollectionEquality().equals(other._highlights, _highlights));
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$TextLineImpl && (identical(other.time, time) || other.time == time) && (identical(other.text, text) || other.text == text) && (identical(other.partsCount, partsCount) || other.partsCount == partsCount) && const DeepCollectionEquality().equals(other._highlights, _highlights) && const DeepCollectionEquality().equals(other._highlightColors, _highlightColors));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, time, text, partsCount, const DeepCollectionEquality().hash(_highlights));
+  int get hashCode => Object.hash(runtimeType, time, text, partsCount, const DeepCollectionEquality().hash(_highlights), const DeepCollectionEquality().hash(_highlightColors));
 
   @JsonKey(ignore: true)
   @override
@@ -162,7 +183,7 @@ class _$TextLineImpl implements _TextLine {
 }
 
 abstract class _TextLine implements TextLine {
-  const factory _TextLine({required final Duration time, required final String text, required final int partsCount, required final List<int> highlights}) = _$TextLineImpl;
+  const factory _TextLine({required final Duration time, required final String text, required final int partsCount, required final List<int> highlights, required final List<int> highlightColors}) = _$TextLineImpl;
 
   factory _TextLine.fromJson(Map<String, dynamic> json) = _$TextLineImpl.fromJson;
 
@@ -178,6 +199,8 @@ abstract class _TextLine implements TextLine {
   int get partsCount;
   @override
   List<int> get highlights;
+  @override
+  List<int> get highlightColors;
   @override
   @JsonKey(ignore: true)
   _$$TextLineImplCopyWith<_$TextLineImpl> get copyWith => throw _privateConstructorUsedError;

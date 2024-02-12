@@ -7,6 +7,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../api/database.dart';
 import '../../../api/entity/recording/recording.dart';
 import '../../../api/entity/text_line/text_line.dart';
+import '../../../constants.dart';
 import '../../../ui/theme.dart';
 import '../extensions/snackbar.dart';
 
@@ -131,7 +132,7 @@ class Player extends ChangeNotifier {
             final substring2 = _textLines![i].text.substring(_textLines![i].highlights[j], _textLines![i].highlights[j + 1]);
             parts[partIndex] = TextSpan(
               text: substring2,
-              style: const TextStyle(color: Colors.red),
+              style: TextStyle(color: _getHighlightColor(i, j)),
             );
             partIndex++;
 
@@ -150,6 +151,15 @@ class Player extends ChangeNotifier {
     } on Exception catch (e) {
       textSpans = [];
       showSnackbar(text: e.toString(), context: _context);
+    }
+  }
+
+  Color? _getHighlightColor(final int textLineIndex, final int highlightIndex) {
+    try {
+      return highlightColors[_textLines![textLineIndex].highlightColors[(highlightIndex / 2).floor()]];
+    } on Exception catch (e) {
+      showSnackbar(text: e.toString(), context: _context);
+      return null;
     }
   }
 

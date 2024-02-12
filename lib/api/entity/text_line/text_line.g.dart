@@ -11,6 +11,7 @@ _$TextLineImpl _$$TextLineImplFromJson(Map<String, dynamic> json) => _$TextLineI
       text: json['text'] as String,
       partsCount: json['parts_count'] as int,
       highlights: (json['highlights'] as List<dynamic>).map((e) => e as int).toList(),
+      highlightColors: (json['highlight_colors'] as List<dynamic>).map((e) => e as int).toList(),
     );
 
 const _$$TextLineImplFieldMap = <String, String>{
@@ -18,4 +19,5 @@ const _$$TextLineImplFieldMap = <String, String>{
   'text': 'text',
   'partsCount': 'parts_count',
   'highlights': 'highlights',
+  'highlightColors': 'highlight_colors',
 };
