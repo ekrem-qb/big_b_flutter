@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../api/entity/recording/recording.dart';
 import '../../../../constants.dart';
 import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
 import '../../player/player_widget.dart';
@@ -59,7 +58,7 @@ class _Player extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final Home model;
     var isInitialized = false;
-    context.select<Home, int?>((final newModel) {
+    context.select((final Home newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -88,7 +87,7 @@ class _RecordingsList extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final Home model;
     var isInitialized = false;
-    context.select<Home, List<Recording>?>((final newModel) {
+    context.select((final Home newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -144,7 +143,7 @@ class _Item extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final Home model;
     var isInitialized = false;
-    context.select<Home, int?>((final newModel) {
+    context.select((final Home newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;

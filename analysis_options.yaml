@@ -80,7 +80,6 @@ linter:
     avoid_returning_this: true
     avoid_setters_without_getters: true
     avoid_single_cascade_in_expression_statements: true
-    avoid_types_on_closure_parameters: true
     avoid_unnecessary_containers: true
     avoid_unused_constructor_parameters: true
     avoid_void_async: true

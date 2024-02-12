@@ -96,7 +96,7 @@ class _Text extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final Player model;
     var isInitialized = false;
-    context.select<Player, List<TextSpan>?>((final newModel) {
+    context.select((final Player newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -160,7 +160,7 @@ class _TextLine extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final Player model;
     var isInitialized = false;
-    context.select<Player, int>((final newModel) {
+    context.select((final Player newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -215,7 +215,7 @@ class _CurrentTime extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final Player model;
     var isInitialized = false;
-    context.select<Player, Duration>((final newModel) {
+    context.select((final Player newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -234,7 +234,7 @@ class _TotalTime extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final Player model;
     var isInitialized = false;
-    context.select<Player, Duration>((final newModel) {
+    context.select((final Player newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -253,7 +253,7 @@ class _Slider extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final Player model;
     var isInitialized = false;
-    context.select<Player, Duration>((final newModel) {
+    context.select((final Player newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -281,7 +281,7 @@ class _PlayButton extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final Player model;
     var isInitialized = false;
-    context.select<Player, bool?>((final newModel) {
+    context.select((final Player newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -319,7 +319,7 @@ class _PlayButtonIcon extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final Player model;
     var isInitialized = false;
-    context.select<Player, bool>((final newModel) {
+    context.select((final Player newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
