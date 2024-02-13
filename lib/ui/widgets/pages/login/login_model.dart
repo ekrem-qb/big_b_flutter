@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../../../../api/database.dart';
@@ -16,14 +18,26 @@ class Login extends ChangeNotifier {
   bool _isPasswordVisible = false;
   bool get isPasswordVisible => _isPasswordVisible;
 
+  bool _isLoggingIn = false;
+  bool get isLoggingIn => _isLoggingIn;
+  set isLoggingIn(final bool value) {
+    if (_isLoggingIn == value) return;
+
+    _isLoggingIn = value;
+    notifyListeners();
+  }
+
   void togglePasswordVisibility() {
     _isPasswordVisible = !_isPasswordVisible;
     notifyListeners();
   }
 
   Future<void> login() async {
+    if (isLoggingIn) return;
     if (emailController.text.isEmpty) return;
     if (passwordController.text.isEmpty) return;
+
+    isLoggingIn = true;
 
     try {
       final response = await db.auth.signInWithPassword(
@@ -34,9 +48,18 @@ class Login extends ChangeNotifier {
       if (response.user == null) return;
       if (response.session == null) return;
 
-      await Navigator.pushReplacementNamed(_context, Home.route);
+      unawaited(Navigator.pushReplacementNamed(_context, Home.route));
     } on Exception catch (e) {
       showSnackbar(text: e.toString(), context: _context);
+    } finally {
+      isLoggingIn = false;
     }
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 }

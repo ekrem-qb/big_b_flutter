@@ -76,7 +76,7 @@ class _PasswordField extends StatelessWidget {
         label: const Text('Şifre'),
         prefixIcon: const Icon(Icons.lock),
         suffixIcon: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 6),
           child: IconButton(
             onPressed: model.togglePasswordVisibility,
             icon: Icon(model.isPasswordVisible ? Icons.visibility : Icons.visibility_off),
@@ -95,11 +95,50 @@ class _LoginButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<Login>();
+    late final Login model;
+    var isInitialized = false;
+    context.select((final Login newModel) {
+      if (!isInitialized) {
+        model = newModel;
+        isInitialized = true;
+      }
+      return model.isLoggingIn;
+    });
 
-    return ElevatedButton(
-      onPressed: model.login,
-      child: const Text('Giriş'),
+    return FilledButton.icon(
+      onPressed: !model.isLoggingIn ? model.login : null,
+      label: const Text('Giriş'),
+      icon: const _LoginIcon(),
+      style: const ButtonStyle(
+        visualDensity: VisualDensity.standard,
+      ),
     );
+  }
+}
+
+class _LoginIcon extends StatelessWidget {
+  const _LoginIcon();
+
+  @override
+  Widget build(final BuildContext context) {
+    late final Login model;
+    var isInitialized = false;
+    context.select((final Login newModel) {
+      if (!isInitialized) {
+        model = newModel;
+        isInitialized = true;
+      }
+      return model.isLoggingIn;
+    });
+
+    return !model.isLoggingIn
+        ? const Icon(Icons.login)
+        : SizedBox.square(
+            dimension: IconTheme.of(context).size,
+            child: CircularProgressIndicator(
+              color: IconTheme.of(context).color,
+              strokeWidth: 3,
+            ),
+          );
   }
 }
