@@ -5,12 +5,23 @@ import '../../extensions/snackbar.dart';
 import '../home/home_model.dart';
 
 class Login extends ChangeNotifier {
+  Login(this._context);
+
   static const String route = '/login';
 
+  final BuildContext _context;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  Future<void> login(final BuildContext context) async {
+  bool _isPasswordVisible = false;
+  bool get isPasswordVisible => _isPasswordVisible;
+
+  void togglePasswordVisibility() {
+    _isPasswordVisible = !_isPasswordVisible;
+    notifyListeners();
+  }
+
+  Future<void> login() async {
     if (emailController.text.isEmpty) return;
     if (passwordController.text.isEmpty) return;
 
@@ -23,9 +34,9 @@ class Login extends ChangeNotifier {
       if (response.user == null) return;
       if (response.session == null) return;
 
-      await Navigator.pushReplacementNamed(context, Home.route);
+      await Navigator.pushReplacementNamed(_context, Home.route);
     } on Exception catch (e) {
-      showSnackbar(text: e.toString(), context: context);
+      showSnackbar(text: e.toString(), context: _context);
     }
   }
 }

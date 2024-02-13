@@ -9,7 +9,7 @@ class LoginWidget extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return ChangeNotifierProvider(
-      create: (final context) => Login(),
+      create: Login.new,
       child: const Scaffold(
         body: Center(
           child: Column(
@@ -21,20 +21,6 @@ class LoginWidget extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _LoginButton extends StatelessWidget {
-  const _LoginButton();
-
-  @override
-  Widget build(final BuildContext context) {
-    final model = context.read<Login>();
-
-    return ElevatedButton(
-      onPressed: () => model.login(context),
-      child: const Text('Giriş'),
     );
   }
 }
@@ -59,18 +45,61 @@ class _Fields extends StatelessWidget {
               prefixIcon: Icon(Icons.account_circle),
             ),
             controller: model.emailController,
+            textInputAction: TextInputAction.next,
           ),
           const SizedBox(height: 16),
-          TextField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              label: Text('Şifre'),
-              prefixIcon: Icon(Icons.lock),
-            ),
-            controller: model.passwordController,
-          ),
+          const _PasswordField(),
         ],
       ),
+    );
+  }
+}
+
+class _PasswordField extends StatelessWidget {
+  const _PasswordField();
+
+  @override
+  Widget build(final BuildContext context) {
+    late final Login model;
+    var isInitialized = false;
+    context.select((final Login newModel) {
+      if (!isInitialized) {
+        model = newModel;
+        isInitialized = true;
+      }
+      return model.isPasswordVisible;
+    });
+
+    return TextField(
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(),
+        label: const Text('Şifre'),
+        prefixIcon: const Icon(Icons.lock),
+        suffixIcon: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: IconButton(
+            onPressed: model.togglePasswordVisibility,
+            icon: Icon(model.isPasswordVisible ? Icons.visibility : Icons.visibility_off),
+          ),
+        ),
+      ),
+      obscureText: !model.isPasswordVisible,
+      controller: model.passwordController,
+      onSubmitted: (final value) => model.login(),
+    );
+  }
+}
+
+class _LoginButton extends StatelessWidget {
+  const _LoginButton();
+
+  @override
+  Widget build(final BuildContext context) {
+    final model = context.read<Login>();
+
+    return ElevatedButton(
+      onPressed: model.login,
+      child: const Text('Giriş'),
     );
   }
 }
