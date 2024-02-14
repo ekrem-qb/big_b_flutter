@@ -149,7 +149,7 @@ class Player extends ChangeNotifier {
         growable: false,
       );
     } on Exception catch (e) {
-      textSpans = [];
+      textSpans = List.empty();
       showSnackbar(text: e.toString(), context: _context);
     }
   }
