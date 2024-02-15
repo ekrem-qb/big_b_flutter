@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../recordings/recordings_widget.dart';
+import '../tasks/tasks_widget.dart';
 import 'home_model.dart';
 
 class HomePage extends StatelessWidget {
@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
           ],
           elevation: 4,
         ),
-        body: const RecordingsWidget(),
+        body: const TasksWidget(),
       ),
     );
   }
