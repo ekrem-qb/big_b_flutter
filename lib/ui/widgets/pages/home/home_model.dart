@@ -16,6 +16,16 @@ class Home extends ChangeNotifier {
   final BuildContext _context;
   late final StreamSubscription? _authSubscription;
 
+  int _selectedTabIndex = 0;
+  int get selectedTabIndex => _selectedTabIndex;
+
+  void setSelectedTabIndex(final int value) {
+    if (_selectedTabIndex == value) return;
+
+    _selectedTabIndex = value;
+    notifyListeners();
+  }
+
   void _onAuthStateChange(final AuthState state) {
     switch (state.event) {
       case AuthChangeEvent.signedOut:
@@ -23,10 +33,6 @@ class Home extends ChangeNotifier {
         _goToLoginPage();
       default:
     }
-  }
-
-  void logout() {
-    db.auth.signOut();
   }
 
   void _goToLoginPage() {
