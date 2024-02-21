@@ -1,9 +1,10 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../api/database.dart';
 import '../../../../api/entity/task/task.dart';
 import '../../extensions/snackbar.dart';
+import '../../task_window/task_window_widget.dart';
 
 class Tasks extends ChangeNotifier {
   Tasks(this._context) {
@@ -76,6 +77,16 @@ class Tasks extends ChangeNotifier {
         }
       default:
     }
+  }
+
+  void open(final int index) {
+    if (tasks.length < index) return;
+
+    showCupertinoDialog(
+      context: _context,
+      barrierDismissible: true,
+      builder: (final context) => TaskWindowWidget(task: tasks[index]),
+    );
   }
 
   @override

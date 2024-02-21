@@ -93,6 +93,8 @@ class _Item extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
+    final model = context.read<Tasks>();
+
     return Card(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -100,7 +102,7 @@ class _Item extends StatelessWidget {
         ),
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: () => model.open(index),
         borderRadius: const BorderRadius.all(Radius.circular(12)),
         child: _ItemContent(index),
       ),
