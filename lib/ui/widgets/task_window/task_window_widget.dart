@@ -143,8 +143,8 @@ class _Image extends StatelessWidget {
               model.task.imageUrl!.toString(),
               filterQuality: FilterQuality.medium,
               fit: BoxFit.cover,
-              loadingBuilder: (final context, final child, final loadingProgress) {
-                return loadingProgress?.cumulativeBytesLoaded == loadingProgress?.expectedTotalBytes
+              frameBuilder: (final context, final child, final frame, final wasSynchronouslyLoaded) {
+                return wasSynchronouslyLoaded || frame != null
                     ? child
                     : const Center(
                         child: Padding(
