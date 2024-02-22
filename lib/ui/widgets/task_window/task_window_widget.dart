@@ -198,8 +198,8 @@ class _DateTime extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const _Deadline(),
-              if (model.task.delay != null) const _Delay(),
+              const Flexible(child: _Deadline()),
+              if (model.task.delay != null) const Flexible(child: _Delay()),
             ],
           );
   }
@@ -228,9 +228,11 @@ class _Deadline extends StatelessWidget {
               children: [
                 const Icon(Icons.calendar_month),
                 const SizedBox(width: 8),
-                Text(
-                  model.task.deadline!.toLocal().toString(),
-                  style: Theme.of(context).textTheme.titleMedium,
+                Flexible(
+                  child: Text(
+                    model.task.deadline!.toLocal().toString(),
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                 ),
               ],
             ),
@@ -273,9 +275,11 @@ class _Delay extends StatelessWidget {
                 children: [
                   const Icon(Icons.access_time),
                   const SizedBox(width: 8),
-                  Text(
-                    '${model.task.delay!.abs()} ${model.task.delay!.isNegative ? 'Erken' : 'Geç'} yapıldı',
-                    style: Theme.of(context).textTheme.titleMedium,
+                  Flexible(
+                    child: Text(
+                      '${model.task.delay!.abs()} ${model.task.delay!.isNegative ? 'Erken' : 'Geç'} yapıldı',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                   ),
                 ],
               ),
