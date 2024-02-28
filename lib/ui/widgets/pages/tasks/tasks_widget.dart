@@ -158,11 +158,10 @@ class _ItemContent extends StatelessWidget {
                       size: 16,
                     ),
                   ),
-                if (model.tasks[index].deadline != null)
                   Padding(
                     padding: const EdgeInsets.only(right: 8),
                     child: Text(
-                      model.tasks[index].deadline!.toLocal().toString(),
+                    model.tasks[index].deadline.toLocal().toString(),
                     ),
                   ),
               ],

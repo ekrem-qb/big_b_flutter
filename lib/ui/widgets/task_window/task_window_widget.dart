@@ -68,7 +68,14 @@ class _Task extends StatelessWidget {
                 ],
               ),
               _Image(),
-              _DateTime(),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Flexible(child: _Deadline()),
+                  Flexible(child: _Delay()),
+                ],
+              ),
             ],
           );
   }
@@ -169,42 +176,6 @@ class _Image extends StatelessWidget {
   }
 }
 
-class _DateTime extends StatelessWidget {
-  const _DateTime();
-
-  @override
-  Widget build(final BuildContext context) {
-    late final TaskWindow model;
-    var isInitialized = false;
-    context
-      ..select((final TaskWindow newModel) {
-        if (!isInitialized) {
-          model = newModel;
-          isInitialized = true;
-        }
-        return model.task.deadline == null;
-      })
-      ..select((final TaskWindow newModel) {
-        if (!isInitialized) {
-          model = newModel;
-          isInitialized = true;
-        }
-        return model.task.delay == null;
-      });
-
-    return model.task.deadline == null && model.task.delay == null
-        ? const SizedBox.shrink()
-        : Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const Flexible(child: _Deadline()),
-              if (model.task.delay != null) const Flexible(child: _Delay()),
-            ],
-          );
-  }
-}
-
 class _Deadline extends StatelessWidget {
   const _Deadline();
 
@@ -220,23 +191,21 @@ class _Deadline extends StatelessWidget {
       return model.task.deadline;
     });
 
-    return model.task.deadline == null
-        ? const SizedBox.shrink()
-        : Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: Row(
-              children: [
-                const Icon(Icons.calendar_month),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: Text(
-                    model.task.deadline!.toLocal().toString(),
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-              ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Row(
+        children: [
+          const Icon(Icons.calendar_month),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Text(
+              model.task.deadline.toLocal().toString(),
+              style: Theme.of(context).textTheme.titleMedium,
             ),
-          );
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -255,35 +224,33 @@ class _Delay extends StatelessWidget {
       return model.task.delay;
     });
 
-    return model.task.delay == null
-        ? const SizedBox.shrink()
-        : Padding(
-            padding: const EdgeInsets.only(top: 16, left: 16),
-            child: DecoratedBox(
-              decoration: UnderlineTabIndicator(
-                borderSide: BorderSide(
-                  color: model.task.delay!.isNegative ? Colors.green : Colors.red,
-                  width: 4,
-                ),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(16),
-                ),
-                insets: const EdgeInsets.only(bottom: -6),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.access_time),
-                  const SizedBox(width: 8),
-                  Flexible(
-                    child: Text(
-                      '${model.task.delay!.abs()} ${model.task.delay!.isNegative ? 'Erken' : 'Geç'} yapıldı',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                  ),
-                ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 16, left: 16),
+      child: DecoratedBox(
+        decoration: UnderlineTabIndicator(
+          borderSide: BorderSide(
+            color: model.task.delay.isNegative ? Colors.green : Colors.red,
+            width: 4,
+          ),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(16),
+          ),
+          insets: const EdgeInsets.only(bottom: -6),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.access_time),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text(
+                '${model.task.delay.abs()} ${model.task.delay.isNegative ? 'Erken' : 'Geç'} yapıldı',
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
-          );
+          ],
+        ),
+      ),
+    );
   }
 }

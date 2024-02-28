@@ -9,10 +9,11 @@ class Task with _$Task {
     required final int id,
     required final String text,
     required final bool isDone,
-    required final Uri? imageUrl,
-    required final DateTime? deadline,
-    required final Duration? delay,
     required final DateTime updatedAt,
+    required final DateTime deadline,
+    required final Duration delay,
+    required final bool isImageRequired,
+    final Uri? imageUrl,
   }) = _Task;
 
   factory Task.fromJson(final Map<String, dynamic> json) => _$TaskFromJson(json);

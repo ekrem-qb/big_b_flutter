@@ -23,11 +23,13 @@ mixin _$Task {
   int get id => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   bool get isDone => throw _privateConstructorUsedError;
-  Uri? get imageUrl => throw _privateConstructorUsedError;
-  DateTime? get deadline => throw _privateConstructorUsedError;
-  Duration? get delay => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
+  DateTime get deadline => throw _privateConstructorUsedError;
+  Duration get delay => throw _privateConstructorUsedError;
+  bool get isImageRequired => throw _privateConstructorUsedError;
+  Uri? get imageUrl => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $TaskCopyWith<Task> get copyWith => throw _privateConstructorUsedError;
 }
@@ -41,10 +43,11 @@ abstract class $TaskCopyWith<$Res> {
       {int id,
       String text,
       bool isDone,
-      Uri? imageUrl,
-      DateTime? deadline,
-      Duration? delay,
-      DateTime updatedAt});
+      DateTime updatedAt,
+      DateTime deadline,
+      Duration delay,
+      bool isImageRequired,
+      Uri? imageUrl});
 }
 
 /// @nodoc
@@ -63,10 +66,11 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
     Object? id = null,
     Object? text = null,
     Object? isDone = null,
-    Object? imageUrl = freezed,
-    Object? deadline = freezed,
-    Object? delay = freezed,
     Object? updatedAt = null,
+    Object? deadline = null,
+    Object? delay = null,
+    Object? isImageRequired = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -81,22 +85,26 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.isDone
           : isDone // ignore: cast_nullable_to_non_nullable
               as bool,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as Uri?,
-      deadline: freezed == deadline
-          ? _value.deadline
-          : deadline // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      delay: freezed == delay
-          ? _value.delay
-          : delay // ignore: cast_nullable_to_non_nullable
-              as Duration?,
       updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      deadline: null == deadline
+          ? _value.deadline
+          : deadline // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      delay: null == delay
+          ? _value.delay
+          : delay // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      isImageRequired: null == isImageRequired
+          ? _value.isImageRequired
+          : isImageRequired // ignore: cast_nullable_to_non_nullable
+              as bool,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as Uri?,
     ) as $Val);
   }
 }
@@ -112,10 +120,11 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
       {int id,
       String text,
       bool isDone,
-      Uri? imageUrl,
-      DateTime? deadline,
-      Duration? delay,
-      DateTime updatedAt});
+      DateTime updatedAt,
+      DateTime deadline,
+      Duration delay,
+      bool isImageRequired,
+      Uri? imageUrl});
 }
 
 /// @nodoc
@@ -131,10 +140,11 @@ class __$$TaskImplCopyWithImpl<$Res>
     Object? id = null,
     Object? text = null,
     Object? isDone = null,
-    Object? imageUrl = freezed,
-    Object? deadline = freezed,
-    Object? delay = freezed,
     Object? updatedAt = null,
+    Object? deadline = null,
+    Object? delay = null,
+    Object? isImageRequired = null,
+    Object? imageUrl = freezed,
   }) {
     return _then(_$TaskImpl(
       id: null == id
@@ -149,37 +159,42 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.isDone
           : isDone // ignore: cast_nullable_to_non_nullable
               as bool,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as Uri?,
-      deadline: freezed == deadline
-          ? _value.deadline
-          : deadline // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      delay: freezed == delay
-          ? _value.delay
-          : delay // ignore: cast_nullable_to_non_nullable
-              as Duration?,
       updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      deadline: null == deadline
+          ? _value.deadline
+          : deadline // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      delay: null == delay
+          ? _value.delay
+          : delay // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      isImageRequired: null == isImageRequired
+          ? _value.isImageRequired
+          : isImageRequired // ignore: cast_nullable_to_non_nullable
+              as bool,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as Uri?,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class _$TaskImpl implements _Task {
   const _$TaskImpl(
       {required this.id,
       required this.text,
       required this.isDone,
-      required this.imageUrl,
+      required this.updatedAt,
       required this.deadline,
       required this.delay,
-      required this.updatedAt});
+      required this.isImageRequired,
+      this.imageUrl});
 
   factory _$TaskImpl.fromJson(Map<String, dynamic> json) =>
       _$$TaskImplFromJson(json);
@@ -191,17 +206,19 @@ class _$TaskImpl implements _Task {
   @override
   final bool isDone;
   @override
-  final Uri? imageUrl;
-  @override
-  final DateTime? deadline;
-  @override
-  final Duration? delay;
-  @override
   final DateTime updatedAt;
+  @override
+  final DateTime deadline;
+  @override
+  final Duration delay;
+  @override
+  final bool isImageRequired;
+  @override
+  final Uri? imageUrl;
 
   @override
   String toString() {
-    return 'Task(id: $id, text: $text, isDone: $isDone, imageUrl: $imageUrl, deadline: $deadline, delay: $delay, updatedAt: $updatedAt)';
+    return 'Task(id: $id, text: $text, isDone: $isDone, updatedAt: $updatedAt, deadline: $deadline, delay: $delay, isImageRequired: $isImageRequired, imageUrl: $imageUrl)';
   }
 
   @override
@@ -212,25 +229,34 @@ class _$TaskImpl implements _Task {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.text, text) || other.text == text) &&
             (identical(other.isDone, isDone) || other.isDone == isDone) &&
-            (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.deadline, deadline) ||
                 other.deadline == deadline) &&
             (identical(other.delay, delay) || other.delay == delay) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            (identical(other.isImageRequired, isImageRequired) ||
+                other.isImageRequired == isImageRequired) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, text, isDone, imageUrl, deadline, delay, updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, text, isDone, updatedAt,
+      deadline, delay, isImageRequired, imageUrl);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$TaskImplCopyWith<_$TaskImpl> get copyWith =>
       __$$TaskImplCopyWithImpl<_$TaskImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TaskImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Task implements Task {
@@ -238,10 +264,11 @@ abstract class _Task implements Task {
       {required final int id,
       required final String text,
       required final bool isDone,
-      required final Uri? imageUrl,
-      required final DateTime? deadline,
-      required final Duration? delay,
-      required final DateTime updatedAt}) = _$TaskImpl;
+      required final DateTime updatedAt,
+      required final DateTime deadline,
+      required final Duration delay,
+      required final bool isImageRequired,
+      final Uri? imageUrl}) = _$TaskImpl;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$TaskImpl.fromJson;
 
@@ -252,13 +279,15 @@ abstract class _Task implements Task {
   @override
   bool get isDone;
   @override
-  Uri? get imageUrl;
-  @override
-  DateTime? get deadline;
-  @override
-  Duration? get delay;
-  @override
   DateTime get updatedAt;
+  @override
+  DateTime get deadline;
+  @override
+  Duration get delay;
+  @override
+  bool get isImageRequired;
+  @override
+  Uri? get imageUrl;
   @override
   @JsonKey(ignore: true)
   _$$TaskImplCopyWith<_$TaskImpl> get copyWith =>
