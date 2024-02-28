@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'text_line.freezed.dart';
 part 'text_line.g.dart';
 
-@freezed
+@Freezed(toJson: false)
 class TextLine with _$TextLine {
   const factory TextLine({
     /// Duration at which the line should be displayed

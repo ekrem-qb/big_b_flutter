@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'recording.freezed.dart';
 part 'recording.g.dart';
 
-@freezed
+@Freezed(toJson: false)
 class Recording with _$Recording {
   const factory Recording({
     required final int id,
