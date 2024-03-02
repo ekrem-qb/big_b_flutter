@@ -40,6 +40,7 @@ class TaskWindow extends ChangeNotifier {
           .subscribe();
     } on Exception catch (e) {
       isDeleted = true;
+      _subscription = null;
       showSnackbar(text: e.toString(), context: _context);
     }
   }

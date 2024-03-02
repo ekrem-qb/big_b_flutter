@@ -40,6 +40,7 @@ class Tasks extends ChangeNotifier {
           .subscribe();
     } on Exception catch (e) {
       tasks = List.empty();
+      _tasksSubscription = null;
       showSnackbar(text: e.toString(), context: _context);
     } finally {
       isLoading = false;

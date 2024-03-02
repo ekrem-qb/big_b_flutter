@@ -48,6 +48,7 @@ class Recordings extends ChangeNotifier {
           .subscribe();
     } on Exception catch (e) {
       recordings = List.empty();
+      _recordingsSubscription = null;
       showSnackbar(text: e.toString(), context: _context);
     } finally {
       isLoading = false;
