@@ -15,7 +15,6 @@ class Recording with _$Recording {
   factory Recording.fromJson(final Map<String, dynamic> json) => _$RecordingFromJson(json);
 
   static const tableName = 'records';
-  static final fieldNames = _$$RecordingImplFieldMap.values.join(',');
 
   static List<Recording>? converter(final List<Map<String, dynamic>> data) => data.map(Recording.fromJson).toList();
 }

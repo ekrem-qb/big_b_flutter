@@ -5,5 +5,4 @@ targets:
         options:
           # Options configure how source code is generated for every
           # `@JsonSerializable`-annotated class in the package.
-          create_field_map: true
           field_rename: snake
