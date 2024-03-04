@@ -24,19 +24,19 @@ class TaskEditorWidget extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Yeni görev'),
         ),
-        body: const SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Açıklama', style: _smallTextStyle),
-                SizedBox(height: 8),
-                _Text(),
-                SizedBox(height: 16),
-                _ImageToggle(),
-                SizedBox(height: 16),
-                Row(
+                const Text('Açıklama', style: _smallTextStyle),
+                const SizedBox(height: 8),
+                const _Text(),
+                const SizedBox(height: 16),
+                const _ImageToggle(),
+                const SizedBox(height: 16),
+                const Row(
                   children: [
                     Column(
                       mainAxisSize: MainAxisSize.min,
@@ -60,24 +60,24 @@ class TaskEditorWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 16),
-                Text('Tekrarlama', style: _smallTextStyle),
-                SizedBox(height: 8),
+                const SizedBox(height: 16),
+                const Text('Tekrarlama', style: _smallTextStyle),
+                const SizedBox(height: 8),
                 Row(
                   children: [
-                    _Day(day: 0, text: 'Pzt'),
-                    SizedBox(width: 8),
-                    _Day(day: 1, text: 'Sal'),
-                    SizedBox(width: 8),
-                    _Day(day: 2, text: 'Çar'),
-                    SizedBox(width: 8),
-                    _Day(day: 3, text: 'Per'),
-                    SizedBox(width: 8),
-                    _Day(day: 4, text: 'Cum'),
-                    SizedBox(width: 8),
-                    _Day(day: 5, text: 'Cmt'),
-                    SizedBox(width: 8),
-                    _Day(day: 6, text: 'Paz'),
+                    _Day(day: 0, text: weekdayNames[0]),
+                    const SizedBox(width: 8),
+                    _Day(day: 1, text: weekdayNames[1]),
+                    const SizedBox(width: 8),
+                    _Day(day: 2, text: weekdayNames[2]),
+                    const SizedBox(width: 8),
+                    _Day(day: 3, text: weekdayNames[3]),
+                    const SizedBox(width: 8),
+                    _Day(day: 4, text: weekdayNames[4]),
+                    const SizedBox(width: 8),
+                    _Day(day: 5, text: weekdayNames[5]),
+                    const SizedBox(width: 8),
+                    _Day(day: 6, text: weekdayNames[6]),
                   ],
                 ),
               ],
