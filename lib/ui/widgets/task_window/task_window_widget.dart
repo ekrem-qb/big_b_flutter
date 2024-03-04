@@ -229,7 +229,7 @@ class _Delay extends StatelessWidget {
       child: DecoratedBox(
         decoration: UnderlineTabIndicator(
           borderSide: BorderSide(
-            color: model.task.delay.isNegative ? Colors.green : Colors.red,
+            color: model.task.delay == Duration.zero ? Colors.green : Colors.red,
             width: 4,
           ),
           borderRadius: const BorderRadius.all(
@@ -244,7 +244,7 @@ class _Delay extends StatelessWidget {
             const SizedBox(width: 8),
             Flexible(
               child: Text(
-                '${model.task.delay.abs()} ${model.task.delay.isNegative ? 'Erken' : 'Geç'} yapıldı',
+                model.task.delay == Duration.zero ? 'Tam zamanında yapıldı' : '${model.task.delay.abs()} Geç yapıldı',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
