@@ -34,6 +34,8 @@ class Login extends ChangeNotifier {
 
   Future<void> login() async {
     if (isLoggingIn) return;
+    emailController.text = emailController.text.trim();
+    passwordController.text = passwordController.text.trim();
     if (emailController.text.isEmpty) return;
     if (passwordController.text.isEmpty) return;
 
