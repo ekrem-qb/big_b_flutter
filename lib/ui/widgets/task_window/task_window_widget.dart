@@ -68,14 +68,7 @@ class _Task extends StatelessWidget {
                 ],
               ),
               _Image(),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Flexible(child: _Deadline()),
-                  Flexible(child: _Delay()),
-                ],
-              ),
+              _Time(),
             ],
           );
   }
@@ -176,6 +169,32 @@ class _Image extends StatelessWidget {
   }
 }
 
+class _Time extends StatelessWidget {
+  const _Time();
+
+  @override
+  Widget build(final BuildContext context) {
+    late final TaskWindow model;
+    var isInitialized = false;
+    context.select((final TaskWindow newModel) {
+      if (!isInitialized) {
+        model = newModel;
+        isInitialized = true;
+      }
+      return model.task.isDone;
+    });
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        const Flexible(child: _Deadline()),
+        if (model.task.isDone) const Flexible(child: _Delay()),
+      ],
+    );
+  }
+}
+
 class _Deadline extends StatelessWidget {
   const _Deadline();
 
@@ -194,6 +213,7 @@ class _Deadline extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.calendar_month),
           const SizedBox(width: 8),
