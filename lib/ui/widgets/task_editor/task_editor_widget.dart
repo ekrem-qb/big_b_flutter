@@ -22,7 +22,7 @@ class TaskEditorWidget extends StatelessWidget {
       create: (final context) => TaskEditor(context, originalPlannedTask: plannedTask, originalTask: task),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Yeni görev'),
+          title: plannedTask == null && task == null ? const Text('Yeni görev') : null,
         ),
         body: SingleChildScrollView(
           child: Padding(
