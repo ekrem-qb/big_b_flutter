@@ -17,7 +17,7 @@ class TaskEditor extends ChangeNotifier {
         _time = originalPlannedTask?.time ?? (originalTask != null ? Duration(hours: originalTask.deadline.hour, minutes: originalTask.deadline.minute) : null) ?? DateTime.now().toTime(),
         _date = originalPlannedTask?.task.deadline ?? originalTask?.deadline ?? DateTime.now(),
         _isImageRequired = originalPlannedTask?.task.isImageRequired ?? originalTask?.isImageRequired ?? false,
-        weekdays = originalPlannedTask?.weekdays ?? List.filled(7, false),
+        weekdays = originalPlannedTask?.weekdays.toList(growable: false) ?? List.filled(7, false),
         textController = TextEditingController(text: originalPlannedTask?.task.text ?? originalTask?.text ?? '');
 
   final _now = DateTime.now();
