@@ -12,7 +12,24 @@ class TasksWidget extends StatelessWidget {
   Widget build(final BuildContext context) {
     return ChangeNotifierProvider(
       create: Tasks.new,
-      child: const _TasksList(),
+      child: const Scaffold(
+        body: _TasksList(),
+        floatingActionButton: _NewTaskButton(),
+      ),
+    );
+  }
+}
+
+class _NewTaskButton extends StatelessWidget {
+  const _NewTaskButton();
+
+  @override
+  Widget build(final BuildContext context) {
+    final model = context.read<Tasks>();
+
+    return FloatingActionButton(
+      onPressed: model.newTask,
+      child: const Icon(Icons.add),
     );
   }
 }
@@ -158,12 +175,12 @@ class _ItemContent extends StatelessWidget {
                       size: 16,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: Text(
+                Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: Text(
                     model.tasks[index].deadline.toLocal().toString(),
-                    ),
                   ),
+                ),
               ],
             ),
           )

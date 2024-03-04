@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../api/database.dart';
 import '../../../../api/entity/task/task.dart';
 import '../../extensions/snackbar.dart';
+import '../../task_editor/task_editor_widget.dart';
 import '../../task_window/task_window_widget.dart';
 
 class Tasks extends ChangeNotifier {
@@ -87,6 +89,15 @@ class Tasks extends ChangeNotifier {
       context: _context,
       barrierDismissible: true,
       builder: (final context) => TaskWindowWidget(task: tasks[index]),
+    );
+  }
+
+  void newTask() {
+    Navigator.push(
+      _context,
+      MaterialPageRoute(
+        builder: (final context) => const TaskEditorWidget(),
+      ),
     );
   }
 
