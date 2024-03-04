@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../more/more_widget.dart';
+import '../planned_tasks/planned_tasks_widget.dart';
 import '../tasks/tasks_widget.dart';
 import 'home_model.dart';
 
@@ -25,7 +26,7 @@ class _Body extends StatelessWidget {
 
   static const _tabs = [
     TasksWidget(),
-    TasksWidget(),
+    PlannedTasksWidget(),
     MorePage(),
   ];
 
