@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -84,10 +83,11 @@ class PlannedTasks extends ChangeNotifier {
   void open(final int index) {
     if (plannedTasks.length < index) return;
 
-    showCupertinoDialog(
-      context: _context,
-      barrierDismissible: true,
-      builder: (final context) => TaskEditorWidget(plannedTask: plannedTasks[index]),
+    Navigator.push(
+      _context,
+      MaterialPageRoute(
+        builder: (final context) => TaskEditorWidget(plannedTask: plannedTasks[index]),
+      ),
     );
   }
 
