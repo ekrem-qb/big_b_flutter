@@ -80,15 +80,14 @@ class TaskWindow extends ChangeNotifier {
 
   Future<void> delete() async {
     final delete = await showDeleteDialog(itemName: 'görevi', context: _context);
+    if (!delete) return;
 
-    if (delete) {
-      try {
-        await db.from(Task.tableName).delete().eq('id', task.id);
+    try {
+      await db.from(Task.tableName).delete().eq('id', task.id);
 
-        Navigator.pop(_context);
-      } on Exception catch (e) {
-        showSnackbar(text: e.toString(), context: _context);
-      }
+      Navigator.pop(_context);
+    } on Exception catch (e) {
+      showSnackbar(text: e.toString(), context: _context);
     }
   }
 

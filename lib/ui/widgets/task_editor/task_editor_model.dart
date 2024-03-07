@@ -7,6 +7,7 @@ import '../../../api/database.dart';
 import '../../../api/entity/planned_task/planned_task.dart';
 import '../../../api/entity/task/task.dart';
 import '../../../extensions/dateTime.dart';
+import '../delete_dialog.dart';
 import '../extensions/pickers/date_picker.dart';
 import '../extensions/pickers/time_picker.dart';
 import '../extensions/snackbar.dart';
@@ -161,6 +162,22 @@ class TaskEditor extends ChangeNotifier {
     } on Exception catch (e) {
       showSnackbar(text: e.toString(), context: _context);
       return false;
+    }
+  }
+
+  Future<void> delete() async {
+    if (isAlreadyPlanned == null) return;
+    if (id == -1) return;
+
+    final delete = await showDeleteDialog(itemName: 'görevi', context: _context);
+    if (!delete) return;
+
+    try {
+      await db.from(isAlreadyPlanned! ? PlannedTask.tableName : Task.tableName).delete().eq('id', id);
+
+      Navigator.pop(_context);
+    } on Exception catch (e) {
+      showSnackbar(text: e.toString(), context: _context);
     }
   }
 }

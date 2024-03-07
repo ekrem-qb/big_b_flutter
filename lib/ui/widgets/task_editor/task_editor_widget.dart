@@ -23,6 +23,9 @@ class TaskEditorWidget extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: plannedTask == null && task == null ? const Text('Yeni görev') : null,
+          actions: [
+            if (plannedTask != null || task != null) const _DeleteButton(),
+          ],
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -88,6 +91,24 @@ class TaskEditorWidget extends StatelessWidget {
           padding: EdgeInsets.all(8),
           child: _SaveButton(),
         ),
+      ),
+    );
+  }
+}
+
+class _DeleteButton extends StatelessWidget {
+  const _DeleteButton();
+
+  @override
+  Widget build(final BuildContext context) {
+    final model = context.read<TaskEditor>();
+
+    return ConstrainedBox(
+      constraints: const BoxConstraints.tightFor(width: kToolbarHeight, height: kToolbarHeight),
+      child: IconButton(
+        icon: const Icon(Icons.delete),
+        tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
+        onPressed: model.delete,
       ),
     );
   }
