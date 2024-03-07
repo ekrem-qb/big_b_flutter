@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       darkTheme: ThemeData.dark(),
+      debugShowCheckedModeBanner: false,
       initialRoute: db.auth.currentSession?.isExpired == false ? Home.route : Login.route,
       routes: {
         Home.route: (final context) => const HomePage(),
