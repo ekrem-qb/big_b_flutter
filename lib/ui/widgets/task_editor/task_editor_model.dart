@@ -14,6 +14,11 @@ import '../extensions/snackbar.dart';
 class TaskEditor extends ChangeNotifier {
   TaskEditor(this._context, {final PlannedTask? originalPlannedTask, final Task? originalTask})
       : id = originalPlannedTask?.id ?? originalTask?.id ?? -1,
+        isAlreadyPlanned = originalPlannedTask != null
+            ? true
+            : originalTask != null
+                ? false
+                : null,
         _time = originalPlannedTask?.time ?? (originalTask != null ? Duration(hours: originalTask.deadline.hour, minutes: originalTask.deadline.minute) : null) ?? DateTime.now().toTime(),
         _date = originalPlannedTask?.task.deadline ?? originalTask?.deadline ?? DateTime.now(),
         _isImageRequired = originalPlannedTask?.task.isImageRequired ?? originalTask?.isImageRequired ?? false,
@@ -24,6 +29,7 @@ class TaskEditor extends ChangeNotifier {
   final BuildContext _context;
   final TextEditingController textController;
   final int id;
+  final bool? isAlreadyPlanned;
 
   Duration _time;
   Duration get time => _time;
@@ -128,7 +134,7 @@ class TaskEditor extends ChangeNotifier {
         isImageRequired: isImageRequired,
       );
 
-      if (isRepeated) {
+      if (isRepeated || (isAlreadyPlanned ?? false)) {
         final plannedTask = PlannedTask(
           id: id,
           task: task,

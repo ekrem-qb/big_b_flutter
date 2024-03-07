@@ -208,7 +208,7 @@ class _Date extends StatelessWidget {
         _formatDate(model.date.toLocal()),
         style: _largeTextStyle,
       ),
-      onPressed: model.isRepeated ? null : model.changeDate,
+      onPressed: (model.isRepeated || (model.isAlreadyPlanned ?? false)) ? null : model.changeDate,
     );
   }
 }
@@ -236,6 +236,7 @@ class _Day extends StatelessWidget {
 
     return Flexible(
       child: InputChip(
+        isEnabled: model.isAlreadyPlanned ?? true,
         showCheckmark: MediaQuery.of(context).size.width > 600,
         selected: model.weekdays[day],
         onSelected: (final value) => model.setDay(day, value: value),
