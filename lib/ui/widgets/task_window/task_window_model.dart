@@ -1,11 +1,13 @@
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../api/database.dart';
 import '../../../api/entity/task/task.dart';
+import '../delete_dialog.dart';
 import '../extensions/snackbar.dart';
+import '../task_editor/task_editor_widget.dart';
 
 class TaskWindow extends ChangeNotifier {
   TaskWindow(this._context, this._task) {
@@ -64,6 +66,29 @@ class TaskWindow extends ChangeNotifier {
     } on Exception catch (e) {
       isDeleted = true;
       showSnackbar(text: e.toString(), context: _context);
+    }
+  }
+
+  void edit() {
+    Navigator.push(
+      _context,
+      MaterialPageRoute(
+        builder: (final context) => TaskEditorWidget(task: task),
+      ),
+    );
+  }
+
+  Future<void> delete() async {
+    final delete = await showDeleteDialog(itemName: 'görevi', context: _context);
+
+    if (delete) {
+      try {
+        await db.from(Task.tableName).delete().eq('id', task.id);
+
+        Navigator.pop(_context);
+      } on Exception catch (e) {
+        showSnackbar(text: e.toString(), context: _context);
+      }
     }
   }
 

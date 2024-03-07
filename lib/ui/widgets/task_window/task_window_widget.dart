@@ -13,18 +13,34 @@ class TaskWindowWidget extends StatelessWidget {
   Widget build(final BuildContext context) {
     return ChangeNotifierProvider(
       create: (final context) => TaskWindow(context, task),
-      child: const Center(
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Card(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: _Task(),
+      child: AlertDialog(
+        insetPadding: const EdgeInsets.all(16),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const _IsDoneIcon(),
+            const SizedBox(width: 8),
+            Flexible(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxHeight: 140,
+                ),
+                child: const SingleChildScrollView(
+                  child: _Text(),
+                ),
               ),
             ),
-          ),
+          ],
         ),
+        content: const SingleChildScrollView(
+          child: _Task(),
+        ),
+        actionsAlignment: MainAxisAlignment.spaceBetween,
+        actions: const [
+          _DeleteButton(),
+          _EditButton(),
+        ],
       ),
     );
   }
@@ -55,19 +71,8 @@ class _Task extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                textBaseline: TextBaseline.alphabetic,
-                children: [
-                  _IsDoneIcon(),
-                  SizedBox(width: 16),
-                  Flexible(
-                    child: _Text(),
-                  ),
-                ],
-              ),
               _Image(),
+              SizedBox(height: 16),
               _Time(),
             ],
           );
@@ -113,7 +118,7 @@ class _Text extends StatelessWidget {
 
     return Text(
       model.task.text,
-      style: Theme.of(context).textTheme.displaySmall,
+      style: const TextStyle(fontWeight: FontWeight.w500),
     );
   }
 }
@@ -135,35 +140,40 @@ class _Image extends StatelessWidget {
 
     return model.task.imageUrl == null
         ? const SizedBox.shrink()
-        : Card(
-            elevation: 3,
-            clipBehavior: Clip.antiAlias,
-            margin: const EdgeInsets.only(top: 16),
-            child: Image.network(
-              model.task.imageUrl!.toString(),
-              filterQuality: FilterQuality.medium,
-              fit: BoxFit.cover,
-              frameBuilder: (final context, final child, final frame, final wasSynchronouslyLoaded) {
-                return wasSynchronouslyLoaded || frame != null
-                    ? child
-                    : const Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 64),
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-              },
-              errorBuilder: (final context, final error, final stackTrace) {
-                return const Center(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 64),
-                    child: Icon(
-                      Icons.image_not_supported,
-                      color: Colors.red,
+        : GestureDetector(
+            onTap: () {
+              // TODO(ekrem-qb): Fullscreen image viewer
+            },
+            child: Material(
+              elevation: 3,
+              clipBehavior: Clip.antiAlias,
+              borderRadius: BorderRadius.circular(12),
+              child: Image.network(
+                model.task.imageUrl!.toString(),
+                filterQuality: FilterQuality.medium,
+                fit: BoxFit.cover,
+                frameBuilder: (final context, final child, final frame, final wasSynchronouslyLoaded) {
+                  return wasSynchronouslyLoaded || frame != null
+                      ? child
+                      : const Center(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 64),
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                },
+                errorBuilder: (final context, final error, final stackTrace) {
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 64),
+                      child: Icon(
+                        Icons.image_not_supported,
+                        color: Colors.red,
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           );
   }
@@ -210,21 +220,18 @@ class _Deadline extends StatelessWidget {
       return model.task.deadline;
     });
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 16),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(Icons.calendar_month),
-          const SizedBox(width: 8),
-          Flexible(
-            child: Text(
-              model.task.deadline.toLocal().toString(),
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Icon(Icons.calendar_month),
+        const SizedBox(width: 8),
+        Flexible(
+          child: Text(
+            model.task.deadline.toLocal().toString(),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -245,7 +252,7 @@ class _Delay extends StatelessWidget {
     });
 
     return Padding(
-      padding: const EdgeInsets.only(top: 16, left: 16),
+      padding: const EdgeInsets.only(left: 16),
       child: DecoratedBox(
         decoration: UnderlineTabIndicator(
           borderSide: BorderSide(
@@ -271,6 +278,36 @@ class _Delay extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _DeleteButton extends StatelessWidget {
+  const _DeleteButton();
+
+  @override
+  Widget build(final BuildContext context) {
+    final model = context.read<TaskWindow>();
+
+    return TextButton.icon(
+      icon: const Icon(Icons.delete),
+      label: const Text('Sil'),
+      onPressed: model.delete,
+    );
+  }
+}
+
+class _EditButton extends StatelessWidget {
+  const _EditButton();
+
+  @override
+  Widget build(final BuildContext context) {
+    final model = context.read<TaskWindow>();
+
+    return TextButton.icon(
+      icon: const Icon(Icons.edit),
+      label: const Text('Düzenle'),
+      onPressed: model.edit,
     );
   }
 }
