@@ -36,7 +36,7 @@ class Recordings extends ChangeNotifier {
 
   Future<void> _load() async {
     try {
-      recordings = await db.from(Recording.tableName).select().order('created_at').withConverter(Recording.converter) ?? List.empty();
+      recordings = await db.from(Recording.tableName).select(Recording.fieldNames).order('created_at').withConverter(Recording.converter) ?? List.empty();
 
       _recordingsSubscription = db
           .channel(Recording.tableName)

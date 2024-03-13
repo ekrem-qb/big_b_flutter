@@ -19,6 +19,7 @@ class Task with _$Task {
   factory Task.fromJson(final Map<String, dynamic> json) => _$TaskFromJson(json);
 
   static const tableName = 'tasks';
+  static final fieldNames = 'id,${_$$TaskImplFieldMap.values.join(',')}';
 
   static List<Task>? converter(final List<Map<String, dynamic>> data) => data.map(Task.fromJson).toList();
 }

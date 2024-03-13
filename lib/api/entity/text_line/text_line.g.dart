@@ -17,3 +17,11 @@ _$TextLineImpl _$$TextLineImplFromJson(Map<String, dynamic> json) =>
           .map((e) => e as int)
           .toList(),
     );
+
+const _$$TextLineImplFieldMap = <String, String>{
+  'time': 'time',
+  'text': 'text',
+  'partsCount': 'parts_count',
+  'highlights': 'highlights',
+  'highlightColors': 'highlight_colors',
+};

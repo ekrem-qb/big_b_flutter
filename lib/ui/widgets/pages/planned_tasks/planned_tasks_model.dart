@@ -28,7 +28,7 @@ class PlannedTasks extends ChangeNotifier {
 
   Future<void> _load() async {
     try {
-      plannedTasks = await db.from(PlannedTask.tableName).select().order('updated_at').withConverter(PlannedTask.converter) ?? List.empty();
+      plannedTasks = await db.from(PlannedTask.tableName).select(PlannedTask.fieldNames).order('updated_at').withConverter(PlannedTask.converter) ?? List.empty();
 
       _plannedTasksSubscription = db
           .channel(PlannedTask.tableName)

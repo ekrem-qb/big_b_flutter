@@ -109,7 +109,7 @@ class Player extends ChangeNotifier {
 
   Future<void> _loadText() async {
     try {
-      _textLines = await db.from(TextLine.tableName).select().eq('record', _recording.id).order('time', ascending: true).withConverter(TextLine.converter);
+      _textLines = await db.from(TextLine.tableName).select(TextLine.fieldNames).eq('record', _recording.id).order('time', ascending: true).withConverter(TextLine.converter);
 
       if (_textLines == null) return;
 

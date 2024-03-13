@@ -16,6 +16,13 @@ _$PlannedTaskImpl _$$PlannedTaskImplFromJson(Map<String, dynamic> json) =>
           (json['weekdays'] as List<dynamic>).map((e) => e as bool).toList(),
     );
 
+const _$$PlannedTaskImplFieldMap = <String, String>{
+  'task': 'task',
+  'time': 'time',
+  'updatedAt': 'updated_at',
+  'weekdays': 'weekdays',
+};
+
 Map<String, dynamic> _$$PlannedTaskImplToJson(_$PlannedTaskImpl instance) =>
     <String, dynamic>{
       'task': instance.task,

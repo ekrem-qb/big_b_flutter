@@ -19,6 +19,16 @@ _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
           : Uri.parse(json['image_url'] as String),
     );
 
+const _$$TaskImplFieldMap = <String, String>{
+  'text': 'text',
+  'isDone': 'is_done',
+  'updatedAt': 'updated_at',
+  'deadline': 'deadline',
+  'delay': 'delay',
+  'isImageRequired': 'is_image_required',
+  'imageUrl': 'image_url',
+};
+
 Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
     <String, dynamic>{
       'text': instance.text,
