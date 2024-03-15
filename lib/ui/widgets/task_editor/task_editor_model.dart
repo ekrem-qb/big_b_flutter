@@ -7,6 +7,7 @@ import '../../../api/database.dart';
 import '../../../api/entity/planned_task/planned_task.dart';
 import '../../../api/entity/task/task.dart';
 import '../../../extensions/dateTime.dart';
+import '../../../extensions/weekdays.dart';
 import '../delete_dialog.dart';
 import '../extensions/pickers/date_picker.dart';
 import '../extensions/pickers/time_picker.dart';
@@ -23,7 +24,7 @@ class TaskEditor extends ChangeNotifier {
         _time = originalPlannedTask?.time ?? (originalTask != null ? Duration(hours: originalTask.deadline.hour, minutes: originalTask.deadline.minute) : null) ?? DateTime.now().toTime(),
         _date = originalPlannedTask?.task.deadline ?? originalTask?.deadline ?? DateTime.now(),
         _isImageRequired = originalPlannedTask?.task.isImageRequired ?? originalTask?.isImageRequired ?? false,
-        weekdays = originalPlannedTask?.weekdays.toList(growable: false) ?? List.filled(7, false),
+        weekdays = originalPlannedTask?.weekdays ?? 0,
         textController = TextEditingController(text: originalPlannedTask?.task.text ?? originalTask?.text ?? '');
 
   final _now = DateTime.now();
@@ -41,9 +42,9 @@ class TaskEditor extends ChangeNotifier {
   bool _isImageRequired;
   bool get isImageRequired => _isImageRequired;
 
-  final List<bool> weekdays;
+  int weekdays;
 
-  bool get isRepeated => weekdays.any((final day) => day);
+  bool get isRepeated => weekdays > 0;
 
   bool _isUploading = false;
   bool get isUploading => _isUploading;
@@ -92,9 +93,10 @@ class TaskEditor extends ChangeNotifier {
   }
 
   void setDay(final int day, {required final bool value}) {
-    if (weekdays[day] == value) return;
+    if (isWeekdaySelected(day, weekdays) == value) return;
+    if (day < 0 || day > 6) return;
 
-    weekdays[day] = value;
+    weekdays = value ? weekdays | 1 << day : weekdays & ~(1 << day);
     notifyListeners();
   }
 
@@ -118,13 +120,14 @@ class TaskEditor extends ChangeNotifier {
   Future<bool> _upload() async {
     try {
       final now = DateTime.now();
+      final isToday = isWeekdaySelected(now.weekday - 1, weekdays);
 
       final task = Task(
         id: id,
         text: textController.text,
         isDone: false,
         updatedAt: now,
-        deadline: date.copyWith(
+        deadline: (isToday ? now : date).copyWith(
           hour: time.inHours,
           minute: time.inMinutes % 60,
           second: 0,
@@ -150,18 +153,26 @@ class TaskEditor extends ChangeNotifier {
           default:
             await db.from(PlannedTask.tableName).update(plannedTask.toJson()).eq('id', plannedTask.id);
         }
-      } else {
-        switch (task.id) {
-          case -1:
-            await db.from(Task.tableName).insert(task.toJson());
-          default:
-            await db.from(Task.tableName).update(task.toJson()).eq('id', task.id);
+
+        if (isToday && isAlreadyPlanned == null) {
+          await _uploadTask(task);
         }
+      } else {
+        await _uploadTask(task);
       }
       return true;
     } on Exception catch (e) {
       showSnackbar(text: e.toString(), context: _context);
       return false;
+    }
+  }
+
+  Future<void> _uploadTask(final Task task) async {
+    switch (task.id) {
+      case -1:
+        await db.from(Task.tableName).insert(task.toJson());
+      default:
+        await db.from(Task.tableName).update(task.toJson()).eq('id', task.id);
     }
   }
 

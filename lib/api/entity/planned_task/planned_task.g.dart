@@ -12,8 +12,7 @@ _$PlannedTaskImpl _$$PlannedTaskImplFromJson(Map<String, dynamic> json) =>
       task: Task.fromJson(json['task'] as Map<String, dynamic>),
       time: Duration(microseconds: json['time'] as int),
       updatedAt: DateTime.parse(json['updated_at'] as String),
-      weekdays:
-          (json['weekdays'] as List<dynamic>).map((e) => e as bool).toList(),
+      weekdays: json['weekdays'] as int,
     );
 
 const _$$PlannedTaskImplFieldMap = <String, String>{

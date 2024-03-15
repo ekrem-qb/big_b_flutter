@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../constants.dart';
+import '../../../../extensions/weekdays.dart';
 import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
 import 'planned_tasks_model.dart';
 
@@ -175,13 +176,13 @@ class _ItemContent extends StatelessWidget {
                     _formatTime(model.plannedTasks[index].time),
                   ),
                 ),
-                if (model.plannedTasks[index].weekdays[0]) _Day(day: 0, text: weekdayNames[0]),
-                if (model.plannedTasks[index].weekdays[1]) _Day(day: 1, text: weekdayNames[1]),
-                if (model.plannedTasks[index].weekdays[2]) _Day(day: 2, text: weekdayNames[2]),
-                if (model.plannedTasks[index].weekdays[3]) _Day(day: 3, text: weekdayNames[3]),
-                if (model.plannedTasks[index].weekdays[4]) _Day(day: 4, text: weekdayNames[4]),
-                if (model.plannedTasks[index].weekdays[5]) _Day(day: 5, text: weekdayNames[5]),
-                if (model.plannedTasks[index].weekdays[6]) _Day(day: 6, text: weekdayNames[6]),
+                if (isWeekdaySelected(0, model.plannedTasks[index].weekdays)) _Day(day: 0, text: weekdayNames[0]),
+                if (isWeekdaySelected(1, model.plannedTasks[index].weekdays)) _Day(day: 1, text: weekdayNames[1]),
+                if (isWeekdaySelected(2, model.plannedTasks[index].weekdays)) _Day(day: 2, text: weekdayNames[2]),
+                if (isWeekdaySelected(3, model.plannedTasks[index].weekdays)) _Day(day: 3, text: weekdayNames[3]),
+                if (isWeekdaySelected(4, model.plannedTasks[index].weekdays)) _Day(day: 4, text: weekdayNames[4]),
+                if (isWeekdaySelected(5, model.plannedTasks[index].weekdays)) _Day(day: 5, text: weekdayNames[5]),
+                if (isWeekdaySelected(6, model.plannedTasks[index].weekdays)) _Day(day: 6, text: weekdayNames[6]),
               ],
             ),
           )

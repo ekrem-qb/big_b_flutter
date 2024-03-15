@@ -12,7 +12,7 @@ class PlannedTask with _$PlannedTask {
     required final Task task,
     required final Duration time,
     required final DateTime updatedAt,
-    required final List<bool> weekdays,
+    required final int weekdays,
   }) = _PlannedTask;
 
   factory PlannedTask.fromJson(final Map<String, dynamic> json) => _$PlannedTaskFromJson(json);

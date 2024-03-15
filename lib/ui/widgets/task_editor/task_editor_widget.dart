@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../api/entity/planned_task/planned_task.dart';
 import '../../../api/entity/task/task.dart';
 import '../../../constants.dart';
+import '../../../extensions/weekdays.dart';
 import 'task_editor_model.dart';
 
 const _textStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.w400, letterSpacing: 0, height: 1.27);
@@ -252,14 +253,14 @@ class _Day extends StatelessWidget {
         model = newModel;
         isInitialized = true;
       }
-      return model.weekdays[day];
+      return isWeekdaySelected(day, model.weekdays);
     });
 
     return Flexible(
       child: InputChip(
         isEnabled: model.isAlreadyPlanned ?? true,
         showCheckmark: MediaQuery.of(context).size.width > 600,
-        selected: model.weekdays[day],
+        selected: isWeekdaySelected(day, model.weekdays),
         onSelected: (final value) => model.setDay(day, value: value),
         labelPadding: EdgeInsets.zero,
         label: FittedBox(

@@ -25,7 +25,7 @@ mixin _$PlannedTask {
   Task get task => throw _privateConstructorUsedError;
   Duration get time => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  List<bool> get weekdays => throw _privateConstructorUsedError;
+  int get weekdays => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,7 +44,7 @@ abstract class $PlannedTaskCopyWith<$Res> {
       Task task,
       Duration time,
       DateTime updatedAt,
-      List<bool> weekdays});
+      int weekdays});
 
   $TaskCopyWith<$Res> get task;
 }
@@ -88,7 +88,7 @@ class _$PlannedTaskCopyWithImpl<$Res, $Val extends PlannedTask>
       weekdays: null == weekdays
           ? _value.weekdays
           : weekdays // ignore: cast_nullable_to_non_nullable
-              as List<bool>,
+              as int,
     ) as $Val);
   }
 
@@ -114,7 +114,7 @@ abstract class _$$PlannedTaskImplCopyWith<$Res>
       Task task,
       Duration time,
       DateTime updatedAt,
-      List<bool> weekdays});
+      int weekdays});
 
   @override
   $TaskCopyWith<$Res> get task;
@@ -155,9 +155,9 @@ class __$$PlannedTaskImplCopyWithImpl<$Res>
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       weekdays: null == weekdays
-          ? _value._weekdays
+          ? _value.weekdays
           : weekdays // ignore: cast_nullable_to_non_nullable
-              as List<bool>,
+              as int,
     ));
   }
 }
@@ -170,8 +170,7 @@ class _$PlannedTaskImpl implements _PlannedTask {
       required this.task,
       required this.time,
       required this.updatedAt,
-      required final List<bool> weekdays})
-      : _weekdays = weekdays;
+      required this.weekdays});
 
   factory _$PlannedTaskImpl.fromJson(Map<String, dynamic> json) =>
       _$$PlannedTaskImplFromJson(json);
@@ -185,13 +184,8 @@ class _$PlannedTaskImpl implements _PlannedTask {
   final Duration time;
   @override
   final DateTime updatedAt;
-  final List<bool> _weekdays;
   @override
-  List<bool> get weekdays {
-    if (_weekdays is EqualUnmodifiableListView) return _weekdays;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_weekdays);
-  }
+  final int weekdays;
 
   @override
   String toString() {
@@ -208,13 +202,14 @@ class _$PlannedTaskImpl implements _PlannedTask {
             (identical(other.time, time) || other.time == time) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
-            const DeepCollectionEquality().equals(other._weekdays, _weekdays));
+            (identical(other.weekdays, weekdays) ||
+                other.weekdays == weekdays));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, task, time, updatedAt,
-      const DeepCollectionEquality().hash(_weekdays));
+  int get hashCode =>
+      Object.hash(runtimeType, id, task, time, updatedAt, weekdays);
 
   @JsonKey(ignore: true)
   @override
@@ -236,7 +231,7 @@ abstract class _PlannedTask implements PlannedTask {
       required final Task task,
       required final Duration time,
       required final DateTime updatedAt,
-      required final List<bool> weekdays}) = _$PlannedTaskImpl;
+      required final int weekdays}) = _$PlannedTaskImpl;
 
   factory _PlannedTask.fromJson(Map<String, dynamic> json) =
       _$PlannedTaskImpl.fromJson;
@@ -251,7 +246,7 @@ abstract class _PlannedTask implements PlannedTask {
   @override
   DateTime get updatedAt;
   @override
-  List<bool> get weekdays;
+  int get weekdays;
   @override
   @JsonKey(ignore: true)
   _$$PlannedTaskImplCopyWith<_$PlannedTaskImpl> get copyWith =>
