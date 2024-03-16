@@ -88,10 +88,7 @@ class TaskEditorWidget extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: const Padding(
-          padding: EdgeInsets.all(8),
-          child: _SaveButton(),
-        ),
+        bottomNavigationBar: const _SaveButton(),
       ),
     );
   }
@@ -291,16 +288,22 @@ class _SaveButton extends StatelessWidget {
     });
 
     return AnimatedCrossFade(
-      firstChild: const LinearProgressIndicator(
-        minHeight: 56,
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+      firstChild: const Padding(
+        padding: EdgeInsets.all(8),
+        child: LinearProgressIndicator(
+          minHeight: 56,
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+        ),
       ),
-      secondChild: SizedBox(
-        width: double.infinity,
-        child: FloatingActionButton.extended(
-          icon: const Icon(Icons.save),
-          label: const Text('Kaydet'),
-          onPressed: model.save,
+      secondChild: Padding(
+        padding: const EdgeInsets.all(8),
+        child: FractionallySizedBox(
+          widthFactor: 1,
+          child: FloatingActionButton.extended(
+            icon: const Icon(Icons.save),
+            label: const Text('Kaydet'),
+            onPressed: model.save,
+          ),
         ),
       ),
       crossFadeState: model.isUploading ? CrossFadeState.showFirst : CrossFadeState.showSecond,
