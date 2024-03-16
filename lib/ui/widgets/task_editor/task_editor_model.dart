@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../api/database.dart';
 import '../../../api/entity/planned_task/planned_task.dart';
 import '../../../api/entity/task/task.dart';
-import '../../../extensions/dateTime.dart';
+import '../../../extensions/date_time.dart';
 import '../../../extensions/weekdays.dart';
 import '../delete_dialog.dart';
 import '../extensions/pickers/date_picker.dart';
@@ -21,11 +21,11 @@ class TaskEditor extends ChangeNotifier {
             : originalTask != null
                 ? false
                 : null,
-        _time = originalPlannedTask?.time ?? (originalTask != null ? Duration(hours: originalTask.deadline.hour, minutes: originalTask.deadline.minute) : null) ?? DateTime.now().toTime(),
-        _date = originalPlannedTask?.task.deadline ?? originalTask?.deadline ?? DateTime.now(),
-        _isImageRequired = originalPlannedTask?.task.isImageRequired ?? originalTask?.isImageRequired ?? false,
+        _time = originalPlannedTask?.deadline.toTime() ?? originalTask?.deadline.toTime() ?? DateTime.now().toTime(),
+        _date = originalPlannedTask?.deadline ?? originalTask?.deadline ?? DateTime.now(),
+        _isImageRequired = originalPlannedTask?.isImageRequired ?? originalTask?.isImageRequired ?? false,
         weekdays = originalPlannedTask?.weekdays ?? 0,
-        textController = TextEditingController(text: originalPlannedTask?.task.text ?? originalTask?.text ?? '');
+        textController = TextEditingController(text: originalPlannedTask?.text ?? originalTask?.text ?? '');
 
   final _now = DateTime.now();
   final BuildContext _context;
@@ -121,19 +121,14 @@ class TaskEditor extends ChangeNotifier {
     try {
       final now = DateTime.now();
       final isToday = isWeekdaySelected(now.weekday - 1, weekdays);
+      final deadline = (isToday ? now : date).copyWithTime(time);
 
       final task = Task(
         id: id,
         text: textController.text,
         isDone: false,
         updatedAt: now,
-        deadline: (isToday ? now : date).copyWith(
-          hour: time.inHours,
-          minute: time.inMinutes % 60,
-          second: 0,
-          millisecond: 0,
-          microsecond: 0,
-        ),
+        deadline: deadline,
         delay: Duration.zero,
         isImageRequired: isImageRequired,
       );
@@ -141,8 +136,9 @@ class TaskEditor extends ChangeNotifier {
       if (isRepeated || (isAlreadyPlanned ?? false)) {
         final plannedTask = PlannedTask(
           id: id,
-          task: task,
-          time: time,
+          text: textController.text,
+          deadline: deadline,
+          isImageRequired: isImageRequired,
           updatedAt: now,
           weekdays: weekdays,
         );

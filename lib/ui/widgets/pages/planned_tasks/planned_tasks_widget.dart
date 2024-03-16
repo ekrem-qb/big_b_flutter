@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../constants.dart';
+import '../../../../extensions/date_time.dart';
 import '../../../../extensions/weekdays.dart';
 import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
 import 'planned_tasks_model.dart';
@@ -156,13 +157,13 @@ class _ItemContent extends StatelessWidget {
         ? ListTile(
             mouseCursor: SystemMouseCursors.click,
             title: Text(
-              model.plannedTasks[index].task.text,
+              model.plannedTasks[index].text,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
             subtitle: Row(
               children: [
-                if (model.plannedTasks[index].task.isImageRequired)
+                if (model.plannedTasks[index].isImageRequired)
                   const Padding(
                     padding: EdgeInsets.only(right: 8),
                     child: Icon(
@@ -173,7 +174,7 @@ class _ItemContent extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: Text(
-                    _formatTime(model.plannedTasks[index].time),
+                    _formatTime(model.plannedTasks[index].deadline.toTime()),
                   ),
                 ),
                 if (isWeekdaySelected(0, model.plannedTasks[index].weekdays)) _Day(day: 0, text: weekdayNames[0]),

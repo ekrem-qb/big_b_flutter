@@ -22,8 +22,9 @@ PlannedTask _$PlannedTaskFromJson(Map<String, dynamic> json) {
 mixin _$PlannedTask {
   @JsonKey(defaultValue: -1, includeToJson: false)
   int get id => throw _privateConstructorUsedError;
-  Task get task => throw _privateConstructorUsedError;
-  Duration get time => throw _privateConstructorUsedError;
+  String get text => throw _privateConstructorUsedError;
+  DateTime get deadline => throw _privateConstructorUsedError;
+  bool get isImageRequired => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
   int get weekdays => throw _privateConstructorUsedError;
 
@@ -41,12 +42,11 @@ abstract class $PlannedTaskCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(defaultValue: -1, includeToJson: false) int id,
-      Task task,
-      Duration time,
+      String text,
+      DateTime deadline,
+      bool isImageRequired,
       DateTime updatedAt,
       int weekdays});
-
-  $TaskCopyWith<$Res> get task;
 }
 
 /// @nodoc
@@ -63,8 +63,9 @@ class _$PlannedTaskCopyWithImpl<$Res, $Val extends PlannedTask>
   @override
   $Res call({
     Object? id = null,
-    Object? task = null,
-    Object? time = null,
+    Object? text = null,
+    Object? deadline = null,
+    Object? isImageRequired = null,
     Object? updatedAt = null,
     Object? weekdays = null,
   }) {
@@ -73,14 +74,18 @@ class _$PlannedTaskCopyWithImpl<$Res, $Val extends PlannedTask>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      task: null == task
-          ? _value.task
-          : task // ignore: cast_nullable_to_non_nullable
-              as Task,
-      time: null == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as Duration,
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      deadline: null == deadline
+          ? _value.deadline
+          : deadline // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      isImageRequired: null == isImageRequired
+          ? _value.isImageRequired
+          : isImageRequired // ignore: cast_nullable_to_non_nullable
+              as bool,
       updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -90,14 +95,6 @@ class _$PlannedTaskCopyWithImpl<$Res, $Val extends PlannedTask>
           : weekdays // ignore: cast_nullable_to_non_nullable
               as int,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $TaskCopyWith<$Res> get task {
-    return $TaskCopyWith<$Res>(_value.task, (value) {
-      return _then(_value.copyWith(task: value) as $Val);
-    });
   }
 }
 
@@ -111,13 +108,11 @@ abstract class _$$PlannedTaskImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(defaultValue: -1, includeToJson: false) int id,
-      Task task,
-      Duration time,
+      String text,
+      DateTime deadline,
+      bool isImageRequired,
       DateTime updatedAt,
       int weekdays});
-
-  @override
-  $TaskCopyWith<$Res> get task;
 }
 
 /// @nodoc
@@ -132,8 +127,9 @@ class __$$PlannedTaskImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? task = null,
-    Object? time = null,
+    Object? text = null,
+    Object? deadline = null,
+    Object? isImageRequired = null,
     Object? updatedAt = null,
     Object? weekdays = null,
   }) {
@@ -142,14 +138,18 @@ class __$$PlannedTaskImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      task: null == task
-          ? _value.task
-          : task // ignore: cast_nullable_to_non_nullable
-              as Task,
-      time: null == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as Duration,
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      deadline: null == deadline
+          ? _value.deadline
+          : deadline // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      isImageRequired: null == isImageRequired
+          ? _value.isImageRequired
+          : isImageRequired // ignore: cast_nullable_to_non_nullable
+              as bool,
       updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -167,8 +167,9 @@ class __$$PlannedTaskImplCopyWithImpl<$Res>
 class _$PlannedTaskImpl implements _PlannedTask {
   const _$PlannedTaskImpl(
       {@JsonKey(defaultValue: -1, includeToJson: false) required this.id,
-      required this.task,
-      required this.time,
+      required this.text,
+      required this.deadline,
+      required this.isImageRequired,
       required this.updatedAt,
       required this.weekdays});
 
@@ -179,9 +180,11 @@ class _$PlannedTaskImpl implements _PlannedTask {
   @JsonKey(defaultValue: -1, includeToJson: false)
   final int id;
   @override
-  final Task task;
+  final String text;
   @override
-  final Duration time;
+  final DateTime deadline;
+  @override
+  final bool isImageRequired;
   @override
   final DateTime updatedAt;
   @override
@@ -189,7 +192,7 @@ class _$PlannedTaskImpl implements _PlannedTask {
 
   @override
   String toString() {
-    return 'PlannedTask(id: $id, task: $task, time: $time, updatedAt: $updatedAt, weekdays: $weekdays)';
+    return 'PlannedTask(id: $id, text: $text, deadline: $deadline, isImageRequired: $isImageRequired, updatedAt: $updatedAt, weekdays: $weekdays)';
   }
 
   @override
@@ -198,8 +201,11 @@ class _$PlannedTaskImpl implements _PlannedTask {
         (other.runtimeType == runtimeType &&
             other is _$PlannedTaskImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.task, task) || other.task == task) &&
-            (identical(other.time, time) || other.time == time) &&
+            (identical(other.text, text) || other.text == text) &&
+            (identical(other.deadline, deadline) ||
+                other.deadline == deadline) &&
+            (identical(other.isImageRequired, isImageRequired) ||
+                other.isImageRequired == isImageRequired) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.weekdays, weekdays) ||
@@ -208,8 +214,8 @@ class _$PlannedTaskImpl implements _PlannedTask {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, task, time, updatedAt, weekdays);
+  int get hashCode => Object.hash(
+      runtimeType, id, text, deadline, isImageRequired, updatedAt, weekdays);
 
   @JsonKey(ignore: true)
   @override
@@ -228,8 +234,9 @@ class _$PlannedTaskImpl implements _PlannedTask {
 abstract class _PlannedTask implements PlannedTask {
   const factory _PlannedTask(
       {@JsonKey(defaultValue: -1, includeToJson: false) required final int id,
-      required final Task task,
-      required final Duration time,
+      required final String text,
+      required final DateTime deadline,
+      required final bool isImageRequired,
       required final DateTime updatedAt,
       required final int weekdays}) = _$PlannedTaskImpl;
 
@@ -240,9 +247,11 @@ abstract class _PlannedTask implements PlannedTask {
   @JsonKey(defaultValue: -1, includeToJson: false)
   int get id;
   @override
-  Task get task;
+  String get text;
   @override
-  Duration get time;
+  DateTime get deadline;
+  @override
+  bool get isImageRequired;
   @override
   DateTime get updatedAt;
   @override
