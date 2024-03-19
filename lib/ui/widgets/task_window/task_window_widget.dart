@@ -227,7 +227,7 @@ class _Deadline extends StatelessWidget {
         const SizedBox(width: 8),
         Flexible(
           child: Text(
-            model.task.deadline.toLocal().toString(),
+            model.task.deadline.toString(),
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),

@@ -224,7 +224,7 @@ class _Date extends StatelessWidget {
 
     return ActionChip(
       label: Text(
-        _formatDate(model.date.toLocal()),
+        _formatDate(model.date),
         style: _largeTextStyle,
       ),
       onPressed: (model.isRepeated || (model.isAlreadyPlanned ?? false)) ? null : model.changeDate,

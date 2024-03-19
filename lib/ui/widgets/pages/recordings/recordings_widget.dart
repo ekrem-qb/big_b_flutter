@@ -184,7 +184,7 @@ class _ItemContent extends StatelessWidget {
         ? ListTile(
             mouseCursor: SystemMouseCursors.click,
             title: Text(
-              model.recordings[index].createdAt.toLocal().toString(),
+              model.recordings[index].createdAt.toString(),
             ),
             trailing: SizedBox.square(
               dimension: 24,
