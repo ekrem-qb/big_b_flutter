@@ -11,7 +11,7 @@ _$RecordingImpl _$$RecordingImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int,
       audioUrl: Uri.parse(json['url'] as String),
       hasLines: json['has_lines'] as bool,
-      createdAt: DateTime.parse(json['created_at'] as String),
+      createdAt: DateTime.parse(json['created_at'] as String).toLocal(),
     );
 
 const _$$RecordingImplFieldMap = <String, String>{

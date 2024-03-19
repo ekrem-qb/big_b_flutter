@@ -10,8 +10,8 @@ _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
       id: json['id'] as int? ?? -1,
       text: json['text'] as String,
       isDone: json['is_done'] as bool,
-      updatedAt: DateTime.parse(json['updated_at'] as String),
-      deadline: DateTime.parse(json['deadline'] as String),
+      updatedAt: DateTime.parse(json['updated_at'] as String).toLocal(),
+      deadline: DateTime.parse(json['deadline'] as String).toLocal(),
       delay: Duration(microseconds: json['delay'] as int),
       isImageRequired: json['is_image_required'] as bool,
       imageUrl: json['image_url'] == null
@@ -33,8 +33,8 @@ Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
     <String, dynamic>{
       'text': instance.text,
       'is_done': instance.isDone,
-      'updated_at': instance.updatedAt.toIso8601String(),
-      'deadline': instance.deadline.toIso8601String(),
+      'updated_at': instance.updatedAt.toUtc().toIso8601String(),
+      'deadline': instance.deadline.toUtc().toIso8601String(),
       'delay': instance.delay.inMicroseconds,
       'is_image_required': instance.isImageRequired,
       'image_url': instance.imageUrl?.toString(),

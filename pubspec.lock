@@ -326,19 +326,21 @@ packages:
   json_annotation:
     dependency: "direct main"
     description:
-      name: json_annotation
-      sha256: b10a7b2ff83d83c777edba3c6a0f97045ddadd56c944e1a23a3fdf43a1bf4467
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.8.1"
+      path: json_annotation
+      ref: HEAD
+      resolved-ref: "4162ca6d0b03f603961719b023732088428604c7"
+      url: "https://github.com/ekrem-qb/json_serializable.dart"
+    source: git
+    version: "4.9.0-wip"
   json_serializable:
     dependency: "direct dev"
     description:
-      name: json_serializable
-      sha256: aa1f5a8912615733e0fdc7a02af03308933c93235bdc8d50d0b0c8a8ccb0b969
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.7.1"
+      path: json_serializable
+      ref: HEAD
+      resolved-ref: "4162ca6d0b03f603961719b023732088428604c7"
+      url: "https://github.com/ekrem-qb/json_serializable.dart"
+    source: git
+    version: "6.8.0-wip"
   just_audio:
     dependency: "direct main"
     description:

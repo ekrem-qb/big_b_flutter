@@ -10,9 +10,9 @@ _$PlannedTaskImpl _$$PlannedTaskImplFromJson(Map<String, dynamic> json) =>
     _$PlannedTaskImpl(
       id: json['id'] as int? ?? -1,
       text: json['text'] as String,
-      deadline: DateTime.parse(json['deadline'] as String),
+      deadline: DateTime.parse(json['deadline'] as String).toLocal(),
       isImageRequired: json['is_image_required'] as bool,
-      updatedAt: DateTime.parse(json['updated_at'] as String),
+      updatedAt: DateTime.parse(json['updated_at'] as String).toLocal(),
       weekdays: json['weekdays'] as int,
     );
 
@@ -27,8 +27,8 @@ const _$$PlannedTaskImplFieldMap = <String, String>{
 Map<String, dynamic> _$$PlannedTaskImplToJson(_$PlannedTaskImpl instance) =>
     <String, dynamic>{
       'text': instance.text,
-      'deadline': instance.deadline.toIso8601String(),
+      'deadline': instance.deadline.toUtc().toIso8601String(),
       'is_image_required': instance.isImageRequired,
-      'updated_at': instance.updatedAt.toIso8601String(),
+      'updated_at': instance.updatedAt.toUtc().toIso8601String(),
       'weekdays': instance.weekdays,
     };
