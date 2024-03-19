@@ -10,9 +10,9 @@ extension DateTimeConverter on DateTime {
     return copyWith(
       hour: time.inHours,
       minute: time.inMinutes % 60,
-      second: time.inSeconds % 3600,
-      millisecond: time.inMilliseconds % 3600000,
-      microsecond: time.inMicroseconds % 3600000000,
+      second: time.inSeconds % 60,
+      millisecond: time.inMilliseconds % 1000,
+      microsecond: time.inMicroseconds % 1000000,
     );
   }
 }
