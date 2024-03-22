@@ -15,29 +15,52 @@ import '../extensions/snackbar.dart';
 
 class TaskEditor extends ChangeNotifier {
   TaskEditor(this._context, {final PlannedTask? originalPlannedTask, final Task? originalTask})
-      : id = originalPlannedTask?.id ?? originalTask?.id ?? -1,
+      : _id = originalPlannedTask?.id ?? originalTask?.id ?? -1,
         isAlreadyPlanned = originalPlannedTask != null
             ? true
             : originalTask != null
                 ? false
                 : null,
-        _time = originalPlannedTask?.deadline.toTime() ?? originalTask?.deadline.toTime() ?? DateTime.now().toTime(),
-        _date = originalPlannedTask?.deadline ?? originalTask?.deadline ?? DateTime.now(),
+        __time = originalPlannedTask?.deadline.toTime() ?? originalTask?.deadline.toTime() ?? DateTime.now().toTime(),
+        __date = originalPlannedTask?.deadline ?? originalTask?.deadline ?? DateTime.now(),
         _isImageRequired = originalPlannedTask?.isImageRequired ?? originalTask?.isImageRequired ?? false,
         weekdays = originalPlannedTask?.weekdays ?? 0,
-        textController = TextEditingController(text: originalPlannedTask?.text ?? originalTask?.text ?? '');
+        textController = TextEditingController(text: originalPlannedTask?.text ?? originalTask?.text ?? '') {
+    _timeText = _formatTime(_time);
+    _dateText = _formatDate(_date);
+  }
 
   final _now = DateTime.now();
   final BuildContext _context;
   final TextEditingController textController;
-  final int id;
+  final int _id;
   final bool? isAlreadyPlanned;
 
-  Duration _time;
-  Duration get time => _time;
+  Duration __time;
+  Duration get _time => __time;
+  set _time(final Duration value) {
+    if (__time == value) return;
 
-  DateTime _date;
-  DateTime get date => _date;
+    __time = value;
+    _timeText = _formatTime(_time);
+    notifyListeners();
+  }
+
+  late String _timeText;
+  String get time => _timeText;
+
+  DateTime __date;
+  DateTime get _date => __date;
+  set _date(final DateTime value) {
+    if (__date == value) return;
+
+    __date = value;
+    _dateText = _formatDate(_date);
+    notifyListeners();
+  }
+
+  late String _dateText;
+  String get date => _dateText;
 
   bool _isImageRequired;
   bool get isImageRequired => _isImageRequired;
@@ -71,10 +94,15 @@ class TaskEditor extends ChangeNotifier {
     );
 
     if (newTime == null) return;
-    if (newTime == _time) return;
 
     _time = newTime;
-    notifyListeners();
+  }
+
+  static String _formatTime(final Duration duration) {
+    final minutes = duration.inHours.toString().padLeft(2, '0');
+    final seconds = (duration.inMinutes % 60).toString().padLeft(2, '0');
+    final time = '$minutes:$seconds';
+    return time;
   }
 
   Future<void> changeDate() async {
@@ -86,10 +114,16 @@ class TaskEditor extends ChangeNotifier {
     );
 
     if (newDate == null) return;
-    if (newDate == _date) return;
 
     _date = newDate;
-    notifyListeners();
+  }
+
+  static String _formatDate(final DateTime date) {
+    final day = date.day.toString().padLeft(2, '0');
+    final month = date.month.toString().padLeft(2, '0');
+    final year = date.year.toString();
+    final formattedDate = '$day.$month.$year';
+    return formattedDate;
   }
 
   void setDay(final int day, {required final bool value}) {
@@ -121,10 +155,10 @@ class TaskEditor extends ChangeNotifier {
     try {
       final now = DateTime.now();
       final isToday = isWeekdaySelected(now.weekday - 1, weekdays);
-      final deadline = (isToday ? now : date).copyWithTime(time);
+      final deadline = (isToday ? now : _date).copyWithTime(_time);
 
       final task = Task(
-        id: id,
+        id: _id,
         text: textController.text,
         isDone: false,
         updatedAt: now,
@@ -135,7 +169,7 @@ class TaskEditor extends ChangeNotifier {
 
       if (isRepeated || (isAlreadyPlanned ?? false)) {
         final plannedTask = PlannedTask(
-          id: id,
+          id: _id,
           text: textController.text,
           deadline: deadline,
           isImageRequired: isImageRequired,
@@ -174,13 +208,13 @@ class TaskEditor extends ChangeNotifier {
 
   Future<void> delete() async {
     if (isAlreadyPlanned == null) return;
-    if (id == -1) return;
+    if (_id == -1) return;
 
     final delete = await showDeleteDialog(itemName: 'görevi', context: _context);
     if (!delete) return;
 
     try {
-      await db.from(isAlreadyPlanned! ? PlannedTask.tableName : Task.tableName).delete().eq('id', id);
+      await db.from(isAlreadyPlanned! ? PlannedTask.tableName : Task.tableName).delete().eq('id', _id);
 
       Navigator.pop(_context);
     } on Exception catch (e) {

@@ -162,13 +162,6 @@ class _ImageToggle extends StatelessWidget {
 class _Time extends StatelessWidget {
   const _Time();
 
-  String _formatTime(final Duration duration) {
-    final minutes = duration.inHours.toString().padLeft(2, '0');
-    final seconds = (duration.inMinutes % 60).toString().padLeft(2, '0');
-    final time = '$minutes:$seconds';
-    return time;
-  }
-
   @override
   Widget build(final BuildContext context) {
     late final TaskEditor model;
@@ -183,7 +176,7 @@ class _Time extends StatelessWidget {
 
     return ActionChip(
       label: Text(
-        _formatTime(model.time),
+        model.time,
         style: _largeTextStyle,
       ),
       onPressed: model.changeTime,
@@ -193,14 +186,6 @@ class _Time extends StatelessWidget {
 
 class _Date extends StatelessWidget {
   const _Date();
-
-  String _formatDate(final DateTime date) {
-    final day = date.day.toString().padLeft(2, '0');
-    final month = date.month.toString().padLeft(2, '0');
-    final year = date.year.toString();
-    final formattedDate = '$day.$month.$year';
-    return formattedDate;
-  }
 
   @override
   Widget build(final BuildContext context) {
@@ -224,7 +209,7 @@ class _Date extends StatelessWidget {
 
     return ActionChip(
       label: Text(
-        _formatDate(model.date),
+        model.date,
         style: _largeTextStyle,
       ),
       onPressed: (model.isRepeated || (model.isAlreadyPlanned ?? false)) ? null : model.changeDate,
