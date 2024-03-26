@@ -93,20 +93,20 @@ class _PlannedTasksListContent extends StatelessWidget {
                 child: ListView.builder(
                   controller: model.scrollController,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (final context, final index) => _Item(index: index),
+                  itemBuilder: _Item.new,
                   itemCount: model.plannedTasks.length,
                 ),
               )
             : ListView.builder(
                 controller: model.scrollController,
-                itemBuilder: (final context, final index) => _Item(index: index),
+                itemBuilder: _Item.new,
                 itemCount: model.plannedTasks.length,
               );
   }
 }
 
 class _Item extends StatelessWidget {
-  const _Item({required this.index});
+  const _Item(final BuildContext _, this.index);
 
   final int index;
 
