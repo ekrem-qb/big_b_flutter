@@ -152,7 +152,7 @@ class _ImageToggle extends StatelessWidget {
         controlAffinity: ListTileControlAffinity.leading,
         value: model.isImageRequired,
         focusNode: skippedFocusNode,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         onChanged: model.setIsImageRequired,
       ),
     );
