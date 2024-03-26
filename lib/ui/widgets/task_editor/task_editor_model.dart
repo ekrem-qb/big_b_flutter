@@ -181,7 +181,7 @@ class TaskEditor extends ChangeNotifier {
           case -1:
             await db.from(PlannedTask.tableName).insert(plannedTask.toJson());
           default:
-            await db.from(PlannedTask.tableName).update(plannedTask.toJson()).eq('id', plannedTask.id);
+            await db.from(PlannedTask.tableName).update(plannedTask.toJson()).eq($PlannedTaskImplJsonKeys.id, plannedTask.id);
         }
 
         if (isToday && isAlreadyPlanned == null) {
@@ -202,7 +202,7 @@ class TaskEditor extends ChangeNotifier {
       case -1:
         await db.from(Task.tableName).insert(task.toJson());
       default:
-        await db.from(Task.tableName).update(task.toJson()).eq('id', task.id);
+        await db.from(Task.tableName).update(task.toJson()).eq($TaskImplJsonKeys.id, task.id);
     }
   }
 
@@ -214,7 +214,7 @@ class TaskEditor extends ChangeNotifier {
     if (!delete) return;
 
     try {
-      await db.from(isAlreadyPlanned! ? PlannedTask.tableName : Task.tableName).delete().eq('id', _id);
+      await db.from(isAlreadyPlanned! ? PlannedTask.tableName : Task.tableName).delete().eq($TaskImplJsonKeys.id, _id);
 
       Navigator.pop(_context);
     } on Exception catch (e) {

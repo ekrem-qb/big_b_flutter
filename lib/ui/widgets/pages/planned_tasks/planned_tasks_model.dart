@@ -28,7 +28,7 @@ class PlannedTasks extends ChangeNotifier {
 
   Future<void> _load() async {
     try {
-      plannedTasks = await db.from(PlannedTask.tableName).select(PlannedTask.fieldNames).order('updated_at').withConverter(PlannedTask.converter) ?? List.empty();
+      plannedTasks = await db.from(PlannedTask.tableName).select(PlannedTask.fieldNames).order($PlannedTaskImplJsonKeys.updatedAt).withConverter(PlannedTask.converter) ?? List.empty();
 
       _plannedTasksSubscription = db
           .channel(PlannedTask.tableName)
@@ -68,7 +68,7 @@ class PlannedTasks extends ChangeNotifier {
           }
         }
       case PostgresChangeEvent.delete:
-        final int id = payload.oldRecord['id'];
+        final int id = payload.oldRecord[$PlannedTaskImplJsonKeys.id];
         for (var i = 0; i < plannedTasks.length; i++) {
           if (id == plannedTasks[i].id) {
             plannedTasks.removeAt(i);

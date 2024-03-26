@@ -19,7 +19,7 @@ class TextLine with _$TextLine {
   factory TextLine.fromJson(final Map<String, dynamic> json) => _$TextLineFromJson(json);
 
   static const tableName = 'lines';
-  static final fieldNames = 'id,${_$$TextLineImplFieldMap.values.join(',')}';
+  static final fieldNames = _$$TextLineImplFieldMap.values.join(',');
 
   static List<TextLine>? converter(final List<Map<String, dynamic>> data) => data.map(TextLine.fromJson).toList();
 }

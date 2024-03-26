@@ -17,12 +17,22 @@ _$PlannedTaskImpl _$$PlannedTaskImplFromJson(Map<String, dynamic> json) =>
     );
 
 const _$$PlannedTaskImplFieldMap = <String, String>{
+  'id': 'id',
   'text': 'text',
   'deadline': 'deadline',
   'isImageRequired': 'is_image_required',
   'updatedAt': 'updated_at',
   'weekdays': 'weekdays',
 };
+
+abstract final class $PlannedTaskImplJsonKeys {
+  static const String id = 'id';
+  static const String text = 'text';
+  static const String deadline = 'deadline';
+  static const String isImageRequired = 'is_image_required';
+  static const String updatedAt = 'updated_at';
+  static const String weekdays = 'weekdays';
+}
 
 Map<String, dynamic> _$$PlannedTaskImplToJson(_$PlannedTaskImpl instance) =>
     <String, dynamic>{

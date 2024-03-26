@@ -17,7 +17,7 @@ class PlannedTask with _$PlannedTask {
   factory PlannedTask.fromJson(final Map<String, dynamic> json) => _$PlannedTaskFromJson(json);
 
   static const tableName = 'planned_tasks';
-  static final fieldNames = 'id,${_$$PlannedTaskImplFieldMap.values.join(',')}';
+  static final fieldNames = _$$PlannedTaskImplFieldMap.values.join(',');
 
   static List<PlannedTask>? converter(final List<Map<String, dynamic>> data) => data.map(PlannedTask.fromJson).toList();
 }

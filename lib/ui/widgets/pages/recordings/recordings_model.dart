@@ -36,7 +36,7 @@ class Recordings extends ChangeNotifier {
 
   Future<void> _load() async {
     try {
-      recordings = await db.from(Recording.tableName).select(Recording.fieldNames).order('created_at').withConverter(Recording.converter) ?? List.empty();
+      recordings = await db.from(Recording.tableName).select(Recording.fieldNames).order($RecordingImplJsonKeys.createdAt).withConverter(Recording.converter) ?? List.empty();
 
       _recordingsSubscription = db
           .channel(Recording.tableName)
@@ -76,7 +76,7 @@ class Recordings extends ChangeNotifier {
           }
         }
       case PostgresChangeEvent.delete:
-        final int id = payload.oldRecord['id'];
+        final int id = payload.oldRecord[$RecordingImplJsonKeys.id];
         for (var i = 0; i < recordings.length; i++) {
           if (id == recordings[i].id) {
             recordings.removeAt(i);

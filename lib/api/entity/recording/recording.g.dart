@@ -20,3 +20,10 @@ const _$$RecordingImplFieldMap = <String, String>{
   'hasLines': 'has_lines',
   'createdAt': 'created_at',
 };
+
+abstract final class $RecordingImplJsonKeys {
+  static const String id = 'id';
+  static const String audioUrl = 'url';
+  static const String hasLines = 'has_lines';
+  static const String createdAt = 'created_at';
+}

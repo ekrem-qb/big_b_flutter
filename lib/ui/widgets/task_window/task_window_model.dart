@@ -37,7 +37,7 @@ class TaskWindow extends ChangeNotifier {
             table: Task.tableName,
             event: PostgresChangeEvent.all,
             callback: _onTaskUpdate,
-            filter: PostgresChangeFilter(type: PostgresChangeFilterType.eq, column: 'id', value: _task.id),
+            filter: PostgresChangeFilter(type: PostgresChangeFilterType.eq, column: $TaskImplJsonKeys.id, value: _task.id),
           )
           .subscribe();
     } on Exception catch (e) {
@@ -83,7 +83,7 @@ class TaskWindow extends ChangeNotifier {
     if (!delete) return;
 
     try {
-      await db.from(Task.tableName).delete().eq('id', task.id);
+      await db.from(Task.tableName).delete().eq($TaskImplJsonKeys.id, task.id);
 
       Navigator.pop(_context);
     } on Exception catch (e) {

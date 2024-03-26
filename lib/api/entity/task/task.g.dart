@@ -20,6 +20,7 @@ _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
     );
 
 const _$$TaskImplFieldMap = <String, String>{
+  'id': 'id',
   'text': 'text',
   'isDone': 'is_done',
   'updatedAt': 'updated_at',
@@ -28,6 +29,17 @@ const _$$TaskImplFieldMap = <String, String>{
   'isImageRequired': 'is_image_required',
   'imageUrl': 'image_url',
 };
+
+abstract final class $TaskImplJsonKeys {
+  static const String id = 'id';
+  static const String text = 'text';
+  static const String isDone = 'is_done';
+  static const String updatedAt = 'updated_at';
+  static const String deadline = 'deadline';
+  static const String delay = 'delay';
+  static const String isImageRequired = 'is_image_required';
+  static const String imageUrl = 'image_url';
+}
 
 Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
     <String, dynamic>{

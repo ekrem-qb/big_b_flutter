@@ -25,3 +25,11 @@ const _$$TextLineImplFieldMap = <String, String>{
   'highlights': 'highlights',
   'highlightColors': 'highlight_colors',
 };
+
+abstract final class $TextLineImplJsonKeys {
+  static const String time = 'time';
+  static const String text = 'text';
+  static const String partsCount = 'parts_count';
+  static const String highlights = 'highlights';
+  static const String highlightColors = 'highlight_colors';
+}
