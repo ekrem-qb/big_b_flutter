@@ -221,4 +221,10 @@ class TaskEditor extends ChangeNotifier {
       showSnackbar(text: e.toString(), context: _context);
     }
   }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
 }
