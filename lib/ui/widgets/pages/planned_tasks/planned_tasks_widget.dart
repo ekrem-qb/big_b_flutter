@@ -112,19 +112,13 @@ class _Item extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<PlannedTasks>();
-
     return Card(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(12),
         ),
       ),
-      child: InkWell(
-        onTap: () => model.open(index),
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
-        child: _ItemContent(index),
-      ),
+      child: _ItemContent(index),
     );
   }
 }
@@ -155,7 +149,11 @@ class _ItemContent extends StatelessWidget {
 
     return model.plannedTasks.length >= index
         ? ListTile(
-            mouseCursor: SystemMouseCursors.click,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(12),
+              ),
+            ),
             title: Text(
               model.plannedTasks[index].text,
               maxLines: 2,
@@ -186,6 +184,7 @@ class _ItemContent extends StatelessWidget {
                 if (isWeekdaySelected(6, model.plannedTasks[index].weekdays)) _Day(day: 6, text: weekdayNames[6]),
               ],
             ),
+            onTap: () => model.open(index),
           )
         : const _DeletedItemContent();
   }

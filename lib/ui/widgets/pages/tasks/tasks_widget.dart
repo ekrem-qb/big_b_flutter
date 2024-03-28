@@ -110,19 +110,13 @@ class _Item extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<Tasks>();
-
     return Card(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(12),
         ),
       ),
-      child: InkWell(
-        onTap: () => model.open(index),
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
-        child: _ItemContent(index),
-      ),
+      child: _ItemContent(index),
     );
   }
 }
@@ -146,7 +140,11 @@ class _ItemContent extends StatelessWidget {
 
     return model.tasks.length >= index
         ? ListTile(
-            mouseCursor: SystemMouseCursors.click,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(12),
+              ),
+            ),
             enabled: !model.tasks[index].isDone,
             leading: model.tasks[index].isDone
                 ? const Icon(
@@ -183,6 +181,7 @@ class _ItemContent extends StatelessWidget {
                 ),
               ],
             ),
+            onTap: () => model.open(index),
           )
         : const _DeletedItemContent();
   }

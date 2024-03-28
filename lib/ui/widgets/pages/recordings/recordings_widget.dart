@@ -154,11 +154,7 @@ class _Item extends StatelessWidget {
           Radius.circular(12),
         ),
       ),
-      child: InkWell(
-        onTap: () => model.selectedRecordingIndex = index,
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
-        child: _ItemContent(index),
-      ),
+      child: _ItemContent(index),
     );
   }
 }
@@ -182,7 +178,15 @@ class _ItemContent extends StatelessWidget {
 
     return model.recordings.length >= index
         ? ListTile(
-            mouseCursor: SystemMouseCursors.click,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: model.selectedRecordingIndex == index ? Theme.of(context).focusColor : Colors.transparent,
+                width: 2,
+              ),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(12),
+              ),
+            ),
             title: Text(
               model.recordings[index].createdAt.toString(),
             ),
@@ -195,6 +199,7 @@ class _ItemContent extends StatelessWidget {
                     )
                   : null,
             ),
+            onTap: () => model.selectedRecordingIndex = index,
           )
         : const _DeletedItemContent();
   }
