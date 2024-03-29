@@ -91,20 +91,20 @@ class _TasksListContent extends StatelessWidget {
                 child: ListView.builder(
                   controller: model.scrollController,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: _Item.new,
+                  itemBuilder: _ItemCard.new,
                   itemCount: model.tasks.length,
                 ),
               )
             : ListView.builder(
                 controller: model.scrollController,
-                itemBuilder: _Item.new,
+                itemBuilder: _ItemCard.new,
                 itemCount: model.tasks.length,
               );
   }
 }
 
-class _Item extends StatelessWidget {
-  const _Item(final BuildContext _, this.index);
+class _ItemCard extends StatelessWidget {
+  const _ItemCard(final BuildContext _, this.index);
 
   final int index;
 
@@ -116,8 +116,29 @@ class _Item extends StatelessWidget {
           Radius.circular(12),
         ),
       ),
-      child: _ItemContent(index),
+      child: _Item(index),
     );
+  }
+}
+
+class _Item extends StatelessWidget {
+  const _Item(this.index);
+
+  final int index;
+
+  @override
+  Widget build(final BuildContext context) {
+    late final Tasks model;
+    var isInitialized = false;
+    context.select((final Tasks newModel) {
+      if (!isInitialized) {
+        model = newModel;
+        isInitialized = true;
+      }
+      return model.tasks.length >= index;
+    });
+
+    return model.tasks.length >= index ? _ItemContent(index) : const _DeletedItemContent();
   }
 }
 
@@ -135,55 +156,81 @@ class _ItemContent extends StatelessWidget {
         model = newModel;
         isInitialized = true;
       }
+      return model.tasks.elementAtOrNull(index)?.isDone;
+    });
+
+    return model.tasks[index].isDone
+        ? InkWell(
+            borderRadius: BorderRadius.circular(12),
+            child: _ItemTile(index),
+            onTap: () => model.open(index),
+          )
+        : _ItemTile(index);
+  }
+}
+
+class _ItemTile extends StatelessWidget {
+  const _ItemTile(this.index);
+
+  final int index;
+
+  @override
+  Widget build(final BuildContext context) {
+    late final Tasks model;
+    var isInitialized = false;
+    context.select((final Tasks newModel) {
+      if (!isInitialized) {
+        model = newModel;
+        isInitialized = true;
+      }
       return model.tasks.elementAtOrNull(index);
     });
 
-    return model.tasks.length >= index
-        ? ListTile(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(12),
+    return ListTile(
+      mouseCursor: SystemMouseCursors.click,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(12),
+        ),
+      ),
+      enabled: !model.tasks[index].isDone,
+      leading: model.tasks[index].isDone
+          ? const Icon(
+              Icons.check_circle,
+            )
+          : const Icon(
+              Icons.circle_outlined,
+            ),
+      title: Text(
+        model.tasks[index].text,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: model.tasks[index].isDone
+            ? const TextStyle(
+                decoration: TextDecoration.lineThrough,
+              )
+            : null,
+      ),
+      subtitle: Row(
+        children: [
+          if (model.tasks[index].imageUrl != null)
+            const Padding(
+              padding: EdgeInsets.only(right: 8),
+              child: Icon(
+                Icons.photo,
+                size: 16,
               ),
             ),
-            enabled: !model.tasks[index].isDone,
-            leading: model.tasks[index].isDone
-                ? const Icon(
-                    Icons.check_circle,
-                  )
-                : const Icon(
-                    Icons.circle_outlined,
-                  ),
-            title: Text(
-              model.tasks[index].text,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: model.tasks[index].isDone
-                  ? const TextStyle(
-                      decoration: TextDecoration.lineThrough,
-                    )
-                  : null,
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: Text(
+              model.tasks[index].deadline.toString(),
             ),
-            subtitle: Row(
-              children: [
-                if (model.tasks[index].imageUrl != null)
-                  const Padding(
-                    padding: EdgeInsets.only(right: 8),
-                    child: Icon(
-                      Icons.photo,
-                      size: 16,
-                    ),
-                  ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: Text(
-                    model.tasks[index].deadline.toString(),
-                  ),
-                ),
-              ],
-            ),
-            onTap: () => model.open(index),
-          )
-        : const _DeletedItemContent();
+          ),
+        ],
+      ),
+      onTap: () => model.open(index),
+    );
   }
 }
 
