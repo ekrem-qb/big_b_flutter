@@ -109,7 +109,7 @@ class TaskEditor extends ChangeNotifier {
     final newDate = await showCupertinoDatePicker(
       context: _context,
       initialDate: _date,
-      minimumDate: _now.copyWithTime(Duration.zero),
+      minimumDate: _date.isBefore(_now) ? _date : _now.copyWithTime(Duration.zero),
       showDayOfWeek: true,
     );
 
