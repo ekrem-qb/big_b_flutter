@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+
+import '../vibration.dart';
 
 Future<Duration?> showCupertinoTimePicker({
   required final BuildContext context,
@@ -25,7 +26,7 @@ class _Model {
     if (_date == value) return;
 
     _date = value;
-    HapticFeedback.selectionClick();
+    Vibration.vibrate();
   }
 
   void ok() {
