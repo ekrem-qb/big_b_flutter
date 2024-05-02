@@ -14,6 +14,9 @@ _$PlannedTaskImpl _$$PlannedTaskImplFromJson(Map<String, dynamic> json) =>
       isImageRequired: json['is_image_required'] as bool,
       updatedAt: DateTime.parse(json['updated_at'] as String).toLocal(),
       weekdays: json['weekdays'] as int,
+      executives: (json['executives'] as List<dynamic>)
+          .map((e) => Profile.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 const _$$PlannedTaskImplFieldMap = <String, String>{
@@ -23,6 +26,7 @@ const _$$PlannedTaskImplFieldMap = <String, String>{
   'isImageRequired': 'is_image_required',
   'updatedAt': 'updated_at',
   'weekdays': 'weekdays',
+  'executives': 'executives',
 };
 
 abstract final class $PlannedTaskImplJsonKeys {
@@ -32,6 +36,7 @@ abstract final class $PlannedTaskImplJsonKeys {
   static const String isImageRequired = 'is_image_required';
   static const String updatedAt = 'updated_at';
   static const String weekdays = 'weekdays';
+  static const String executives = 'executives';
 }
 
 Map<String, dynamic> _$$PlannedTaskImplToJson(_$PlannedTaskImpl instance) =>

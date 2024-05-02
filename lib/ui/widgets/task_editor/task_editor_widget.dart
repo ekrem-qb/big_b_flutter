@@ -84,6 +84,10 @@ class TaskEditorWidget extends StatelessWidget {
                     _Day(day: 6, text: weekdayNames[6]),
                   ],
                 ),
+                const SizedBox(height: 16),
+                const Text('Görevli', style: _smallTextStyle),
+                const SizedBox(height: 8),
+                const _Executives(),
               ],
             ),
           ),
@@ -253,6 +257,42 @@ class _Day extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _Executives extends StatelessWidget {
+  const _Executives();
+
+  @override
+  Widget build(final BuildContext context) {
+    late final TaskEditor model;
+    var isInitialized = false;
+    context.select((final TaskEditor newModel) {
+      if (!isInitialized) {
+        model = newModel;
+        isInitialized = true;
+      }
+      return model.executives.length;
+    });
+
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: [
+        for (var i = 0; i < model.executives.length; i++)
+          InputChip(
+            label: Text(model.executives[i].name),
+            deleteIcon: const Icon(Icons.cancel, size: 18),
+            onDeleted: () => model.removeExecutive(i),
+          ),
+        IconButton.filledTonal(
+          visualDensity: VisualDensity.compact,
+          padding: EdgeInsets.zero,
+          icon: const Icon(Icons.add),
+          onPressed: model.addExecutives,
+        ),
+      ],
     );
   }
 }

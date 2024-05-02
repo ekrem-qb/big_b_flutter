@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../profile/profile.dart';
+
 part 'task.freezed.dart';
 part 'task.g.dart';
 
@@ -14,12 +16,14 @@ class Task with _$Task {
     required final Duration delay,
     required final bool isImageRequired,
     final Uri? imageUrl,
+    // ignore: always_put_required_named_parameters_first
+    @JsonKey(includeToJson: false) required final List<Profile> executives,
   }) = _Task;
 
   factory Task.fromJson(final Map<String, dynamic> json) => _$TaskFromJson(json);
 
   static const tableName = 'tasks';
-  static final fieldNames = _$$TaskImplFieldMap.values.join(',');
+  static final fieldNames = '${_$$TaskImplFieldMap.values.join(',')}:${Profile.tableName}!${tableName}_${$TaskImplJsonKeys.executives}(${Profile.fieldNames})';
 
   static List<Task>? converter(final List<Map<String, dynamic>> data) => data.map(Task.fromJson).toList();
 }

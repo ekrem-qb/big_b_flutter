@@ -17,6 +17,9 @@ _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
       imageUrl: json['image_url'] == null
           ? null
           : Uri.parse(json['image_url'] as String),
+      executives: (json['executives'] as List<dynamic>)
+          .map((e) => Profile.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 const _$$TaskImplFieldMap = <String, String>{
@@ -28,6 +31,7 @@ const _$$TaskImplFieldMap = <String, String>{
   'delay': 'delay',
   'isImageRequired': 'is_image_required',
   'imageUrl': 'image_url',
+  'executives': 'executives',
 };
 
 abstract final class $TaskImplJsonKeys {
@@ -39,6 +43,7 @@ abstract final class $TaskImplJsonKeys {
   static const String delay = 'delay';
   static const String isImageRequired = 'is_image_required';
   static const String imageUrl = 'image_url';
+  static const String executives = 'executives';
 }
 
 Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>

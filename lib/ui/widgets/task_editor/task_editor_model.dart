@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 import '../../../api/database.dart';
 import '../../../api/entity/planned_task/planned_task.dart';
+import '../../../api/entity/profile/profile.dart';
+import '../../../api/entity/profile_join/profile_join.dart';
 import '../../../api/entity/task/task.dart';
 import '../../../extensions/date_time.dart';
 import '../../../extensions/weekdays.dart';
@@ -12,6 +13,7 @@ import '../delete_dialog.dart';
 import '../extensions/pickers/date_picker.dart';
 import '../extensions/pickers/time_picker.dart';
 import '../extensions/snackbar.dart';
+import '../profiles_picker/profiles_picker_widget.dart';
 
 class TaskEditor extends ChangeNotifier {
   TaskEditor(this._context, {final PlannedTask? originalPlannedTask, final Task? originalTask})
@@ -25,7 +27,8 @@ class TaskEditor extends ChangeNotifier {
         __date = originalPlannedTask?.deadline ?? originalTask?.deadline ?? DateTime.now(),
         _isImageRequired = originalPlannedTask?.isImageRequired ?? originalTask?.isImageRequired ?? false,
         weekdays = originalPlannedTask?.weekdays ?? 0,
-        textController = TextEditingController(text: originalPlannedTask?.text ?? originalTask?.text ?? '') {
+        textController = TextEditingController(text: originalPlannedTask?.text ?? originalTask?.text ?? ''),
+        executives = originalPlannedTask?.executives.toList() ?? originalTask?.executives.toList() ?? [] {
     _timeText = _formatTime(_time);
     _dateText = _formatDate(_date);
   }
@@ -35,6 +38,7 @@ class TaskEditor extends ChangeNotifier {
   final TextEditingController textController;
   final int _id;
   final bool? isAlreadyPlanned;
+  final List<Profile> executives;
 
   Duration __time;
   Duration get _time => __time;
@@ -134,6 +138,19 @@ class TaskEditor extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeExecutive(final int index) {
+    executives.removeAt(index);
+    notifyListeners();
+  }
+
+  Future<void> addExecutives() async {
+    final newExecutives = await showProfilesPicker(_context, excluded: executives);
+    if (newExecutives.isEmpty) return;
+
+    executives.addAll(newExecutives);
+    notifyListeners();
+  }
+
   Future<void> save() async {
     textController.text = textController.text.trim();
 
@@ -144,7 +161,7 @@ class TaskEditor extends ChangeNotifier {
 
     isUploading = true;
 
-    if (await Future.microtask(_upload)) {
+    if (await _upload()) {
       Navigator.pop(_context);
     }
 
@@ -165,6 +182,7 @@ class TaskEditor extends ChangeNotifier {
         deadline: deadline,
         delay: Duration.zero,
         isImageRequired: isImageRequired,
+        executives: executives,
       );
 
       if (isRepeated || (isAlreadyPlanned ?? false)) {
@@ -175,20 +193,39 @@ class TaskEditor extends ChangeNotifier {
           isImageRequired: isImageRequired,
           updatedAt: now,
           weekdays: weekdays,
+          executives: executives,
         );
+
+        final int? id;
 
         switch (plannedTask.id) {
           case -1:
-            await db.from(PlannedTask.tableName).insert(plannedTask.toJson());
+            final addedPlannedTasks = await db.from(PlannedTask.tableName).insert(plannedTask.toJson()).select(PlannedTask.fieldNames).withConverter(PlannedTask.converter).catchError(onError);
+
+            id = addedPlannedTasks?.firstOrNull?.id;
           default:
-            await db.from(PlannedTask.tableName).update(plannedTask.toJson()).eq($PlannedTaskImplJsonKeys.id, plannedTask.id);
+            await db.from(PlannedTask.tableName).update(plannedTask.toJson()).eq($PlannedTaskImplJsonKeys.id, plannedTask.id).catchError(onError);
+
+            await db.from('${PlannedTask.tableName}_${$PlannedTaskImplJsonKeys.executives}').delete().eq($ProfileJoinImplJsonKeys.id, plannedTask.id).catchError(onError);
+
+            id = plannedTask.id;
         }
 
+        if (id == null) return false;
+
+        final executivesJoins = executives.map((final Profile profile) => ProfileJoin(id: id!, profile: profile.uid).toJson()).toList();
+
+        await db.from('${PlannedTask.tableName}_${$PlannedTaskImplJsonKeys.executives}').upsert(executivesJoins).catchError(onError);
+
         if (isToday && isAlreadyPlanned == null) {
-          await _uploadTask(task);
+          if (!await _uploadTask(task)) {
+            return false;
+          }
         }
       } else {
-        await _uploadTask(task);
+        if (!await _uploadTask(task)) {
+          return false;
+        }
       }
       return true;
     } on Exception catch (e) {
@@ -197,13 +234,34 @@ class TaskEditor extends ChangeNotifier {
     }
   }
 
-  Future<void> _uploadTask(final Task task) async {
+  Future<bool> _uploadTask(final Task task) async {
+    final int? id;
+
     switch (task.id) {
       case -1:
-        await db.from(Task.tableName).insert(task.toJson());
+        final addedTasks = await db.from(Task.tableName).insert(task.toJson()).select(Task.fieldNames).withConverter(Task.converter).catchError(onError);
+
+        id = addedTasks?.firstOrNull?.id;
       default:
-        await db.from(Task.tableName).update(task.toJson()).eq($TaskImplJsonKeys.id, task.id);
+        await db.from(Task.tableName).update(task.toJson()).eq($TaskImplJsonKeys.id, task.id).catchError(onError);
+
+        await db.from('${Task.tableName}_${$TaskImplJsonKeys.executives}').delete().eq($ProfileJoinImplJsonKeys.id, task.id).catchError(onError);
+
+        id = task.id;
     }
+
+    if (id == null) return false;
+
+    final newExecutives = executives.map((final Profile profile) => ProfileJoin(id: id!, profile: profile.uid).toJson()).toList();
+
+    await db.from('${Task.tableName}_${$TaskImplJsonKeys.executives}').upsert(newExecutives).catchError(onError);
+
+    return true;
+  }
+
+  void onError() {
+    showSnackbar(text: 'Beklenmeyen bir hata oluştu', context: _context);
+    isUploading = false;
   }
 
   Future<void> delete() async {
@@ -214,7 +272,7 @@ class TaskEditor extends ChangeNotifier {
     if (!delete) return;
 
     try {
-      await db.from(isAlreadyPlanned! ? PlannedTask.tableName : Task.tableName).delete().eq($TaskImplJsonKeys.id, _id);
+      await db.from(isAlreadyPlanned! ? PlannedTask.tableName : Task.tableName).delete().eq($TaskImplJsonKeys.id, _id).catchError(onError);
 
       Navigator.pop(_context);
     } on Exception catch (e) {

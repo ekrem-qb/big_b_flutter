@@ -26,7 +26,10 @@ mixin _$PlannedTask {
   DateTime get deadline => throw _privateConstructorUsedError;
   bool get isImageRequired => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  int get weekdays => throw _privateConstructorUsedError;
+  int get weekdays =>
+      throw _privateConstructorUsedError; // ignore: always_put_required_named_parameters_first
+  @JsonKey(includeToJson: false)
+  List<Profile> get executives => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,7 +49,8 @@ abstract class $PlannedTaskCopyWith<$Res> {
       DateTime deadline,
       bool isImageRequired,
       DateTime updatedAt,
-      int weekdays});
+      int weekdays,
+      @JsonKey(includeToJson: false) List<Profile> executives});
 }
 
 /// @nodoc
@@ -68,6 +72,7 @@ class _$PlannedTaskCopyWithImpl<$Res, $Val extends PlannedTask>
     Object? isImageRequired = null,
     Object? updatedAt = null,
     Object? weekdays = null,
+    Object? executives = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -94,6 +99,10 @@ class _$PlannedTaskCopyWithImpl<$Res, $Val extends PlannedTask>
           ? _value.weekdays
           : weekdays // ignore: cast_nullable_to_non_nullable
               as int,
+      executives: null == executives
+          ? _value.executives
+          : executives // ignore: cast_nullable_to_non_nullable
+              as List<Profile>,
     ) as $Val);
   }
 }
@@ -112,7 +121,8 @@ abstract class _$$PlannedTaskImplCopyWith<$Res>
       DateTime deadline,
       bool isImageRequired,
       DateTime updatedAt,
-      int weekdays});
+      int weekdays,
+      @JsonKey(includeToJson: false) List<Profile> executives});
 }
 
 /// @nodoc
@@ -132,6 +142,7 @@ class __$$PlannedTaskImplCopyWithImpl<$Res>
     Object? isImageRequired = null,
     Object? updatedAt = null,
     Object? weekdays = null,
+    Object? executives = null,
   }) {
     return _then(_$PlannedTaskImpl(
       id: null == id
@@ -158,6 +169,10 @@ class __$$PlannedTaskImplCopyWithImpl<$Res>
           ? _value.weekdays
           : weekdays // ignore: cast_nullable_to_non_nullable
               as int,
+      executives: null == executives
+          ? _value._executives
+          : executives // ignore: cast_nullable_to_non_nullable
+              as List<Profile>,
     ));
   }
 }
@@ -171,7 +186,9 @@ class _$PlannedTaskImpl implements _PlannedTask {
       required this.deadline,
       required this.isImageRequired,
       required this.updatedAt,
-      required this.weekdays});
+      required this.weekdays,
+      @JsonKey(includeToJson: false) required final List<Profile> executives})
+      : _executives = executives;
 
   factory _$PlannedTaskImpl.fromJson(Map<String, dynamic> json) =>
       _$$PlannedTaskImplFromJson(json);
@@ -189,10 +206,20 @@ class _$PlannedTaskImpl implements _PlannedTask {
   final DateTime updatedAt;
   @override
   final int weekdays;
+// ignore: always_put_required_named_parameters_first
+  final List<Profile> _executives;
+// ignore: always_put_required_named_parameters_first
+  @override
+  @JsonKey(includeToJson: false)
+  List<Profile> get executives {
+    if (_executives is EqualUnmodifiableListView) return _executives;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_executives);
+  }
 
   @override
   String toString() {
-    return 'PlannedTask(id: $id, text: $text, deadline: $deadline, isImageRequired: $isImageRequired, updatedAt: $updatedAt, weekdays: $weekdays)';
+    return 'PlannedTask(id: $id, text: $text, deadline: $deadline, isImageRequired: $isImageRequired, updatedAt: $updatedAt, weekdays: $weekdays, executives: $executives)';
   }
 
   @override
@@ -209,13 +236,22 @@ class _$PlannedTaskImpl implements _PlannedTask {
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.weekdays, weekdays) ||
-                other.weekdays == weekdays));
+                other.weekdays == weekdays) &&
+            const DeepCollectionEquality()
+                .equals(other._executives, _executives));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, text, deadline, isImageRequired, updatedAt, weekdays);
+      runtimeType,
+      id,
+      text,
+      deadline,
+      isImageRequired,
+      updatedAt,
+      weekdays,
+      const DeepCollectionEquality().hash(_executives));
 
   @JsonKey(ignore: true)
   @override
@@ -238,7 +274,9 @@ abstract class _PlannedTask implements PlannedTask {
       required final DateTime deadline,
       required final bool isImageRequired,
       required final DateTime updatedAt,
-      required final int weekdays}) = _$PlannedTaskImpl;
+      required final int weekdays,
+      @JsonKey(includeToJson: false)
+      required final List<Profile> executives}) = _$PlannedTaskImpl;
 
   factory _PlannedTask.fromJson(Map<String, dynamic> json) =
       _$PlannedTaskImpl.fromJson;
@@ -256,6 +294,9 @@ abstract class _PlannedTask implements PlannedTask {
   DateTime get updatedAt;
   @override
   int get weekdays;
+  @override // ignore: always_put_required_named_parameters_first
+  @JsonKey(includeToJson: false)
+  List<Profile> get executives;
   @override
   @JsonKey(ignore: true)
   _$$PlannedTaskImplCopyWith<_$PlannedTaskImpl> get copyWith =>

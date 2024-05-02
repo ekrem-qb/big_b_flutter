@@ -28,7 +28,10 @@ mixin _$Task {
   DateTime get deadline => throw _privateConstructorUsedError;
   Duration get delay => throw _privateConstructorUsedError;
   bool get isImageRequired => throw _privateConstructorUsedError;
-  Uri? get imageUrl => throw _privateConstructorUsedError;
+  Uri? get imageUrl =>
+      throw _privateConstructorUsedError; // ignore: always_put_required_named_parameters_first
+  @JsonKey(includeToJson: false)
+  List<Profile> get executives => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,7 +51,8 @@ abstract class $TaskCopyWith<$Res> {
       DateTime deadline,
       Duration delay,
       bool isImageRequired,
-      Uri? imageUrl});
+      Uri? imageUrl,
+      @JsonKey(includeToJson: false) List<Profile> executives});
 }
 
 /// @nodoc
@@ -72,6 +76,7 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
     Object? delay = null,
     Object? isImageRequired = null,
     Object? imageUrl = freezed,
+    Object? executives = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -106,6 +111,10 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as Uri?,
+      executives: null == executives
+          ? _value.executives
+          : executives // ignore: cast_nullable_to_non_nullable
+              as List<Profile>,
     ) as $Val);
   }
 }
@@ -125,7 +134,8 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
       DateTime deadline,
       Duration delay,
       bool isImageRequired,
-      Uri? imageUrl});
+      Uri? imageUrl,
+      @JsonKey(includeToJson: false) List<Profile> executives});
 }
 
 /// @nodoc
@@ -146,6 +156,7 @@ class __$$TaskImplCopyWithImpl<$Res>
     Object? delay = null,
     Object? isImageRequired = null,
     Object? imageUrl = freezed,
+    Object? executives = null,
   }) {
     return _then(_$TaskImpl(
       id: null == id
@@ -180,6 +191,10 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as Uri?,
+      executives: null == executives
+          ? _value._executives
+          : executives // ignore: cast_nullable_to_non_nullable
+              as List<Profile>,
     ));
   }
 }
@@ -195,7 +210,9 @@ class _$TaskImpl implements _Task {
       required this.deadline,
       required this.delay,
       required this.isImageRequired,
-      this.imageUrl});
+      this.imageUrl,
+      @JsonKey(includeToJson: false) required final List<Profile> executives})
+      : _executives = executives;
 
   factory _$TaskImpl.fromJson(Map<String, dynamic> json) =>
       _$$TaskImplFromJson(json);
@@ -217,10 +234,20 @@ class _$TaskImpl implements _Task {
   final bool isImageRequired;
   @override
   final Uri? imageUrl;
+// ignore: always_put_required_named_parameters_first
+  final List<Profile> _executives;
+// ignore: always_put_required_named_parameters_first
+  @override
+  @JsonKey(includeToJson: false)
+  List<Profile> get executives {
+    if (_executives is EqualUnmodifiableListView) return _executives;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_executives);
+  }
 
   @override
   String toString() {
-    return 'Task(id: $id, text: $text, isDone: $isDone, updatedAt: $updatedAt, deadline: $deadline, delay: $delay, isImageRequired: $isImageRequired, imageUrl: $imageUrl)';
+    return 'Task(id: $id, text: $text, isDone: $isDone, updatedAt: $updatedAt, deadline: $deadline, delay: $delay, isImageRequired: $isImageRequired, imageUrl: $imageUrl, executives: $executives)';
   }
 
   @override
@@ -239,13 +266,24 @@ class _$TaskImpl implements _Task {
             (identical(other.isImageRequired, isImageRequired) ||
                 other.isImageRequired == isImageRequired) &&
             (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl));
+                other.imageUrl == imageUrl) &&
+            const DeepCollectionEquality()
+                .equals(other._executives, _executives));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, text, isDone, updatedAt,
-      deadline, delay, isImageRequired, imageUrl);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      text,
+      isDone,
+      updatedAt,
+      deadline,
+      delay,
+      isImageRequired,
+      imageUrl,
+      const DeepCollectionEquality().hash(_executives));
 
   @JsonKey(ignore: true)
   @override
@@ -270,7 +308,9 @@ abstract class _Task implements Task {
       required final DateTime deadline,
       required final Duration delay,
       required final bool isImageRequired,
-      final Uri? imageUrl}) = _$TaskImpl;
+      final Uri? imageUrl,
+      @JsonKey(includeToJson: false)
+      required final List<Profile> executives}) = _$TaskImpl;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$TaskImpl.fromJson;
 
@@ -291,6 +331,9 @@ abstract class _Task implements Task {
   bool get isImageRequired;
   @override
   Uri? get imageUrl;
+  @override // ignore: always_put_required_named_parameters_first
+  @JsonKey(includeToJson: false)
+  List<Profile> get executives;
   @override
   @JsonKey(ignore: true)
   _$$TaskImplCopyWith<_$TaskImpl> get copyWith =>
