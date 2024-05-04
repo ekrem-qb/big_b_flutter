@@ -10,62 +10,45 @@ import '../extensions/snackbar.dart';
 import '../task_editor/task_editor_widget.dart';
 
 class TaskWindow extends ChangeNotifier {
-  TaskWindow(this._context, this._task) {
-    Future.microtask(_load);
-  }
-
-  final BuildContext _context;
-  late final RealtimeChannel? _subscription;
-
-  bool _isDeleted = false;
-  bool get isDeleted => _isDeleted;
-  set isDeleted(final bool value) {
-    if (_isDeleted == value) return;
-
-    _isDeleted = value;
-    notifyListeners();
-  }
-
-  Task _task;
-  Task get task => _task;
-
-  Future<void> _load() async {
-    try {
-      _subscription = db
-          .channel('${Task.tableName}/${_task.id}')
+  TaskWindow(this._context, final Task originalTask) : _task = originalTask {
+    _tasksSubscriptions = [
+      db
+          .channel('${Task.tableName}/${originalTask.id}')
           .onPostgresChanges(
             table: Task.tableName,
             event: PostgresChangeEvent.all,
-            callback: _onTaskUpdate,
-            filter: PostgresChangeFilter(type: PostgresChangeFilterType.eq, column: $TaskImplJsonKeys.id, value: _task.id),
+            filter: PostgresChangeFilter(type: PostgresChangeFilterType.eq, column: $TaskImplJsonKeys.id, value: originalTask.id),
+            callback: _load,
           )
-          .subscribe();
-    } on Exception catch (e) {
-      isDeleted = true;
-      _subscription = null;
-      showSnackbar(text: e.toString(), context: _context);
-    }
+          .subscribe(),
+      db
+          .channel('${Task.executivesTableName}/${originalTask.id}')
+          .onPostgresChanges(
+            table: Task.executivesTableName,
+            event: PostgresChangeEvent.all,
+            filter: PostgresChangeFilter(type: PostgresChangeFilterType.eq, column: $TaskImplJsonKeys.id, value: originalTask.id),
+            callback: _load,
+          )
+          .subscribe(),
+    ];
   }
 
-  void _onTaskUpdate(final PostgresChangePayload payload) {
+  late final List<RealtimeChannel> _tasksSubscriptions;
+  final BuildContext _context;
+
+  Task? _task;
+  Task? get task => _task;
+
+  Future<void> _load([final _]) async {
     try {
-      switch (payload.eventType) {
-        case PostgresChangeEvent.insert:
-        case PostgresChangeEvent.update:
-          final newTask = Task.fromJson(payload.newRecord);
+      if (task == null) return;
 
-          isDeleted = false;
-          if (_task == newTask) return;
-
-          _task = newTask;
-          notifyListeners();
-        case PostgresChangeEvent.delete:
-          isDeleted = true;
-        default:
-      }
+      _task = await db.from(Task.tableName).select(Task.fieldNames).eq($TaskImplJsonKeys.id, task!.id).maybeSingle().withConverter(Task.maybeFromJson);
     } on Exception catch (e) {
-      isDeleted = true;
+      _task = null;
       showSnackbar(text: e.toString(), context: _context);
+    } finally {
+      notifyListeners();
     }
   }
 
@@ -79,11 +62,13 @@ class TaskWindow extends ChangeNotifier {
   }
 
   Future<void> delete() async {
+    if (task == null) return;
+
     final delete = await showDeleteDialog(itemName: 'görevi', context: _context);
     if (!delete) return;
 
     try {
-      await db.from(Task.tableName).delete().eq($TaskImplJsonKeys.id, task.id);
+      await db.from(Task.tableName).delete().eq($TaskImplJsonKeys.id, task!.id);
 
       Navigator.pop(_context);
     } on Exception catch (e) {
@@ -93,7 +78,9 @@ class TaskWindow extends ChangeNotifier {
 
   @override
   void dispose() {
-    _subscription?.unsubscribe();
+    for (var i = 0; i < _tasksSubscriptions.length; i++) {
+      _tasksSubscriptions[i].unsubscribe();
+    }
     super.dispose();
   }
 }

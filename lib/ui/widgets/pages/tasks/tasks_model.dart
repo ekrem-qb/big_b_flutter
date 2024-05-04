@@ -10,75 +10,46 @@ import '../../task_window/task_window_widget.dart';
 
 class Tasks extends ChangeNotifier {
   Tasks(this._context) {
+    _tasksSubscriptions = [
+      db
+          .channel(Task.tableName)
+          .onPostgresChanges(
+            table: Task.tableName,
+            event: PostgresChangeEvent.all,
+            callback: _load,
+          )
+          .subscribe(),
+      db
+          .channel(Task.executivesTableName)
+          .onPostgresChanges(
+            table: Task.executivesTableName,
+            event: PostgresChangeEvent.all,
+            callback: _load,
+          )
+          .subscribe(),
+    ];
     Future.microtask(_load);
   }
 
   final BuildContext _context;
   final scrollController = ScrollController();
 
-  late final List<Task> tasks;
-  late final RealtimeChannel? _tasksSubscription;
+  late final List<RealtimeChannel> _tasksSubscriptions;
+  late List<Task> tasks;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
-  set isLoading(final bool value) {
-    if (_isLoading == value) return;
 
-    _isLoading = value;
-    notifyListeners();
-  }
-
-  Future<void> _load() async {
+  Future<void> _load([final _]) async {
     try {
       tasks = await db.from(Task.tableName).select(Task.fieldNames).order($TaskImplJsonKeys.updatedAt).withConverter(Task.converter) ?? List.empty();
-
-      _tasksSubscription = db
-          .channel(Task.tableName)
-          .onPostgresChanges(
-            table: Task.tableName,
-            event: PostgresChangeEvent.all,
-            callback: _onChangeTasks,
-          )
-          .subscribe();
     } on Exception catch (e) {
       tasks = List.empty();
-      _tasksSubscription = null;
+      _tasksSubscriptions = List.empty();
       showSnackbar(text: e.toString(), context: _context);
     } finally {
-      isLoading = false;
-    }
-  }
-
-  void _onChangeTasks(final PostgresChangePayload payload) {
-    switch (payload.eventType) {
-      case PostgresChangeEvent.insert:
-        final newTask = Task.fromJson(payload.newRecord);
-        for (var i = 0; i < tasks.length; i++) {
-          if (newTask.updatedAt.isAfter(tasks[i].updatedAt)) {
-            tasks.insert(i, newTask);
-            notifyListeners();
-            return;
-          }
-        }
-      case PostgresChangeEvent.update:
-        final newTask = Task.fromJson(payload.newRecord);
-        for (var i = 0; i < tasks.length; i++) {
-          if (newTask.id == tasks[i].id) {
-            tasks[i] = newTask;
-            notifyListeners();
-            return;
-          }
-        }
-      case PostgresChangeEvent.delete:
-        final int id = payload.oldRecord[$TaskImplJsonKeys.id];
-        for (var i = 0; i < tasks.length; i++) {
-          if (id == tasks[i].id) {
-            tasks.removeAt(i);
-            notifyListeners();
-            return;
-          }
-        }
-      default:
+      _isLoading = false;
+      notifyListeners();
     }
   }
 
@@ -103,7 +74,9 @@ class Tasks extends ChangeNotifier {
 
   @override
   void dispose() {
-    _tasksSubscription?.unsubscribe();
+    for (var i = 0; i < _tasksSubscriptions.length; i++) {
+      _tasksSubscriptions[i].unsubscribe();
+    }
     super.dispose();
   }
 }

@@ -58,10 +58,10 @@ class _Task extends StatelessWidget {
         model = newModel;
         isInitialized = true;
       }
-      return model.isDeleted;
+      return model.task == null;
     });
 
-    return model.isDeleted
+    return model.task == null
         ? Text(
             'Silinmiş',
             textAlign: TextAlign.center,
@@ -91,11 +91,11 @@ class _IsDoneIcon extends StatelessWidget {
         model = newModel;
         isInitialized = true;
       }
-      return model.task.isDone;
+      return model.task!.isDone;
     });
 
     return Icon(
-      model.task.isDone ? Icons.check_circle : Icons.circle_outlined,
+      model.task!.isDone ? Icons.check_circle : Icons.circle_outlined,
       size: 32,
     );
   }
@@ -113,11 +113,11 @@ class _Text extends StatelessWidget {
         model = newModel;
         isInitialized = true;
       }
-      return model.task.text;
+      return model.task!.text;
     });
 
     return Text(
-      model.task.text,
+      model.task!.text,
       style: const TextStyle(fontWeight: FontWeight.w500),
     );
   }
@@ -135,10 +135,10 @@ class _Image extends StatelessWidget {
         model = newModel;
         isInitialized = true;
       }
-      return model.task.imageUrl;
+      return model.task!.imageUrl;
     });
 
-    return model.task.imageUrl == null
+    return model.task!.imageUrl == null
         ? const SizedBox.shrink()
         : GestureDetector(
             onTap: () {
@@ -149,7 +149,7 @@ class _Image extends StatelessWidget {
               clipBehavior: Clip.antiAlias,
               borderRadius: BorderRadius.circular(12),
               child: Image.network(
-                model.task.imageUrl!.toString(),
+                model.task!.imageUrl!.toString(),
                 filterQuality: FilterQuality.medium,
                 fit: BoxFit.cover,
                 frameBuilder: (final context, final child, final frame, final wasSynchronouslyLoaded) {
@@ -191,7 +191,7 @@ class _Time extends StatelessWidget {
         model = newModel;
         isInitialized = true;
       }
-      return model.task.isDone;
+      return model.task!.isDone;
     });
 
     return Row(
@@ -199,7 +199,7 @@ class _Time extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         const Flexible(child: _Deadline()),
-        if (model.task.isDone) const Flexible(child: _Delay()),
+        if (model.task!.isDone) const Flexible(child: _Delay()),
       ],
     );
   }
@@ -217,7 +217,7 @@ class _Deadline extends StatelessWidget {
         model = newModel;
         isInitialized = true;
       }
-      return model.task.deadline;
+      return model.task!.deadline;
     });
 
     return Row(
@@ -227,7 +227,7 @@ class _Deadline extends StatelessWidget {
         const SizedBox(width: 8),
         Flexible(
           child: Text(
-            model.task.deadline.toString(),
+            model.task!.deadline.toString(),
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
@@ -248,7 +248,7 @@ class _Delay extends StatelessWidget {
         model = newModel;
         isInitialized = true;
       }
-      return model.task.delay;
+      return model.task!.delay;
     });
 
     return Padding(
@@ -256,7 +256,7 @@ class _Delay extends StatelessWidget {
       child: DecoratedBox(
         decoration: UnderlineTabIndicator(
           borderSide: BorderSide(
-            color: model.task.delay == Duration.zero ? Colors.green : Colors.red,
+            color: model.task!.delay == Duration.zero ? Colors.green : Colors.red,
             width: 4,
           ),
           borderRadius: const BorderRadius.all(
@@ -271,7 +271,7 @@ class _Delay extends StatelessWidget {
             const SizedBox(width: 8),
             Flexible(
               child: Text(
-                model.task.delay == Duration.zero ? 'Tam zamanında yapıldı' : '${model.task.delay.abs()} Geç yapıldı',
+                model.task!.delay == Duration.zero ? 'Tam zamanında yapıldı' : '${model.task!.delay.abs()} Geç yapıldı',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
