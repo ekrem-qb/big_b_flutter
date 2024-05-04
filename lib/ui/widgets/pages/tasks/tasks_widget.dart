@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../constants.dart';
+import '../../extensions/app_bar_controller.dart';
 import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
 import 'tasks_model.dart';
 
@@ -10,12 +11,64 @@ class TasksWidget extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return ChangeNotifierProvider(
-      create: Tasks.new,
-      child: const Scaffold(
-        body: _TasksList(),
-        floatingActionButton: _NewTaskButton(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (final _) => AppBarController()),
+        ChangeNotifierProvider(create: Tasks.new),
+      ],
+      child: const _Scaffold(),
+    );
+  }
+}
+
+class _Scaffold extends StatelessWidget {
+  const _Scaffold();
+
+  @override
+  Widget build(final BuildContext context) {
+    final model = context.read<AppBarController>();
+
+    return Scaffold(
+      appBar: AppBar(
+        shadowColor: Theme.of(context).shadowColor,
+        title: const Text('Görevler'),
+        notificationPredicate: model.onScroll,
+        actions: const [
+          _PlanningButton(),
+          SizedBox(width: 8),
+        ],
       ),
+      body: const _TasksList(),
+      floatingActionButton: const _NewTaskButton(),
+    );
+  }
+}
+
+class _PlanningButton extends StatelessWidget {
+  const _PlanningButton();
+
+  @override
+  Widget build(final BuildContext context) {
+    final model = context.read<Tasks>();
+
+    late final AppBarController appBar;
+    var isInitialized = false;
+    context.select((final AppBarController newModel) {
+      if (!isInitialized) {
+        appBar = newModel;
+        isInitialized = true;
+      }
+      return appBar.isScrolled;
+    });
+
+    return ElevatedButton.icon(
+      style: ButtonStyle(
+        visualDensity: VisualDensity.standard,
+        elevation: appBar.isScrolled ? const MaterialStatePropertyAll(0) : null,
+      ),
+      icon: const Icon(Icons.event_available),
+      label: const Text('Planlama'),
+      onPressed: model.openPlanning,
     );
   }
 }

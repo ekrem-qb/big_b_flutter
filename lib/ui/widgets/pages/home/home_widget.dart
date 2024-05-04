@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../more/more_widget.dart';
-import '../planned_tasks/planned_tasks_widget.dart';
 import '../profiles/profiles_widget.dart';
 import '../tasks/tasks_widget.dart';
 import 'home_model.dart';
@@ -27,7 +26,6 @@ class _Body extends StatelessWidget {
 
   static const _tabs = [
     TasksWidget(),
-    PlannedTasksWidget(),
     ProfilesWidget(),
     MorePage(),
   ];
@@ -68,7 +66,6 @@ class _NavBar extends StatelessWidget {
       onDestinationSelected: model.setSelectedTabIndex,
       destinations: const [
         NavigationDestination(icon: Icon(Icons.task_alt), label: 'Görevler', tooltip: ''),
-        NavigationDestination(icon: Icon(Icons.event_available), label: 'Görev Planlama', tooltip: ''),
         NavigationDestination(icon: Icon(Icons.manage_accounts), label: 'Çalışanlar', tooltip: ''),
         NavigationDestination(icon: Icon(Icons.menu), label: 'Gene', tooltip: ''),
       ],

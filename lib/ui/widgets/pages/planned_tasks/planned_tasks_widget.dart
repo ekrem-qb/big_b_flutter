@@ -14,9 +14,12 @@ class PlannedTasksWidget extends StatelessWidget {
   Widget build(final BuildContext context) {
     return ChangeNotifierProvider(
       create: PlannedTasks.new,
-      child: const Scaffold(
-        body: _PlannedTasksList(),
-        floatingActionButton: _NewPlannedTaskButton(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Görev Planlama'),
+        ),
+        body: const _PlannedTasksList(),
+        floatingActionButton: const _NewPlannedTaskButton(),
       ),
     );
   }
