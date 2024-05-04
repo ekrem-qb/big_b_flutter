@@ -21,7 +21,8 @@ class PlannedTask with _$PlannedTask {
   factory PlannedTask.fromJson(final Map<String, dynamic> json) => _$PlannedTaskFromJson(json);
 
   static const tableName = 'planned_tasks';
-  static final fieldNames = '${_$$PlannedTaskImplFieldMap.values.join(',')}:${Profile.tableName}!${tableName}_${$PlannedTaskImplJsonKeys.executives}(${Profile.fieldNames})';
+  static const executivesTableName = '${tableName}_${$PlannedTaskImplJsonKeys.executives}';
+  static final fieldNames = '${_$$PlannedTaskImplFieldMap.values.join(',')}:${Profile.tableName}!$executivesTableName(${Profile.fieldNames})';
 
   static List<PlannedTask>? converter(final List<Map<String, dynamic>> data) => data.map(PlannedTask.fromJson).toList();
 }

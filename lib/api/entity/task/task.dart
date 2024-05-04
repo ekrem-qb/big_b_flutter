@@ -22,8 +22,11 @@ class Task with _$Task {
 
   factory Task.fromJson(final Map<String, dynamic> json) => _$TaskFromJson(json);
 
+  static Task? maybeFromJson(final Map<String, dynamic>? json) => json != null ? _$TaskFromJson(json) : null;
+
   static const tableName = 'tasks';
-  static final fieldNames = '${_$$TaskImplFieldMap.values.join(',')}:${Profile.tableName}!${tableName}_${$TaskImplJsonKeys.executives}(${Profile.fieldNames})';
+  static const executivesTableName = '${tableName}_${$TaskImplJsonKeys.executives}';
+  static final fieldNames = '${_$$TaskImplFieldMap.values.join(',')}:${Profile.tableName}!$executivesTableName(${Profile.fieldNames})';
 
   static List<Task>? converter(final List<Map<String, dynamic>> data) => data.map(Task.fromJson).toList();
 }
