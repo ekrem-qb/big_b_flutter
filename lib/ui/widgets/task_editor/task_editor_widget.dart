@@ -5,11 +5,8 @@ import '../../../api/entity/planned_task/planned_task.dart';
 import '../../../api/entity/task/task.dart';
 import '../../../constants.dart';
 import '../../../extensions/weekdays.dart';
+import '../../theme.dart';
 import 'task_editor_model.dart';
-
-const _textStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.w400, letterSpacing: 0, height: 1.27);
-const _smallTextStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w500, letterSpacing: 0.15, height: 1.50);
-const _largeTextStyle = TextStyle(fontSize: 32, fontWeight: FontWeight.bold, letterSpacing: 0, height: 1.25);
 
 class TaskEditorWidget extends StatelessWidget {
   const TaskEditorWidget({this.plannedTask, this.task, super.key});
@@ -34,7 +31,7 @@ class TaskEditorWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Açıklama', style: _smallTextStyle),
+                const Text('Açıklama', style: smallTextStyle),
                 const SizedBox(height: 8),
                 const _Text(),
                 const SizedBox(height: 16),
@@ -46,7 +43,7 @@ class TaskEditorWidget extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Saat', style: _smallTextStyle),
+                        Text('Saat', style: smallTextStyle),
                         SizedBox(height: 8),
                         _Time(),
                       ],
@@ -56,7 +53,7 @@ class TaskEditorWidget extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Tarih', style: _smallTextStyle),
+                          Text('Tarih', style: smallTextStyle),
                           SizedBox(height: 8),
                           _Date(),
                         ],
@@ -65,7 +62,7 @@ class TaskEditorWidget extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                const Text('Tekrarlama', style: _smallTextStyle),
+                const Text('Tekrarlama', style: smallTextStyle),
                 const SizedBox(height: 8),
                 Row(
                   children: [
@@ -85,7 +82,7 @@ class TaskEditorWidget extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                const Text('Görevli', style: _smallTextStyle),
+                const Text('Görevli', style: smallTextStyle),
                 const SizedBox(height: 8),
                 const _Executives(),
               ],
@@ -181,7 +178,7 @@ class _Time extends StatelessWidget {
     return ActionChip(
       label: Text(
         model.time,
-        style: _largeTextStyle,
+        style: largeTextStyle,
       ),
       onPressed: model.changeTime,
     );
@@ -214,7 +211,7 @@ class _Date extends StatelessWidget {
     return ActionChip(
       label: Text(
         model.date,
-        style: _largeTextStyle,
+        style: largeTextStyle,
       ),
       onPressed: (model.isRepeated || (model.isAlreadyPlanned ?? false)) ? null : model.changeDate,
     );
@@ -253,7 +250,7 @@ class _Day extends StatelessWidget {
           fit: BoxFit.fitHeight,
           child: Text(
             text,
-            style: _textStyle,
+            style: textStyle,
           ),
         ),
       ),
