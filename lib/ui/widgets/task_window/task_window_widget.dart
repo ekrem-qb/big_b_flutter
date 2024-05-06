@@ -91,7 +91,7 @@ class _IsDoneIcon extends StatelessWidget {
         model = newModel;
         isInitialized = true;
       }
-      return model.task!.isDone;
+      return model.task?.isDone;
     });
 
     return Icon(
@@ -113,7 +113,7 @@ class _Text extends StatelessWidget {
         model = newModel;
         isInitialized = true;
       }
-      return model.task!.text;
+      return model.task?.text;
     });
 
     return Text(
@@ -135,10 +135,10 @@ class _Image extends StatelessWidget {
         model = newModel;
         isInitialized = true;
       }
-      return model.task!.imageUrl;
+      return model.task?.imageUrl;
     });
 
-    return model.task!.imageUrl == null
+    return model.task?.imageUrl == null
         ? const SizedBox.shrink()
         : GestureDetector(
             onTap: () {
@@ -191,7 +191,7 @@ class _Time extends StatelessWidget {
         model = newModel;
         isInitialized = true;
       }
-      return model.task!.isDone;
+      return model.task?.isDone;
     });
 
     return Row(
@@ -217,7 +217,7 @@ class _Deadline extends StatelessWidget {
         model = newModel;
         isInitialized = true;
       }
-      return model.task!.deadline;
+      return model.task?.deadline;
     });
 
     return Row(
@@ -248,7 +248,7 @@ class _Delay extends StatelessWidget {
         model = newModel;
         isInitialized = true;
       }
-      return model.task!.delay;
+      return model.task?.delay;
     });
 
     return Padding(
