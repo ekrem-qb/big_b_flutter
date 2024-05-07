@@ -257,7 +257,10 @@ class _RoleChip extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon),
+              Icon(
+                icon,
+                color: isSelected ? Theme.of(context).colorScheme.onSecondaryContainer : null,
+              ),
               const SizedBox(width: 8),
               Text(
                 text,

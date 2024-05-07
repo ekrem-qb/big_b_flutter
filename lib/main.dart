@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'api/database.dart';
+import 'ui/theme.dart';
 import 'ui/widgets/pages/home/home_model.dart';
 import 'ui/widgets/pages/home/home_widget.dart';
 import 'ui/widgets/pages/login/login_model.dart';
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
   Widget build(final BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      darkTheme: ThemeData.dark(),
+      theme: lightTheme,
+      darkTheme: darkTheme(context),
       debugShowCheckedModeBanner: false,
       initialRoute: db.auth.currentSession?.isExpired == false ? Home.route : Login.route,
       routes: {
