@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../constants.dart';
+import '../../../theme.dart';
 import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
-import '../../player/player_widget.dart';
 import 'recordings_model.dart';
 
 class RecordingsWidget extends StatelessWidget {
@@ -13,48 +13,8 @@ class RecordingsWidget extends StatelessWidget {
   Widget build(final BuildContext context) {
     return ChangeNotifierProvider(
       create: Recordings.new,
-      child: const Row(
-        children: [
-          Flexible(
-            child: _RecordingsList(),
-          ),
-          VerticalDivider(width: 1),
-          Flexible(
-            flex: 2,
-            child: _Player(),
-          ),
-        ],
-      ),
+      child: const _RecordingsList(),
     );
-  }
-}
-
-class _Player extends StatelessWidget {
-  const _Player();
-
-  @override
-  Widget build(final BuildContext context) {
-    late final Recordings model;
-    var isInitialized = false;
-    context.select((final Recordings newModel) {
-      if (!isInitialized) {
-        model = newModel;
-        isInitialized = true;
-      }
-      return model.selectedRecordingIndex;
-    });
-
-    return model.selectedRecordingIndex != null
-        ? PlayerWidget(
-            recording: model.recordings[model.selectedRecordingIndex!],
-            key: ValueKey(model.selectedRecordingIndex!),
-          )
-        : const Center(
-            child: Text(
-              'Select recording on the left',
-              style: TextStyle(fontSize: 32),
-            ),
-          );
   }
 }
 
@@ -105,7 +65,7 @@ class _RecordingsListContent extends StatelessWidget {
                   Icons.sentiment_very_dissatisfied,
                   size: 64,
                 ),
-                Text('No recordings'),
+                Text('Kayıtlar bulunamadı'),
               ],
             ),
           )
@@ -141,67 +101,29 @@ class _Item extends StatelessWidget {
         model = newModel;
         isInitialized = true;
       }
-      return model.selectedRecordingIndex == index;
-    });
-
-    return Card(
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: model.selectedRecordingIndex == index ? Theme.of(context).focusColor : Colors.transparent,
-          width: 2,
-        ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(12),
-        ),
-      ),
-      child: _ItemContent(index),
-    );
-  }
-}
-
-class _ItemContent extends StatelessWidget {
-  const _ItemContent(this.index);
-
-  final int index;
-
-  @override
-  Widget build(final BuildContext context) {
-    late final Recordings model;
-    var isInitialized = false;
-    context.select((final Recordings newModel) {
-      if (!isInitialized) {
-        model = newModel;
-        isInitialized = true;
-      }
       return model.recordings.elementAtOrNull(index);
     });
 
-    return model.recordings.length >= index
-        ? ListTile(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: model.selectedRecordingIndex == index ? Theme.of(context).focusColor : Colors.transparent,
-                width: 2,
+    return Card(
+      child: model.recordings.length >= index
+          ? ListTile(
+              shape: kDefaultShape,
+              title: Text(
+                model.recordings[index].createdAt.toString(),
               ),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(12),
+              trailing: SizedBox.square(
+                dimension: 24,
+                child: !model.recordings[index].hasLines
+                    ? const Icon(
+                        Icons.font_download_off_outlined,
+                        size: 24,
+                      )
+                    : null,
               ),
-            ),
-            title: Text(
-              model.recordings[index].createdAt.toString(),
-            ),
-            trailing: SizedBox.square(
-              dimension: 24,
-              child: !model.recordings[index].hasLines
-                  ? const Icon(
-                      Icons.font_download_off_outlined,
-                      size: 24,
-                    )
-                  : null,
-            ),
-            onTap: () => model.selectedRecordingIndex = index,
-          )
-        : const _DeletedItemContent();
+              onTap: () => model.open(index),
+            )
+          : const _DeletedItemContent(),
+    );
   }
 }
 

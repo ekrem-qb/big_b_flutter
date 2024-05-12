@@ -1,9 +1,10 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../api/database.dart';
 import '../../../../api/entity/recording/recording.dart';
 import '../../extensions/snackbar.dart';
+import '../../player/player_widget.dart';
 
 class Recordings extends ChangeNotifier {
   Recordings(this._context) {
@@ -15,15 +16,6 @@ class Recordings extends ChangeNotifier {
 
   late final List<Recording> recordings;
   late final RealtimeChannel? _recordingsSubscription;
-
-  int? _selectedRecordingIndex;
-  int? get selectedRecordingIndex => _selectedRecordingIndex;
-  set selectedRecordingIndex(final int? value) {
-    if (_selectedRecordingIndex == value) return;
-
-    _selectedRecordingIndex = value;
-    notifyListeners();
-  }
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
@@ -86,6 +78,19 @@ class Recordings extends ChangeNotifier {
         }
       default:
     }
+  }
+
+  void open(final int index) {
+    if (recordings.length < index) return;
+
+    Navigator.push(
+      _context,
+      MaterialPageRoute(
+        builder: (final context) => PlayerWidget(
+          recording: recordings[index],
+        ),
+      ),
+    );
   }
 
   @override

@@ -21,7 +21,10 @@ class PlayerWidget extends StatelessWidget {
   Widget build(final BuildContext context) {
     return ChangeNotifierProvider(
       create: (final context) => Player(context, recording: recording),
-      child: const _Player(),
+      child: Scaffold(
+        appBar: AppBar(),
+        body: const _Player(),
+      ),
     );
   }
 }
