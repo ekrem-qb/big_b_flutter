@@ -6,6 +6,10 @@ const largeTextStyle = TextStyle(fontSize: 32, fontWeight: FontWeight.bold, lett
 const textStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.w400, letterSpacing: 0, height: 1.27);
 const smallTextStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w500, letterSpacing: 0.15, height: 1.50);
 
+const kDefaultShape = RoundedRectangleBorder(
+  borderRadius: BorderRadius.all(Radius.circular(12)),
+);
+
 const _appBarTheme = AppBarTheme(
   centerTitle: false,
 );
