@@ -65,7 +65,7 @@ class _Text extends StatelessWidget {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTapDown: (final _) => model.jumpToLine(index),
+        onTap: () => model.jumpToLine(index),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: _TextLine(index: index),
