@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'api/database.dart';
@@ -13,6 +15,13 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
+const _dragDevices = {
+  PointerDeviceKind.mouse,
+  PointerDeviceKind.stylus,
+  PointerDeviceKind.touch,
+  PointerDeviceKind.trackpad,
+};
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -22,6 +31,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: lightTheme,
       darkTheme: darkTheme(context),
+      scrollBehavior: const CupertinoScrollBehavior().copyWith(
+        dragDevices: _dragDevices,
+      ),
       debugShowCheckedModeBanner: false,
       initialRoute: db.auth.currentSession?.isExpired == false ? Home.route : Login.route,
       routes: {
