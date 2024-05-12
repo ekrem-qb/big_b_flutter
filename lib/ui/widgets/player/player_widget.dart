@@ -74,26 +74,24 @@ class _Text extends StatelessWidget {
     );
   }
 
-  Shader _shader(final rect) {
-    return LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [
-        Colors.transparent,
-        Colors.white.withOpacity(0.75),
-        Colors.white,
-        Colors.white.withOpacity(0.75),
-        Colors.transparent,
-      ],
-      stops: const [
-        0,
-        0.25,
-        0.5,
-        0.75,
-        1,
-      ],
-    ).createShader(rect);
-  }
+  static const _gradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      Colors.transparent,
+      Color(0xbfffffff),
+      Colors.white,
+      Color(0xbfffffff),
+      Colors.transparent,
+    ],
+    stops: [
+      0,
+      0.25,
+      0.5,
+      0.75,
+      1,
+    ],
+  );
 
   @override
   Widget build(final BuildContext context) {
@@ -110,7 +108,7 @@ class _Text extends StatelessWidget {
     return Expanded(
       child: model.textSpans != null
           ? ShaderMask(
-              shaderCallback: _shader,
+              shaderCallback: _gradient.createShader,
               blendMode: BlendMode.dstIn,
               child: isDesktop
                   ? PositionedSmoothScroll(
