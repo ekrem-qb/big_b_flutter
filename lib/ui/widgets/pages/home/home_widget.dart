@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../more/more_widget.dart';
 import '../profiles/profiles_widget.dart';
+import '../recordings/recordings_widget.dart';
 import '../tasks/tasks_widget.dart';
 import 'home_model.dart';
 
@@ -26,6 +27,7 @@ class _Body extends StatelessWidget {
 
   static const _tabs = [
     TasksWidget(),
+    RecordingsWidget(),
     ProfilesWidget(),
     MorePage(),
   ];
@@ -66,6 +68,7 @@ class _NavBar extends StatelessWidget {
       onDestinationSelected: model.setSelectedTabIndex,
       destinations: const [
         NavigationDestination(icon: Icon(Icons.task_alt), label: 'Görevler', tooltip: ''),
+        NavigationDestination(icon: Icon(Icons.mic), label: 'Kayıtlar', tooltip: ''),
         NavigationDestination(icon: Icon(Icons.manage_accounts), label: 'Çalışanlar', tooltip: ''),
         NavigationDestination(icon: Icon(Icons.menu), label: 'Gene', tooltip: ''),
       ],
