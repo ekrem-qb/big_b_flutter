@@ -35,7 +35,6 @@ final darkColorScheme = ColorScheme.fromSeed(
   onPrimaryContainer: Colors.black,
   secondaryContainer: Colors.amber,
   onSecondaryContainer: Colors.black,
-  background: Colors.black,
   surface: Colors.black,
   surfaceTint: Colors.white,
 );
@@ -47,14 +46,14 @@ ThemeData darkTheme(final BuildContext context) {
     chipTheme: ChipThemeData(
       deleteIconColor: darkColorScheme.secondary,
       checkmarkColor: darkColorScheme.onSecondaryContainer,
-      labelStyle: Theme.of(context).textTheme.labelLarge?.copyWith(color: MaterialStateColor.resolveWith(getFillColor)),
+      labelStyle: Theme.of(context).textTheme.labelLarge?.copyWith(color: WidgetStateColor.resolveWith(getFillColor)),
     ),
     colorScheme: darkColorScheme,
   );
 }
 
-Color getFillColor(final Set<MaterialState> states) {
-  if (states.contains(MaterialState.selected)) {
+Color getFillColor(final Set<WidgetState> states) {
+  if (states.contains(WidgetState.selected)) {
     return darkColorScheme.onSecondaryContainer;
   }
   return darkColorScheme.onSurface;

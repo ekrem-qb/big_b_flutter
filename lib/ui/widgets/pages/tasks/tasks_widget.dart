@@ -64,7 +64,7 @@ class _PlanningButton extends StatelessWidget {
     return ElevatedButton.icon(
       style: ButtonStyle(
         visualDensity: VisualDensity.standard,
-        elevation: appBar.isScrolled ? const MaterialStatePropertyAll(0) : null,
+        elevation: appBar.isScrolled ? const WidgetStatePropertyAll(0) : null,
       ),
       icon: const Icon(Icons.event_available),
       label: const Text('Planlama'),
