@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: lightTheme,
-      darkTheme: darkTheme(context),
+      darkTheme: darkTheme,
       scrollBehavior: const CupertinoScrollBehavior().copyWith(
         dragDevices: _dragDevices,
       ),
