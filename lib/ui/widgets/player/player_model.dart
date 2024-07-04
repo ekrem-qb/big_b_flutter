@@ -116,32 +116,29 @@ class Player extends ChangeNotifier {
       textSpans = List.generate(
         _textLines!.length,
         (final i) {
-          if (_textLines![i].partsCount < 2) return TextSpan(text: _textLines![i].text);
-
-          final parts = List<TextSpan?>.filled(_textLines![i].partsCount, null);
+          final parts = <TextSpan>[];
 
           var charIndex = 0;
-          var partIndex = 0;
           for (var j = 0; j < _textLines![i].highlights.length; j += 2) {
-            if (charIndex < _textLines![i].highlights[j]) {
-              final substring = _textLines![i].text.substring(charIndex, _textLines![i].highlights[j]);
-              parts[partIndex] = TextSpan(text: substring);
-              partIndex++;
+            if (charIndex < _textLines![i].highlights[j].startIndex) {
+              final substring = _textLines![i].text.substring(charIndex, _textLines![i].highlights[j].startIndex);
+              parts.add(TextSpan(text: substring));
             }
 
-            final substring2 = _textLines![i].text.substring(_textLines![i].highlights[j], _textLines![i].highlights[j + 1]);
-            parts[partIndex] = TextSpan(
-              text: substring2,
-              style: TextStyle(color: _getHighlightColor(i, j)),
+            final substring2 = _textLines![i].text.substring(_textLines![i].highlights[j].startIndex, _textLines![i].highlights[j].endIndex);
+            parts.add(
+              TextSpan(
+                text: substring2,
+                style: TextStyle(color: _getHighlightColor(i, j)),
+              ),
             );
-            partIndex++;
 
-            charIndex = _textLines![i].highlights[j + 1];
+            charIndex = _textLines![i].highlights[j].endIndex;
           }
 
           if (charIndex < _textLines![i].text.length) {
             final substring = _textLines![i].text.substring(charIndex);
-            parts[partIndex] = TextSpan(text: substring);
+            parts.add(TextSpan(text: substring));
           }
 
           return TextSpan(children: List.castFrom(parts));
@@ -156,7 +153,7 @@ class Player extends ChangeNotifier {
 
   Color? _getHighlightColor(final int textLineIndex, final int highlightIndex) {
     try {
-      return highlightColors[_textLines![textLineIndex].highlightColors[(highlightIndex / 2).floor()]];
+      return highlightColors[_textLines![textLineIndex].highlights[highlightIndex].type];
     } on Exception catch (e) {
       showSnackbar(text: e.toString(), context: _context);
       return null;
