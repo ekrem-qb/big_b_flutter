@@ -173,6 +173,7 @@ class Player extends ChangeNotifier {
   void _onPositionChanged(final Duration? newPosition) {
     if (isSeeking) return;
     if (newPosition == null) return;
+    if (newPosition > duration) return;
 
     position = newPosition;
 
