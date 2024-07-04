@@ -327,20 +327,20 @@ packages:
     dependency: "direct main"
     description:
       path: json_annotation
-      ref: HEAD
-      resolved-ref: "4162ca6d0b03f603961719b023732088428604c7"
+      ref: ekrem
+      resolved-ref: "501e83d818336e66a9d5550561e495e91ded37e8"
       url: "https://github.com/ekrem-qb/json_serializable.dart"
     source: git
-    version: "4.9.0-wip"
+    version: "4.9.0"
   json_serializable:
     dependency: "direct dev"
     description:
       path: json_serializable
-      ref: HEAD
-      resolved-ref: "4162ca6d0b03f603961719b023732088428604c7"
+      ref: ekrem
+      resolved-ref: "501e83d818336e66a9d5550561e495e91ded37e8"
       url: "https://github.com/ekrem-qb/json_serializable.dart"
     source: git
-    version: "6.8.0-wip"
+    version: "6.8.0"
   just_audio:
     dependency: "direct main"
     description:

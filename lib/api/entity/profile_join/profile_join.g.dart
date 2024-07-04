@@ -8,7 +8,7 @@ part of 'profile_join.dart';
 
 _$ProfileJoinImpl _$$ProfileJoinImplFromJson(Map<String, dynamic> json) =>
     _$ProfileJoinImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       profile: json['profile'] as String,
     );
 

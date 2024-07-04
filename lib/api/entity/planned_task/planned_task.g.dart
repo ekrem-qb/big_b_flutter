@@ -8,12 +8,12 @@ part of 'planned_task.dart';
 
 _$PlannedTaskImpl _$$PlannedTaskImplFromJson(Map<String, dynamic> json) =>
     _$PlannedTaskImpl(
-      id: json['id'] as int? ?? -1,
+      id: (json['id'] as num?)?.toInt() ?? -1,
       text: json['text'] as String,
       deadline: DateTime.parse(json['deadline'] as String).toLocal(),
       isImageRequired: json['is_image_required'] as bool,
       updatedAt: DateTime.parse(json['updated_at'] as String).toLocal(),
-      weekdays: json['weekdays'] as int,
+      weekdays: (json['weekdays'] as num).toInt(),
       executives: (json['executives'] as List<dynamic>)
           .map((e) => Profile.fromJson(e as Map<String, dynamic>))
           .toList(),

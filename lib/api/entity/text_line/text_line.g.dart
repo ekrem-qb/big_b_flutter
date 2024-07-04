@@ -8,13 +8,14 @@ part of 'text_line.dart';
 
 _$TextLineImpl _$$TextLineImplFromJson(Map<String, dynamic> json) =>
     _$TextLineImpl(
-      time: Duration(microseconds: json['time'] as int),
+      time: Duration(microseconds: (json['time'] as num).toInt()),
       text: json['text'] as String,
-      partsCount: json['parts_count'] as int,
-      highlights:
-          (json['highlights'] as List<dynamic>).map((e) => e as int).toList(),
+      partsCount: (json['parts_count'] as num).toInt(),
+      highlights: (json['highlights'] as List<dynamic>)
+          .map((e) => (e as num).toInt())
+          .toList(),
       highlightColors: (json['highlight_colors'] as List<dynamic>)
-          .map((e) => e as int)
+          .map((e) => (e as num).toInt())
           .toList(),
     );
 
