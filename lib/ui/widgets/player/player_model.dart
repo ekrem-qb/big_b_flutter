@@ -234,7 +234,7 @@ class Player extends ChangeNotifier {
     }
 
     if (_textLines != null && seekPlayer) {
-      seek(_textLines![index].time);
+      seek(_textLines![index].time + const Duration(milliseconds: 1));
     }
   }
 
