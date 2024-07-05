@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:media_kit/media_kit.dart' as media;
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../api/database.dart';
@@ -13,16 +13,16 @@ import '../extensions/snackbar.dart';
 
 class Player extends ChangeNotifier {
   Player(this._context, {required final Recording recording}) : _recording = recording {
-    durationSubscription = _player.durationStream.listen(_onDurationChanged);
-    positionSubscription = _player.positionStream.listen(_onPositionChanged);
-    playingSubscription = _player.playingStream.listen(_onPlayingChanged);
+    durationSubscription = _player.stream.duration.listen(_onDurationChanged);
+    positionSubscription = _player.stream.position.listen(_onPositionChanged);
+    playingSubscription = _player.stream.playing.listen(_onPlayingChanged);
 
     Future.microtask(_load);
   }
 
   final BuildContext _context;
   final Recording _recording;
-  final _player = AudioPlayer();
+  final _player = media.Player();
   final scrollController = ItemScrollController();
   final offsetController = ScrollOffsetController();
 
@@ -97,9 +97,7 @@ class Player extends ChangeNotifier {
 
   Future<void> _loadAudio() async {
     try {
-      await _player.setAudioSource(
-        AudioSource.uri(_recording.audioUrl),
-      );
+      await _player.open(media.Media(_recording.audioUrl), play: false);
       isAudioLoaded = true;
     } on Exception catch (e) {
       isAudioLoaded = false;

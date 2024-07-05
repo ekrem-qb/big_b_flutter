@@ -9,7 +9,7 @@ part of 'recording.dart';
 _$RecordingImpl _$$RecordingImplFromJson(Map<String, dynamic> json) =>
     _$RecordingImpl(
       id: (json['id'] as num).toInt(),
-      audioUrl: Uri.parse(json['url'] as String),
+      audioUrl: json['url'] as String,
       hasLines: json['has_lines'] as bool,
       createdAt: DateTime.parse(json['created_at'] as String).toLocal(),
     );

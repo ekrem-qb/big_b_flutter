@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:media_kit/media_kit.dart';
 
 import 'api/database.dart';
 import 'ui/theme.dart';
@@ -11,6 +12,7 @@ import 'ui/widgets/pages/login/login_widget.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MediaKit.ensureInitialized();
   await Database.init();
   runApp(const MyApp());
 }

@@ -7,7 +7,7 @@ part 'recording.g.dart';
 class Recording with _$Recording {
   const factory Recording({
     required final int id,
-    @JsonKey(name: 'url') required final Uri audioUrl,
+    @JsonKey(name: 'url') required final String audioUrl,
     required final bool hasLines,
     required final DateTime createdAt,
   }) = _Recording;

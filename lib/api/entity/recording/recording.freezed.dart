@@ -22,7 +22,7 @@ Recording _$RecordingFromJson(Map<String, dynamic> json) {
 mixin _$Recording {
   int get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'url')
-  Uri get audioUrl => throw _privateConstructorUsedError;
+  String get audioUrl => throw _privateConstructorUsedError;
   bool get hasLines => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
 
@@ -38,7 +38,7 @@ abstract class $RecordingCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      @JsonKey(name: 'url') Uri audioUrl,
+      @JsonKey(name: 'url') String audioUrl,
       bool hasLines,
       DateTime createdAt});
 }
@@ -69,7 +69,7 @@ class _$RecordingCopyWithImpl<$Res, $Val extends Recording>
       audioUrl: null == audioUrl
           ? _value.audioUrl
           : audioUrl // ignore: cast_nullable_to_non_nullable
-              as Uri,
+              as String,
       hasLines: null == hasLines
           ? _value.hasLines
           : hasLines // ignore: cast_nullable_to_non_nullable
@@ -92,7 +92,7 @@ abstract class _$$RecordingImplCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      @JsonKey(name: 'url') Uri audioUrl,
+      @JsonKey(name: 'url') String audioUrl,
       bool hasLines,
       DateTime createdAt});
 }
@@ -121,7 +121,7 @@ class __$$RecordingImplCopyWithImpl<$Res>
       audioUrl: null == audioUrl
           ? _value.audioUrl
           : audioUrl // ignore: cast_nullable_to_non_nullable
-              as Uri,
+              as String,
       hasLines: null == hasLines
           ? _value.hasLines
           : hasLines // ignore: cast_nullable_to_non_nullable
@@ -150,7 +150,7 @@ class _$RecordingImpl implements _Recording {
   final int id;
   @override
   @JsonKey(name: 'url')
-  final Uri audioUrl;
+  final String audioUrl;
   @override
   final bool hasLines;
   @override
@@ -190,7 +190,7 @@ class _$RecordingImpl implements _Recording {
 abstract class _Recording implements Recording {
   const factory _Recording(
       {required final int id,
-      @JsonKey(name: 'url') required final Uri audioUrl,
+      @JsonKey(name: 'url') required final String audioUrl,
       required final bool hasLines,
       required final DateTime createdAt}) = _$RecordingImpl;
 
@@ -201,7 +201,7 @@ abstract class _Recording implements Recording {
   int get id;
   @override
   @JsonKey(name: 'url')
-  Uri get audioUrl;
+  String get audioUrl;
   @override
   bool get hasLines;
   @override
