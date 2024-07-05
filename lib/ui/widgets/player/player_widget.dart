@@ -254,13 +254,21 @@ class _Slider extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final Player model;
     var isInitialized = false;
-    context.select((final Player newModel) {
-      if (!isInitialized) {
-        model = newModel;
-        isInitialized = true;
-      }
-      return model.position;
-    });
+    context
+      ..select((final Player newModel) {
+        if (!isInitialized) {
+          model = newModel;
+          isInitialized = true;
+        }
+        return model.position;
+      })
+      ..select((final Player newModel) {
+        if (!isInitialized) {
+          model = newModel;
+          isInitialized = true;
+        }
+        return model.isAudioLoaded;
+      });
 
     return MediaQuery(
       data: const MediaQueryData(navigationMode: NavigationMode.directional),
@@ -268,7 +276,7 @@ class _Slider extends StatelessWidget {
         max: model.duration.inMilliseconds.toDouble(),
         value: model.position.inMilliseconds.toDouble(),
         onChangeStart: (final _) => model.isSeeking = true,
-        onChanged: (final newValue) => model.position = Duration(milliseconds: newValue.toInt()),
+        onChanged: model.isAudioLoaded ?? false ? (final newValue) => model.position = Duration(milliseconds: newValue.toInt()) : null,
         onChangeEnd: (final newValue) => model.seek(Duration(milliseconds: newValue.toInt())),
       ),
     );
