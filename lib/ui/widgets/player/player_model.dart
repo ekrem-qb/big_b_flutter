@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart' as media;
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -22,7 +23,11 @@ class Player extends ChangeNotifier {
 
   final BuildContext _context;
   final Recording _recording;
-  final _player = media.Player();
+  final _player = media.Player(
+    configuration: const media.PlayerConfiguration(
+      logLevel: kDebugMode ? media.MPVLogLevel.debug : media.MPVLogLevel.error,
+    ),
+  );
   final scrollController = ItemScrollController();
   final offsetController = ScrollOffsetController();
 
