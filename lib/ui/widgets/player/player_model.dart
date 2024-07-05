@@ -17,6 +17,7 @@ class Player extends ChangeNotifier {
     durationSubscription = _player.stream.duration.listen(_onDurationChanged);
     positionSubscription = _player.stream.position.listen(_onPositionChanged);
     playingSubscription = _player.stream.playing.listen(_onPlayingChanged);
+    errorSubscription = _player.stream.error.listen(_onError);
 
     Future.microtask(_load);
   }
@@ -34,6 +35,7 @@ class Player extends ChangeNotifier {
   late final StreamSubscription durationSubscription;
   late final StreamSubscription positionSubscription;
   late final StreamSubscription playingSubscription;
+  late final StreamSubscription errorSubscription;
 
   bool isSeeking = false;
 
@@ -194,6 +196,11 @@ class Player extends ChangeNotifier {
     isPlaying = newState;
   }
 
+  void _onError(final String error) {
+    isAudioLoaded = false;
+    showSnackbar(text: error, context: _context);
+  }
+
   void play() {
     if (isPlaying) {
       _player.pause();
@@ -236,6 +243,7 @@ class Player extends ChangeNotifier {
     durationSubscription.cancel();
     positionSubscription.cancel();
     playingSubscription.cancel();
+    errorSubscription.cancel();
     _player.dispose();
     super.dispose();
   }
