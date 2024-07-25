@@ -1,11 +1,12 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 
 import 'api/database.dart';
+import 'bloc_observer.dart';
 import 'ui/theme.dart';
-import 'ui/widgets/pages/home/home_model.dart';
 import 'ui/widgets/pages/home/home_widget.dart';
 import 'ui/widgets/pages/login/login_model.dart';
 import 'ui/widgets/pages/login/login_widget.dart';
@@ -14,6 +15,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MediaKit.ensureInitialized();
   await Database.init();
+  Bloc.observer = AppBlocObserver();
   runApp(const MyApp());
 }
 
