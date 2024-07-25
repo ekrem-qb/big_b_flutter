@@ -39,9 +39,9 @@ class MyApp extends StatelessWidget {
         dragDevices: _dragDevices,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: db.auth.currentSession?.isExpired == false ? Home.route : Login.route,
+      initialRoute: db.auth.currentSession?.isExpired == false ? HomePage.route : Login.route,
       routes: {
-        Home.route: (final context) => const HomePage(),
+        HomePage.route: (final context) => const HomePage(),
         Login.route: (final context) => const LoginWidget(),
       },
     );

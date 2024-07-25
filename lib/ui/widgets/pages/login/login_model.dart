@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../api/database.dart';
 import '../../extensions/snackbar.dart';
-import '../home/home_model.dart';
+import '../home/home_widget.dart';
 
 class Login extends ChangeNotifier {
   Login(this._context);
@@ -50,7 +50,7 @@ class Login extends ChangeNotifier {
       if (response.user == null) return;
       if (response.session == null) return;
 
-      unawaited(Navigator.pushReplacementNamed(_context, Home.route));
+      unawaited(Navigator.pushReplacementNamed(_context, HomePage.route));
     } on Exception catch (e) {
       showSnackbar(text: e.toString(), context: _context);
     } finally {
