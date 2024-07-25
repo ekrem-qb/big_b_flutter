@@ -12,8 +12,8 @@ class Highlight with _$Highlight {
     required final int type,
   }) = _Highlight;
 
+  factory Highlight.fromJson(final Map<String, dynamic> json) => _$HighlightFromJson(json);
+
   static const tableName = 'highlights';
   static final fieldNames = _$$HighlightImplFieldMap.values.join(',');
-
-  factory Highlight.fromJson(final Map<String, dynamic> json) => _$HighlightFromJson(json);
 }
