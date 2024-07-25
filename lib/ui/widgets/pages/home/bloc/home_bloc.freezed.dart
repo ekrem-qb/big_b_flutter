@@ -14,11 +14,16 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+HomeState _$HomeStateFromJson(Map<String, dynamic> json) {
+  return _HomeState.fromJson(json);
+}
+
 /// @nodoc
 mixin _$HomeState {
   int get selectedTabIndex => throw _privateConstructorUsedError;
   AuthStatus get authStatus => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $HomeStateCopyWith<HomeState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -100,10 +105,13 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$HomeStateImpl implements _HomeState {
   const _$HomeStateImpl(
       {this.selectedTabIndex = 0, this.authStatus = AuthStatus.signedIn});
+
+  factory _$HomeStateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$HomeStateImplFromJson(json);
 
   @override
   @JsonKey()
@@ -128,6 +136,7 @@ class _$HomeStateImpl implements _HomeState {
                 other.authStatus == authStatus));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, selectedTabIndex, authStatus);
 
@@ -136,12 +145,22 @@ class _$HomeStateImpl implements _HomeState {
   @pragma('vm:prefer-inline')
   _$$HomeStateImplCopyWith<_$HomeStateImpl> get copyWith =>
       __$$HomeStateImplCopyWithImpl<_$HomeStateImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$HomeStateImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _HomeState implements HomeState {
   const factory _HomeState(
       {final int selectedTabIndex,
       final AuthStatus authStatus}) = _$HomeStateImpl;
+
+  factory _HomeState.fromJson(Map<String, dynamic> json) =
+      _$HomeStateImpl.fromJson;
 
   @override
   int get selectedTabIndex;

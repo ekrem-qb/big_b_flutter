@@ -11,4 +11,6 @@ class HomeState with _$HomeState {
     @Default(0) final int selectedTabIndex,
     @Default(AuthStatus.signedIn) final AuthStatus authStatus,
   }) = _HomeState;
+
+  factory HomeState.fromJson(final Map<String, dynamic> json) => _$HomeStateFromJson(json);
 }
