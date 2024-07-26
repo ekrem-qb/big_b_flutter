@@ -10,15 +10,15 @@ Future<List<Profile>> showProfilesPicker(final BuildContext context, {final List
   final profiles = await showCupertinoModalPopup<List<Profile>>(
     context: context,
     builder: (final context) {
-      return _ProfilePickerWidget(excluded);
+      return _ProfilePickerDialog(excluded);
     },
   );
 
   return profiles ?? List.empty();
 }
 
-class _ProfilePickerWidget extends StatelessWidget {
-  const _ProfilePickerWidget(this._excluded);
+class _ProfilePickerDialog extends StatelessWidget {
+  const _ProfilePickerDialog(this._excluded);
 
   final List<Profile>? _excluded;
 

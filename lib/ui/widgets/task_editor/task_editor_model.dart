@@ -13,7 +13,7 @@ import '../delete_dialog.dart';
 import '../extensions/pickers/date_picker.dart';
 import '../extensions/pickers/time_picker.dart';
 import '../extensions/snackbar.dart';
-import '../profiles_picker/profiles_picker_widget.dart';
+import '../profiles_picker/profiles_picker_dialog.dart';
 
 class TaskEditor extends ChangeNotifier {
   TaskEditor(this._context, {final PlannedTask? originalPlannedTask, final Task? originalTask})
