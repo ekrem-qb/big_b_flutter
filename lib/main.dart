@@ -9,7 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'api/database.dart';
 import 'bloc_observer.dart';
 import 'ui/theme.dart';
-import 'ui/widgets/pages/home/home_widget.dart';
+import 'ui/widgets/pages/home/home_page.dart';
 import 'ui/widgets/pages/login/login_model.dart';
 import 'ui/widgets/pages/login/login_widget.dart';
 

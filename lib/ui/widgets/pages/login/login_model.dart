@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../api/database.dart';
 import '../../extensions/snackbar.dart';
-import '../home/home_widget.dart';
+import '../home/home_page.dart';
 
 class Login extends ChangeNotifier {
   Login(this._context);
