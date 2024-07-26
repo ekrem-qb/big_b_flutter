@@ -7,7 +7,7 @@ import '../../../api/database.dart';
 import '../../../api/entity/task/task.dart';
 import '../delete_dialog.dart';
 import '../extensions/snackbar.dart';
-import '../task_editor/task_editor_widget.dart';
+import '../task_editor/task_editor_page.dart';
 
 class TaskViewer extends ChangeNotifier {
   TaskViewer(this._context, final Task originalTask) : _task = originalTask {
@@ -56,7 +56,7 @@ class TaskViewer extends ChangeNotifier {
     Navigator.push(
       _context,
       MaterialPageRoute(
-        builder: (final context) => TaskEditorWidget(task: task),
+        builder: (final context) => TaskEditorPage(task: task),
       ),
     );
   }

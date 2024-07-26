@@ -4,7 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../api/database.dart';
 import '../../../../api/entity/planned_task/planned_task.dart';
 import '../../extensions/snackbar.dart';
-import '../../task_editor/task_editor_widget.dart';
+import '../../task_editor/task_editor_page.dart';
 
 class PlannedTasks extends ChangeNotifier {
   PlannedTasks(this._context) {
@@ -56,7 +56,7 @@ class PlannedTasks extends ChangeNotifier {
     Navigator.push(
       _context,
       MaterialPageRoute(
-        builder: (final context) => TaskEditorWidget(plannedTask: plannedTasks[index]),
+        builder: (final context) => TaskEditorPage(plannedTask: plannedTasks[index]),
       ),
     );
   }
@@ -65,7 +65,7 @@ class PlannedTasks extends ChangeNotifier {
     Navigator.push(
       _context,
       MaterialPageRoute(
-        builder: (final context) => const TaskEditorWidget(),
+        builder: (final context) => const TaskEditorPage(),
       ),
     );
   }

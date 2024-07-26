@@ -8,8 +8,8 @@ import '../../../extensions/weekdays.dart';
 import '../../theme.dart';
 import 'task_editor_model.dart';
 
-class TaskEditorWidget extends StatelessWidget {
-  const TaskEditorWidget({this.plannedTask, this.task, super.key});
+class TaskEditorPage extends StatelessWidget {
+  const TaskEditorPage({this.plannedTask, this.task, super.key});
 
   final PlannedTask? plannedTask;
   final Task? task;
