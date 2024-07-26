@@ -9,8 +9,8 @@ import '../delete_dialog.dart';
 import '../extensions/snackbar.dart';
 import '../task_editor/task_editor_widget.dart';
 
-class TaskWindow extends ChangeNotifier {
-  TaskWindow(this._context, final Task originalTask) : _task = originalTask {
+class TaskViewer extends ChangeNotifier {
+  TaskViewer(this._context, final Task originalTask) : _task = originalTask {
     _tasksSubscriptions = [
       db
           .channel('${Task.tableName}/${originalTask.id}')

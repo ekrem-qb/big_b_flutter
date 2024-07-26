@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../api/entity/task/task.dart';
-import 'task_window_model.dart';
+import 'task_viewer_model.dart';
 
-class TaskWindowWidget extends StatelessWidget {
-  const TaskWindowWidget({required this.task, super.key});
+class TaskViewerDialog extends StatelessWidget {
+  const TaskViewerDialog({required this.task, super.key});
 
   final Task task;
 
   @override
   Widget build(final BuildContext context) {
     return ChangeNotifierProvider(
-      create: (final context) => TaskWindow(context, task),
+      create: (final context) => TaskViewer(context, task),
       child: AlertDialog(
         insetPadding: const EdgeInsets.all(16),
         title: Row(
@@ -51,9 +51,9 @@ class _Task extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskWindow model;
+    late final TaskViewer model;
     var isInitialized = false;
-    context.select((final TaskWindow newModel) {
+    context.select((final TaskViewer newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -84,9 +84,9 @@ class _IsDoneIcon extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskWindow model;
+    late final TaskViewer model;
     var isInitialized = false;
-    context.select((final TaskWindow newModel) {
+    context.select((final TaskViewer newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -106,9 +106,9 @@ class _Text extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskWindow model;
+    late final TaskViewer model;
     var isInitialized = false;
-    context.select((final TaskWindow newModel) {
+    context.select((final TaskViewer newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -128,9 +128,9 @@ class _Image extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskWindow model;
+    late final TaskViewer model;
     var isInitialized = false;
-    context.select((final TaskWindow newModel) {
+    context.select((final TaskViewer newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -184,9 +184,9 @@ class _Time extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskWindow model;
+    late final TaskViewer model;
     var isInitialized = false;
-    context.select((final TaskWindow newModel) {
+    context.select((final TaskViewer newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -210,9 +210,9 @@ class _Deadline extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskWindow model;
+    late final TaskViewer model;
     var isInitialized = false;
-    context.select((final TaskWindow newModel) {
+    context.select((final TaskViewer newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -241,9 +241,9 @@ class _Delay extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskWindow model;
+    late final TaskViewer model;
     var isInitialized = false;
-    context.select((final TaskWindow newModel) {
+    context.select((final TaskViewer newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -287,7 +287,7 @@ class _DeleteButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<TaskWindow>();
+    final model = context.read<TaskViewer>();
 
     return TextButton.icon(
       icon: const Icon(Icons.delete),
@@ -302,7 +302,7 @@ class _EditButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<TaskWindow>();
+    final model = context.read<TaskViewer>();
 
     return TextButton.icon(
       icon: const Icon(Icons.edit),

@@ -6,7 +6,7 @@ import '../../../../api/database.dart';
 import '../../../../api/entity/task/task.dart';
 import '../../extensions/snackbar.dart';
 import '../../task_editor/task_editor_widget.dart';
-import '../../task_window/task_window_widget.dart';
+import '../../task_viewer/task_viewer_dialog.dart';
 import '../planned_tasks/planned_tasks_page.dart';
 
 class Tasks extends ChangeNotifier {
@@ -69,7 +69,7 @@ class Tasks extends ChangeNotifier {
     showCupertinoDialog(
       context: _context,
       barrierDismissible: true,
-      builder: (final context) => TaskWindowWidget(task: tasks[index]),
+      builder: (final context) => TaskViewerDialog(task: tasks[index]),
     );
   }
 
