@@ -8,7 +8,7 @@ import '../../../api/database.dart';
 import '../../../api/entity/profile/profile.dart';
 import '../../../api/enums/role.dart';
 import '../../../extensions/case_helpers.dart';
-import '../delete_dialog.dart';
+import '../dialogs/delete_dialog.dart';
 import '../extensions/snackbar.dart';
 
 class ProfileEditor extends ChangeNotifier {

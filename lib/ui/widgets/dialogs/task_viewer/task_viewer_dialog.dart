@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../api/entity/task/task.dart';
+import '../../../../api/entity/task/task.dart';
 import 'task_viewer_model.dart';
 
 class TaskViewerDialog extends StatelessWidget {

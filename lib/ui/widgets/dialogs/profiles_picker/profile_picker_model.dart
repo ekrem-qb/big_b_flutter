@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../api/database.dart';
-import '../../../api/entity/profile/profile.dart';
-import '../extensions/snackbar.dart';
+import '../../../../api/database.dart';
+import '../../../../api/entity/profile/profile.dart';
+import '../../extensions/snackbar.dart';
 
 class ProfilePicker extends ChangeNotifier {
   ProfilePicker(this._context, this._excluded) {

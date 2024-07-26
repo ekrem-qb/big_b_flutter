@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../api/entity/profile/profile.dart';
-import '../../../api/enums/role.dart';
+import '../../../../api/entity/profile/profile.dart';
+import '../../../../api/enums/role.dart';
 import 'profile_picker_model.dart';
 
 Future<List<Profile>> showProfilesPicker(final BuildContext context, {final List<Profile>? excluded}) async {

@@ -9,11 +9,11 @@ import '../../../api/entity/profile_join/profile_join.dart';
 import '../../../api/entity/task/task.dart';
 import '../../../extensions/date_time.dart';
 import '../../../extensions/weekdays.dart';
-import '../delete_dialog.dart';
+import '../dialogs/delete_dialog.dart';
+import '../dialogs/profiles_picker/profiles_picker_dialog.dart';
 import '../extensions/pickers/date_picker.dart';
 import '../extensions/pickers/time_picker.dart';
 import '../extensions/snackbar.dart';
-import '../profiles_picker/profiles_picker_dialog.dart';
 
 class TaskEditor extends ChangeNotifier {
   TaskEditor(this._context, {final PlannedTask? originalPlannedTask, final Task? originalTask})

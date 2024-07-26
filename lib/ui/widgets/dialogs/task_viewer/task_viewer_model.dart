@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../api/database.dart';
-import '../../../api/entity/task/task.dart';
+import '../../../../api/database.dart';
+import '../../../../api/entity/task/task.dart';
+import '../../extensions/snackbar.dart';
+import '../../task_editor/task_editor_page.dart';
 import '../delete_dialog.dart';
-import '../extensions/snackbar.dart';
-import '../task_editor/task_editor_page.dart';
 
 class TaskViewer extends ChangeNotifier {
   TaskViewer(this._context, final Task originalTask) : _task = originalTask {

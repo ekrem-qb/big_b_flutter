@@ -4,9 +4,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../api/database.dart';
 import '../../../../api/entity/task/task.dart';
+import '../../dialogs/task_viewer/task_viewer_dialog.dart';
 import '../../extensions/snackbar.dart';
 import '../../task_editor/task_editor_page.dart';
-import '../../task_viewer/task_viewer_dialog.dart';
 import '../planned_tasks/planned_tasks_page.dart';
 
 class Tasks extends ChangeNotifier {
