@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -5,13 +6,11 @@ import '../../tabs/more/more_page.dart';
 import '../../tabs/profiles/profiles_page.dart';
 import '../../tabs/recordings/recordings_page.dart';
 import '../../tabs/tasks/tasks_page.dart';
-import '../login/login_model.dart';
 import 'bloc/home_bloc.dart';
 
+@RoutePage()
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  static const String route = '/home';
 
   @override
   Widget build(final BuildContext context) {
@@ -27,16 +26,9 @@ class _HomeView extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<HomeBloc, HomeState>(
-      listener: (final context, final state) {
-        if (state.authStatus == AuthStatus.signedOut) {
-          Navigator.pushReplacementNamed(context, Login.route);
-        }
-      },
-      child: const Scaffold(
-        body: _Body(),
-        bottomNavigationBar: _NavBar(),
-      ),
+    return const Scaffold(
+      body: _Body(),
+      bottomNavigationBar: _NavBar(),
     );
   }
 }

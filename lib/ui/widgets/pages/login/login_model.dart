@@ -1,15 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../api/database.dart';
 import '../../extensions/snackbar.dart';
-import '../home/home_page.dart';
+import '../app/bloc/app_bloc.dart';
 
 class Login extends ChangeNotifier {
   Login(this._context);
-
-  static const String route = '/login';
 
   final BuildContext _context;
   final emailController = TextEditingController();
@@ -50,7 +49,7 @@ class Login extends ChangeNotifier {
       if (response.user == null) return;
       if (response.session == null) return;
 
-      unawaited(Navigator.pushReplacementNamed(_context, HomePage.route));
+      _context.read<AppBloc>().add(const AppEventSignedIn());
     } on Exception catch (e) {
       showSnackbar(text: e.toString(), context: _context);
     } finally {

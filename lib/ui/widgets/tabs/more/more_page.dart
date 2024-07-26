@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'more_model.dart';
+import '../../pages/app/bloc/app_bloc.dart';
 
 class MorePage extends StatelessWidget {
   const MorePage({super.key});
 
   @override
   Widget build(final BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (final context) => More(),
-      child: Column(
-        children: [
-          AppBar(
-            actions: const [
-              _LogoutButton(),
-            ],
-            elevation: 4,
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        AppBar(
+          actions: const [
+            _LogoutButton(),
+          ],
+          elevation: 4,
+        ),
+      ],
     );
   }
 }
@@ -29,10 +26,10 @@ class _LogoutButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<More>();
+    final model = context.read<AppBloc>();
 
     return ElevatedButton(
-      onPressed: model.logout,
+      onPressed: () => model.add(const AppEventSignOutRequested()),
       child: const Text('Çıkış'),
     );
   }

@@ -15,12 +15,20 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$HomeEvent {}
+mixin _$HomeEvent {
+  int get index => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $HomeEventCopyWith<HomeEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
 
 /// @nodoc
 abstract class $HomeEventCopyWith<$Res> {
   factory $HomeEventCopyWith(HomeEvent value, $Res Function(HomeEvent) then) =
       _$HomeEventCopyWithImpl<$Res, HomeEvent>;
+  @useResult
+  $Res call({int index});
 }
 
 /// @nodoc
@@ -32,13 +40,28 @@ class _$HomeEventCopyWithImpl<$Res, $Val extends HomeEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? index = null,
+  }) {
+    return _then(_value.copyWith(
+      index: null == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$HomeTabChangedImplCopyWith<$Res> {
+abstract class _$$HomeTabChangedImplCopyWith<$Res>
+    implements $HomeEventCopyWith<$Res> {
   factory _$$HomeTabChangedImplCopyWith(_$HomeTabChangedImpl value,
           $Res Function(_$HomeTabChangedImpl) then) =
       __$$HomeTabChangedImplCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({int index});
 }
@@ -100,50 +123,12 @@ class _$HomeTabChangedImpl implements HomeTabChanged {
 abstract class HomeTabChanged implements HomeEvent {
   const factory HomeTabChanged(final int index) = _$HomeTabChangedImpl;
 
+  @override
   int get index;
+  @override
   @JsonKey(ignore: true)
   _$$HomeTabChangedImplCopyWith<_$HomeTabChangedImpl> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$HomeSignedOutImplCopyWith<$Res> {
-  factory _$$HomeSignedOutImplCopyWith(
-          _$HomeSignedOutImpl value, $Res Function(_$HomeSignedOutImpl) then) =
-      __$$HomeSignedOutImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$HomeSignedOutImplCopyWithImpl<$Res>
-    extends _$HomeEventCopyWithImpl<$Res, _$HomeSignedOutImpl>
-    implements _$$HomeSignedOutImplCopyWith<$Res> {
-  __$$HomeSignedOutImplCopyWithImpl(
-      _$HomeSignedOutImpl _value, $Res Function(_$HomeSignedOutImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$HomeSignedOutImpl implements _HomeSignedOut {
-  const _$HomeSignedOutImpl();
-
-  @override
-  String toString() {
-    return 'HomeEvent.signedOut()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$HomeSignedOutImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-}
-
-abstract class _HomeSignedOut implements HomeEvent {
-  const factory _HomeSignedOut() = _$HomeSignedOutImpl;
 }
 
 HomeState _$HomeStateFromJson(Map<String, dynamic> json) {
@@ -153,7 +138,6 @@ HomeState _$HomeStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$HomeState {
   int get selectedTabIndex => throw _privateConstructorUsedError;
-  AuthStatus get authStatus => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -166,7 +150,7 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call({int selectedTabIndex, AuthStatus authStatus});
+  $Res call({int selectedTabIndex});
 }
 
 /// @nodoc
@@ -183,17 +167,12 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   @override
   $Res call({
     Object? selectedTabIndex = null,
-    Object? authStatus = null,
   }) {
     return _then(_value.copyWith(
       selectedTabIndex: null == selectedTabIndex
           ? _value.selectedTabIndex
           : selectedTabIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      authStatus: null == authStatus
-          ? _value.authStatus
-          : authStatus // ignore: cast_nullable_to_non_nullable
-              as AuthStatus,
     ) as $Val);
   }
 }
@@ -206,7 +185,7 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int selectedTabIndex, AuthStatus authStatus});
+  $Res call({int selectedTabIndex});
 }
 
 /// @nodoc
@@ -221,17 +200,12 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? selectedTabIndex = null,
-    Object? authStatus = null,
   }) {
     return _then(_$HomeStateImpl(
       selectedTabIndex: null == selectedTabIndex
           ? _value.selectedTabIndex
           : selectedTabIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      authStatus: null == authStatus
-          ? _value.authStatus
-          : authStatus // ignore: cast_nullable_to_non_nullable
-              as AuthStatus,
     ));
   }
 }
@@ -239,8 +213,7 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$HomeStateImpl implements _HomeState {
-  const _$HomeStateImpl(
-      {this.selectedTabIndex = 0, this.authStatus = AuthStatus.signedIn});
+  const _$HomeStateImpl({this.selectedTabIndex = 0});
 
   factory _$HomeStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HomeStateImplFromJson(json);
@@ -248,13 +221,10 @@ class _$HomeStateImpl implements _HomeState {
   @override
   @JsonKey()
   final int selectedTabIndex;
-  @override
-  @JsonKey()
-  final AuthStatus authStatus;
 
   @override
   String toString() {
-    return 'HomeState(selectedTabIndex: $selectedTabIndex, authStatus: $authStatus)';
+    return 'HomeState(selectedTabIndex: $selectedTabIndex)';
   }
 
   @override
@@ -263,14 +233,12 @@ class _$HomeStateImpl implements _HomeState {
         (other.runtimeType == runtimeType &&
             other is _$HomeStateImpl &&
             (identical(other.selectedTabIndex, selectedTabIndex) ||
-                other.selectedTabIndex == selectedTabIndex) &&
-            (identical(other.authStatus, authStatus) ||
-                other.authStatus == authStatus));
+                other.selectedTabIndex == selectedTabIndex));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, selectedTabIndex, authStatus);
+  int get hashCode => Object.hash(runtimeType, selectedTabIndex);
 
   @JsonKey(ignore: true)
   @override
@@ -287,17 +255,13 @@ class _$HomeStateImpl implements _HomeState {
 }
 
 abstract class _HomeState implements HomeState {
-  const factory _HomeState(
-      {final int selectedTabIndex,
-      final AuthStatus authStatus}) = _$HomeStateImpl;
+  const factory _HomeState({final int selectedTabIndex}) = _$HomeStateImpl;
 
   factory _HomeState.fromJson(Map<String, dynamic> json) =
       _$HomeStateImpl.fromJson;
 
   @override
   int get selectedTabIndex;
-  @override
-  AuthStatus get authStatus;
   @override
   @JsonKey(ignore: true)
   _$$HomeStateImplCopyWith<_$HomeStateImpl> get copyWith =>
