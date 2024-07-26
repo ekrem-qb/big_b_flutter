@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../../api/enums/role.dart';
 import '../../../../constants.dart';
 import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
-import '../profiles/profiles_model.dart';
+import 'profiles_model.dart';
 
 class ProfilesPage extends StatelessWidget {
   const ProfilesPage({super.key});
