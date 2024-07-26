@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 
 import 'login_model.dart';
 
-class LoginWidget extends StatelessWidget {
-  const LoginWidget({super.key});
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 
   @override
   Widget build(final BuildContext context) {

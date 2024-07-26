@@ -11,7 +11,7 @@ import 'bloc_observer.dart';
 import 'ui/theme.dart';
 import 'ui/widgets/pages/home/home_page.dart';
 import 'ui/widgets/pages/login/login_model.dart';
-import 'ui/widgets/pages/login/login_widget.dart';
+import 'ui/widgets/pages/login/login_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
       initialRoute: db.auth.currentSession?.isExpired == false ? HomePage.route : Login.route,
       routes: {
         HomePage.route: (final context) => const HomePage(),
-        Login.route: (final context) => const LoginWidget(),
+        Login.route: (final context) => const LoginPage(),
       },
     );
   }
