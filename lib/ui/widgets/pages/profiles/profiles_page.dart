@@ -6,8 +6,8 @@ import '../../../../constants.dart';
 import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
 import '../profiles/profiles_model.dart';
 
-class ProfilesWidget extends StatelessWidget {
-  const ProfilesWidget({super.key});
+class ProfilesPage extends StatelessWidget {
+  const ProfilesPage({super.key});
 
   @override
   Widget build(final BuildContext context) {
