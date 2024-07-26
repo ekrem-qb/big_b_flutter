@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../login/login_model.dart';
 import '../more/more_page.dart';
 import '../profiles/profiles_page.dart';
-import '../recordings/recordings_widget.dart';
+import '../recordings/recordings_page.dart';
 import '../tasks/tasks_page.dart';
 import 'bloc/home_bloc.dart';
 
@@ -46,7 +46,7 @@ class _Body extends StatelessWidget {
 
   static const _tabs = [
     TasksPage(),
-    RecordingsWidget(),
+    RecordingsPage(),
     ProfilesPage(),
     MorePage(),
   ];

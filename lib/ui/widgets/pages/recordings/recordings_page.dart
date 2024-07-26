@@ -6,8 +6,8 @@ import '../../../theme.dart';
 import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
 import 'recordings_model.dart';
 
-class RecordingsWidget extends StatelessWidget {
-  const RecordingsWidget({super.key});
+class RecordingsPage extends StatelessWidget {
+  const RecordingsPage({super.key});
 
   @override
   Widget build(final BuildContext context) {
