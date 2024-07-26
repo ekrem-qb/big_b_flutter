@@ -5,8 +5,8 @@ import '../../../api/entity/profile/profile.dart';
 import '../../../api/enums/role.dart';
 import 'profile_editor_model.dart';
 
-class ProfileEditorWidget extends StatelessWidget {
-  const ProfileEditorWidget({this.profile, super.key});
+class ProfileEditorPage extends StatelessWidget {
+  const ProfileEditorPage({this.profile, super.key});
 
   final Profile? profile;
 

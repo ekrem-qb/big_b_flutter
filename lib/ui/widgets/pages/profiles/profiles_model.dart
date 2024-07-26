@@ -4,7 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../api/database.dart';
 import '../../../../api/entity/profile/profile.dart';
 import '../../extensions/snackbar.dart';
-import '../../profile_editor/profile_editor_widget.dart';
+import '../../profile_editor/profile_editor_page.dart';
 
 class Profiles extends ChangeNotifier {
   Profiles(this._context) {
@@ -102,7 +102,7 @@ class Profiles extends ChangeNotifier {
     Navigator.push(
       _context,
       MaterialPageRoute(
-        builder: (final context) => ProfileEditorWidget(profile: profiles[index]),
+        builder: (final context) => ProfileEditorPage(profile: profiles[index]),
       ),
     );
   }
@@ -111,7 +111,7 @@ class Profiles extends ChangeNotifier {
     Navigator.push(
       _context,
       MaterialPageRoute(
-        builder: (final context) => const ProfileEditorWidget(),
+        builder: (final context) => const ProfileEditorPage(),
       ),
     );
   }
