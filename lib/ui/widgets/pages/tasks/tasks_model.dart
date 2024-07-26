@@ -7,7 +7,7 @@ import '../../../../api/entity/task/task.dart';
 import '../../extensions/snackbar.dart';
 import '../../task_editor/task_editor_widget.dart';
 import '../../task_window/task_window_widget.dart';
-import '../planned_tasks/planned_tasks_widget.dart';
+import '../planned_tasks/planned_tasks_page.dart';
 
 class Tasks extends ChangeNotifier {
   Tasks(this._context) {
@@ -58,7 +58,7 @@ class Tasks extends ChangeNotifier {
     Navigator.push(
       _context,
       MaterialPageRoute(
-        builder: (final context) => const PlannedTasksWidget(),
+        builder: (final context) => const PlannedTasksPage(),
       ),
     );
   }

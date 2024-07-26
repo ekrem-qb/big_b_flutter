@@ -7,8 +7,8 @@ import '../../../../extensions/weekdays.dart';
 import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
 import 'planned_tasks_model.dart';
 
-class PlannedTasksWidget extends StatelessWidget {
-  const PlannedTasksWidget({super.key});
+class PlannedTasksPage extends StatelessWidget {
+  const PlannedTasksPage({super.key});
 
   @override
   Widget build(final BuildContext context) {
