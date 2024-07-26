@@ -6,8 +6,8 @@ import '../../extensions/app_bar_controller.dart';
 import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
 import 'tasks_model.dart';
 
-class TasksWidget extends StatelessWidget {
-  const TasksWidget({super.key});
+class TasksPage extends StatelessWidget {
+  const TasksPage({super.key});
 
   @override
   Widget build(final BuildContext context) {

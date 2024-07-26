@@ -5,7 +5,7 @@ import '../login/login_model.dart';
 import '../more/more_page.dart';
 import '../profiles/profiles_widget.dart';
 import '../recordings/recordings_widget.dart';
-import '../tasks/tasks_widget.dart';
+import '../tasks/tasks_page.dart';
 import 'bloc/home_bloc.dart';
 
 class HomePage extends StatelessWidget {
@@ -45,7 +45,7 @@ class _Body extends StatelessWidget {
   const _Body();
 
   static const _tabs = [
-    TasksWidget(),
+    TasksPage(),
     RecordingsWidget(),
     ProfilesWidget(),
     MorePage(),
