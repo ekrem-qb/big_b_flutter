@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../login/login_model.dart';
-import '../more/more_widget.dart';
+import '../more/more_page.dart';
 import '../profiles/profiles_widget.dart';
 import '../recordings/recordings_widget.dart';
 import '../tasks/tasks_widget.dart';
