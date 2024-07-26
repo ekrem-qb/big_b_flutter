@@ -14,6 +14,138 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+/// @nodoc
+mixin _$HomeEvent {}
+
+/// @nodoc
+abstract class $HomeEventCopyWith<$Res> {
+  factory $HomeEventCopyWith(HomeEvent value, $Res Function(HomeEvent) then) =
+      _$HomeEventCopyWithImpl<$Res, HomeEvent>;
+}
+
+/// @nodoc
+class _$HomeEventCopyWithImpl<$Res, $Val extends HomeEvent>
+    implements $HomeEventCopyWith<$Res> {
+  _$HomeEventCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$HomeTabChangedImplCopyWith<$Res> {
+  factory _$$HomeTabChangedImplCopyWith(_$HomeTabChangedImpl value,
+          $Res Function(_$HomeTabChangedImpl) then) =
+      __$$HomeTabChangedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int index});
+}
+
+/// @nodoc
+class __$$HomeTabChangedImplCopyWithImpl<$Res>
+    extends _$HomeEventCopyWithImpl<$Res, _$HomeTabChangedImpl>
+    implements _$$HomeTabChangedImplCopyWith<$Res> {
+  __$$HomeTabChangedImplCopyWithImpl(
+      _$HomeTabChangedImpl _value, $Res Function(_$HomeTabChangedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? index = null,
+  }) {
+    return _then(_$HomeTabChangedImpl(
+      null == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$HomeTabChangedImpl implements HomeTabChanged {
+  const _$HomeTabChangedImpl(this.index);
+
+  @override
+  final int index;
+
+  @override
+  String toString() {
+    return 'HomeEvent.tabChanged(index: $index)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$HomeTabChangedImpl &&
+            (identical(other.index, index) || other.index == index));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, index);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$HomeTabChangedImplCopyWith<_$HomeTabChangedImpl> get copyWith =>
+      __$$HomeTabChangedImplCopyWithImpl<_$HomeTabChangedImpl>(
+          this, _$identity);
+}
+
+abstract class HomeTabChanged implements HomeEvent {
+  const factory HomeTabChanged(final int index) = _$HomeTabChangedImpl;
+
+  int get index;
+  @JsonKey(ignore: true)
+  _$$HomeTabChangedImplCopyWith<_$HomeTabChangedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$HomeSignedOutImplCopyWith<$Res> {
+  factory _$$HomeSignedOutImplCopyWith(
+          _$HomeSignedOutImpl value, $Res Function(_$HomeSignedOutImpl) then) =
+      __$$HomeSignedOutImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$HomeSignedOutImplCopyWithImpl<$Res>
+    extends _$HomeEventCopyWithImpl<$Res, _$HomeSignedOutImpl>
+    implements _$$HomeSignedOutImplCopyWith<$Res> {
+  __$$HomeSignedOutImplCopyWithImpl(
+      _$HomeSignedOutImpl _value, $Res Function(_$HomeSignedOutImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$HomeSignedOutImpl implements _HomeSignedOut {
+  const _$HomeSignedOutImpl();
+
+  @override
+  String toString() {
+    return 'HomeEvent.signedOut()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$HomeSignedOutImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+}
+
+abstract class _HomeSignedOut implements HomeEvent {
+  const factory _HomeSignedOut() = _$HomeSignedOutImpl;
+}
+
 HomeState _$HomeStateFromJson(Map<String, dynamic> json) {
   return _HomeState.fromJson(json);
 }
