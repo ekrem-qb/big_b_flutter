@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../theme.dart';
-import 'smooth_scroll_model.dart';
+
+class _Model {
+  double offset = 0;
+}
 
 class SmoothScroll extends StatelessWidget {
   const SmoothScroll({
@@ -33,7 +36,7 @@ class SmoothScroll extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return Provider(
-      create: (final context) => SmoothScrollModel(),
+      create: (final context) => _Model(),
       child: _Widget(controller: controller, scrollSpeedMultiplier: scrollSpeedMultiplier, scrollAnimationDuration: scrollAnimationDuration, curve: curve, child: child),
     );
   }
@@ -56,7 +59,7 @@ class _Widget extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<SmoothScrollModel>();
+    final model = context.read<_Model>();
 
     controller.addListener(() {
       /// ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
