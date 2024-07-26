@@ -8,3 +8,7 @@ targets:
           create_field_map: true
           create_json_keys: true
           field_rename: snake
+      freezed:
+        options:
+          map: false
+          when: false
