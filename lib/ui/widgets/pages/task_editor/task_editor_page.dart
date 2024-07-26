@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../api/entity/planned_task/planned_task.dart';
-import '../../../api/entity/task/task.dart';
-import '../../../constants.dart';
-import '../../../extensions/weekdays.dart';
-import '../../theme.dart';
+import '../../../../api/entity/planned_task/planned_task.dart';
+import '../../../../api/entity/task/task.dart';
+import '../../../../constants.dart';
+import '../../../../extensions/weekdays.dart';
+import '../../../theme.dart';
 import 'task_editor_model.dart';
 
 class TaskEditorPage extends StatelessWidget {

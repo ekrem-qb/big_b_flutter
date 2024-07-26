@@ -4,7 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../api/database.dart';
 import '../../../../api/entity/recording/recording.dart';
 import '../../extensions/snackbar.dart';
-import '../../player/player_page.dart';
+import '../../pages/player/player_page.dart';
 
 class Recordings extends ChangeNotifier {
   Recordings(this._context) {

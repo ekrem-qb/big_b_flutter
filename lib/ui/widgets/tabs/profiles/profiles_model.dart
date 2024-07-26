@@ -4,7 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../api/database.dart';
 import '../../../../api/entity/profile/profile.dart';
 import '../../extensions/snackbar.dart';
-import '../../profile_editor/profile_editor_page.dart';
+import '../../pages/profile_editor/profile_editor_page.dart';
 
 class Profiles extends ChangeNotifier {
   Profiles(this._context) {

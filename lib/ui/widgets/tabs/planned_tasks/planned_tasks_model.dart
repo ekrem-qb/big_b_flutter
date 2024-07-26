@@ -4,7 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../api/database.dart';
 import '../../../../api/entity/planned_task/planned_task.dart';
 import '../../extensions/snackbar.dart';
-import '../../task_editor/task_editor_page.dart';
+import '../../pages/task_editor/task_editor_page.dart';
 
 class PlannedTasks extends ChangeNotifier {
   PlannedTasks(this._context) {

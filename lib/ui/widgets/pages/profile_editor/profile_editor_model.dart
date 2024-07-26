@@ -4,12 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:remove_diacritic/remove_diacritic.dart';
 
-import '../../../api/database.dart';
-import '../../../api/entity/profile/profile.dart';
-import '../../../api/enums/role.dart';
-import '../../../extensions/case_helpers.dart';
-import '../dialogs/delete_dialog.dart';
-import '../extensions/snackbar.dart';
+import '../../../../api/database.dart';
+import '../../../../api/entity/profile/profile.dart';
+import '../../../../api/enums/role.dart';
+import '../../../../extensions/case_helpers.dart';
+import '../../dialogs/delete_dialog.dart';
+import '../../extensions/snackbar.dart';
 
 class ProfileEditor extends ChangeNotifier {
   ProfileEditor(this._context, {final Profile? originalProfile})

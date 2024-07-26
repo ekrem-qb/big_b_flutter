@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../api/entity/profile/profile.dart';
-import '../../../api/enums/role.dart';
+import '../../../../api/entity/profile/profile.dart';
+import '../../../../api/enums/role.dart';
 import 'profile_editor_model.dart';
 
 class ProfileEditorPage extends StatelessWidget {

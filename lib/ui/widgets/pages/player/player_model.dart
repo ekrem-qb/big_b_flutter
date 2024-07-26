@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart' as media;
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import '../../../api/database.dart';
-import '../../../api/entity/recording/recording.dart';
-import '../../../api/entity/text_line/text_line.dart';
-import '../../../constants.dart';
-import '../../../ui/theme.dart';
-import '../extensions/snackbar.dart';
+import '../../../../api/database.dart';
+import '../../../../api/entity/recording/recording.dart';
+import '../../../../api/entity/text_line/text_line.dart';
+import '../../../../constants.dart';
+import '../../../theme.dart';
+import '../../extensions/snackbar.dart';
 
 class Player extends ChangeNotifier {
   Player(this._context, {required final Recording recording}) : _recording = recording {

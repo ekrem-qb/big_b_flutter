@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-import '../../../api/entity/recording/recording.dart';
-import '../../../constants.dart';
-import '../extensions/separator.dart';
-import '../extensions/smooth_scroll/positioned_smooth_scroll.dart';
+import '../../../../api/entity/recording/recording.dart';
+import '../../../../constants.dart';
+import '../../extensions/separator.dart';
+import '../../extensions/smooth_scroll/positioned_smooth_scroll.dart';
 import 'player_model.dart';
 
 class PlayerPage extends StatelessWidget {
