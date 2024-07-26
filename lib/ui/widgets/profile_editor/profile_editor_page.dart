@@ -10,11 +10,6 @@ class ProfileEditorPage extends StatelessWidget {
 
   final Profile? profile;
 
-  static const elevation = 1.0;
-  static const tileHeight = 56.0;
-  static const indicatorShape = StadiumBorder();
-  static const indicatorSize = Size(336, 56);
-
   @override
   Widget build(final BuildContext context) {
     return ChangeNotifierProvider(
