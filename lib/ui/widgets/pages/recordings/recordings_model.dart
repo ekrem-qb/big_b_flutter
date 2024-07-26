@@ -4,7 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../api/database.dart';
 import '../../../../api/entity/recording/recording.dart';
 import '../../extensions/snackbar.dart';
-import '../../player/player_widget.dart';
+import '../../player/player_page.dart';
 
 class Recordings extends ChangeNotifier {
   Recordings(this._context) {
@@ -86,7 +86,7 @@ class Recordings extends ChangeNotifier {
     Navigator.push(
       _context,
       MaterialPageRoute(
-        builder: (final context) => PlayerWidget(
+        builder: (final context) => PlayerPage(
           recording: recordings[index],
         ),
       ),

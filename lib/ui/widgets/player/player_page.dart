@@ -9,8 +9,8 @@ import '../extensions/separator.dart';
 import '../extensions/smooth_scroll/positioned_smooth_scroll.dart';
 import 'player_model.dart';
 
-class PlayerWidget extends StatelessWidget {
-  const PlayerWidget({
+class PlayerPage extends StatelessWidget {
+  const PlayerPage({
     required this.recording,
     super.key,
   });
