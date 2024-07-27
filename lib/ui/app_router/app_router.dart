@@ -3,6 +3,10 @@ import 'package:auto_route/auto_route.dart';
 import '../widgets/pages/app/app_page.dart';
 import '../widgets/pages/home/home_page.dart';
 import '../widgets/pages/login/login_page.dart';
+import '../widgets/tabs/more/more_page.dart';
+import '../widgets/tabs/profiles/profiles_page.dart';
+import '../widgets/tabs/recordings/recordings_page.dart';
+import '../widgets/tabs/tasks/tasks_page.dart';
 
 part 'app_router.gr.dart';
 
@@ -23,6 +27,28 @@ class AppRouter extends _$AppRouter {
           AutoRoute(
             path: 'home',
             page: HomeRoute.page,
+            children: [
+              RedirectRoute(
+                path: '',
+                redirectTo: 'tasks',
+              ),
+              AutoRoute(
+                path: 'tasks',
+                page: TasksRoute.page,
+              ),
+              AutoRoute(
+                path: 'recordings',
+                page: RecordingsRoute.page,
+              ),
+              AutoRoute(
+                path: 'profiles',
+                page: ProfilesRoute.page,
+              ),
+              AutoRoute(
+                path: 'more',
+                page: MoreRoute.page,
+              ),
+            ],
           ),
         ],
       ),

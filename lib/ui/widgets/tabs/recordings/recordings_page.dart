@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,6 +7,7 @@ import '../../../theme.dart';
 import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
 import 'recordings_model.dart';
 
+@RoutePage()
 class RecordingsPage extends StatelessWidget {
   const RecordingsPage({super.key});
 
