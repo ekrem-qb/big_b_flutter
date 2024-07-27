@@ -17,15 +17,21 @@ class HomePage extends StatelessWidget {
         MoreRoute(),
       ],
       bottomNavigationBuilder: (final context, final tabsRouter) {
-        return NavigationBar(
-          selectedIndex: tabsRouter.activeIndex,
-          onDestinationSelected: tabsRouter.setActiveIndex,
-          destinations: const [
-            NavigationDestination(icon: Icon(Icons.task_alt), label: 'Görevler', tooltip: ''),
-            NavigationDestination(icon: Icon(Icons.mic), label: 'Kayıtlar', tooltip: ''),
-            NavigationDestination(icon: Icon(Icons.manage_accounts), label: 'Çalışanlar', tooltip: ''),
-            NavigationDestination(icon: Icon(Icons.menu), label: 'Gene', tooltip: ''),
-          ],
+        final canNavigateBack = tabsRouter.navigationHistory.length > 2;
+
+        return PopScope(
+          canPop: !canNavigateBack,
+          onPopInvoked: (final didPop) => tabsRouter.back(),
+          child: NavigationBar(
+            selectedIndex: tabsRouter.activeIndex,
+            onDestinationSelected: tabsRouter.setActiveIndex,
+            destinations: const [
+              NavigationDestination(icon: Icon(Icons.task_alt), label: 'Görevler', tooltip: ''),
+              NavigationDestination(icon: Icon(Icons.mic), label: 'Kayıtlar', tooltip: ''),
+              NavigationDestination(icon: Icon(Icons.manage_accounts), label: 'Çalışanlar', tooltip: ''),
+              NavigationDestination(icon: Icon(Icons.menu), label: 'Gene', tooltip: ''),
+            ],
+          ),
         );
       },
     );
