@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../api/entity/profile/profile.dart';
 import '../../../../api/enums/role.dart';
+import '../../extensions/mouse_navigator.dart';
 import 'profile_editor_model.dart';
 
 class ProfileEditorPage extends StatelessWidget {
@@ -12,47 +13,49 @@ class ProfileEditorPage extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (final context) => ProfileEditor(context, originalProfile: profile),
-      child: Scaffold(
-        appBar: AppBar(
-          title: profile == null ? const Text('Yeni çalışan') : null,
-          actions: [
-            if (profile != null) const _DeleteButton(),
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const _Name(),
-                const SizedBox(height: 16),
-                const _Login(),
-                if (profile == null) const _Password(),
-                const SizedBox(height: 16),
-                const Row(
-                  children: [
-                    _Role(
-                      role: Role.employee,
-                      text: 'Normal',
-                      icon: Icons.person,
-                      isFirst: true,
-                    ),
-                    _Role(
-                      role: Role.manager,
-                      text: 'Yönetici',
-                      icon: Icons.security,
-                      isFirst: false,
-                    ),
-                  ],
-                ),
-              ],
+    return MouseNavigator(
+      child: ChangeNotifierProvider(
+        create: (final context) => ProfileEditor(context, originalProfile: profile),
+        child: Scaffold(
+          appBar: AppBar(
+            title: profile == null ? const Text('Yeni çalışan') : null,
+            actions: [
+              if (profile != null) const _DeleteButton(),
+            ],
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const _Name(),
+                  const SizedBox(height: 16),
+                  const _Login(),
+                  if (profile == null) const _Password(),
+                  const SizedBox(height: 16),
+                  const Row(
+                    children: [
+                      _Role(
+                        role: Role.employee,
+                        text: 'Normal',
+                        icon: Icons.person,
+                        isFirst: true,
+                      ),
+                      _Role(
+                        role: Role.manager,
+                        text: 'Yönetici',
+                        icon: Icons.security,
+                        isFirst: false,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
+          bottomNavigationBar: const _SaveButton(),
         ),
-        bottomNavigationBar: const _SaveButton(),
       ),
     );
   }

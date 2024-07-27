@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app_router/app_router.dart';
+import '../../extensions/mouse_navigator.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -9,31 +10,33 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return AutoTabsScaffold(
-      routes: const [
-        TasksRoute(),
-        RecordingsRoute(),
-        ProfilesRoute(),
-        MoreRoute(),
-      ],
-      bottomNavigationBuilder: (final context, final tabsRouter) {
-        final canNavigateBack = tabsRouter.navigationHistory.length > 2;
+    return MouseNavigator(
+      child: AutoTabsScaffold(
+        routes: const [
+          TasksRoute(),
+          RecordingsRoute(),
+          ProfilesRoute(),
+          MoreRoute(),
+        ],
+        bottomNavigationBuilder: (final context, final tabsRouter) {
+          final canNavigateBack = tabsRouter.navigationHistory.length > 2;
 
-        return PopScope(
-          canPop: !canNavigateBack,
-          onPopInvoked: (final didPop) => tabsRouter.back(),
-          child: NavigationBar(
-            selectedIndex: tabsRouter.activeIndex,
-            onDestinationSelected: tabsRouter.setActiveIndex,
-            destinations: const [
-              NavigationDestination(icon: Icon(Icons.task_alt), label: 'Görevler', tooltip: ''),
-              NavigationDestination(icon: Icon(Icons.mic), label: 'Kayıtlar', tooltip: ''),
-              NavigationDestination(icon: Icon(Icons.manage_accounts), label: 'Çalışanlar', tooltip: ''),
-              NavigationDestination(icon: Icon(Icons.menu), label: 'Gene', tooltip: ''),
-            ],
-          ),
-        );
-      },
+          return PopScope(
+            canPop: !canNavigateBack,
+            onPopInvoked: (final didPop) => tabsRouter.back(),
+            child: NavigationBar(
+              selectedIndex: tabsRouter.activeIndex,
+              onDestinationSelected: tabsRouter.setActiveIndex,
+              destinations: const [
+                NavigationDestination(icon: Icon(Icons.task_alt), label: 'Görevler', tooltip: ''),
+                NavigationDestination(icon: Icon(Icons.mic), label: 'Kayıtlar', tooltip: ''),
+                NavigationDestination(icon: Icon(Icons.manage_accounts), label: 'Çalışanlar', tooltip: ''),
+                NavigationDestination(icon: Icon(Icons.menu), label: 'Gene', tooltip: ''),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

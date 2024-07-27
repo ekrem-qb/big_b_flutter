@@ -5,6 +5,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../../api/entity/recording/recording.dart';
 import '../../../../constants.dart';
+import '../../extensions/mouse_navigator.dart';
 import '../../extensions/separator.dart';
 import '../../extensions/smooth_scroll/positioned_smooth_scroll.dart';
 import 'player_model.dart';
@@ -19,11 +20,13 @@ class PlayerPage extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (final context) => Player(context, recording: recording),
-      child: Scaffold(
-        appBar: AppBar(),
-        body: const _Player(),
+    return MouseNavigator(
+      child: ChangeNotifierProvider(
+        create: (final context) => Player(context, recording: recording),
+        child: Scaffold(
+          appBar: AppBar(),
+          body: const _Player(),
+        ),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../api/entity/profile/profile.dart';
 import '../../../../api/enums/role.dart';
+import '../../extensions/mouse_navigator.dart';
 import 'profile_picker_model.dart';
 
 Future<List<Profile>> showProfilesPicker(final BuildContext context, {final List<Profile>? excluded}) async {
@@ -24,35 +25,37 @@ class _ProfilePickerDialog extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (final context) => ProfilePicker(context, _excluded),
-      builder: (final context, final child) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Flexible(
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: FractionallySizedBox(
-                  heightFactor: 0.5,
-                  child: CupertinoPopupSurface(
-                    child: _Profiles(),
+    return MouseNavigator(
+      child: ChangeNotifierProvider(
+        create: (final context) => ProfilePicker(context, _excluded),
+        builder: (final context, final child) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Flexible(
+                child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: FractionallySizedBox(
+                    heightFactor: 0.5,
+                    child: CupertinoPopupSurface(
+                      child: _Profiles(),
+                    ),
                   ),
                 ),
               ),
-            ),
-            MediaQuery.removePadding(
-              context: context,
-              removeTop: true,
-              child: const CupertinoActionSheet(
-                actions: [
-                  _Ok(),
-                ],
+              MediaQuery.removePadding(
+                context: context,
+                removeTop: true,
+                child: const CupertinoActionSheet(
+                  actions: [
+                    _Ok(),
+                  ],
+                ),
               ),
-            ),
-          ],
-        );
-      },
+            ],
+          );
+        },
+      ),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../../constants.dart';
 import '../../../../extensions/date_time.dart';
 import '../../../../extensions/weekdays.dart';
+import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
 import 'planned_tasks_model.dart';
 
@@ -12,14 +13,16 @@ class PlannedTasksPage extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return ChangeNotifierProvider(
-      create: PlannedTasks.new,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Görev Planlama'),
+    return MouseNavigator(
+      child: ChangeNotifierProvider(
+        create: PlannedTasks.new,
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Görev Planlama'),
+          ),
+          body: const _PlannedTasksList(),
+          floatingActionButton: const _NewPlannedTaskButton(),
         ),
-        body: const _PlannedTasksList(),
-        floatingActionButton: const _NewPlannedTaskButton(),
       ),
     );
   }

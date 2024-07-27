@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../api/entity/task/task.dart';
+import '../../extensions/mouse_navigator.dart';
 import 'task_viewer_model.dart';
 
 class TaskViewerDialog extends StatelessWidget {
@@ -11,36 +12,38 @@ class TaskViewerDialog extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (final context) => TaskViewer(context, task),
-      child: AlertDialog(
-        insetPadding: const EdgeInsets.all(16),
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const _IsDoneIcon(),
-            const SizedBox(width: 8),
-            Flexible(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxHeight: 140,
-                ),
-                child: const SingleChildScrollView(
-                  child: _Text(),
+    return MouseNavigator(
+      child: ChangeNotifierProvider(
+        create: (final context) => TaskViewer(context, task),
+        child: AlertDialog(
+          insetPadding: const EdgeInsets.all(16),
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const _IsDoneIcon(),
+              const SizedBox(width: 8),
+              Flexible(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxHeight: 140,
+                  ),
+                  child: const SingleChildScrollView(
+                    child: _Text(),
+                  ),
                 ),
               ),
-            ),
+            ],
+          ),
+          content: const SingleChildScrollView(
+            child: _Task(),
+          ),
+          actionsAlignment: MainAxisAlignment.spaceBetween,
+          actions: const [
+            _DeleteButton(),
+            _EditButton(),
           ],
         ),
-        content: const SingleChildScrollView(
-          child: _Task(),
-        ),
-        actionsAlignment: MainAxisAlignment.spaceBetween,
-        actions: const [
-          _DeleteButton(),
-          _EditButton(),
-        ],
       ),
     );
   }
