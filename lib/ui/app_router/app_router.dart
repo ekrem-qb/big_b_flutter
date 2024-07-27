@@ -12,11 +12,18 @@ class AppRouter extends _$AppRouter {
   List<AutoRoute> get routes {
     return [
       AutoRoute(
+        path: '/',
         page: AppRoute.page,
         initial: true,
         children: [
-          AutoRoute(page: LoginRoute.page),
-          AutoRoute(page: HomeRoute.page),
+          AutoRoute(
+            path: 'login',
+            page: LoginRoute.page,
+          ),
+          AutoRoute(
+            path: 'home',
+            page: HomeRoute.page,
+          ),
         ],
       ),
     ];
