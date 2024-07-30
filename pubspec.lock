@@ -76,10 +76,11 @@ packages:
   auto_route:
     dependency: "direct main"
     description:
-      name: auto_route
-      sha256: a9001a90539ca3effc168f7e1029a5885c7326b9032c09ac895e303c1d137704
-      url: "https://pub.dev"
-    source: hosted
+      path: auto_route
+      ref: master
+      resolved-ref: "0d203cea305a35d28f33746b487c7db666e72547"
+      url: "https://github.com/ekrem-qb/auto_route_library"
+    source: git
     version: "8.3.0"
   auto_route_generator:
     dependency: "direct dev"
