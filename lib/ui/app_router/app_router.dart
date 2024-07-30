@@ -34,19 +34,31 @@ class AppRouter extends _$AppRouter {
               ),
               AutoRoute(
                 path: 'tasks',
-                page: TasksRoute.page,
+                page: FirsTabRoute.page,
+                children: [
+                  AutoRoute(path: '', page: TasksRoute.page),
+                ],
               ),
               AutoRoute(
                 path: 'recordings',
-                page: RecordingsRoute.page,
+                page: SecondTabRoute.page,
+                children: [
+                  AutoRoute(path: '', page: RecordingsRoute.page),
+                ],
               ),
               AutoRoute(
                 path: 'profiles',
-                page: ProfilesRoute.page,
+                page: ThirdTabRoute.page,
+                children: [
+                  AutoRoute(path: '', page: ProfilesRoute.page),
+                ],
               ),
               AutoRoute(
                 path: 'more',
-                page: MoreRoute.page,
+                page: ForthTabRoute.page,
+                children: [
+                  AutoRoute(path: '', page: MoreRoute.page),
+                ],
               ),
             ],
           ),
@@ -54,4 +66,24 @@ class AppRouter extends _$AppRouter {
       ),
     ];
   }
+}
+
+@RoutePage()
+class FirsTabPage extends AutoRouter {
+  const FirsTabPage({super.key});
+}
+
+@RoutePage()
+class SecondTabPage extends AutoRouter {
+  const SecondTabPage({super.key});
+}
+
+@RoutePage()
+class ThirdTabPage extends AutoRouter {
+  const ThirdTabPage({super.key});
+}
+
+@RoutePage()
+class ForthTabPage extends AutoRouter {
+  const ForthTabPage({super.key});
 }

@@ -21,6 +21,18 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AppPage(),
       );
     },
+    FirsTabRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const FirsTabPage(),
+      );
+    },
+    ForthTabRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ForthTabPage(),
+      );
+    },
     HomeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -51,10 +63,22 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const RecordingsPage(),
       );
     },
+    SecondTabRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SecondTabPage(),
+      );
+    },
     TasksRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const TasksPage(),
+      );
+    },
+    ThirdTabRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ThirdTabPage(),
       );
     },
   };
@@ -70,6 +94,34 @@ class AppRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AppRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [FirsTabPage]
+class FirsTabRoute extends PageRouteInfo<void> {
+  const FirsTabRoute({List<PageRouteInfo>? children})
+      : super(
+          FirsTabRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FirsTabRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ForthTabPage]
+class ForthTabRoute extends PageRouteInfo<void> {
+  const ForthTabRoute({List<PageRouteInfo>? children})
+      : super(
+          ForthTabRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ForthTabRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -145,6 +197,20 @@ class RecordingsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SecondTabPage]
+class SecondTabRoute extends PageRouteInfo<void> {
+  const SecondTabRoute({List<PageRouteInfo>? children})
+      : super(
+          SecondTabRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SecondTabRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [TasksPage]
 class TasksRoute extends PageRouteInfo<void> {
   const TasksRoute({List<PageRouteInfo>? children})
@@ -154,6 +220,20 @@ class TasksRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'TasksRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ThirdTabPage]
+class ThirdTabRoute extends PageRouteInfo<void> {
+  const ThirdTabRoute({List<PageRouteInfo>? children})
+      : super(
+          ThirdTabRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ThirdTabRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
