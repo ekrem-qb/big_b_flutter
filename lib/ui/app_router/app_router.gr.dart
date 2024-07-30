@@ -9,87 +9,6 @@
 
 part of 'app_router.dart';
 
-abstract class _$AppRouter extends RootStackRouter {
-  // ignore: unused_element
-  _$AppRouter({super.navigatorKey});
-
-  @override
-  final Map<String, PageFactory> pagesMap = {
-    AppRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const AppPage(),
-      );
-    },
-    FirstTabRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const FirstTabPage(),
-      );
-    },
-    ForthTabRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const ForthTabPage(),
-      );
-    },
-    HomeRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const HomePage(),
-      );
-    },
-    LoginRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const LoginPage(),
-      );
-    },
-    MoreRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const MorePage(),
-      );
-    },
-    PlannedTasksRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const PlannedTasksPage(),
-      );
-    },
-    ProfilesRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const ProfilesPage(),
-      );
-    },
-    RecordingsRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const RecordingsPage(),
-      );
-    },
-    SecondTabRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const SecondTabPage(),
-      );
-    },
-    TasksRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const TasksPage(),
-      );
-    },
-    ThirdTabRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const ThirdTabPage(),
-      );
-    },
-  };
-}
-
 /// generated route for
 /// [AppPage]
 class AppRoute extends PageRouteInfo<void> {
@@ -101,7 +20,12 @@ class AppRoute extends PageRouteInfo<void> {
 
   static const String name = 'AppRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AppPage();
+    },
+  );
 }
 
 /// generated route for
@@ -115,7 +39,12 @@ class FirstTabRoute extends PageRouteInfo<void> {
 
   static const String name = 'FirstTabRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const FirstTabPage();
+    },
+  );
 }
 
 /// generated route for
@@ -129,7 +58,12 @@ class ForthTabRoute extends PageRouteInfo<void> {
 
   static const String name = 'ForthTabRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ForthTabPage();
+    },
+  );
 }
 
 /// generated route for
@@ -143,7 +77,12 @@ class HomeRoute extends PageRouteInfo<void> {
 
   static const String name = 'HomeRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const HomePage();
+    },
+  );
 }
 
 /// generated route for
@@ -157,7 +96,12 @@ class LoginRoute extends PageRouteInfo<void> {
 
   static const String name = 'LoginRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const LoginPage();
+    },
+  );
 }
 
 /// generated route for
@@ -171,7 +115,12 @@ class MoreRoute extends PageRouteInfo<void> {
 
   static const String name = 'MoreRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const MorePage();
+    },
+  );
 }
 
 /// generated route for
@@ -185,7 +134,12 @@ class PlannedTasksRoute extends PageRouteInfo<void> {
 
   static const String name = 'PlannedTasksRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const PlannedTasksPage();
+    },
+  );
 }
 
 /// generated route for
@@ -199,7 +153,12 @@ class ProfilesRoute extends PageRouteInfo<void> {
 
   static const String name = 'ProfilesRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ProfilesPage();
+    },
+  );
 }
 
 /// generated route for
@@ -213,7 +172,12 @@ class RecordingsRoute extends PageRouteInfo<void> {
 
   static const String name = 'RecordingsRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const RecordingsPage();
+    },
+  );
 }
 
 /// generated route for
@@ -227,7 +191,12 @@ class SecondTabRoute extends PageRouteInfo<void> {
 
   static const String name = 'SecondTabRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SecondTabPage();
+    },
+  );
 }
 
 /// generated route for
@@ -241,7 +210,12 @@ class TasksRoute extends PageRouteInfo<void> {
 
   static const String name = 'TasksRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const TasksPage();
+    },
+  );
 }
 
 /// generated route for
@@ -255,5 +229,10 @@ class ThirdTabRoute extends PageRouteInfo<void> {
 
   static const String name = 'ThirdTabRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ThirdTabPage();
+    },
+  );
 }
