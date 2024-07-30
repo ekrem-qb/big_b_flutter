@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,6 +9,7 @@ import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
 import 'planned_tasks_model.dart';
 
+@RoutePage()
 class PlannedTasksPage extends StatelessWidget {
   const PlannedTasksPage({super.key});
 

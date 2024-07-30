@@ -4,6 +4,7 @@ import '../widgets/pages/app/app_page.dart';
 import '../widgets/pages/home/home_page.dart';
 import '../widgets/pages/login/login_page.dart';
 import '../widgets/tabs/more/more_page.dart';
+import '../widgets/tabs/planned_tasks/planned_tasks_page.dart';
 import '../widgets/tabs/profiles/profiles_page.dart';
 import '../widgets/tabs/recordings/recordings_page.dart';
 import '../widgets/tabs/tasks/tasks_page.dart';
@@ -37,6 +38,10 @@ class AppRouter extends _$AppRouter {
                 page: FirsTabRoute.page,
                 children: [
                   AutoRoute(path: '', page: TasksRoute.page),
+                  AutoRoute(
+                    path: 'planned_tasks',
+                    page: PlannedTasksRoute.page,
+                  ),
                 ],
               ),
               AutoRoute(

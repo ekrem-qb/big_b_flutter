@@ -1,13 +1,14 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../api/database.dart';
 import '../../../../api/entity/task/task.dart';
+import '../../../app_router/app_router.dart';
 import '../../dialogs/task_viewer/task_viewer_dialog.dart';
 import '../../extensions/snackbar.dart';
 import '../../pages/task_editor/task_editor_page.dart';
-import '../planned_tasks/planned_tasks_page.dart';
 
 class Tasks extends ChangeNotifier {
   Tasks(this._context) {
@@ -55,12 +56,7 @@ class Tasks extends ChangeNotifier {
   }
 
   void openPlanning() {
-    Navigator.push(
-      _context,
-      MaterialPageRoute(
-        builder: (final context) => const PlannedTasksPage(),
-      ),
-    );
+    _context.router.push(const PlannedTasksRoute());
   }
 
   void open(final int index) {
