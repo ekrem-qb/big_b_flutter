@@ -35,7 +35,7 @@ class AppRouter extends _$AppRouter {
               ),
               AutoRoute(
                 path: 'tasks',
-                page: FirsTabRoute.page,
+                page: FirstTabRoute.page,
                 children: [
                   AutoRoute(path: '', page: TasksRoute.page),
                   AutoRoute(
@@ -74,8 +74,8 @@ class AppRouter extends _$AppRouter {
 }
 
 @RoutePage()
-class FirsTabPage extends AutoRouter {
-  const FirsTabPage({super.key});
+class FirstTabPage extends AutoRouter {
+  const FirstTabPage({super.key});
 }
 
 @RoutePage()

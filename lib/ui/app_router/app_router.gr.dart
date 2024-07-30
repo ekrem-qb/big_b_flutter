@@ -21,10 +21,10 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AppPage(),
       );
     },
-    FirsTabRoute.name: (routeData) {
+    FirstTabRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const FirsTabPage(),
+        child: const FirstTabPage(),
       );
     },
     ForthTabRoute.name: (routeData) {
@@ -105,15 +105,15 @@ class AppRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [FirsTabPage]
-class FirsTabRoute extends PageRouteInfo<void> {
-  const FirsTabRoute({List<PageRouteInfo>? children})
+/// [FirstTabPage]
+class FirstTabRoute extends PageRouteInfo<void> {
+  const FirstTabRoute({List<PageRouteInfo>? children})
       : super(
-          FirsTabRoute.name,
+          FirstTabRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'FirsTabRoute';
+  static const String name = 'FirstTabRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
