@@ -36,7 +36,10 @@ class MyApp extends StatelessWidget {
           dragDevices: _dragDevices,
         ),
         debugShowCheckedModeBanner: false,
-        routerConfig: appRouter.config(),
+        restorationScopeId: 'app',
+        routerConfig: appRouter.config(
+          navRestorationScopeId: 'navigation',
+        ),
       ),
     );
   }
