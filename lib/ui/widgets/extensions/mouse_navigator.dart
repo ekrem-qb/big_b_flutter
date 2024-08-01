@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -13,13 +14,15 @@ class MouseNavigator extends StatelessWidget {
   Widget build(final BuildContext context) {
     final router = context.read<AppRouter?>();
 
-    return Listener(
-      onPointerDown: (final pointerEvent) {
-        if (pointerEvent.buttons == kBackMouseButton) {
-          (router?.navigationHistory.length ?? 0) > 2 ? router?.back() : Navigator.maybePop(context);
-        }
-      },
-      child: child,
-    );
+    return kIsWeb
+        ? child
+        : Listener(
+            onPointerDown: (final pointerEvent) {
+              if (pointerEvent.buttons == kBackMouseButton) {
+                (router?.navigationHistory.length ?? 0) > 2 ? router?.back() : Navigator.maybePop(context);
+              }
+            },
+            child: child,
+          );
   }
 }
