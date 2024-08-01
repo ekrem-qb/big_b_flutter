@@ -55,12 +55,14 @@ class AppPage extends StatelessWidget {
 
     return AutoRouter.declarative(
       routes: (final handler) {
-        return [
-          switch (state) {
-            AppStateSignedIn() => const HomeRoute(),
-            AppStateSignedOut() => const LoginRoute(),
-          },
-        ];
+        return handler.hasPendingRoutes
+            ? handler.initialPendingRoutes!
+            : [
+                switch (state) {
+                  AppStateSignedIn() => const HomeRoute(),
+                  AppStateSignedOut() => const LoginRoute(),
+                },
+              ];
       },
     );
   }
