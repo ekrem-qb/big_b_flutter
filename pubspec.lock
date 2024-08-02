@@ -52,12 +52,11 @@ packages:
   auto_route:
     dependency: "direct main"
     description:
-      path: auto_route
-      ref: master
-      resolved-ref: "39f76911b2ef9312f427fed0d776cf1ecf4450cb"
-      url: "https://github.com/ekrem-qb/auto_route_library"
-    source: git
-    version: "9.0.0"
+      name: auto_route
+      sha256: "0956ad9f1604d863f3de9df3bf478ae5eb26c637ba997493a1898152ebcdac90"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.1.0"
   auto_route_generator:
     dependency: "direct dev"
     description:
