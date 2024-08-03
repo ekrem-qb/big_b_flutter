@@ -22,6 +22,8 @@ class HomeModel extends RestorableProperty {
   }
 
   void goBack(final TabsRouter tabsRouter) {
+    if (_state.history.isEmpty) return;
+
     _state = _state.copyWith(history: _state.history.sublist(0, _state.history.length - 1));
     notifyListeners();
     tabsRouter.setActiveIndex(_state.history.lastOrNull ?? 0);
