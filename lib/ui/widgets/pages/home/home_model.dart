@@ -6,6 +6,8 @@ import 'home_state.dart';
 class HomeModel extends RestorableProperty {
   HomeState _state = const HomeState();
 
+  bool get canGoBack => _state.history.length > 1;
+
   void setTab(final int newIndex) {
     if (_state.history.lastOrNull == newIndex) return;
 

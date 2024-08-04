@@ -47,7 +47,11 @@ class _HomeView extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<HomeModel>();
+    late HomeModel model;
+    context.select((final HomeModel newModel) {
+      model = newModel;
+      return newModel.canGoBack;
+    });
 
     return MouseNavigator(
       child: AutoTabsScaffold(
@@ -63,7 +67,7 @@ class _HomeView extends StatelessWidget {
           });
 
           return PopScope(
-            canPop: false,
+            canPop: !model.canGoBack,
             onPopInvoked: (final didPop) {
               if (_didPop) {
                 _didPop = false;
