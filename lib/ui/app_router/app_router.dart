@@ -52,7 +52,7 @@ class AppRouter extends RootStackRouter {
                     ],
                   ),
                   CupertinoRoute(
-                    path: 'planned_tasks',
+                    path: 'planned',
                     page: PlannedTasksRoute.page,
                   ),
                 ],
