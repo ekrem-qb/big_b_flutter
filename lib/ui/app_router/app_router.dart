@@ -12,7 +12,7 @@ import '../widgets/tabs/tasks/tasks_page.dart';
 
 part 'app_router.gr.dart';
 
-@AutoRouterConfig()
+@AutoRouterConfig(replaceInRouteName: 'Page|Screen|Dialog,Route')
 class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes {
