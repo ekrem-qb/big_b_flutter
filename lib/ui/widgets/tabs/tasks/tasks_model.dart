@@ -1,12 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../api/database.dart';
 import '../../../../api/entity/task/task.dart';
 import '../../../app_router/app_router.dart';
-import '../../dialogs/task_viewer/task_viewer_dialog.dart';
 import '../../extensions/snackbar.dart';
 import '../../pages/task_editor/task_editor_page.dart';
 
@@ -62,11 +60,7 @@ class Tasks extends ChangeNotifier {
   void open(final int index) {
     if (tasks.length < index) return;
 
-    showCupertinoDialog(
-      context: _context,
-      barrierDismissible: true,
-      builder: (final context) => TaskViewerDialog(task: tasks[index]),
-    );
+    _context.router.push(TaskViewerRoute(id: tasks[index].id, task: tasks[index]));
   }
 
   void newTask() {

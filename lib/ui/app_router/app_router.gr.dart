@@ -200,6 +200,61 @@ class SecondTabRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [TaskViewerDialog]
+class TaskViewerRoute extends PageRouteInfo<TaskViewerRouteArgs> {
+  TaskViewerRoute({
+    required int id,
+    Task? task,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          TaskViewerRoute.name,
+          args: TaskViewerRouteArgs(
+            id: id,
+            task: task,
+            key: key,
+          ),
+          rawPathParams: {'id': id},
+          initialChildren: children,
+        );
+
+  static const String name = 'TaskViewerRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<TaskViewerRouteArgs>(
+          orElse: () => TaskViewerRouteArgs(id: pathParams.getInt('id')));
+      return TaskViewerDialog(
+        id: args.id,
+        task: args.task,
+        key: args.key,
+      );
+    },
+  );
+}
+
+class TaskViewerRouteArgs {
+  const TaskViewerRouteArgs({
+    required this.id,
+    this.task,
+    this.key,
+  });
+
+  final int id;
+
+  final Task? task;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'TaskViewerRouteArgs{id: $id, task: $task, key: $key}';
+  }
+}
+
+/// generated route for
 /// [TasksPage]
 class TasksRoute extends PageRouteInfo<void> {
   const TasksRoute({List<PageRouteInfo>? children})

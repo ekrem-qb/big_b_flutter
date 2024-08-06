@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../constants.dart';
 import '../../extensions/app_bar_controller.dart';
+import '../../extensions/dialog_router.dart';
 import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
 import 'tasks_model.dart';
 
@@ -18,7 +19,12 @@ class TasksPage extends StatelessWidget {
         ChangeNotifierProvider(create: (final _) => AppBarController()),
         ChangeNotifierProvider(create: Tasks.new),
       ],
-      child: const _Scaffold(),
+      child: const Stack(
+        children: [
+          _Scaffold(),
+          DialogRouter(),
+        ],
+      ),
     );
   }
 }

@@ -1,6 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../api/entity/task/task.dart';
+import '../widgets/dialogs/task_viewer/task_viewer_dialog.dart';
+import '../widgets/extensions/dialog_router.dart';
 import '../widgets/pages/app/app_page.dart';
 import '../widgets/pages/home/home_page.dart';
 import '../widgets/pages/login/login_page.dart';
@@ -38,7 +41,16 @@ class AppRouter extends RootStackRouter {
                 path: 'tasks',
                 page: FirstTabRoute.page,
                 children: [
-                  CupertinoRoute(path: '', page: TasksRoute.page),
+                  CupertinoRoute(
+                    path: '',
+                    page: TasksRoute.page,
+                    children: [
+                      DialogRoute(
+                        path: ':id',
+                        page: TaskViewerRoute.page,
+                      ),
+                    ],
+                  ),
                   CupertinoRoute(
                     path: 'planned_tasks',
                     page: PlannedTasksRoute.page,

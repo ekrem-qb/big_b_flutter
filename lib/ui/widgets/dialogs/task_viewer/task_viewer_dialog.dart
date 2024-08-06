@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -5,16 +6,18 @@ import '../../../../api/entity/task/task.dart';
 import '../../extensions/mouse_navigator.dart';
 import 'task_viewer_model.dart';
 
+@RoutePage()
 class TaskViewerDialog extends StatelessWidget {
-  const TaskViewerDialog({required this.task, super.key});
+  const TaskViewerDialog({@pathParam required this.id, this.task, super.key});
 
-  final Task task;
+  final int id;
+  final Task? task;
 
   @override
   Widget build(final BuildContext context) {
     return MouseNavigator(
       child: ChangeNotifierProvider(
-        create: (final context) => TaskViewer(context, task),
+        create: (final context) => TaskViewer(context, id, task),
         child: AlertDialog(
           insetPadding: const EdgeInsets.all(16),
           title: Row(
@@ -98,7 +101,7 @@ class _IsDoneIcon extends StatelessWidget {
     });
 
     return Icon(
-      model.task!.isDone ? Icons.check_circle : Icons.circle_outlined,
+      model.task?.isDone ?? false ? Icons.check_circle : Icons.circle_outlined,
       size: 32,
     );
   }
@@ -120,7 +123,7 @@ class _Text extends StatelessWidget {
     });
 
     return Text(
-      model.task!.text,
+      model.task?.text ?? '',
       style: const TextStyle(fontWeight: FontWeight.w500),
     );
   }
@@ -152,7 +155,7 @@ class _Image extends StatelessWidget {
               clipBehavior: Clip.antiAlias,
               borderRadius: BorderRadius.circular(12),
               child: Image.network(
-                model.task!.imageUrl!.toString(),
+                model.task?.imageUrl!.toString() ?? '',
                 filterQuality: FilterQuality.medium,
                 fit: BoxFit.cover,
                 frameBuilder: (final context, final child, final frame, final wasSynchronouslyLoaded) {
@@ -202,7 +205,7 @@ class _Time extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         const Flexible(child: _Deadline()),
-        if (model.task!.isDone) const Flexible(child: _Delay()),
+        if (model.task?.isDone ?? false) const Flexible(child: _Delay()),
       ],
     );
   }
@@ -230,7 +233,7 @@ class _Deadline extends StatelessWidget {
         const SizedBox(width: 8),
         Flexible(
           child: Text(
-            model.task!.deadline.toString(),
+            model.task?.deadline.toString() ?? '',
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
@@ -259,7 +262,7 @@ class _Delay extends StatelessWidget {
       child: DecoratedBox(
         decoration: UnderlineTabIndicator(
           borderSide: BorderSide(
-            color: model.task!.delay == Duration.zero ? Colors.green : Colors.red,
+            color: model.task?.delay == Duration.zero ? Colors.green : Colors.red,
             width: 4,
           ),
           borderRadius: const BorderRadius.all(
@@ -274,7 +277,7 @@ class _Delay extends StatelessWidget {
             const SizedBox(width: 8),
             Flexible(
               child: Text(
-                model.task!.delay == Duration.zero ? 'Tam zamanında yapıldı' : '${model.task!.delay.abs()} Geç yapıldı',
+                model.task?.delay == Duration.zero ? 'Tam zamanında yapıldı' : '${model.task?.delay.abs()} Geç yapıldı',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
