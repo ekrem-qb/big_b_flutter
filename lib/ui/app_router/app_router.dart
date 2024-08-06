@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../widgets/pages/app/app_page.dart';
 import '../widgets/pages/home/home_page.dart';
@@ -16,16 +17,16 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes {
     return [
-      AutoRoute(
+      CupertinoRoute(
         path: '/',
         page: AppRoute.page,
         initial: true,
         children: [
-          AutoRoute(
+          CupertinoRoute(
             path: 'login',
             page: LoginRoute.page,
           ),
-          AutoRoute(
+          CupertinoRoute(
             path: 'home',
             page: HomeRoute.page,
             children: [
@@ -33,36 +34,36 @@ class AppRouter extends RootStackRouter {
                 path: '',
                 redirectTo: 'tasks',
               ),
-              AutoRoute(
+              CupertinoRoute(
                 path: 'tasks',
                 page: FirstTabRoute.page,
                 children: [
-                  AutoRoute(path: '', page: TasksRoute.page),
-                  AutoRoute(
+                  CupertinoRoute(path: '', page: TasksRoute.page),
+                  CupertinoRoute(
                     path: 'planned_tasks',
                     page: PlannedTasksRoute.page,
                   ),
                 ],
               ),
-              AutoRoute(
+              CupertinoRoute(
                 path: 'recordings',
                 page: SecondTabRoute.page,
                 children: [
-                  AutoRoute(path: '', page: RecordingsRoute.page),
+                  CupertinoRoute(path: '', page: RecordingsRoute.page),
                 ],
               ),
-              AutoRoute(
+              CupertinoRoute(
                 path: 'profiles',
                 page: ThirdTabRoute.page,
                 children: [
-                  AutoRoute(path: '', page: ProfilesRoute.page),
+                  CupertinoRoute(path: '', page: ProfilesRoute.page),
                 ],
               ),
-              AutoRoute(
+              CupertinoRoute(
                 path: 'more',
                 page: ForthTabRoute.page,
                 children: [
-                  AutoRoute(path: '', page: MoreRoute.page),
+                  CupertinoRoute(path: '', page: MoreRoute.page),
                 ],
               ),
             ],
