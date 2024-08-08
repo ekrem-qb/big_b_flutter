@@ -46,7 +46,7 @@ class AppRouter extends RootStackRouter {
                     page: TasksRoute.page,
                     children: [
                       DialogRoute(
-                        path: ':id',
+                        path: ':id/view',
                         page: TaskViewerRoute.page,
                       ),
                     ],
