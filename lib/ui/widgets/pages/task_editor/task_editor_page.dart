@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,89 +10,147 @@ import '../../../theme.dart';
 import '../../extensions/mouse_navigator.dart';
 import 'task_editor_model.dart';
 
+@RoutePage()
 class TaskEditorPage extends StatelessWidget {
-  const TaskEditorPage({this.plannedTask, this.task, super.key});
+  const TaskEditorPage({
+    @pathParam this.taskId,
+    this.task,
+    super.key,
+  });
 
-  final PlannedTask? plannedTask;
+  final int? taskId;
   final Task? task;
 
   @override
   Widget build(final BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (final context) => TaskEditor(
+        context,
+        taskId: taskId,
+        originalTask: task,
+      ),
+      child: TaskEditorView(isNew: taskId == null),
+    );
+  }
+}
+
+@RoutePage()
+class PlannedTaskEditorPage extends StatelessWidget {
+  const PlannedTaskEditorPage({
+    @pathParam this.plannedTaskId,
+    this.plannedTask,
+    super.key,
+  });
+
+  final int? plannedTaskId;
+  final PlannedTask? plannedTask;
+
+  @override
+  Widget build(final BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (final context) => TaskEditor(
+        context,
+        plannedTaskId: plannedTaskId,
+        originalPlannedTask: plannedTask,
+      ),
+      child: TaskEditorView(isNew: plannedTaskId == null),
+    );
+  }
+}
+
+class TaskEditorView extends StatelessWidget {
+  const TaskEditorView({
+    required this.isNew,
+    super.key,
+  });
+
+  final bool isNew;
+
+  @override
+  Widget build(final BuildContext context) {
+    final isLoading = context.select((final TaskEditor model) => model.isLoading);
+
     return MouseNavigator(
-      child: ChangeNotifierProvider(
-        create: (final context) => TaskEditor(context, originalPlannedTask: plannedTask, originalTask: task),
-        child: Scaffold(
-          appBar: AppBar(
-            title: plannedTask == null && task == null ? const Text('Yeni görev') : null,
-            actions: [
-              if (plannedTask != null || task != null) const _DeleteButton(),
-            ],
-          ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Açıklama', style: smallTextStyle),
-                  const SizedBox(height: 8),
-                  const _Text(),
-                  const SizedBox(height: 16),
-                  const _ImageToggle(),
-                  const SizedBox(height: 16),
-                  const Row(
+      child: Scaffold(
+        appBar: AppBar(
+          title: isNew ? const Text('Yeni görev') : null,
+          actions: [
+            if (!isNew) const _DeleteButton(),
+          ],
+        ),
+        body: isLoading ? const Center(child: CircularProgressIndicator()) : const _Body(),
+        bottomNavigationBar: !isLoading ? const _SaveButton() : null,
+      ),
+    );
+  }
+}
+
+class _Body extends StatelessWidget {
+  const _Body();
+
+  @override
+  Widget build(final BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Açıklama', style: smallTextStyle),
+            const SizedBox(height: 8),
+            const _Text(),
+            const SizedBox(height: 16),
+            const _ImageToggle(),
+            const SizedBox(height: 16),
+            const Row(
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Saat', style: smallTextStyle),
+                    SizedBox(height: 8),
+                    _Time(),
+                  ],
+                ),
+                SizedBox(width: 16),
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Saat', style: smallTextStyle),
-                          SizedBox(height: 8),
-                          _Time(),
-                        ],
-                      ),
-                      SizedBox(width: 16),
-                      Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Tarih', style: smallTextStyle),
-                            SizedBox(height: 8),
-                            _Date(),
-                          ],
-                        ),
-                      ),
+                      Text('Tarih', style: smallTextStyle),
+                      SizedBox(height: 8),
+                      _Date(),
                     ],
                   ),
-                  const SizedBox(height: 16),
-                  const Text('Tekrarlama', style: smallTextStyle),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      _Day(day: 0, text: weekdayNames[0]),
-                      const SizedBox(width: 8),
-                      _Day(day: 1, text: weekdayNames[1]),
-                      const SizedBox(width: 8),
-                      _Day(day: 2, text: weekdayNames[2]),
-                      const SizedBox(width: 8),
-                      _Day(day: 3, text: weekdayNames[3]),
-                      const SizedBox(width: 8),
-                      _Day(day: 4, text: weekdayNames[4]),
-                      const SizedBox(width: 8),
-                      _Day(day: 5, text: weekdayNames[5]),
-                      const SizedBox(width: 8),
-                      _Day(day: 6, text: weekdayNames[6]),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  const Text('Görevli', style: smallTextStyle),
-                  const SizedBox(height: 8),
-                  const _Executives(),
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
-          bottomNavigationBar: const _SaveButton(),
+            const SizedBox(height: 16),
+            const Text('Tekrarlama', style: smallTextStyle),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                _Day(day: 0, text: weekdayNames[0]),
+                const SizedBox(width: 8),
+                _Day(day: 1, text: weekdayNames[1]),
+                const SizedBox(width: 8),
+                _Day(day: 2, text: weekdayNames[2]),
+                const SizedBox(width: 8),
+                _Day(day: 3, text: weekdayNames[3]),
+                const SizedBox(width: 8),
+                _Day(day: 4, text: weekdayNames[4]),
+                const SizedBox(width: 8),
+                _Day(day: 5, text: weekdayNames[5]),
+                const SizedBox(width: 8),
+                _Day(day: 6, text: weekdayNames[6]),
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Text('Görevli', style: smallTextStyle),
+            const SizedBox(height: 8),
+            const _Executives(),
+          ],
         ),
       ),
     );

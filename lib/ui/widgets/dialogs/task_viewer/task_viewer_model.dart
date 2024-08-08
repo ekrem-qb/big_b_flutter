@@ -1,12 +1,13 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../api/database.dart';
 import '../../../../api/entity/task/task.dart';
+import '../../../app_router/app_router.dart';
 import '../../extensions/snackbar.dart';
-import '../../pages/task_editor/task_editor_page.dart';
 import '../delete_dialog.dart';
 
 class TaskViewer extends ChangeNotifier {
@@ -55,12 +56,7 @@ class TaskViewer extends ChangeNotifier {
   }
 
   void edit() {
-    Navigator.push(
-      _context,
-      MaterialPageRoute(
-        builder: (final context) => TaskEditorPage(task: task),
-      ),
-    );
+    _context.pushRoute(TaskEditorRoute(taskId: _id, task: task));
   }
 
   Future<void> delete() async {

@@ -16,11 +16,12 @@ import '../../extensions/pickers/time_picker.dart';
 import '../../extensions/snackbar.dart';
 
 class TaskEditor extends ChangeNotifier {
-  TaskEditor(this._context, {final PlannedTask? originalPlannedTask, final Task? originalTask})
-      : _id = originalPlannedTask?.id ?? originalTask?.id ?? -1,
-        isAlreadyPlanned = originalPlannedTask != null
+  TaskEditor(this._context, {final int? plannedTaskId, final int? taskId, final PlannedTask? originalPlannedTask, final Task? originalTask})
+      : _id = plannedTaskId ?? taskId ?? -1,
+        _isLoading = (originalPlannedTask == null && plannedTaskId != null) || (originalTask == null && taskId != null),
+        isAlreadyPlanned = originalPlannedTask != null || plannedTaskId != null
             ? true
-            : originalTask != null
+            : originalTask != null || taskId != null
                 ? false
                 : null,
         __time = originalPlannedTask?.deadline.toTime() ?? originalTask?.deadline.toTime() ?? DateTime.now().toTime(),
@@ -31,6 +32,37 @@ class TaskEditor extends ChangeNotifier {
         executives = originalPlannedTask?.executives.toList() ?? originalTask?.executives.toList() ?? [] {
     _timeText = _formatTime(_time);
     _dateText = _formatDate(_date);
+    if (isLoading) {
+      _load(plannedTaskId, taskId);
+    }
+  }
+
+  Future<void> _load(final int? plannedTaskId, final int? taskId) async {
+    try {
+      if (plannedTaskId != null) {
+        final plannedTask = await db.from(PlannedTask.tableName).select(PlannedTask.fieldNames).eq($PlannedTaskImplJsonKeys.id, plannedTaskId).single().withConverter(PlannedTask.fromJson).onError(onError);
+
+        _time = plannedTask.deadline.toTime();
+        _date = plannedTask.deadline;
+        _isImageRequired = plannedTask.isImageRequired;
+        weekdays = plannedTask.weekdays;
+        textController.text = plannedTask.text;
+        executives.addAll(plannedTask.executives);
+      } else if (taskId != null) {
+        final task = await db.from(Task.tableName).select(Task.fieldNames).eq($TaskImplJsonKeys.id, taskId).single().withConverter(Task.fromJson).onError(onError);
+
+        _time = task.deadline.toTime();
+        _date = task.deadline;
+        _isImageRequired = task.isImageRequired;
+        textController.text = task.text;
+        executives.addAll(task.executives);
+      }
+    } on Exception catch (e) {
+      showSnackbar(text: e.toString(), context: _context);
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
   }
 
   final _now = DateTime.now();
@@ -79,6 +111,15 @@ class TaskEditor extends ChangeNotifier {
     if (_isUploading == value) return;
 
     _isUploading = value;
+    notifyListeners();
+  }
+
+  bool _isLoading;
+  bool get isLoading => _isLoading;
+  set isLoading(final bool value) {
+    if (_isLoading == value) return;
+
+    _isLoading = value;
     notifyListeners();
   }
 
@@ -259,9 +300,10 @@ class TaskEditor extends ChangeNotifier {
     return true;
   }
 
-  void onError() {
+  E onError<E>(final E e, final StackTrace? stackTrace) {
     showSnackbar(text: 'Beklenmeyen bir hata oluştu', context: _context);
     isUploading = false;
+    return e;
   }
 
   Future<void> delete() async {

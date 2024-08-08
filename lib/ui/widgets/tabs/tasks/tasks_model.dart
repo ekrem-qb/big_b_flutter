@@ -6,7 +6,6 @@ import '../../../../api/database.dart';
 import '../../../../api/entity/task/task.dart';
 import '../../../app_router/app_router.dart';
 import '../../extensions/snackbar.dart';
-import '../../pages/task_editor/task_editor_page.dart';
 
 class Tasks extends ChangeNotifier {
   Tasks(this._context) {
@@ -64,12 +63,7 @@ class Tasks extends ChangeNotifier {
   }
 
   void newTask() {
-    Navigator.push(
-      _context,
-      MaterialPageRoute(
-        builder: (final context) => const TaskEditorPage(),
-      ),
-    );
+    _context.pushRoute(TaskEditorRoute());
   }
 
   @override

@@ -124,6 +124,62 @@ class MoreRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [PlannedTaskEditorPage]
+class PlannedTaskEditorRoute extends PageRouteInfo<PlannedTaskEditorRouteArgs> {
+  PlannedTaskEditorRoute({
+    int? plannedTaskId,
+    PlannedTask? plannedTask,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PlannedTaskEditorRoute.name,
+          args: PlannedTaskEditorRouteArgs(
+            plannedTaskId: plannedTaskId,
+            plannedTask: plannedTask,
+            key: key,
+          ),
+          rawPathParams: {'plannedTaskId': plannedTaskId},
+          initialChildren: children,
+        );
+
+  static const String name = 'PlannedTaskEditorRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<PlannedTaskEditorRouteArgs>(
+          orElse: () => PlannedTaskEditorRouteArgs(
+              plannedTaskId: pathParams.optInt('plannedTaskId')));
+      return PlannedTaskEditorPage(
+        plannedTaskId: args.plannedTaskId,
+        plannedTask: args.plannedTask,
+        key: args.key,
+      );
+    },
+  );
+}
+
+class PlannedTaskEditorRouteArgs {
+  const PlannedTaskEditorRouteArgs({
+    this.plannedTaskId,
+    this.plannedTask,
+    this.key,
+  });
+
+  final int? plannedTaskId;
+
+  final PlannedTask? plannedTask;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'PlannedTaskEditorRouteArgs{plannedTaskId: $plannedTaskId, plannedTask: $plannedTask, key: $key}';
+  }
+}
+
+/// generated route for
 /// [PlannedTasksPage]
 class PlannedTasksRoute extends PageRouteInfo<void> {
   const PlannedTasksRoute({List<PageRouteInfo>? children})
@@ -197,6 +253,62 @@ class SecondTabRoute extends PageRouteInfo<void> {
       return const SecondTabPage();
     },
   );
+}
+
+/// generated route for
+/// [TaskEditorPage]
+class TaskEditorRoute extends PageRouteInfo<TaskEditorRouteArgs> {
+  TaskEditorRoute({
+    int? taskId,
+    Task? task,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          TaskEditorRoute.name,
+          args: TaskEditorRouteArgs(
+            taskId: taskId,
+            task: task,
+            key: key,
+          ),
+          rawPathParams: {'taskId': taskId},
+          initialChildren: children,
+        );
+
+  static const String name = 'TaskEditorRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<TaskEditorRouteArgs>(
+          orElse: () =>
+              TaskEditorRouteArgs(taskId: pathParams.optInt('taskId')));
+      return TaskEditorPage(
+        taskId: args.taskId,
+        task: args.task,
+        key: args.key,
+      );
+    },
+  );
+}
+
+class TaskEditorRouteArgs {
+  const TaskEditorRouteArgs({
+    this.taskId,
+    this.task,
+    this.key,
+  });
+
+  final int? taskId;
+
+  final Task? task;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'TaskEditorRouteArgs{taskId: $taskId, task: $task, key: $key}';
+  }
 }
 
 /// generated route for
