@@ -13,7 +13,7 @@ import '../../../theme.dart';
 import '../../extensions/snackbar.dart';
 
 class Player extends ChangeNotifier {
-  Player(this._context, {required final Recording recording}) : _recording = recording {
+  Player(this._context, {required this.id, final Recording? recording}) : _recording = recording {
     durationSubscription = _player.stream.duration.listen(_onDurationChanged);
     positionSubscription = _player.stream.position.listen(_onPositionChanged);
     playingSubscription = _player.stream.playing.listen(_onPlayingChanged);
@@ -23,7 +23,6 @@ class Player extends ChangeNotifier {
   }
 
   final BuildContext _context;
-  final Recording _recording;
   final _player = media.Player(
     configuration: const media.PlayerConfiguration(
       logLevel: kDebugMode ? media.MPVLogLevel.debug : media.MPVLogLevel.error,
@@ -31,6 +30,7 @@ class Player extends ChangeNotifier {
   );
   final scrollController = ItemScrollController();
   final offsetController = ScrollOffsetController();
+  final int id;
 
   late final StreamSubscription durationSubscription;
   late final StreamSubscription positionSubscription;
@@ -38,6 +38,15 @@ class Player extends ChangeNotifier {
   late final StreamSubscription errorSubscription;
 
   bool isSeeking = false;
+
+  Recording? _recording;
+  Recording? get recording => _recording;
+  set recording(final Recording? value) {
+    if (_recording == value) return;
+
+    _recording = value;
+    notifyListeners();
+  }
 
   Duration _position = Duration.zero;
   Duration get position => _position;
@@ -96,15 +105,27 @@ class Player extends ChangeNotifier {
   List<TextLine>? _textLines;
 
   Future<void> _load() async {
-    await Future.wait([
-      _loadAudio(),
-      _loadText(),
-    ]);
+    try {
+      recording ??= await db.from(Recording.tableName).select(Recording.fieldNames).eq($RecordingImplJsonKeys.id, id).single().withConverter(Recording.fromJson).onError(_onLoadError);
+
+      await Future.wait([
+        _loadAudio(),
+        _loadText(),
+      ]);
+    } on Exception catch (e) {
+      _onLoadError(e);
+    }
+  }
+
+  E _onLoadError<E>(final E e, [final StackTrace? stackTrace]) {
+    showSnackbar(text: e.toString(), context: _context);
+    Navigator.of(_context).pop();
+    return e;
   }
 
   Future<void> _loadAudio() async {
     try {
-      await _player.open(media.Media(_recording.audioUrl), play: false);
+      await _player.open(media.Media(_recording?.audioUrl ?? ''), play: false);
       isAudioLoaded = true;
     } on Exception catch (e) {
       isAudioLoaded = false;
@@ -114,7 +135,7 @@ class Player extends ChangeNotifier {
 
   Future<void> _loadText() async {
     try {
-      _textLines = await db.from(TextLine.tableName).select(TextLine.fieldNames).eq('record', _recording.id).order($TextLineImplJsonKeys.time, ascending: true).withConverter(TextLine.converter);
+      _textLines = await db.from(TextLine.tableName).select(TextLine.fieldNames).eq('record', id).order($TextLineImplJsonKeys.time, ascending: true).withConverter(TextLine.converter);
 
       if (_textLines == null) return;
 

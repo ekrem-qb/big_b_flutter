@@ -1,10 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../api/database.dart';
 import '../../../../api/entity/recording/recording.dart';
+import '../../../app_router/app_router.dart';
 import '../../extensions/snackbar.dart';
-import '../../pages/player/player_page.dart';
 
 class Recordings extends ChangeNotifier {
   Recordings(this._context) {
@@ -83,12 +84,10 @@ class Recordings extends ChangeNotifier {
   void open(final int index) {
     if (recordings.length < index) return;
 
-    Navigator.push(
-      _context,
-      MaterialPageRoute(
-        builder: (final context) => PlayerPage(
-          recording: recordings[index],
-        ),
+    _context.router.push(
+      PlayerRoute(
+        id: recordings[index].id,
+        recording: recordings[index],
       ),
     );
   }

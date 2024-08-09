@@ -2,12 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../api/entity/planned_task/planned_task.dart';
+import '../../api/entity/recording/recording.dart';
 import '../../api/entity/task/task.dart';
 import '../widgets/dialogs/task_viewer/task_viewer_dialog.dart';
 import '../widgets/extensions/dialog_router.dart';
 import '../widgets/pages/app/app_page.dart';
 import '../widgets/pages/home/home_page.dart';
 import '../widgets/pages/login/login_page.dart';
+import '../widgets/pages/player/player_page.dart';
 import '../widgets/pages/task_editor/task_editor_page.dart';
 import '../widgets/tabs/more/more_page.dart';
 import '../widgets/tabs/planned_tasks/planned_tasks_page.dart';
@@ -72,6 +74,10 @@ class AppRouter extends RootStackRouter {
                 page: SecondTabRoute.page,
                 children: [
                   CupertinoRoute(path: '', page: RecordingsRoute.page),
+                  CupertinoRoute(
+                    path: ':id',
+                    page: PlayerRoute.page,
+                  ),
                 ],
               ),
               CupertinoRoute(

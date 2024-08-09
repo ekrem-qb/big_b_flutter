@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -10,19 +11,26 @@ import '../../extensions/separator.dart';
 import '../../extensions/smooth_scroll/positioned_smooth_scroll.dart';
 import 'player_model.dart';
 
+@RoutePage()
 class PlayerPage extends StatelessWidget {
   const PlayerPage({
-    required this.recording,
+    @pathParam required this.id,
+    this.recording,
     super.key,
   });
 
-  final Recording recording;
+  final int id;
+  final Recording? recording;
 
   @override
   Widget build(final BuildContext context) {
     return MouseNavigator(
       child: ChangeNotifierProvider(
-        create: (final context) => Player(context, recording: recording),
+        create: (final context) => Player(
+          context,
+          id: id,
+          recording: recording,
+        ),
         child: Scaffold(
           appBar: AppBar(),
           body: const _Player(),

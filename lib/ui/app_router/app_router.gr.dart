@@ -199,6 +199,61 @@ class PlannedTasksRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [PlayerPage]
+class PlayerRoute extends PageRouteInfo<PlayerRouteArgs> {
+  PlayerRoute({
+    required int id,
+    Recording? recording,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PlayerRoute.name,
+          args: PlayerRouteArgs(
+            id: id,
+            recording: recording,
+            key: key,
+          ),
+          rawPathParams: {'id': id},
+          initialChildren: children,
+        );
+
+  static const String name = 'PlayerRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<PlayerRouteArgs>(
+          orElse: () => PlayerRouteArgs(id: pathParams.getInt('id')));
+      return PlayerPage(
+        id: args.id,
+        recording: args.recording,
+        key: args.key,
+      );
+    },
+  );
+}
+
+class PlayerRouteArgs {
+  const PlayerRouteArgs({
+    required this.id,
+    this.recording,
+    this.key,
+  });
+
+  final int id;
+
+  final Recording? recording;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'PlayerRouteArgs{id: $id, recording: $recording, key: $key}';
+  }
+}
+
+/// generated route for
 /// [ProfilesPage]
 class ProfilesRoute extends PageRouteInfo<void> {
   const ProfilesRoute({List<PageRouteInfo>? children})
