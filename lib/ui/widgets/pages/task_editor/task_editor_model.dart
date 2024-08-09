@@ -40,7 +40,7 @@ class TaskEditor extends ChangeNotifier {
   Future<void> _load(final int? plannedTaskId, final int? taskId) async {
     try {
       if (plannedTaskId != null) {
-        final plannedTask = await db.from(PlannedTask.tableName).select(PlannedTask.fieldNames).eq($PlannedTaskImplJsonKeys.id, plannedTaskId).single().withConverter(PlannedTask.fromJson).onError(onError);
+        final plannedTask = await db.from(PlannedTask.tableName).select(PlannedTask.fieldNames).eq($PlannedTaskImplJsonKeys.id, plannedTaskId).single().withConverter(PlannedTask.fromJson).onError(_onError);
 
         _time = plannedTask.deadline.toTime();
         _date = plannedTask.deadline;
@@ -49,7 +49,7 @@ class TaskEditor extends ChangeNotifier {
         textController.text = plannedTask.text;
         executives.addAll(plannedTask.executives);
       } else if (taskId != null) {
-        final task = await db.from(Task.tableName).select(Task.fieldNames).eq($TaskImplJsonKeys.id, taskId).single().withConverter(Task.fromJson).onError(onError);
+        final task = await db.from(Task.tableName).select(Task.fieldNames).eq($TaskImplJsonKeys.id, taskId).single().withConverter(Task.fromJson).onError(_onError);
 
         _time = task.deadline.toTime();
         _date = task.deadline;
@@ -241,13 +241,13 @@ class TaskEditor extends ChangeNotifier {
 
         switch (plannedTask.id) {
           case -1:
-            final addedPlannedTasks = await db.from(PlannedTask.tableName).insert(plannedTask.toJson()).select(PlannedTask.fieldNames).withConverter(PlannedTask.converter).catchError(onError);
+            final addedPlannedTasks = await db.from(PlannedTask.tableName).insert(plannedTask.toJson()).select(PlannedTask.fieldNames).withConverter(PlannedTask.converter).catchError(_onError);
 
             id = addedPlannedTasks?.firstOrNull?.id;
           default:
-            await db.from(PlannedTask.tableName).update(plannedTask.toJson()).eq($PlannedTaskImplJsonKeys.id, plannedTask.id).catchError(onError);
+            await db.from(PlannedTask.tableName).update(plannedTask.toJson()).eq($PlannedTaskImplJsonKeys.id, plannedTask.id).catchError(_onError);
 
-            await db.from(PlannedTask.executivesTableName).delete().eq($ProfileJoinImplJsonKeys.id, plannedTask.id).catchError(onError);
+            await db.from(PlannedTask.executivesTableName).delete().eq($ProfileJoinImplJsonKeys.id, plannedTask.id).catchError(_onError);
 
             id = plannedTask.id;
         }
@@ -256,7 +256,7 @@ class TaskEditor extends ChangeNotifier {
 
         final executivesJoins = executives.map((final Profile profile) => ProfileJoin(id: id!, profile: profile.uid).toJson()).toList();
 
-        await db.from(PlannedTask.executivesTableName).upsert(executivesJoins).catchError(onError);
+        await db.from(PlannedTask.executivesTableName).upsert(executivesJoins).catchError(_onError);
 
         if (isToday && isAlreadyPlanned == null) {
           if (!await _uploadTask(task)) {
@@ -280,13 +280,13 @@ class TaskEditor extends ChangeNotifier {
 
     switch (task.id) {
       case -1:
-        final addedTasks = await db.from(Task.tableName).insert(task.toJson()).select(Task.fieldNames).withConverter(Task.converter).catchError(onError);
+        final addedTasks = await db.from(Task.tableName).insert(task.toJson()).select(Task.fieldNames).withConverter(Task.converter).catchError(_onError);
 
         id = addedTasks?.firstOrNull?.id;
       default:
-        await db.from(Task.tableName).update(task.toJson()).eq($TaskImplJsonKeys.id, task.id).catchError(onError);
+        await db.from(Task.tableName).update(task.toJson()).eq($TaskImplJsonKeys.id, task.id).catchError(_onError);
 
-        await db.from(Task.executivesTableName).delete().eq($ProfileJoinImplJsonKeys.id, task.id).catchError(onError);
+        await db.from(Task.executivesTableName).delete().eq($ProfileJoinImplJsonKeys.id, task.id).catchError(_onError);
 
         id = task.id;
     }
@@ -295,13 +295,13 @@ class TaskEditor extends ChangeNotifier {
 
     final newExecutives = executives.map((final Profile profile) => ProfileJoin(id: id!, profile: profile.uid).toJson()).toList();
 
-    await db.from(Task.executivesTableName).upsert(newExecutives).catchError(onError);
+    await db.from(Task.executivesTableName).upsert(newExecutives).catchError(_onError);
 
     return true;
   }
 
-  E onError<E>(final E e, final StackTrace? stackTrace) {
-    showSnackbar(text: 'Beklenmeyen bir hata oluştu', context: _context);
+  E _onError<E>(final E e, final StackTrace? stackTrace) {
+    showSnackbar(text: e.toString(), context: _context);
     isUploading = false;
     return e;
   }
@@ -314,7 +314,7 @@ class TaskEditor extends ChangeNotifier {
     if (!delete) return;
 
     try {
-      await db.from(isAlreadyPlanned! ? PlannedTask.tableName : Task.tableName).delete().eq($TaskImplJsonKeys.id, _id).catchError(onError);
+      await db.from(isAlreadyPlanned! ? PlannedTask.tableName : Task.tableName).delete().eq($TaskImplJsonKeys.id, _id).catchError(_onError);
 
       Navigator.pop(_context);
     } on Exception catch (e) {
