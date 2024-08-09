@@ -6,6 +6,14 @@ import 'home_state.dart';
 class HomeModel extends RestorableProperty {
   HomeState _state = const HomeState();
 
+  TabsRouter? _tabsRouter;
+  // ignore: avoid_setters_without_getters
+  set tabsRouter(final TabsRouter? value) {
+    if (value == _tabsRouter) return;
+
+    _tabsRouter = value;
+  }
+
   bool get canGoBack => _state.history.length > 1;
 
   void setTab(final int newIndex) {
@@ -23,12 +31,12 @@ class HomeModel extends RestorableProperty {
     notifyListeners();
   }
 
-  void goBack(final TabsRouter tabsRouter) {
+  void goBack() {
     if (_state.history.isEmpty) return;
 
     _state = _state.copyWith(history: _state.history.sublist(0, _state.history.length - 1));
     notifyListeners();
-    tabsRouter.setActiveIndex(_state.history.lastOrNull ?? 0);
+    _tabsRouter?.setActiveIndex(_state.history.lastOrNull ?? 0);
   }
 
   @override

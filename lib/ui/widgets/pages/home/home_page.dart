@@ -6,8 +6,6 @@ import '../../../app_router/app_router.dart';
 import '../../extensions/mouse_navigator.dart';
 import 'home_model.dart';
 
-bool _didPop = false;
-
 @RoutePage()
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -48,40 +46,33 @@ class _HomeView extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     late HomeModel model;
-    context.select((final HomeModel newModel) {
+    final canGoBack = context.select((final HomeModel newModel) {
       model = newModel;
       return newModel.canGoBack;
     });
+    final router = context.watchRouter;
 
-    return MouseNavigator(
-      child: AutoTabsScaffold(
-        routes: const [
-          TasksRoute(),
-          RecordingsRoute(),
-          ProfilesRoute(),
-          MoreRoute(),
-        ],
-        bottomNavigationBuilder: (final context, final tabsRouter) {
-          WidgetsBinding.instance.addPostFrameCallback((final _) {
-            model.setTab(tabsRouter.activeIndex);
-          });
+    return PopScope(
+      canPop: router.canPop() || !canGoBack,
+      onPopInvoked: (final didPop) {
+        if (!didPop) model.goBack();
+      },
+      child: MouseNavigator(
+        child: AutoTabsScaffold(
+          routes: const [
+            TasksRoute(),
+            RecordingsRoute(),
+            ProfilesRoute(),
+            MoreRoute(),
+          ],
+          bottomNavigationBuilder: (final context, final tabsRouter) {
+            WidgetsBinding.instance.addPostFrameCallback((final _) {
+              model
+                ..tabsRouter = tabsRouter
+                ..setTab(tabsRouter.activeIndex);
+            });
 
-          return PopScope(
-            canPop: !model.canGoBack,
-            onPopInvoked: (final didPop) {
-              if (_didPop) {
-                _didPop = false;
-                return;
-              }
-
-              if (tabsRouter.canPop()) {
-                tabsRouter.maybePop();
-                _didPop = true;
-              } else {
-                model.goBack(tabsRouter);
-              }
-            },
-            child: NavigationBar(
+            return NavigationBar(
               selectedIndex: tabsRouter.activeIndex,
               onDestinationSelected: tabsRouter.setActiveIndex,
               destinations: const [
@@ -90,9 +81,9 @@ class _HomeView extends StatelessWidget {
                 NavigationDestination(icon: Icon(Icons.manage_accounts), label: 'Çalışanlar', tooltip: ''),
                 NavigationDestination(icon: Icon(Icons.menu), label: 'Gene', tooltip: ''),
               ],
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
