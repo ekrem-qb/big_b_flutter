@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,55 +7,86 @@ import '../../../../api/enums/role.dart';
 import '../../extensions/mouse_navigator.dart';
 import 'profile_editor_model.dart';
 
+@RoutePage()
 class ProfileEditorPage extends StatelessWidget {
-  const ProfileEditorPage({this.profile, super.key});
+  const ProfileEditorPage({@pathParam this.uid, this.profile, super.key});
 
+  final String? uid;
   final Profile? profile;
 
   @override
   Widget build(final BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (final context) => ProfileEditor(context, uid: uid, originalProfile: profile),
+      child: TaskEditorView(isNew: uid == null),
+    );
+  }
+}
+
+class TaskEditorView extends StatelessWidget {
+  const TaskEditorView({
+    required this.isNew,
+    super.key,
+  });
+
+  final bool isNew;
+
+  @override
+  Widget build(final BuildContext context) {
+    final isLoading = context.select((final ProfileEditor model) => model.isLoading);
+
     return MouseNavigator(
-      child: ChangeNotifierProvider(
-        create: (final context) => ProfileEditor(context, originalProfile: profile),
-        child: Scaffold(
-          appBar: AppBar(
-            title: profile == null ? const Text('Yeni çalışan') : null,
-            actions: [
-              if (profile != null) const _DeleteButton(),
-            ],
-          ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const _Name(),
-                  const SizedBox(height: 16),
-                  const _Login(),
-                  if (profile == null) const _Password(),
-                  const SizedBox(height: 16),
-                  const Row(
-                    children: [
-                      _Role(
-                        role: Role.employee,
-                        text: 'Normal',
-                        icon: Icons.person,
-                        isFirst: true,
-                      ),
-                      _Role(
-                        role: Role.manager,
-                        text: 'Yönetici',
-                        icon: Icons.security,
-                        isFirst: false,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+      child: Scaffold(
+        appBar: AppBar(
+          title: isNew ? const Text('Yeni çalışan') : null,
+          actions: [
+            if (!isNew) const _DeleteButton(),
+          ],
+        ),
+        body: isLoading ? const Center(child: CircularProgressIndicator()) : _Body(isNew: isNew),
+        bottomNavigationBar: !isLoading ? const _SaveButton() : null,
+      ),
+    );
+  }
+}
+
+class _Body extends StatelessWidget {
+  const _Body({
+    required this.isNew,
+  });
+
+  final bool isNew;
+
+  @override
+  Widget build(final BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const _Name(),
+            const SizedBox(height: 16),
+            const _Login(),
+            if (isNew) const _Password(),
+            const SizedBox(height: 16),
+            const Row(
+              children: [
+                _Role(
+                  role: Role.employee,
+                  text: 'Normal',
+                  icon: Icons.person,
+                  isFirst: true,
+                ),
+                _Role(
+                  role: Role.manager,
+                  text: 'Yönetici',
+                  icon: Icons.security,
+                  isFirst: false,
+                ),
+              ],
             ),
-          ),
-          bottomNavigationBar: const _SaveButton(),
+          ],
         ),
       ),
     );

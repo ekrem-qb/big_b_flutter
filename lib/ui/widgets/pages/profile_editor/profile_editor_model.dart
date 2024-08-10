@@ -12,12 +12,17 @@ import '../../dialogs/delete_dialog.dart';
 import '../../extensions/snackbar.dart';
 
 class ProfileEditor extends ChangeNotifier {
-  ProfileEditor(this._context, {final Profile? originalProfile})
-      : _uid = originalProfile?.uid ?? '',
-        exist = originalProfile != null,
+  ProfileEditor(this._context, {final String? uid, final Profile? originalProfile})
+      : _uid = uid ?? '',
+        _isLoading = uid != null && originalProfile == null,
+        exist = uid != null,
         _role = originalProfile?.role ?? Role.employee,
         nameController = TextEditingController(text: originalProfile?.name ?? ''),
-        loginController = TextEditingController(text: originalProfile?.login ?? '');
+        loginController = TextEditingController(text: originalProfile?.login ?? '') {
+    if (isLoading) {
+      _load();
+    }
+  }
 
   final BuildContext _context;
   final TextEditingController nameController;
@@ -38,6 +43,15 @@ class ProfileEditor extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _isLoading;
+  bool get isLoading => _isLoading;
+  set isLoading(final bool value) {
+    if (_isLoading == value) return;
+
+    _isLoading = value;
+    notifyListeners();
+  }
+
   Role _role;
   Role get role => _role;
   set role(final Role value) {
@@ -45,6 +59,25 @@ class ProfileEditor extends ChangeNotifier {
 
     _role = value;
     notifyListeners();
+  }
+
+  Future<void> _load() async {
+    try {
+      final profile = await db.from(Profile.tableName).select(Profile.fieldNames).eq($ProfileImplJsonKeys.uid, _uid).single().withConverter(Profile.fromJson).onError(_onLoadError);
+
+      _role = profile.role;
+      nameController.text = profile.name;
+      loginController.text = profile.login;
+    } on Exception catch (e) {
+      _onLoadError(e);
+    }
+    isLoading = false;
+    notifyListeners();
+  }
+
+  E _onLoadError<E>(final E error, [final StackTrace? stackTrace]) {
+    showSnackbar(text: error.toString(), context: _context);
+    return error;
   }
 
   void onNameChanged(final String value) {

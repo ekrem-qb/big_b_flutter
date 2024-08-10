@@ -254,6 +254,62 @@ class PlayerRouteArgs {
 }
 
 /// generated route for
+/// [ProfileEditorPage]
+class ProfileEditorRoute extends PageRouteInfo<ProfileEditorRouteArgs> {
+  ProfileEditorRoute({
+    String? uid,
+    Profile? profile,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ProfileEditorRoute.name,
+          args: ProfileEditorRouteArgs(
+            uid: uid,
+            profile: profile,
+            key: key,
+          ),
+          rawPathParams: {'uid': uid},
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileEditorRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<ProfileEditorRouteArgs>(
+          orElse: () =>
+              ProfileEditorRouteArgs(uid: pathParams.optString('uid')));
+      return ProfileEditorPage(
+        uid: args.uid,
+        profile: args.profile,
+        key: args.key,
+      );
+    },
+  );
+}
+
+class ProfileEditorRouteArgs {
+  const ProfileEditorRouteArgs({
+    this.uid,
+    this.profile,
+    this.key,
+  });
+
+  final String? uid;
+
+  final Profile? profile;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ProfileEditorRouteArgs{uid: $uid, profile: $profile, key: $key}';
+  }
+}
+
+/// generated route for
 /// [ProfilesPage]
 class ProfilesRoute extends PageRouteInfo<void> {
   const ProfilesRoute({List<PageRouteInfo>? children})

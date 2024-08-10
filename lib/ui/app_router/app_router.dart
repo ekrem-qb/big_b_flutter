@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../api/entity/planned_task/planned_task.dart';
+import '../../api/entity/profile/profile.dart';
 import '../../api/entity/recording/recording.dart';
 import '../../api/entity/task/task.dart';
 import '../widgets/dialogs/task_viewer/task_viewer_dialog.dart';
@@ -10,6 +11,7 @@ import '../widgets/pages/app/app_page.dart';
 import '../widgets/pages/home/home_page.dart';
 import '../widgets/pages/login/login_page.dart';
 import '../widgets/pages/player/player_page.dart';
+import '../widgets/pages/profile_editor/profile_editor_page.dart';
 import '../widgets/pages/task_editor/task_editor_page.dart';
 import '../widgets/tabs/more/more_page.dart';
 import '../widgets/tabs/planned_tasks/planned_tasks_page.dart';
@@ -85,6 +87,10 @@ class AppRouter extends RootStackRouter {
                 page: ThirdTabRoute.page,
                 children: [
                   CupertinoRoute(path: '', page: ProfilesRoute.page),
+                  CupertinoRoute(
+                    path: ':uid',
+                    page: ProfileEditorRoute.page,
+                  ),
                 ],
               ),
               CupertinoRoute(

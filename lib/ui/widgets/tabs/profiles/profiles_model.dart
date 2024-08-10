@@ -1,8 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../api/database.dart';
 import '../../../../api/entity/profile/profile.dart';
+import '../../../app_router/app_router.dart';
 import '../../extensions/snackbar.dart';
 import '../../pages/profile_editor/profile_editor_page.dart';
 
@@ -99,10 +101,10 @@ class Profiles extends ChangeNotifier {
   void open(final int index) {
     if (profiles.length < index) return;
 
-    Navigator.push(
-      _context,
-      MaterialPageRoute(
-        builder: (final context) => ProfileEditorPage(profile: profiles[index]),
+    _context.pushRoute(
+      ProfileEditorRoute(
+        uid: profiles[index].uid,
+        profile: profiles[index],
       ),
     );
   }
