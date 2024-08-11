@@ -1,0 +1,44 @@
+part of 'player_bloc.dart';
+
+@freezed
+sealed class PlayerState with _$PlayerState {
+  const factory PlayerState({
+    required final int id,
+    final String? error,
+    @Default(PlayerAudioStateLoading()) final PlayerAudioState audioState,
+    @Default(PlayerTextStateLoading()) final PlayerTextState textState,
+  }) = _PlayerState;
+}
+
+@freezed
+sealed class PlayerAudioState with _$PlayerAudioState {
+  const factory PlayerAudioState.data({
+    @Default(Duration.zero) final Duration position,
+    @Default(Duration(seconds: 1)) final Duration duration,
+    @Default(false) final bool isPlaying,
+    @Default(false) final bool isSeeking,
+  }) = PlayerAudioStateData;
+
+  const factory PlayerAudioState.loading() = PlayerAudioStateLoading;
+
+  const factory PlayerAudioState.error({
+    required final String error,
+  }) = PlayerAudioStateError;
+}
+
+@freezed
+sealed class PlayerTextState with _$PlayerTextState {
+  const factory PlayerTextState.data({
+    @Default(0) final int currentTextLine,
+    @Default(<TextSpan>[]) final List<TextSpan> textSpans,
+    @Default(<TextLine>[]) final List<TextLine> textLines,
+  }) = PlayerTextStateData;
+
+  const factory PlayerTextState.loading() = PlayerTextStateLoading;
+
+  const factory PlayerTextState.processing() = PlayerTextStateProcessing;
+
+  const factory PlayerTextState.error({
+    required final String error,
+  }) = PlayerTextStateError;
+}

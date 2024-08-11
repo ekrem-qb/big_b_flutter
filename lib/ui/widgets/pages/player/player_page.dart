@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../../api/entity/recording/recording.dart';
@@ -9,7 +9,8 @@ import '../../../../constants.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/separator.dart';
 import '../../extensions/smooth_scroll/positioned_smooth_scroll.dart';
-import 'player_model.dart';
+import '../../extensions/snackbar.dart';
+import 'bloc/player_bloc.dart';
 
 @RoutePage()
 class PlayerPage extends StatelessWidget {
@@ -25,16 +26,44 @@ class PlayerPage extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return MouseNavigator(
-      child: ChangeNotifierProvider(
-        create: (final context) => Player(
-          context,
-          id: id,
-          recording: recording,
-        ),
-        child: Scaffold(
-          appBar: AppBar(),
-          body: const _Player(),
-        ),
+      child: BlocProvider(
+        create: (final context) => PlayerBloc(id: id, recording: recording),
+        child: const PlayerView(),
+      ),
+    );
+  }
+}
+
+class PlayerView extends StatelessWidget {
+  const PlayerView({
+    super.key,
+  });
+
+  @override
+  Widget build(final BuildContext context) {
+    return BlocListener<PlayerBloc, PlayerState>(
+      listenWhen: (final previous, final current) => previous.error != current.error || previous.audioState.runtimeType != current.audioState.runtimeType || previous.textState.runtimeType != current.textState.runtimeType,
+      listener: (final context, final state) {
+        final error = state.error;
+        if (error != null) {
+          showSnackbar(text: error, context: context);
+          Navigator.of(context).pop();
+          return;
+        }
+        final audioState = state.audioState;
+        if (audioState is PlayerAudioStateError) {
+          showSnackbar(text: audioState.error, context: context);
+          return;
+        }
+        final textState = state.textState;
+        if (textState is PlayerTextStateError) {
+          showSnackbar(text: textState.error, context: context);
+          return;
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(),
+        body: const _Player(),
       ),
     );
   }
@@ -45,13 +74,25 @@ class _Player extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<Player>();
+    final bloc = context.read<PlayerBloc>();
 
     return CallbackShortcuts(
       bindings: {
-        const SingleActivator(LogicalKeyboardKey.arrowUp): () => model.jumpToLine(model.currentTextLine - 1),
-        const SingleActivator(LogicalKeyboardKey.arrowDown): () => model.jumpToLine(model.currentTextLine + 1),
-        const SingleActivator(LogicalKeyboardKey.space, includeRepeats: false): model.play,
+        const SingleActivator(LogicalKeyboardKey.arrowUp): () => switch (bloc.state.textState) {
+              PlayerTextStateData(
+                :final currentTextLine
+              ) =>
+                bloc.add(PlayerEventJumpToLineRequested(currentTextLine - 1)),
+              _ => null,
+            },
+        const SingleActivator(LogicalKeyboardKey.arrowDown): () => switch (bloc.state.textState) {
+              PlayerTextStateData(
+                :final currentTextLine
+              ) =>
+                bloc.add(PlayerEventJumpToLineRequested(currentTextLine + 1)),
+              _ => null,
+            },
+        const SingleActivator(LogicalKeyboardKey.space, includeRepeats: false): () => bloc.add(const PlayerEventPlayPauseButtonPressed()),
       },
       child: const Padding(
         padding: EdgeInsets.symmetric(vertical: 16),
@@ -72,11 +113,11 @@ class _Player extends StatelessWidget {
 class _Text extends StatelessWidget {
   const _Text();
 
-  Widget _item(final Player model, final int index) {
+  Widget _item(final PlayerBloc bloc, final int index) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () => model.jumpToLine(index),
+        onTap: () => bloc.add(PlayerEventJumpToLineRequested(index)),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: _TextLine(index: index),
@@ -106,59 +147,82 @@ class _Text extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Player model;
+    late final PlayerBloc bloc;
     var isInitialized = false;
-    context.select((final Player newModel) {
+    context.select((final PlayerBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.textSpans;
+      return bloc.state.textState.runtimeType;
     });
 
     return Expanded(
-      child: model.textSpans != null
-          ? ShaderMask(
-              shaderCallback: _gradient.createShader,
-              blendMode: BlendMode.dstIn,
-              child: isDesktop
-                  ? PositionedSmoothScroll(
-                      controller: model.offsetController,
-                      child: ScrollablePositionedList.separated(
-                        itemScrollController: model.scrollController,
-                        scrollOffsetController: model.offsetController,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: model.textSpans!.length,
-                        padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.5),
-                        separatorBuilder: separatorBuilder,
-                        itemBuilder: (final context, final index) => _item(model, index),
-                      ),
-                    )
-                  : ScrollablePositionedList.separated(
-                      itemScrollController: model.scrollController,
-                      scrollOffsetController: model.offsetController,
-                      itemCount: model.textSpans!.length,
+      child: switch (bloc.state.textState) {
+        PlayerTextStateData(
+          :final textSpans,
+        ) =>
+          ShaderMask(
+            shaderCallback: _gradient.createShader,
+            blendMode: BlendMode.dstIn,
+            child: isDesktop
+                ? PositionedSmoothScroll(
+                    controller: bloc.offsetController,
+                    child: ScrollablePositionedList.separated(
+                      itemScrollController: bloc.scrollController,
+                      scrollOffsetController: bloc.offsetController,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: textSpans.length,
                       padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.5),
                       separatorBuilder: separatorBuilder,
-                      itemBuilder: (final context, final index) => _item(model, index),
+                      itemBuilder: (final context, final index) => _item(bloc, index),
                     ),
-            )
-          : const Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.cloud_sync_rounded,
-                    size: 64,
+                  )
+                : ScrollablePositionedList.separated(
+                    itemScrollController: bloc.scrollController,
+                    scrollOffsetController: bloc.offsetController,
+                    itemCount: textSpans.length,
+                    padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.5),
+                    separatorBuilder: separatorBuilder,
+                    itemBuilder: (final context, final index) => _item(bloc, index),
                   ),
-                  SizedBox(height: 36),
-                  Text(
-                    'AI is processing audio in cloud',
-                    style: TextStyle(fontSize: 24),
-                  ),
-                ],
-              ),
+          ),
+        PlayerTextStateLoading() => const Center(
+            child: CircularProgressIndicator(),
+          ),
+        PlayerTextStateProcessing() => const Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.cloud_sync_rounded,
+                  size: 64,
+                ),
+                SizedBox(height: 36),
+                Text(
+                  'AI is processing audio in cloud',
+                  style: TextStyle(fontSize: 24),
+                ),
+              ],
             ),
+          ),
+        PlayerTextStateError() => const Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.error_outline_rounded,
+                  size: 64,
+                ),
+                SizedBox(height: 36),
+                Text(
+                  'Hata oluştu',
+                  style: TextStyle(fontSize: 24),
+                ),
+              ],
+            ),
+          ),
+      },
     );
   }
 }
@@ -170,28 +234,41 @@ class _TextLine extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Player model;
+    late final PlayerBloc bloc;
     var isInitialized = false;
-    context.select((final Player newModel) {
+    context.select((final PlayerBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.currentTextLine;
+      return switch (bloc.state.textState) {
+        PlayerTextStateData(
+          :final currentTextLine,
+        ) =>
+          currentTextLine,
+        _ => 0,
+      };
     });
 
-    return model.currentTextLine != index
-        ? Opacity(
-            opacity: 0.5,
-            child: Text.rich(
-              model.textSpans![index],
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-          )
-        : Text.rich(
-            model.textSpans![index],
-            style: Theme.of(context).textTheme.headlineSmall,
-          );
+    return switch (bloc.state.textState) {
+      PlayerTextStateData(
+        :final currentTextLine,
+        :final textSpans,
+      ) =>
+        currentTextLine != index
+            ? Opacity(
+                opacity: 0.5,
+                child: Text.rich(
+                  textSpans[index],
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+              )
+            : Text.rich(
+                textSpans[index],
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+      _ => const SizedBox.shrink()
+    };
   }
 }
 
@@ -225,17 +302,23 @@ class _CurrentTime extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Player model;
+    late final PlayerBloc bloc;
     var isInitialized = false;
-    context.select((final Player newModel) {
+    final position = context.select((final PlayerBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.position;
+      return switch (bloc.state.audioState) {
+        PlayerAudioStateData(
+          :final position,
+        ) =>
+          position,
+        _ => null,
+      };
     });
 
-    return Text(_formatTime(model.position));
+    return Text(_formatTime(position ?? Duration.zero));
   }
 }
 
@@ -244,17 +327,23 @@ class _TotalTime extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Player model;
+    late final PlayerBloc bloc;
     var isInitialized = false;
-    context.select((final Player newModel) {
+    final duration = context.select((final PlayerBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.duration;
+      return switch (bloc.state.audioState) {
+        PlayerAudioStateData(
+          :final duration,
+        ) =>
+          duration,
+        _ => null,
+      };
     });
 
-    return Text(_formatTime(model.duration));
+    return Text(_formatTime(duration ?? const Duration(seconds: 1)));
   }
 }
 
@@ -263,33 +352,49 @@ class _Slider extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Player model;
+    late final PlayerBloc bloc;
     var isInitialized = false;
     context
-      ..select((final Player newModel) {
+      ..select((final PlayerBloc newBloc) {
         if (!isInitialized) {
-          model = newModel;
+          bloc = newBloc;
           isInitialized = true;
         }
-        return model.position;
+        return switch (bloc.state.audioState) {
+          PlayerAudioStateData(
+            :final position
+          ) =>
+            position,
+          _ => null,
+        };
       })
-      ..select((final Player newModel) {
+      ..select((final PlayerBloc newBloc) {
         if (!isInitialized) {
-          model = newModel;
+          bloc = newBloc;
           isInitialized = true;
         }
-        return model.isAudioLoaded;
+        return bloc.state.audioState.runtimeType;
       });
 
     return MediaQuery(
       data: const MediaQueryData(navigationMode: NavigationMode.directional),
-      child: Slider(
-        max: model.duration.inMilliseconds.toDouble(),
-        value: model.position.inMilliseconds.toDouble(),
-        onChangeStart: (final _) => model.isSeeking = true,
-        onChanged: model.isAudioLoaded ?? false ? (final newValue) => model.position = Duration(milliseconds: newValue.toInt()) : null,
-        onChangeEnd: (final newValue) => model.seek(Duration(milliseconds: newValue.toInt())),
-      ),
+      child: switch (bloc.state.audioState) {
+        PlayerAudioStateData(
+          :final position,
+          :final duration,
+        ) =>
+          Slider(
+            max: duration.inMilliseconds.toDouble(),
+            value: position.inMilliseconds.toDouble(),
+            onChangeStart: (final _) => bloc.add(const PlayerEventStartedSeeking()),
+            onChanged: (final newValue) => bloc.add(PlayerEventPositionChanged(position: Duration(milliseconds: newValue.toInt()))),
+            onChangeEnd: (final newValue) => bloc.add(PlayerEventSeekRequested(Duration(milliseconds: newValue.toInt()))),
+          ),
+        _ => const Slider(
+            value: 0,
+            onChanged: null,
+          ),
+      },
     );
   }
 }
@@ -299,23 +404,23 @@ class _PlayButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Player model;
+    late final PlayerBloc bloc;
     var isInitialized = false;
-    context.select((final Player newModel) {
+    context.select((final PlayerBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.isAudioLoaded;
+      return bloc.state.audioState.runtimeType;
     });
 
-    return model.isAudioLoaded != null
+    return bloc.state.audioState is! PlayerAudioStateLoading
         ? IconButton.filled(
             visualDensity: const VisualDensity(
               horizontal: 2,
               vertical: 2,
             ),
-            onPressed: model.isAudioLoaded! ? model.play : null,
+            onPressed: bloc.state.audioState is PlayerAudioStateData ? () => bloc.add(const PlayerEventPlayPauseButtonPressed()) : null,
             icon: const _PlayButtonIcon(),
           )
         : const IconButton.filled(
@@ -337,18 +442,24 @@ class _PlayButtonIcon extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Player model;
+    late final PlayerBloc bloc;
     var isInitialized = false;
-    context.select((final Player newModel) {
+    final isPlaying = context.select((final PlayerBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.isPlaying;
+      return switch (bloc.state.audioState) {
+        PlayerAudioStateData(
+          :final isPlaying,
+        ) =>
+          isPlaying,
+        _ => false,
+      };
     });
 
     return Icon(
-      model.isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+      isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
     );
   }
 }
