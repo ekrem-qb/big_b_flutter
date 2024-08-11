@@ -11,14 +11,29 @@ import '../../extensions/mouse_navigator.dart';
 import 'task_editor_model.dart';
 
 @RoutePage()
+class NewTaskEditorPage extends StatelessWidget {
+  const NewTaskEditorPage({
+    super.key,
+  });
+
+  @override
+  Widget build(final BuildContext context) {
+    return ChangeNotifierProvider(
+      create: TaskEditor.new,
+      child: const TaskEditorView(isNew: true),
+    );
+  }
+}
+
+@RoutePage()
 class TaskEditorPage extends StatelessWidget {
   const TaskEditorPage({
-    @pathParam this.taskId,
+    @pathParam required this.taskId,
     this.task,
     super.key,
   });
 
-  final int? taskId;
+  final int taskId;
   final Task? task;
 
   @override
@@ -29,7 +44,7 @@ class TaskEditorPage extends StatelessWidget {
         taskId: taskId,
         originalTask: task,
       ),
-      child: TaskEditorView(isNew: taskId == null),
+      child: const TaskEditorView(isNew: false),
     );
   }
 }
@@ -37,12 +52,12 @@ class TaskEditorPage extends StatelessWidget {
 @RoutePage()
 class PlannedTaskEditorPage extends StatelessWidget {
   const PlannedTaskEditorPage({
-    @pathParam this.plannedTaskId,
+    @pathParam required this.plannedTaskId,
     this.plannedTask,
     super.key,
   });
 
-  final int? plannedTaskId;
+  final int plannedTaskId;
   final PlannedTask? plannedTask;
 
   @override
@@ -53,7 +68,7 @@ class PlannedTaskEditorPage extends StatelessWidget {
         plannedTaskId: plannedTaskId,
         originalPlannedTask: plannedTask,
       ),
-      child: TaskEditorView(isNew: plannedTaskId == null),
+      child: const TaskEditorView(isNew: true),
     );
   }
 }

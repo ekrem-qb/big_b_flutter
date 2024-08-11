@@ -124,10 +124,29 @@ class MoreRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [NewTaskEditorPage]
+class NewTaskEditorRoute extends PageRouteInfo<void> {
+  const NewTaskEditorRoute({List<PageRouteInfo>? children})
+      : super(
+          NewTaskEditorRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'NewTaskEditorRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const NewTaskEditorPage();
+    },
+  );
+}
+
+/// generated route for
 /// [PlannedTaskEditorPage]
 class PlannedTaskEditorRoute extends PageRouteInfo<PlannedTaskEditorRouteArgs> {
   PlannedTaskEditorRoute({
-    int? plannedTaskId,
+    required int plannedTaskId,
     PlannedTask? plannedTask,
     Key? key,
     List<PageRouteInfo>? children,
@@ -150,7 +169,7 @@ class PlannedTaskEditorRoute extends PageRouteInfo<PlannedTaskEditorRouteArgs> {
       final pathParams = data.inheritedPathParams;
       final args = data.argsAs<PlannedTaskEditorRouteArgs>(
           orElse: () => PlannedTaskEditorRouteArgs(
-              plannedTaskId: pathParams.optInt('plannedTaskId')));
+              plannedTaskId: pathParams.getInt('plannedTaskId')));
       return PlannedTaskEditorPage(
         plannedTaskId: args.plannedTaskId,
         plannedTask: args.plannedTask,
@@ -162,12 +181,12 @@ class PlannedTaskEditorRoute extends PageRouteInfo<PlannedTaskEditorRouteArgs> {
 
 class PlannedTaskEditorRouteArgs {
   const PlannedTaskEditorRouteArgs({
-    this.plannedTaskId,
+    required this.plannedTaskId,
     this.plannedTask,
     this.key,
   });
 
-  final int? plannedTaskId;
+  final int plannedTaskId;
 
   final PlannedTask? plannedTask;
 
@@ -370,7 +389,7 @@ class SecondTabRoute extends PageRouteInfo<void> {
 /// [TaskEditorPage]
 class TaskEditorRoute extends PageRouteInfo<TaskEditorRouteArgs> {
   TaskEditorRoute({
-    int? taskId,
+    required int taskId,
     Task? task,
     Key? key,
     List<PageRouteInfo>? children,
@@ -393,7 +412,7 @@ class TaskEditorRoute extends PageRouteInfo<TaskEditorRouteArgs> {
       final pathParams = data.inheritedPathParams;
       final args = data.argsAs<TaskEditorRouteArgs>(
           orElse: () =>
-              TaskEditorRouteArgs(taskId: pathParams.optInt('taskId')));
+              TaskEditorRouteArgs(taskId: pathParams.getInt('taskId')));
       return TaskEditorPage(
         taskId: args.taskId,
         task: args.task,
@@ -405,12 +424,12 @@ class TaskEditorRoute extends PageRouteInfo<TaskEditorRouteArgs> {
 
 class TaskEditorRouteArgs {
   const TaskEditorRouteArgs({
-    this.taskId,
+    required this.taskId,
     this.task,
     this.key,
   });
 
-  final int? taskId;
+  final int taskId;
 
   final Task? task;
 

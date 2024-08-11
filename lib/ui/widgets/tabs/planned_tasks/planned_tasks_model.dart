@@ -63,7 +63,7 @@ class PlannedTasks extends ChangeNotifier {
   }
 
   void newPlannedTask() {
-    _context.pushRoute(TaskEditorRoute());
+    _context.pushRoute(const NewTaskEditorRoute());
   }
 
   @override

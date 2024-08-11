@@ -58,6 +58,10 @@ class AppRouter extends RootStackRouter {
                     ],
                   ),
                   CupertinoRoute(
+                    path: 'new',
+                    page: NewTaskEditorRoute.page,
+                  ),
+                  CupertinoRoute(
                     path: ':taskId/edit',
                     page: TaskEditorRoute.page,
                   ),
