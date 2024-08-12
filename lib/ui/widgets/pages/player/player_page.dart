@@ -168,27 +168,31 @@ class _Text extends StatelessWidget {
           ShaderMask(
             shaderCallback: _gradient.createShader,
             blendMode: BlendMode.dstIn,
-            child: isDesktop
-                ? PositionedSmoothScroll(
-                    controller: bloc.offsetController,
-                    child: ScrollablePositionedList.separated(
-                      itemScrollController: bloc.scrollController,
-                      scrollOffsetController: bloc.offsetController,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: textSpans.length,
-                      padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.5),
-                      separatorBuilder: separatorBuilder,
-                      itemBuilder: (final context, final index) => _item(bloc, index),
-                    ),
-                  )
-                : ScrollablePositionedList.separated(
-                    itemScrollController: bloc.scrollController,
-                    scrollOffsetController: bloc.offsetController,
-                    itemCount: textSpans.length,
-                    padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height * 0.5),
-                    separatorBuilder: separatorBuilder,
-                    itemBuilder: (final context, final index) => _item(bloc, index),
-                  ),
+            child: LayoutBuilder(
+              builder: (final context, final constraints) {
+                return isDesktop
+                    ? PositionedSmoothScroll(
+                        controller: bloc.offsetController,
+                        child: ScrollablePositionedList.separated(
+                          itemScrollController: bloc.scrollController,
+                          scrollOffsetController: bloc.offsetController,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: textSpans.length,
+                          padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.5),
+                          separatorBuilder: separatorBuilder,
+                          itemBuilder: (final context, final index) => _item(bloc, index),
+                        ),
+                      )
+                    : ScrollablePositionedList.separated(
+                        itemScrollController: bloc.scrollController,
+                        scrollOffsetController: bloc.offsetController,
+                        itemCount: textSpans.length,
+                        padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.5),
+                        separatorBuilder: separatorBuilder,
+                        itemBuilder: (final context, final index) => _item(bloc, index),
+                      );
+              },
+            ),
           ),
         PlayerTextStateLoading() => const Center(
             child: CircularProgressIndicator(),
