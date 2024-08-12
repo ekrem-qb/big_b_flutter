@@ -251,6 +251,10 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
     emit(state.copyWith(textState: textState.copyWith(currentTextLine: event.index)));
 
+    if (event.seekPlayer) {
+      add(PlayerEventSeekRequested(textState.textLines[event.index].time + const Duration(milliseconds: 1)));
+    }
+
     if (scrollController.isAttached) {
       await scrollController.scrollTo(
         index: event.index,
@@ -259,18 +263,15 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         curve: scrollCurve,
       );
     }
-
-    if (event.seekPlayer) {
-      add(PlayerEventSeekRequested(textState.textLines[event.index].time + const Duration(milliseconds: 1)));
-    }
   }
 
   Future<void> _onSeekRequested(final PlayerEventSeekRequested event, final Emitter<PlayerState> emit) async {
     final audioState = state.audioState;
     if (audioState is! PlayerAudioStateData) return;
-    if (!audioState.isSeeking) return;
 
     await _player.seek(event.position);
+
+    if (!audioState.isSeeking) return;
     emit(state.copyWith(audioState: audioState.copyWith(isSeeking: false)));
   }
 
