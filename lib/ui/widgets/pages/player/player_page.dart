@@ -252,6 +252,7 @@ class _TextLine extends StatelessWidget {
         _ => 0,
       };
     });
+    final textStyle = Theme.of(context).textTheme.titleLarge;
 
     return switch (bloc.state.textState) {
       PlayerTextStateData(
@@ -263,12 +264,12 @@ class _TextLine extends StatelessWidget {
                 opacity: 0.5,
                 child: Text.rich(
                   textSpans[index],
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  style: textStyle,
                 ),
               )
             : Text.rich(
                 textSpans[index],
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: textStyle,
               ),
       _ => const SizedBox.shrink()
     };
