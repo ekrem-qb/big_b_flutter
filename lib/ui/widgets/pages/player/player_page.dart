@@ -66,6 +66,7 @@ class PlayerView extends StatelessWidget {
           backgroundColor: Colors.transparent,
           scrolledUnderElevation: 0,
         ),
+        extendBodyBehindAppBar: true,
         body: const _Player(),
       ),
     );
@@ -134,17 +135,22 @@ class _Text extends StatelessWidget {
     end: Alignment.bottomCenter,
     colors: [
       Colors.transparent,
-      Color(0xbfffffff),
+      Color.fromRGBO(255, 255, 255, 0.05),
+      Color.fromRGBO(255, 255, 255, 0.25),
+      Color.fromRGBO(255, 255, 255, 0.75),
       Colors.white,
-      Color(0xbfffffff),
+      Colors.white,
+      Colors.white,
+      Colors.white,
+      Colors.white,
+      Colors.white,
+      Colors.white,
+      Colors.white,
+      Colors.white,
+      Color.fromRGBO(255, 255, 255, 0.75),
+      Color.fromRGBO(255, 255, 255, 0.5),
+      Color.fromRGBO(255, 255, 255, 0.25),
       Colors.transparent,
-    ],
-    stops: [
-      0,
-      0.25,
-      0.5,
-      0.75,
-      1,
     ],
   );
 
@@ -167,7 +173,6 @@ class _Text extends StatelessWidget {
         ) =>
           ShaderMask(
             shaderCallback: _gradient.createShader,
-            blendMode: BlendMode.dstIn,
             child: LayoutBuilder(
               builder: (final context, final constraints) {
                 return isDesktop
