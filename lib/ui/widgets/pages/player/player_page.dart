@@ -268,18 +268,13 @@ class _TextLine extends StatelessWidget {
         :final currentTextLine,
         :final textSpans,
       ) =>
-        currentTextLine != index
-            ? Opacity(
-                opacity: 0.5,
-                child: Text.rich(
-                  textSpans[index],
-                  style: textStyle,
-                ),
-              )
-            : Text.rich(
-                textSpans[index],
-                style: textStyle,
-              ),
+        Opacity(
+          opacity: currentTextLine != index ? 0.5 : 1,
+          child: Text.rich(
+            textSpans[index],
+            style: textStyle,
+          ),
+        ),
       _ => const SizedBox.shrink()
     };
   }
