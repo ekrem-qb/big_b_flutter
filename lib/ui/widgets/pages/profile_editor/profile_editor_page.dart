@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../../api/entity/profile/profile.dart';
 import '../../../../api/enums/role.dart';
 import '../../extensions/mouse_navigator.dart';
+import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import 'profile_editor_model.dart';
 
 @RoutePage()
@@ -59,36 +60,42 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const _Name(),
-            const SizedBox(height: 16),
-            const _Login(),
-            if (isNew) const _Password(),
-            const SizedBox(height: 16),
-            const Row(
+    return SmoothMouseScroll(
+      builder: (final context, final child, final controller, final physics) {
+        return SingleChildScrollView(
+          controller: controller,
+          physics: physics,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _Role(
-                  role: Role.employee,
-                  text: 'Normal',
-                  icon: Icons.person,
-                  isFirst: true,
-                ),
-                _Role(
-                  role: Role.manager,
-                  text: 'Yönetici',
-                  icon: Icons.security,
-                  isFirst: false,
+                const _Name(),
+                const SizedBox(height: 16),
+                const _Login(),
+                if (isNew) const _Password(),
+                const SizedBox(height: 16),
+                const Row(
+                  children: [
+                    _Role(
+                      role: Role.employee,
+                      text: 'Normal',
+                      icon: Icons.person,
+                      isFirst: true,
+                    ),
+                    _Role(
+                      role: Role.manager,
+                      text: 'Yönetici',
+                      icon: Icons.security,
+                      isFirst: false,
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

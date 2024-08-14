@@ -8,6 +8,7 @@ import '../../../../constants.dart';
 import '../../../../extensions/weekdays.dart';
 import '../../../theme.dart';
 import '../../extensions/mouse_navigator.dart';
+import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import 'task_editor_model.dart';
 
 @RoutePage()
@@ -105,69 +106,75 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Açıklama', style: smallTextStyle),
-            const SizedBox(height: 8),
-            const _Text(),
-            const SizedBox(height: 16),
-            const _ImageToggle(),
-            const SizedBox(height: 16),
-            const Row(
+    return SmoothMouseScroll(
+      builder: (final context, final child, final controller, final physics) {
+        return SingleChildScrollView(
+          controller: controller,
+          physics: physics,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                const Text('Açıklama', style: smallTextStyle),
+                const SizedBox(height: 8),
+                const _Text(),
+                const SizedBox(height: 16),
+                const _ImageToggle(),
+                const SizedBox(height: 16),
+                const Row(
                   children: [
-                    Text('Saat', style: smallTextStyle),
-                    SizedBox(height: 8),
-                    _Time(),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Saat', style: smallTextStyle),
+                        SizedBox(height: 8),
+                        _Time(),
+                      ],
+                    ),
+                    SizedBox(width: 16),
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Tarih', style: smallTextStyle),
+                          SizedBox(height: 8),
+                          _Date(),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-                SizedBox(width: 16),
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Tarih', style: smallTextStyle),
-                      SizedBox(height: 8),
-                      _Date(),
-                    ],
-                  ),
+                const SizedBox(height: 16),
+                const Text('Tekrarlama', style: smallTextStyle),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    _Day(day: 0, text: weekdayNames[0]),
+                    const SizedBox(width: 8),
+                    _Day(day: 1, text: weekdayNames[1]),
+                    const SizedBox(width: 8),
+                    _Day(day: 2, text: weekdayNames[2]),
+                    const SizedBox(width: 8),
+                    _Day(day: 3, text: weekdayNames[3]),
+                    const SizedBox(width: 8),
+                    _Day(day: 4, text: weekdayNames[4]),
+                    const SizedBox(width: 8),
+                    _Day(day: 5, text: weekdayNames[5]),
+                    const SizedBox(width: 8),
+                    _Day(day: 6, text: weekdayNames[6]),
+                  ],
                 ),
+                const SizedBox(height: 16),
+                const Text('Görevli', style: smallTextStyle),
+                const SizedBox(height: 8),
+                const _Executives(),
               ],
             ),
-            const SizedBox(height: 16),
-            const Text('Tekrarlama', style: smallTextStyle),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                _Day(day: 0, text: weekdayNames[0]),
-                const SizedBox(width: 8),
-                _Day(day: 1, text: weekdayNames[1]),
-                const SizedBox(width: 8),
-                _Day(day: 2, text: weekdayNames[2]),
-                const SizedBox(width: 8),
-                _Day(day: 3, text: weekdayNames[3]),
-                const SizedBox(width: 8),
-                _Day(day: 4, text: weekdayNames[4]),
-                const SizedBox(width: 8),
-                _Day(day: 5, text: weekdayNames[5]),
-                const SizedBox(width: 8),
-                _Day(day: 6, text: weekdayNames[6]),
-              ],
-            ),
-            const SizedBox(height: 16),
-            const Text('Görevli', style: smallTextStyle),
-            const SizedBox(height: 8),
-            const _Executives(),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

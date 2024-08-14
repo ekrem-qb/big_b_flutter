@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../api/entity/task/task.dart';
 import '../../extensions/mouse_navigator.dart';
+import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import 'task_viewer_model.dart';
 
 @RoutePage()
@@ -31,15 +32,27 @@ class TaskViewerDialog extends StatelessWidget {
                   constraints: const BoxConstraints(
                     maxHeight: 140,
                   ),
-                  child: const SingleChildScrollView(
-                    child: _Text(),
+                  child: SmoothMouseScroll(
+                    builder: (final context, final child, final controller, final physics) {
+                      return SingleChildScrollView(
+                        controller: controller,
+                        physics: physics,
+                        child: const _Text(),
+                      );
+                    },
                   ),
                 ),
               ),
             ],
           ),
-          content: const SingleChildScrollView(
-            child: _Task(),
+          content: SmoothMouseScroll(
+            builder: (final context, final child, final controller, final physics) {
+              return SingleChildScrollView(
+                controller: controller,
+                physics: physics,
+                child: const _Task(),
+              );
+            },
           ),
           actionsAlignment: MainAxisAlignment.spaceBetween,
           actions: const [
