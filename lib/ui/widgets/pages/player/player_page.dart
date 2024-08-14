@@ -5,10 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../../api/entity/recording/recording.dart';
-import '../../../../constants.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/separator.dart';
-import '../../extensions/smooth_scroll/positioned_smooth_scroll.dart';
+import '../../extensions/smooth_mouse_scroll/positioned_smooth_mouse_scroll.dart';
 import '../../extensions/snackbar.dart';
 import 'bloc/player_bloc.dart';
 
@@ -170,32 +169,26 @@ class _Text extends StatelessWidget {
       child: switch (bloc.state.textState) {
         PlayerTextStateData(
           :final textSpans,
+          :final currentTextLine,
         ) =>
           ShaderMask(
             shaderCallback: _gradient.createShader,
             child: LayoutBuilder(
               builder: (final context, final constraints) {
-                return isDesktop
-                    ? PositionedSmoothScroll(
-                        controller: bloc.offsetController,
-                        child: ScrollablePositionedList.separated(
-                          itemScrollController: bloc.scrollController,
-                          scrollOffsetController: bloc.offsetController,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: textSpans.length,
-                          padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.5),
-                          separatorBuilder: separatorBuilder,
-                          itemBuilder: (final context, final index) => _item(bloc, index),
-                        ),
-                      )
-                    : ScrollablePositionedList.separated(
-                        itemScrollController: bloc.scrollController,
-                        scrollOffsetController: bloc.offsetController,
-                        itemCount: textSpans.length,
-                        padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.5),
-                        separatorBuilder: separatorBuilder,
-                        itemBuilder: (final context, final index) => _item(bloc, index),
-                      );
+                return PositionedSmoothMouseScroll(
+                  builder: (final context, final child, final controller, final physics) {
+                    return ScrollablePositionedList.separated(
+                      itemScrollController: bloc.scrollController,
+                      scrollOffsetController: controller,
+                      initialScrollIndex: currentTextLine,
+                      physics: physics,
+                      itemCount: textSpans.length,
+                      padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.5),
+                      separatorBuilder: separatorBuilder,
+                      itemBuilder: (final context, final index) => _item(bloc, index),
+                    );
+                  },
+                );
               },
             ),
           ),
