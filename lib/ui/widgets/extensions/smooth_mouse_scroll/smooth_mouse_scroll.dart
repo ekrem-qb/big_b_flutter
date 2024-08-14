@@ -4,25 +4,28 @@ import 'package:provider/provider.dart';
 
 import '../../../theme.dart';
 
+typedef ScrollBuilder = Widget Function(BuildContext context, Widget? child, ScrollController controller, ScrollPhysics? physics);
+
 class _Model {
   double offset = 0;
 }
 
-class SmoothScroll extends StatelessWidget {
-  const SmoothScroll({
-    required this.controller,
-    required this.child,
-    super.key,
+class SmoothMouseScroll extends StatefulWidget {
+  const SmoothMouseScroll({
+    required this.builder,
+    this.child,
+    this.controller,
     this.scrollSpeedMultiplier = 2,
     this.scrollAnimationDuration = scrollDuration,
     this.curve = scrollCurve,
+    super.key,
   });
 
   ///Same ScrollController as the child widget's.
-  final ScrollController controller;
+  final ScrollController? controller;
 
   ///Child scrollable widget.
-  final Widget child;
+  final Widget? child;
 
   ///Scroll speed px/scroll.
   final double scrollSpeedMultiplier;
@@ -33,11 +36,27 @@ class SmoothScroll extends StatelessWidget {
   ///Curve of the animation.
   final Curve curve;
 
+  final ScrollBuilder builder;
+
+  @override
+  State<SmoothMouseScroll> createState() => _SmoothMouseScrollState();
+}
+
+class _SmoothMouseScrollState extends State<SmoothMouseScroll> {
+  late final ScrollController controller = widget.controller ?? ScrollController();
+
   @override
   Widget build(final BuildContext context) {
     return Provider(
       create: (final context) => _Model(),
-      child: _Widget(controller: controller, scrollSpeedMultiplier: scrollSpeedMultiplier, scrollAnimationDuration: scrollAnimationDuration, curve: curve, child: child),
+      child: _Widget(
+        controller: controller,
+        scrollSpeedMultiplier: widget.scrollSpeedMultiplier,
+        scrollAnimationDuration: widget.scrollAnimationDuration,
+        curve: widget.curve,
+        builder: widget.builder,
+        child: widget.child,
+      ),
     );
   }
 }
@@ -49,13 +68,15 @@ class _Widget extends StatelessWidget {
     required this.scrollAnimationDuration,
     required this.curve,
     required this.child,
+    required this.builder,
   });
 
   final ScrollController controller;
   final double scrollSpeedMultiplier;
   final Duration scrollAnimationDuration;
   final Curve curve;
-  final Widget child;
+  final Widget? child;
+  final ScrollBuilder builder;
 
   @override
   Widget build(final BuildContext context) {
@@ -92,7 +113,18 @@ class _Widget extends StatelessWidget {
             );
         }
       },
-      child: child,
+      child: ListenableBuilder(
+        listenable: WidgetsBinding.instance.mouseTracker,
+        builder: (final context, final child) {
+          return builder(
+            context,
+            child,
+            controller,
+            WidgetsBinding.instance.mouseTracker.mouseIsConnected ? const NeverScrollableScrollPhysics() : null,
+          );
+        },
+        child: child,
+      ),
     );
   }
 }

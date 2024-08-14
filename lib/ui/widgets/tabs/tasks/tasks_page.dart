@@ -2,10 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../constants.dart';
 import '../../extensions/app_bar_controller.dart';
 import '../../extensions/dialog_router.dart';
-import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
+import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import 'tasks_model.dart';
 
 @RoutePage()
@@ -146,21 +145,16 @@ class _TasksListContent extends StatelessWidget {
               ],
             ),
           )
-        : isDesktop
-            ? SmoothScroll(
-                controller: model.scrollController,
-                child: ListView.builder(
-                  controller: model.scrollController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: _ItemCard.new,
-                  itemCount: model.tasks.length,
-                ),
-              )
-            : ListView.builder(
-                controller: model.scrollController,
+        : SmoothMouseScroll(
+            builder: (final context, final child, final controller, final physics) {
+              return ListView.builder(
+                controller: controller,
+                physics: physics,
                 itemBuilder: _ItemCard.new,
                 itemCount: model.tasks.length,
               );
+            },
+          );
   }
 }
 

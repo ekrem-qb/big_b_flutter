@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../api/enums/role.dart';
-import '../../../../constants.dart';
-import '../../extensions/smooth_scroll/smooth_scroll_widget.dart';
+import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import 'profiles_model.dart';
 
 @RoutePage()
@@ -88,21 +87,16 @@ class _ProfilesListContent extends StatelessWidget {
               ],
             ),
           )
-        : isDesktop
-            ? SmoothScroll(
-                controller: model.scrollController,
-                child: ListView.builder(
-                  controller: model.scrollController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: _Item.new,
-                  itemCount: model.profiles.length,
-                ),
-              )
-            : ListView.builder(
-                controller: model.scrollController,
+        : SmoothMouseScroll(
+            builder: (final context, final child, final controller, final physics) {
+              return ListView.builder(
+                controller: controller,
+                physics: physics,
                 itemBuilder: _Item.new,
                 itemCount: model.profiles.length,
               );
+            },
+          );
   }
 }
 
