@@ -31,7 +31,6 @@ class Tasks extends ChangeNotifier {
   }
 
   final BuildContext _context;
-  final scrollController = ScrollController();
 
   late final List<RealtimeChannel> _tasksSubscriptions;
   late List<Task> tasks;

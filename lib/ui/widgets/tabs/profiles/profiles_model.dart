@@ -14,7 +14,6 @@ class Profiles extends ChangeNotifier {
   }
 
   final BuildContext _context;
-  final scrollController = ScrollController();
 
   late final List<Profile> profiles;
   late final RealtimeChannel? _profilesSubscription;

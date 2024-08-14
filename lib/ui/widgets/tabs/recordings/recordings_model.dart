@@ -13,7 +13,6 @@ class Recordings extends ChangeNotifier {
   }
 
   final BuildContext _context;
-  final scrollController = ScrollController();
 
   late final List<Recording> recordings;
   late final RealtimeChannel? _recordingsSubscription;

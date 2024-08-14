@@ -57,7 +57,6 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     ),
   );
   final scrollController = ItemScrollController();
-  final offsetController = ScrollOffsetController();
 
   StreamSubscription? _durationSubscription;
   StreamSubscription? _positionSubscription;
