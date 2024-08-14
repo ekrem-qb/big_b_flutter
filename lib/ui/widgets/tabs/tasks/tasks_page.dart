@@ -1,11 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
+import '../../../app_router/app_router.dart';
 import '../../extensions/app_bar_controller.dart';
 import '../../extensions/dialog_router.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
-import 'tasks_model.dart';
+import 'bloc/tasks_bloc.dart';
 
 @RoutePage()
 class TasksPage extends StatelessWidget {
@@ -16,7 +18,7 @@ class TasksPage extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (final _) => AppBarController()),
-        ChangeNotifierProvider(create: Tasks.new),
+        BlocProvider(create: (final context) => TasksBloc()),
       ],
       child: const Stack(
         children: [
@@ -33,13 +35,13 @@ class _Scaffold extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<AppBarController>();
+    final bloc = context.read<AppBarController>();
 
     return Scaffold(
       appBar: AppBar(
         shadowColor: Theme.of(context).shadowColor,
         title: const Text('Görevler'),
-        notificationPredicate: model.onScroll,
+        notificationPredicate: bloc.onScroll,
         actions: const [
           _PlanningButton(),
           SizedBox(width: 8),
@@ -56,13 +58,11 @@ class _PlanningButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<Tasks>();
-
     late final AppBarController appBar;
     var isInitialized = false;
-    context.select((final AppBarController newModel) {
+    context.select((final AppBarController newBloc) {
       if (!isInitialized) {
-        appBar = newModel;
+        appBar = newBloc;
         isInitialized = true;
       }
       return appBar.isScrolled;
@@ -75,7 +75,7 @@ class _PlanningButton extends StatelessWidget {
       ),
       icon: const Icon(Icons.event_available),
       label: const Text('Planlama'),
-      onPressed: model.openPlanning,
+      onPressed: () => context.router.push(const PlannedTasksRoute()),
     );
   }
 }
@@ -85,10 +85,8 @@ class _NewTaskButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<Tasks>();
-
     return FloatingActionButton(
-      onPressed: model.newTask,
+      onPressed: () => context.pushRoute(const NewTaskEditorRoute()),
       child: const Icon(Icons.add),
     );
   }
@@ -99,21 +97,47 @@ class _TasksList extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Tasks model;
+    late final TasksBloc bloc;
     var isInitialized = false;
-    context.select((final Tasks newModel) {
+    context.select((final TasksBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.isLoading;
+      return bloc.state.runtimeType;
     });
 
-    return model.isLoading
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
-        : const _TasksListContent();
+    return switch (bloc.state) {
+      TasksStateLoading() => const Center(
+          child: CircularProgressIndicator(),
+        ),
+      TasksStateData() => const _TasksListContent(),
+      TasksStateError(
+        :final error
+      ) =>
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(
+              Icons.error_outline_rounded,
+              size: 64,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(32),
+              child: Text(
+                error,
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            ElevatedButton.icon(
+              onPressed: () => bloc.add(const TasksEventLoadRequested()),
+              icon: const Icon(Icons.refresh_rounded),
+              label: const Text('Yenile'),
+            ),
+          ],
+        ),
+    };
   }
 }
 
@@ -122,17 +146,17 @@ class _TasksListContent extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Tasks model;
-    var isInitialized = false;
-    context.select((final Tasks newModel) {
-      if (!isInitialized) {
-        model = newModel;
-        isInitialized = true;
-      }
-      return model.tasks.length;
+    final count = context.select((final TasksBloc bloc) {
+      return switch (bloc.state) {
+        TasksStateData(
+          :final tasks
+        ) =>
+          tasks.length,
+        _ => 0,
+      };
     });
 
-    return model.tasks.isEmpty
+    return count == 0
         ? const Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -151,7 +175,7 @@ class _TasksListContent extends StatelessWidget {
                 controller: controller,
                 physics: physics,
                 itemBuilder: _ItemCard.new,
-                itemCount: model.tasks.length,
+                itemCount: count,
               );
             },
           );
@@ -183,18 +207,26 @@ class _Item extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Tasks model;
-    var isInitialized = false;
-    context.select((final Tasks newModel) {
-      if (!isInitialized) {
-        model = newModel;
-        isInitialized = true;
-      }
-      return model.tasks.length >= index;
+    final exists = context.select((final TasksBloc bloc) {
+      return switch (bloc.state) {
+        TasksStateData(
+          :final tasks,
+        ) =>
+          tasks.length >= index,
+        _ => false,
+      };
     });
 
-    return model.tasks.length >= index ? _ItemContent(index) : const _DeletedItemContent();
+    return exists ? _ItemContent(index) : const _DeletedItemContent();
   }
+}
+
+void _open(final int index, final BuildContext context, final TasksBloc bloc) {
+  final state = bloc.state;
+  if (state is! TasksStateData) return;
+  if (state.tasks.length < index) return;
+
+  context.router.push(TaskViewerRoute(id: state.tasks[index].id, task: state.tasks[index]));
 }
 
 class _ItemContent extends StatelessWidget {
@@ -204,21 +236,27 @@ class _ItemContent extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Tasks model;
+    late final TasksBloc bloc;
     var isInitialized = false;
-    context.select((final Tasks newModel) {
+    final isDone = context.select((final TasksBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.tasks.elementAtOrNull(index)?.isDone;
+      return switch (bloc.state) {
+        TasksStateData(
+          :final tasks,
+        ) =>
+          tasks.elementAtOrNull(index)?.isDone ?? false,
+        _ => false,
+      };
     });
 
-    return model.tasks[index].isDone
+    return isDone
         ? InkWell(
             borderRadius: BorderRadius.circular(12),
             child: _ItemTile(index),
-            onTap: () => model.open(index),
+            onTap: () => _open(index, context, bloc),
           )
         : _ItemTile(index);
   }
@@ -231,14 +269,20 @@ class _ItemTile extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Tasks model;
+    late final TasksBloc bloc;
     var isInitialized = false;
-    context.select((final Tasks newModel) {
+    final task = context.select((final TasksBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.tasks.elementAtOrNull(index);
+      return switch (bloc.state) {
+        TasksStateData(
+          :final tasks,
+        ) =>
+          tasks.elementAtOrNull(index),
+        _ => null,
+      };
     });
 
     return ListTile(
@@ -248,8 +292,8 @@ class _ItemTile extends StatelessWidget {
           Radius.circular(12),
         ),
       ),
-      enabled: !model.tasks[index].isDone,
-      leading: model.tasks[index].isDone
+      enabled: !(task?.isDone ?? false),
+      leading: task?.isDone ?? false
           ? const Icon(
               Icons.check_circle,
             )
@@ -257,10 +301,10 @@ class _ItemTile extends StatelessWidget {
               Icons.circle_outlined,
             ),
       title: Text(
-        model.tasks[index].text,
+        task?.text ?? '',
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
-        style: model.tasks[index].isDone
+        style: task?.isDone ?? false
             ? const TextStyle(
                 decoration: TextDecoration.lineThrough,
               )
@@ -268,7 +312,7 @@ class _ItemTile extends StatelessWidget {
       ),
       subtitle: Row(
         children: [
-          if (model.tasks[index].imageUrl != null)
+          if (task?.imageUrl != null)
             const Padding(
               padding: EdgeInsets.only(right: 8),
               child: Icon(
@@ -279,12 +323,12 @@ class _ItemTile extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 8),
             child: Text(
-              model.tasks[index].deadline.toString(),
+              task?.deadline.toString() ?? '',
             ),
           ),
         ],
       ),
-      onTap: () => model.open(index),
+      onTap: () => _open(index, context, bloc),
     );
   }
 }
