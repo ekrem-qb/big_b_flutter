@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import '../../../app_router/app_router.dart';
 import '../../extensions/app_bar_controller.dart';
 import '../../extensions/dialog_router.dart';
+import '../../extensions/fade_transition_builder.dart';
+import '../../extensions/shimmer.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import 'bloc/tasks_bloc.dart';
 
@@ -106,38 +108,55 @@ class _TasksList extends StatelessWidget {
       }
       return bloc.state.runtimeType;
     });
+    final colorScheme = Theme.of(context).colorScheme;
 
-    return switch (bloc.state) {
-      TasksStateLoading() => const Center(
-          child: CircularProgressIndicator(),
-        ),
-      TasksStateData() => const _TasksListContent(),
-      TasksStateError(
-        :final error
-      ) =>
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.error_outline_rounded,
-              size: 64,
+    return AnimatedSwitcher(
+      duration: Durations.medium1,
+      transitionBuilder: fadeTransitionBuilder,
+      child: switch (bloc.state) {
+        TasksStateLoading() => Shimmer.fromColors(
+            baseColor: colorScheme.surfaceContainerLow,
+            highlightColor: colorScheme.surfaceTint,
+            child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (final BuildContext context, final int index) {
+                return const Card(
+                  child: ListTile(
+                    title: Text(''),
+                    subtitle: Text(''),
+                  ),
+                );
+              },
             ),
-            Padding(
-              padding: const EdgeInsets.all(32),
-              child: Text(
-                error,
-                maxLines: 4,
-                overflow: TextOverflow.ellipsis,
+          ),
+        TasksStateData() => const _TasksListContent(),
+        TasksStateError(
+          :final error
+        ) =>
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.error_outline_rounded,
+                size: 64,
               ),
-            ),
-            ElevatedButton.icon(
-              onPressed: () => bloc.add(const TasksEventLoadRequested()),
-              icon: const Icon(Icons.refresh_rounded),
-              label: const Text('Yenile'),
-            ),
-          ],
-        ),
-    };
+              Padding(
+                padding: const EdgeInsets.all(32),
+                child: Text(
+                  error,
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              ElevatedButton.icon(
+                onPressed: () => bloc.add(const TasksEventLoadRequested()),
+                icon: const Icon(Icons.refresh_rounded),
+                label: const Text('Yenile'),
+              ),
+            ],
+          ),
+      },
+    );
   }
 }
 
