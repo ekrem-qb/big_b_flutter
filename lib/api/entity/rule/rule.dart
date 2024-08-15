@@ -7,7 +7,7 @@ part 'rule.g.dart';
 
 @freezed
 class Rule with _$Rule {
-  factory Rule({
+  const factory Rule({
     @JsonKey(includeToJson: false) required final int id,
     required final String description,
     required final String? details,
@@ -22,6 +22,8 @@ class Rule with _$Rule {
 
   static const tableName = 'rules';
   static final fieldNames = _$$RuleImplFieldMap.values.join(',');
+
+  static List<Rule>? converter(final List<Map<String, dynamic>> data) => data.map(Rule.fromJson).toList();
 }
 
 int colorToJson(final Color object) => object.value;

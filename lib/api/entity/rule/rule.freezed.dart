@@ -136,7 +136,7 @@ class __$$RuleImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$RuleImpl implements _Rule {
-  _$RuleImpl(
+  const _$RuleImpl(
       {@JsonKey(includeToJson: false) required this.id,
       required this.description,
       required this.details,
@@ -192,7 +192,7 @@ class _$RuleImpl implements _Rule {
 }
 
 abstract class _Rule implements Rule {
-  factory _Rule(
+  const factory _Rule(
       {@JsonKey(includeToJson: false) required final int id,
       required final String description,
       required final String? details,
