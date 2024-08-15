@@ -37,13 +37,13 @@ class _Scaffold extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final bloc = context.read<AppBarController>();
+    final appBar = context.read<AppBarController>();
 
     return Scaffold(
       appBar: AppBar(
         shadowColor: Theme.of(context).shadowColor,
         title: const Text('Görevler'),
-        notificationPredicate: bloc.onScroll,
+        notificationPredicate: appBar.onScroll,
         actions: const [
           _PlanningButton(),
           SizedBox(width: 8),
