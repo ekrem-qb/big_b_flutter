@@ -17,6 +17,7 @@ import '../widgets/tabs/more/more_page.dart';
 import '../widgets/tabs/planned_tasks/planned_tasks_page.dart';
 import '../widgets/tabs/profiles/profiles_page.dart';
 import '../widgets/tabs/recordings/recordings_page.dart';
+import '../widgets/tabs/rules/rules_page.dart';
 import '../widgets/tabs/tasks/tasks_page.dart';
 
 part 'app_router.gr.dart';
@@ -102,6 +103,10 @@ class AppRouter extends RootStackRouter {
                 page: ForthTabRoute.page,
                 children: [
                   CupertinoRoute(path: '', page: MoreRoute.page),
+                  CupertinoRoute(
+                    path: 'rules',
+                    page: RulesRoute.page,
+                  ),
                 ],
               ),
             ],

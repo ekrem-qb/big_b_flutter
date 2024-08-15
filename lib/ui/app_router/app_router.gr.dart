@@ -367,6 +367,25 @@ class RecordingsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [RulesPage]
+class RulesRoute extends PageRouteInfo<void> {
+  const RulesRoute({List<PageRouteInfo>? children})
+      : super(
+          RulesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'RulesRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const RulesPage();
+    },
+  );
+}
+
+/// generated route for
 /// [SecondTabPage]
 class SecondTabRoute extends PageRouteInfo<void> {
   const SecondTabRoute({List<PageRouteInfo>? children})
