@@ -6,7 +6,6 @@ import '../../../../api/database.dart';
 import '../../../../api/entity/profile/profile.dart';
 import '../../../app_router/app_router.dart';
 import '../../extensions/snackbar.dart';
-import '../../pages/profile_editor/profile_editor_page.dart';
 
 class Profiles extends ChangeNotifier {
   Profiles(this._context) {
@@ -109,12 +108,7 @@ class Profiles extends ChangeNotifier {
   }
 
   void newProfile() {
-    Navigator.push(
-      _context,
-      MaterialPageRoute(
-        builder: (final context) => const ProfileEditorPage(),
-      ),
-    );
+    _context.pushRoute(ProfileEditorRoute());
   }
 
   @override
