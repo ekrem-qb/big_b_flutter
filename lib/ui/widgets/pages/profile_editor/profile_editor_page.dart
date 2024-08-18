@@ -1,12 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../api/entity/profile/profile.dart';
 import '../../../../api/enums/role.dart';
+import '../../dialogs/delete_dialog.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
-import 'profile_editor_model.dart';
+import '../../extensions/snackbar.dart';
+import 'bloc/profile_editor_bloc.dart';
 
 @RoutePage()
 class ProfileEditorPage extends StatelessWidget {
@@ -17,8 +19,8 @@ class ProfileEditorPage extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (final context) => ProfileEditor(context, uid: uid, originalProfile: profile),
+    return BlocProvider(
+      create: (final context) => ProfileEditorBloc(uid: uid, originalProfile: profile),
       child: TaskEditorView(isNew: uid == null),
     );
   }
@@ -34,18 +36,71 @@ class TaskEditorView extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final isLoading = context.select((final ProfileEditor model) => model.isLoading);
+    late final ProfileEditorBloc bloc;
+    var isInitialized = false;
+    context.select((final ProfileEditorBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return bloc.state.runtimeType;
+    });
 
     return MouseNavigator(
-      child: Scaffold(
-        appBar: AppBar(
-          title: isNew ? const Text('Yeni çalışan') : null,
-          actions: [
-            if (!isNew) const _DeleteButton(),
-          ],
+      child: BlocListener<ProfileEditorBloc, ProfileEditorState>(
+        listener: (final context, final state) async {
+          switch (state) {
+            case ProfileEditorStateCreate(
+                    :final uploadState,
+                  ) ||
+                  ProfileEditorStateEdit(
+                    :final uploadState,
+                  ):
+              switch (uploadState) {
+                case StatusCompleted():
+                  Navigator.pop(context);
+                case StatusError(
+                    :final error
+                  ):
+                  showSnackbar(text: error, context: context);
+                default:
+              }
+              switch (state) {
+                case ProfileEditorStateEdit(
+                    :final deleteState
+                  ):
+                  switch (deleteState) {
+                    case StatusInProgress():
+                      final isDeleted = await showDeleteDialog(itemName: 'çalışanı', context: context);
+                      bloc.add(ProfileEditorEventDeleteDialogClosed(isDeleted: isDeleted));
+                    case StatusCompleted():
+                      Navigator.pop(context);
+                    case StatusError(
+                        :final error
+                      ):
+                      showSnackbar(text: error, context: context);
+                    default:
+                  }
+                default:
+              }
+            case ProfileEditorStateError(
+                :final error
+              ):
+              showSnackbar(text: error, context: context);
+              Navigator.pop(context);
+            default:
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: isNew ? const Text('Yeni çalışan') : null,
+            actions: [
+              if (!isNew) const _DeleteButton(),
+            ],
+          ),
+          body: bloc.state is ProfileEditorStateLoading ? const Center(child: CircularProgressIndicator()) : _Body(isNew: isNew),
+          bottomNavigationBar: bloc.state is! ProfileEditorStateLoading ? const _SaveButton() : null,
         ),
-        body: isLoading ? const Center(child: CircularProgressIndicator()) : _Body(isNew: isNew),
-        bottomNavigationBar: !isLoading ? const _SaveButton() : null,
       ),
     );
   }
@@ -105,14 +160,14 @@ class _DeleteButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<ProfileEditor>();
+    final bloc = context.read<ProfileEditorBloc>();
 
     return ConstrainedBox(
       constraints: const BoxConstraints.tightFor(width: kToolbarHeight, height: kToolbarHeight),
       child: IconButton(
         icon: const Icon(Icons.delete),
         tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
-        onPressed: model.delete,
+        onPressed: () => bloc.add(const ProfileEditorEventDeleteDialogOpened()),
       ),
     );
   }
@@ -123,35 +178,127 @@ class _Name extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<ProfileEditor>();
+    late final ProfileEditorBloc bloc;
+    var isInitialized = false;
+    final error = context.select((final ProfileEditorBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return switch (newBloc.state) {
+        ProfileEditorStateCreate(
+          :final nameError
+        ) ||
+        ProfileEditorStateEdit(
+          :final nameError
+        ) =>
+          nameError,
+        _ => '',
+      };
+    });
+    final name = switch (bloc.state) {
+      ProfileEditorStateCreate(
+        :final name
+      ) ||
+      ProfileEditorStateEdit(
+        :final name
+      ) =>
+        name,
+      _ => '',
+    };
 
-    return TextField(
-      decoration: const InputDecoration(
-        label: Text('Ad Soyad'),
-        prefixIcon: Icon(Icons.person),
-        border: OutlineInputBorder(),
+    return TextFormField(
+      decoration: InputDecoration(
+        label: const Text('Ad Soyad'),
+        prefixIcon: const Icon(Icons.person),
+        border: const OutlineInputBorder(),
+        errorText: error,
       ),
-      controller: model.nameController,
-      onChanged: model.onNameChanged,
+      initialValue: name,
+      onChanged: (final value) => bloc.add(ProfileEditorEventNameChanged(value)),
     );
   }
 }
 
-class _Login extends StatelessWidget {
+class _Login extends StatefulWidget {
   const _Login();
 
   @override
-  Widget build(final BuildContext context) {
-    final model = context.read<ProfileEditor>();
+  State<_Login> createState() => _LoginState();
+}
 
-    return TextField(
-      decoration: const InputDecoration(
-        border: OutlineInputBorder(),
-        label: Text('Kullanıcı adı'),
-        prefixIcon: Icon(Icons.lock),
+class _LoginState extends State<_Login> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void initState() {
+    final state = context.read<ProfileEditorBloc>().state;
+    _controller.text = switch (state) {
+      ProfileEditorStateCreate(
+        :final login
+      ) ||
+      ProfileEditorStateEdit(
+        :final login
+      ) =>
+        login,
+      _ => '',
+    };
+    super.initState();
+  }
+
+  @override
+  Widget build(final BuildContext context) {
+    late final ProfileEditorBloc bloc;
+    var isInitialized = false;
+    final error = context.select((final ProfileEditorBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return switch (newBloc.state) {
+        ProfileEditorStateCreate(
+          :final loginError
+        ) =>
+          loginError,
+        _ => null,
+      };
+    });
+
+    return BlocListener<ProfileEditorBloc, ProfileEditorState>(
+      listenWhen: (final previous, final current) => switch (previous) {
+        ProfileEditorStateCreate(
+          :final login
+        ) =>
+          login !=
+              switch (current) {
+                ProfileEditorStateCreate(
+                  :final login
+                ) =>
+                  login,
+                _ => '',
+              },
+        _ => false,
+      },
+      listener: (final context, final state) {
+        _controller.text = switch (state) {
+          ProfileEditorStateCreate(
+            :final login
+          ) =>
+            login,
+          _ => '',
+        };
+      },
+      child: TextFormField(
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          label: const Text('Kullanıcı adı'),
+          prefixIcon: const Icon(Icons.lock),
+          errorText: error,
+        ),
+        controller: _controller,
+        readOnly: bloc.state is! ProfileEditorStateCreate,
+        onChanged: (final value) => bloc.add(ProfileEditorEventLoginChanged(value)),
       ),
-      controller: model.loginController,
-      readOnly: model.exist,
     );
   }
 }
@@ -161,19 +308,41 @@ class _Password extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final ProfileEditor model;
+    late final ProfileEditorBloc bloc;
     var isInitialized = false;
-    context.select((final ProfileEditor newModel) {
+    final isPasswordVisible = context.select((final ProfileEditorBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.isPasswordVisible;
+      return switch (bloc.state) {
+        ProfileEditorStateCreate(
+          :final isPasswordVisible
+        ) =>
+          isPasswordVisible,
+        _ => false,
+      };
     });
+    final error = context.select((final ProfileEditorBloc newBloc) {
+      return switch (newBloc.state) {
+        ProfileEditorStateCreate(
+          :final passwordError
+        ) =>
+          passwordError,
+        _ => '',
+      };
+    });
+    final password = switch (bloc.state) {
+      ProfileEditorStateCreate(
+        :final password
+      ) =>
+        password,
+      _ => '',
+    };
 
     return Padding(
       padding: const EdgeInsets.only(top: 16),
-      child: TextField(
+      child: TextFormField(
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
           label: const Text('Şifre'),
@@ -181,13 +350,15 @@ class _Password extends StatelessWidget {
           suffixIcon: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 6),
             child: IconButton(
-              onPressed: model.togglePasswordVisibility,
-              icon: Icon(model.isPasswordVisible ? Icons.visibility : Icons.visibility_off),
+              onPressed: () => bloc.add(const ProfileEditorEventPasswordVisibilityToggled()),
+              icon: Icon(isPasswordVisible ? Icons.visibility : Icons.visibility_off),
             ),
           ),
+          errorText: error,
         ),
-        controller: model.passwordController,
-        obscureText: !model.isPasswordVisible,
+        initialValue: password,
+        obscureText: !isPasswordVisible,
+        onChanged: (final value) => bloc.add(ProfileEditorEventPasswordChanged(value)),
       ),
     );
   }
@@ -222,25 +393,34 @@ class _Role extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final ProfileEditor model;
+    late final ProfileEditorBloc bloc;
     var isInitialized = false;
-    context.select((final ProfileEditor newModel) {
+    final currentRole = context.select((final ProfileEditorBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.role;
+      return switch (bloc.state) {
+        ProfileEditorStateCreate(
+          :final role
+        ) ||
+        ProfileEditorStateEdit(
+          :final role
+        ) =>
+          role,
+        _ => Role.employee,
+      };
     });
 
     return Expanded(
       child: AnimatedCrossFade(
-        crossFadeState: model.role == role ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+        crossFadeState: currentRole == role ? CrossFadeState.showFirst : CrossFadeState.showSecond,
         duration: const Duration(milliseconds: 250),
         firstCurve: Curves.easeIn,
         secondCurve: Curves.easeOut,
         firstChild: _RoleChip(
           isSelected: true,
-          onSelected: (final _) => model.role = role,
+          onSelected: (final _) {},
           borderRadius: _borderRadius,
           icon: icon,
           text: text,
@@ -248,7 +428,7 @@ class _Role extends StatelessWidget {
         ),
         secondChild: _RoleChip(
           isSelected: false,
-          onSelected: (final _) => model.role = role,
+          onSelected: (final _) => bloc.add(ProfileEditorEventRoleChanged(role)),
           borderRadius: _borderRadius,
           icon: icon,
           text: text,
@@ -318,14 +498,23 @@ class _SaveButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final ProfileEditor model;
+    late final ProfileEditorBloc bloc;
     var isInitialized = false;
-    context.select((final ProfileEditor newModel) {
+    final uploadState = context.select((final ProfileEditorBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.isUploading;
+      return switch (bloc.state) {
+        ProfileEditorStateCreate(
+          :final uploadState
+        ) ||
+        ProfileEditorStateEdit(
+          :final uploadState
+        ) =>
+          uploadState,
+        _ => const StatusInitial(),
+      };
     });
 
     return AnimatedCrossFade(
@@ -343,11 +532,11 @@ class _SaveButton extends StatelessWidget {
           child: FloatingActionButton.extended(
             icon: const Icon(Icons.save),
             label: const Text('Kaydet'),
-            onPressed: model.save,
+            onPressed: () => bloc.add(const ProfileEditorEventSaveRequested()),
           ),
         ),
       ),
-      crossFadeState: model.isUploading ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+      crossFadeState: uploadState is StatusInProgress ? CrossFadeState.showFirst : CrossFadeState.showSecond,
       duration: const Duration(milliseconds: 500),
     );
   }
