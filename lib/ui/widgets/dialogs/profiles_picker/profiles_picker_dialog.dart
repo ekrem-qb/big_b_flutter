@@ -128,11 +128,6 @@ class _Profile extends StatelessWidget {
             : BorderSide.none,
       ),
       child: ListTile(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(12),
-          ),
-        ),
         leading: Icon(model.all[index].role == Role.manager ? Icons.security : Icons.person),
         title: Text(model.all[index].name),
         selected: isSelected,

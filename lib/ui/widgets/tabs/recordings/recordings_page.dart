@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../theme.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import 'recordings_model.dart';
 
@@ -103,7 +102,6 @@ class _Item extends StatelessWidget {
     return Card(
       child: model.recordings.length >= index
           ? ListTile(
-              shape: kDefaultShape,
               title: Text(
                 model.recordings[index].createdAt.toString(),
               ),

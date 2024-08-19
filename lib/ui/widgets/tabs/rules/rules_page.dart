@@ -167,11 +167,6 @@ class _ItemCard extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(12),
-        ),
-      ),
       child: _Item(index),
     );
   }

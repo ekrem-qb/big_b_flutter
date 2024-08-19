@@ -116,11 +116,6 @@ class _Item extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(12),
-        ),
-      ),
       child: _ItemContent(index),
     );
   }
@@ -152,11 +147,6 @@ class _ItemContent extends StatelessWidget {
 
     return model.plannedTasks.length >= index
         ? ListTile(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(12),
-              ),
-            ),
             title: Text(
               model.plannedTasks[index].text,
               maxLines: 2,

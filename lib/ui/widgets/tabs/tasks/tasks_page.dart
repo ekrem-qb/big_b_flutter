@@ -209,11 +209,6 @@ class _ItemCard extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return Card(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(12),
-        ),
-      ),
       child: _Item(index),
     );
   }
@@ -306,11 +301,6 @@ class _ItemTile extends StatelessWidget {
 
     return ListTile(
       mouseCursor: SystemMouseCursors.click,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(12),
-        ),
-      ),
       enabled: !(task?.isDone ?? false),
       leading: task?.isDone ?? false
           ? const Icon(
