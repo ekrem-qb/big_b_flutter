@@ -208,7 +208,6 @@ class _Text extends StatelessWidget {
       controller: model.textController,
       minLines: 3,
       maxLines: 8,
-      decoration: const InputDecoration(border: OutlineInputBorder()),
     );
   }
 }

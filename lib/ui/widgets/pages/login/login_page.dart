@@ -42,7 +42,6 @@ class _Fields extends StatelessWidget {
           TextField(
             autofocus: true,
             decoration: const InputDecoration(
-              border: OutlineInputBorder(),
               label: Text('Kullanıcı adı'),
               prefixIcon: Icon(Icons.account_circle),
             ),
@@ -74,7 +73,6 @@ class _PasswordField extends StatelessWidget {
 
     return TextField(
       decoration: InputDecoration(
-        border: const OutlineInputBorder(),
         label: const Text('Şifre'),
         prefixIcon: const Icon(Icons.lock),
         suffixIcon: Padding(

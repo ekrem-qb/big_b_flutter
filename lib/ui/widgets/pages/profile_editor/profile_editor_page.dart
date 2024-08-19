@@ -224,7 +224,6 @@ class _Name extends StatelessWidget {
       decoration: InputDecoration(
         label: const Text('Ad Soyad'),
         prefixIcon: const Icon(Icons.person),
-        border: const OutlineInputBorder(),
         errorText: error,
       ),
       initialValue: name,
@@ -303,7 +302,6 @@ class _LoginState extends State<_Login> {
       },
       child: TextFormField(
         decoration: InputDecoration(
-          border: const OutlineInputBorder(),
           label: const Text('Kullanıcı adı'),
           prefixIcon: const Icon(Icons.lock),
           errorText: error,
@@ -357,7 +355,6 @@ class _Password extends StatelessWidget {
       padding: const EdgeInsets.only(top: 16),
       child: TextFormField(
         decoration: InputDecoration(
-          border: const OutlineInputBorder(),
           label: const Text('Şifre'),
           prefixIcon: const Icon(Icons.key),
           suffixIcon: Padding(

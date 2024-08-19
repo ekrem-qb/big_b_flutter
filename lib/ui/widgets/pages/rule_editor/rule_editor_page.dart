@@ -211,7 +211,6 @@ class _Description extends StatelessWidget {
 
     return TextFormField(
       decoration: InputDecoration(
-        border: const OutlineInputBorder(),
         errorText: error,
       ),
       minLines: 1,
@@ -240,7 +239,6 @@ class _Details extends StatelessWidget {
     };
 
     return TextFormField(
-      decoration: const InputDecoration(border: OutlineInputBorder()),
       minLines: 3,
       maxLines: 8,
       initialValue: details,
