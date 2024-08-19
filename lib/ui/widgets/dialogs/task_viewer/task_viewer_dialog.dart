@@ -169,7 +169,6 @@ class _Image extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               child: Image.network(
                 model.task?.imageUrl!.toString() ?? '',
-                filterQuality: FilterQuality.medium,
                 fit: BoxFit.cover,
                 frameBuilder: (final context, final child, final frame, final wasSynchronouslyLoaded) {
                   return wasSynchronouslyLoaded || frame != null
