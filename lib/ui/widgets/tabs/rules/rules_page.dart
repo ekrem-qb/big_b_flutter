@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../app_router/app_router.dart';
 import '../../extensions/fade_transition_builder.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/shimmer.dart';
@@ -33,7 +34,20 @@ class RulesView extends StatelessWidget {
           title: const Text('Kurallar'),
         ),
         body: const _RulesList(),
+        floatingActionButton: const _NewRuleButton(),
       ),
+    );
+  }
+}
+
+class _NewRuleButton extends StatelessWidget {
+  const _NewRuleButton();
+
+  @override
+  Widget build(final BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () => context.pushRoute(const NewRuleEditorRoute()),
+      child: const Icon(Icons.add),
     );
   }
 }
@@ -228,6 +242,7 @@ class _ItemContent extends StatelessWidget {
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
       ),
+      onTap: () => context.pushRoute(RuleEditorRoute(id: rule!.id)),
     );
   }
 }
