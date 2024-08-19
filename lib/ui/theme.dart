@@ -23,11 +23,16 @@ const _listTileTheme = ListTileThemeData(
   shape: kDefaultShape,
 );
 
+const _inputDecorationTheme = InputDecorationTheme(
+  border: OutlineInputBorder(),
+);
+
 final lightTheme = ThemeData(
   brightness: Brightness.light,
   appBarTheme: _appBarTheme,
   cardTheme: _cardTheme,
   listTileTheme: _listTileTheme,
+  inputDecorationTheme: _inputDecorationTheme,
   colorScheme: lightColorScheme,
 );
 
@@ -132,6 +137,7 @@ final darkTheme = ThemeData(
   appBarTheme: _appBarTheme,
   cardTheme: _cardTheme,
   listTileTheme: _listTileTheme,
+  inputDecorationTheme: _inputDecorationTheme,
   chipTheme: ChipThemeData(
     checkmarkColor: darkColorScheme.onSecondaryContainer,
   ),
