@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app_router/app_router.dart';
+import '../../../theme.dart';
 import '../../extensions/app_bar_controller.dart';
 import '../../extensions/dialog_router.dart';
 import '../../extensions/fade_transition_builder.dart';
@@ -268,7 +269,7 @@ class _ItemContent extends StatelessWidget {
 
     return isDone
         ? InkWell(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: kDefaultRadius,
             child: _ItemTile(index),
             onTap: () => _open(index, context, bloc),
           )

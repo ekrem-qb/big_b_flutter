@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app_router/app_router.dart';
+import '../../../theme.dart';
 import '../../extensions/fade_transition_builder.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/shimmer.dart';
@@ -219,9 +220,7 @@ class _ItemContent extends StatelessWidget {
     return ListTile(
       mouseCursor: SystemMouseCursors.click,
       shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(12),
-        ),
+        borderRadius: kDefaultRadius,
         side: BorderSide(
           width: 2,
           color: rule?.color ?? Colors.grey,

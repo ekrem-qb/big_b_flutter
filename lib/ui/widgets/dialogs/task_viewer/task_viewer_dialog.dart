@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../api/entity/task/task.dart';
+import '../../../theme.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import 'task_viewer_model.dart';
@@ -166,7 +167,7 @@ class _Image extends StatelessWidget {
             child: Material(
               elevation: 3,
               clipBehavior: Clip.antiAlias,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: kDefaultRadius,
               child: Image.network(
                 model.task?.imageUrl!.toString() ?? '',
                 fit: BoxFit.cover,

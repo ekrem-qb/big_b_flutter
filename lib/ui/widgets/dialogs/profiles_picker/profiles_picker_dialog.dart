@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../api/entity/profile/profile.dart';
 import '../../../../api/enums/role.dart';
+import '../../../theme.dart';
 import '../../extensions/mouse_navigator.dart';
 import 'profile_picker_model.dart';
 
@@ -117,9 +118,7 @@ class _Profile extends StatelessWidget {
 
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(12),
-        ),
+        borderRadius: kDefaultRadius,
         side: isSelected
             ? BorderSide(
                 color: Theme.of(context).colorScheme.primary,
