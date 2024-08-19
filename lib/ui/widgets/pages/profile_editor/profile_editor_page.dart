@@ -11,17 +11,30 @@ import '../../extensions/snackbar.dart';
 import 'bloc/profile_editor_bloc.dart';
 
 @RoutePage()
-class ProfileEditorPage extends StatelessWidget {
-  const ProfileEditorPage({@pathParam this.uid, this.profile, super.key});
+class NewProfileEditorPage extends StatelessWidget {
+  const NewProfileEditorPage({super.key});
 
-  final String? uid;
+  @override
+  Widget build(final BuildContext context) {
+    return BlocProvider(
+      create: (final context) => ProfileEditorBloc(),
+      child: const TaskEditorView(isNew: true),
+    );
+  }
+}
+
+@RoutePage()
+class ProfileEditorPage extends StatelessWidget {
+  const ProfileEditorPage({@pathParam required this.uid, this.profile, super.key});
+
+  final String uid;
   final Profile? profile;
 
   @override
   Widget build(final BuildContext context) {
     return BlocProvider(
       create: (final context) => ProfileEditorBloc(uid: uid, originalProfile: profile),
-      child: TaskEditorView(isNew: uid == null),
+      child: const TaskEditorView(isNew: false),
     );
   }
 }

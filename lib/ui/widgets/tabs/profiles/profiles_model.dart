@@ -108,7 +108,7 @@ class Profiles extends ChangeNotifier {
   }
 
   void newProfile() {
-    _context.pushRoute(ProfileEditorRoute());
+    _context.pushRoute(const NewProfileEditorRoute());
   }
 
   @override

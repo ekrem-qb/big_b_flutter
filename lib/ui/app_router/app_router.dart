@@ -96,6 +96,10 @@ class AppRouter extends RootStackRouter {
                     path: ':uid',
                     page: ProfileEditorRoute.page,
                   ),
+                  CupertinoRoute(
+                    path: 'new',
+                    page: NewProfileEditorRoute.page,
+                  ),
                 ],
               ),
               CupertinoRoute(

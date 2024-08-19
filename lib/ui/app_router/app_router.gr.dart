@@ -124,6 +124,44 @@ class MoreRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [NewProfileEditorPage]
+class NewProfileEditorRoute extends PageRouteInfo<void> {
+  const NewProfileEditorRoute({List<PageRouteInfo>? children})
+      : super(
+          NewProfileEditorRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'NewProfileEditorRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const NewProfileEditorPage();
+    },
+  );
+}
+
+/// generated route for
+/// [NewRuleEditorPage]
+class NewRuleEditorRoute extends PageRouteInfo<void> {
+  const NewRuleEditorRoute({List<PageRouteInfo>? children})
+      : super(
+          NewRuleEditorRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'NewRuleEditorRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const NewRuleEditorPage();
+    },
+  );
+}
+
+/// generated route for
 /// [NewTaskEditorPage]
 class NewTaskEditorRoute extends PageRouteInfo<void> {
   const NewTaskEditorRoute({List<PageRouteInfo>? children})
@@ -276,7 +314,7 @@ class PlayerRouteArgs {
 /// [ProfileEditorPage]
 class ProfileEditorRoute extends PageRouteInfo<ProfileEditorRouteArgs> {
   ProfileEditorRoute({
-    String? uid,
+    required String uid,
     Profile? profile,
     Key? key,
     List<PageRouteInfo>? children,
@@ -299,7 +337,7 @@ class ProfileEditorRoute extends PageRouteInfo<ProfileEditorRouteArgs> {
       final pathParams = data.inheritedPathParams;
       final args = data.argsAs<ProfileEditorRouteArgs>(
           orElse: () =>
-              ProfileEditorRouteArgs(uid: pathParams.optString('uid')));
+              ProfileEditorRouteArgs(uid: pathParams.getString('uid')));
       return ProfileEditorPage(
         uid: args.uid,
         profile: args.profile,
@@ -311,12 +349,12 @@ class ProfileEditorRoute extends PageRouteInfo<ProfileEditorRouteArgs> {
 
 class ProfileEditorRouteArgs {
   const ProfileEditorRouteArgs({
-    this.uid,
+    required this.uid,
     this.profile,
     this.key,
   });
 
-  final String? uid;
+  final String uid;
 
   final Profile? profile;
 
