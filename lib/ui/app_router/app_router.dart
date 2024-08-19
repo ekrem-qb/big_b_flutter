@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import '../../api/entity/planned_task/planned_task.dart';
 import '../../api/entity/profile/profile.dart';
 import '../../api/entity/recording/recording.dart';
+import '../../api/entity/rule/rule.dart';
 import '../../api/entity/task/task.dart';
 import '../widgets/dialogs/task_viewer/task_viewer_dialog.dart';
 import '../widgets/extensions/dialog_router.dart';
@@ -12,6 +13,7 @@ import '../widgets/pages/home/home_page.dart';
 import '../widgets/pages/login/login_page.dart';
 import '../widgets/pages/player/player_page.dart';
 import '../widgets/pages/profile_editor/profile_editor_page.dart';
+import '../widgets/pages/rule_editor/rule_editor_page.dart';
 import '../widgets/pages/task_editor/task_editor_page.dart';
 import '../widgets/tabs/more/more_page.dart';
 import '../widgets/tabs/planned_tasks/planned_tasks_page.dart';
@@ -110,6 +112,14 @@ class AppRouter extends RootStackRouter {
                   CupertinoRoute(
                     path: 'rules',
                     page: RulesRoute.page,
+                  ),
+                  CupertinoRoute(
+                    path: 'rules/:id',
+                    page: RuleEditorRoute.page,
+                  ),
+                  CupertinoRoute(
+                    path: 'rules/new',
+                    page: NewRuleEditorRoute.page,
                   ),
                 ],
               ),

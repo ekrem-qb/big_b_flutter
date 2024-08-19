@@ -405,6 +405,61 @@ class RecordingsRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [RuleEditorPage]
+class RuleEditorRoute extends PageRouteInfo<RuleEditorRouteArgs> {
+  RuleEditorRoute({
+    required int id,
+    Rule? rule,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          RuleEditorRoute.name,
+          args: RuleEditorRouteArgs(
+            id: id,
+            rule: rule,
+            key: key,
+          ),
+          rawPathParams: {'id': id},
+          initialChildren: children,
+        );
+
+  static const String name = 'RuleEditorRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<RuleEditorRouteArgs>(
+          orElse: () => RuleEditorRouteArgs(id: pathParams.getInt('id')));
+      return RuleEditorPage(
+        id: args.id,
+        rule: args.rule,
+        key: args.key,
+      );
+    },
+  );
+}
+
+class RuleEditorRouteArgs {
+  const RuleEditorRouteArgs({
+    required this.id,
+    this.rule,
+    this.key,
+  });
+
+  final int id;
+
+  final Rule? rule;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'RuleEditorRouteArgs{id: $id, rule: $rule, key: $key}';
+  }
+}
+
+/// generated route for
 /// [RulesPage]
 class RulesRoute extends PageRouteInfo<void> {
   const RulesRoute({List<PageRouteInfo>? children})
