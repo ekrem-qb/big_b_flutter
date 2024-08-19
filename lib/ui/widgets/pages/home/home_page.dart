@@ -54,7 +54,7 @@ class _HomeView extends StatelessWidget {
 
     return PopScope(
       canPop: router.canPop() || !canGoBack,
-      onPopInvoked: (final didPop) {
+      onPopInvokedWithResult: (final didPop, final result) {
         if (!didPop) model.goBack();
       },
       child: MouseNavigator(
