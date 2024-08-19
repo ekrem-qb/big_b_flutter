@@ -15,9 +15,19 @@ const _appBarTheme = AppBarTheme(
   centerTitle: false,
 );
 
+const _cardTheme = CardTheme(
+  shape: kDefaultShape,
+);
+
+const _listTileTheme = ListTileThemeData(
+  shape: kDefaultShape,
+);
+
 final lightTheme = ThemeData(
   brightness: Brightness.light,
   appBarTheme: _appBarTheme,
+  cardTheme: _cardTheme,
+  listTileTheme: _listTileTheme,
   colorScheme: lightColorScheme,
 );
 
@@ -120,6 +130,8 @@ const darkColorScheme = ColorScheme(
 final darkTheme = ThemeData(
   brightness: Brightness.dark,
   appBarTheme: _appBarTheme,
+  cardTheme: _cardTheme,
+  listTileTheme: _listTileTheme,
   chipTheme: ChipThemeData(
     checkmarkColor: darkColorScheme.onSecondaryContainer,
   ),
