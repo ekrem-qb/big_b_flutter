@@ -17,19 +17,21 @@ class RulesBloc extends Bloc<RulesEvent, RulesState> {
       };
     });
 
+    _rulesSubscriptions = [
+      db
+          .channel(Rule.tableName)
+          .onPostgresChanges(
+            table: Rule.tableName,
+            event: PostgresChangeEvent.all,
+            callback: (final _) => add(const RulesEventLoadRequested()),
+          )
+          .subscribe(),
+    ];
+
     add(const RulesEventLoadRequested());
   }
 
-  late final List<RealtimeChannel> _rulesSubscriptions = [
-    db
-        .channel(Rule.tableName)
-        .onPostgresChanges(
-          table: Rule.tableName,
-          event: PostgresChangeEvent.all,
-          callback: (final _) => add(const RulesEventLoadRequested()),
-        )
-        .subscribe(),
-  ];
+  late final List<RealtimeChannel> _rulesSubscriptions;
 
   Future<void> _onLoadRequested(final Emitter<RulesState> emit, final RulesEventLoadRequested event) async {
     try {

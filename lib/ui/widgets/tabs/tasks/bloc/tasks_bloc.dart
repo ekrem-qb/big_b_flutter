@@ -17,27 +17,29 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       };
     });
 
+    _tasksSubscriptions = [
+      db
+          .channel(Task.tableName)
+          .onPostgresChanges(
+            table: Task.tableName,
+            event: PostgresChangeEvent.all,
+            callback: (final _) => add(const TasksEventLoadRequested()),
+          )
+          .subscribe(),
+      db
+          .channel(Task.executivesTableName)
+          .onPostgresChanges(
+            table: Task.executivesTableName,
+            event: PostgresChangeEvent.all,
+            callback: (final _) => add(const TasksEventLoadRequested()),
+          )
+          .subscribe(),
+    ];
+
     add(const TasksEventLoadRequested());
   }
 
-  late final List<RealtimeChannel> _tasksSubscriptions = [
-    db
-        .channel(Task.tableName)
-        .onPostgresChanges(
-          table: Task.tableName,
-          event: PostgresChangeEvent.all,
-          callback: (final _) => add(const TasksEventLoadRequested()),
-        )
-        .subscribe(),
-    db
-        .channel(Task.executivesTableName)
-        .onPostgresChanges(
-          table: Task.executivesTableName,
-          event: PostgresChangeEvent.all,
-          callback: (final _) => add(const TasksEventLoadRequested()),
-        )
-        .subscribe(),
-  ];
+  late final List<RealtimeChannel> _tasksSubscriptions;
 
   Future<void> _onLoadRequested(final Emitter<TasksState> emit, final TasksEventLoadRequested event) async {
     try {
