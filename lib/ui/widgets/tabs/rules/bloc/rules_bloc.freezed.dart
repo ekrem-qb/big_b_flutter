@@ -85,6 +85,88 @@ abstract class RulesEventLoadRequested implements RulesEvent {
 }
 
 /// @nodoc
+abstract class _$$RulesEventDataUpdatedImplCopyWith<$Res> {
+  factory _$$RulesEventDataUpdatedImplCopyWith(
+          _$RulesEventDataUpdatedImpl value,
+          $Res Function(_$RulesEventDataUpdatedImpl) then) =
+      __$$RulesEventDataUpdatedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({PostgresChangePayload payload});
+}
+
+/// @nodoc
+class __$$RulesEventDataUpdatedImplCopyWithImpl<$Res>
+    extends _$RulesEventCopyWithImpl<$Res, _$RulesEventDataUpdatedImpl>
+    implements _$$RulesEventDataUpdatedImplCopyWith<$Res> {
+  __$$RulesEventDataUpdatedImplCopyWithImpl(_$RulesEventDataUpdatedImpl _value,
+      $Res Function(_$RulesEventDataUpdatedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RulesEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? payload = null,
+  }) {
+    return _then(_$RulesEventDataUpdatedImpl(
+      payload: null == payload
+          ? _value.payload
+          : payload // ignore: cast_nullable_to_non_nullable
+              as PostgresChangePayload,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$RulesEventDataUpdatedImpl implements _RulesEventDataUpdated {
+  const _$RulesEventDataUpdatedImpl({required this.payload});
+
+  @override
+  final PostgresChangePayload payload;
+
+  @override
+  String toString() {
+    return 'RulesEvent.dataUpdated(payload: $payload)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RulesEventDataUpdatedImpl &&
+            (identical(other.payload, payload) || other.payload == payload));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, payload);
+
+  /// Create a copy of RulesEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RulesEventDataUpdatedImplCopyWith<_$RulesEventDataUpdatedImpl>
+      get copyWith => __$$RulesEventDataUpdatedImplCopyWithImpl<
+          _$RulesEventDataUpdatedImpl>(this, _$identity);
+}
+
+abstract class _RulesEventDataUpdated implements RulesEvent {
+  const factory _RulesEventDataUpdated(
+          {required final PostgresChangePayload payload}) =
+      _$RulesEventDataUpdatedImpl;
+
+  PostgresChangePayload get payload;
+
+  /// Create a copy of RulesEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RulesEventDataUpdatedImplCopyWith<_$RulesEventDataUpdatedImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$RulesState {}
 
 /// @nodoc
