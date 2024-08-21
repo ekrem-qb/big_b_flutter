@@ -33,6 +33,9 @@ class _$RuleEditorEventCopyWithImpl<$Res, $Val extends RuleEditorEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -52,6 +55,9 @@ class __$$RuleEditorEventLoadRequestedImplCopyWithImpl<$Res>
       _$RuleEditorEventLoadRequestedImpl _value,
       $Res Function(_$RuleEditorEventLoadRequestedImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -101,6 +107,8 @@ class __$$RuleEditorEventDescriptionChangedImplCopyWithImpl<$Res>
       $Res Function(_$RuleEditorEventDescriptionChangedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -140,7 +148,9 @@ class _$RuleEditorEventDescriptionChangedImpl
   @override
   int get hashCode => Object.hash(runtimeType, value);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RuleEditorEventDescriptionChangedImplCopyWith<
@@ -154,7 +164,10 @@ abstract class RuleEditorEventDescriptionChanged implements RuleEditorEvent {
       _$RuleEditorEventDescriptionChangedImpl;
 
   String get value;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RuleEditorEventDescriptionChangedImplCopyWith<
           _$RuleEditorEventDescriptionChangedImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -180,6 +193,8 @@ class __$$RuleEditorEventDetailsChangedImplCopyWithImpl<$Res>
       $Res Function(_$RuleEditorEventDetailsChangedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -219,7 +234,9 @@ class _$RuleEditorEventDetailsChangedImpl
   @override
   int get hashCode => Object.hash(runtimeType, value);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RuleEditorEventDetailsChangedImplCopyWith<
@@ -233,7 +250,10 @@ abstract class RuleEditorEventDetailsChanged implements RuleEditorEvent {
       _$RuleEditorEventDetailsChangedImpl;
 
   String get value;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RuleEditorEventDetailsChangedImplCopyWith<
           _$RuleEditorEventDetailsChangedImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -259,6 +279,8 @@ class __$$RuleEditorEventColorChangedImplCopyWithImpl<$Res>
       $Res Function(_$RuleEditorEventColorChangedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -297,7 +319,9 @@ class _$RuleEditorEventColorChangedImpl implements RuleEditorEventColorChanged {
   @override
   int get hashCode => Object.hash(runtimeType, value);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RuleEditorEventColorChangedImplCopyWith<_$RuleEditorEventColorChangedImpl>
@@ -310,7 +334,10 @@ abstract class RuleEditorEventColorChanged implements RuleEditorEvent {
       _$RuleEditorEventColorChangedImpl;
 
   Color get value;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RuleEditorEventColorChangedImplCopyWith<_$RuleEditorEventColorChangedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -332,6 +359,9 @@ class __$$RuleEditorEventSaveRequestedImplCopyWithImpl<$Res>
       _$RuleEditorEventSaveRequestedImpl _value,
       $Res Function(_$RuleEditorEventSaveRequestedImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -378,6 +408,9 @@ class __$$RuleEditorEventDeleteDialogOpenedImplCopyWithImpl<$Res>
       _$RuleEditorEventDeleteDialogOpenedImpl _value,
       $Res Function(_$RuleEditorEventDeleteDialogOpenedImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -427,6 +460,8 @@ class __$$RuleEditorEventDeleteDialogClosedImplCopyWithImpl<$Res>
       $Res Function(_$RuleEditorEventDeleteDialogClosedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -467,7 +502,9 @@ class _$RuleEditorEventDeleteDialogClosedImpl
   @override
   int get hashCode => Object.hash(runtimeType, isDeleted);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RuleEditorEventDeleteDialogClosedImplCopyWith<
@@ -482,7 +519,10 @@ abstract class RuleEditorEventDeleteDialogClosed implements RuleEditorEvent {
       _$RuleEditorEventDeleteDialogClosedImpl;
 
   bool get isDeleted;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RuleEditorEventDeleteDialogClosedImplCopyWith<
           _$RuleEditorEventDeleteDialogClosedImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -507,6 +547,9 @@ class _$RuleEditorStateCopyWithImpl<$Res, $Val extends RuleEditorState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of RuleEditorState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -536,6 +579,8 @@ class __$$RuleEditorStateEditImplCopyWithImpl<$Res>
       $Res Function(_$RuleEditorStateEditImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RuleEditorState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -579,6 +624,8 @@ class __$$RuleEditorStateEditImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of RuleEditorState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $StatusCopyWith<$Res> get uploadState {
@@ -587,6 +634,8 @@ class __$$RuleEditorStateEditImplCopyWithImpl<$Res>
     });
   }
 
+  /// Create a copy of RuleEditorState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $StatusCopyWith<$Res> get deleteState {
@@ -652,7 +701,9 @@ class _$RuleEditorStateEditImpl implements RuleEditorStateEdit {
   int get hashCode => Object.hash(runtimeType, id, description, details, color,
       descriptionError, uploadState, deleteState);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RuleEditorState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RuleEditorStateEditImplCopyWith<_$RuleEditorStateEditImpl> get copyWith =>
@@ -677,7 +728,10 @@ abstract class RuleEditorStateEdit implements RuleEditorState {
   String? get descriptionError;
   Status get uploadState;
   Status get deleteState;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RuleEditorState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RuleEditorStateEditImplCopyWith<_$RuleEditorStateEditImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -707,6 +761,8 @@ class __$$RuleEditorStateCreateImplCopyWithImpl<$Res>
       $Res Function(_$RuleEditorStateCreateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RuleEditorState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -740,6 +796,8 @@ class __$$RuleEditorStateCreateImplCopyWithImpl<$Res>
     ));
   }
 
+  /// Create a copy of RuleEditorState
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $StatusCopyWith<$Res> get uploadState {
@@ -798,7 +856,9 @@ class _$RuleEditorStateCreateImpl implements RuleEditorStateCreate {
   int get hashCode => Object.hash(
       runtimeType, description, descriptionError, details, color, uploadState);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RuleEditorState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RuleEditorStateCreateImplCopyWith<_$RuleEditorStateCreateImpl>
@@ -819,7 +879,10 @@ abstract class RuleEditorStateCreate implements RuleEditorState {
   String? get details;
   Color get color;
   Status get uploadState;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RuleEditorState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RuleEditorStateCreateImplCopyWith<_$RuleEditorStateCreateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -843,6 +906,8 @@ class __$$RuleEditorStateLoadingImplCopyWithImpl<$Res>
       $Res Function(_$RuleEditorStateLoadingImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RuleEditorState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -881,7 +946,9 @@ class _$RuleEditorStateLoadingImpl implements RuleEditorStateLoading {
   @override
   int get hashCode => Object.hash(runtimeType, id);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RuleEditorState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RuleEditorStateLoadingImplCopyWith<_$RuleEditorStateLoadingImpl>
@@ -894,7 +961,10 @@ abstract class RuleEditorStateLoading implements RuleEditorState {
       _$RuleEditorStateLoadingImpl;
 
   int get id;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RuleEditorState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RuleEditorStateLoadingImplCopyWith<_$RuleEditorStateLoadingImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -916,6 +986,8 @@ class __$$RuleEditorStateErrorImplCopyWithImpl<$Res>
       $Res Function(_$RuleEditorStateErrorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RuleEditorState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -954,7 +1026,9 @@ class _$RuleEditorStateErrorImpl implements RuleEditorStateError {
   @override
   int get hashCode => Object.hash(runtimeType, error);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RuleEditorState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RuleEditorStateErrorImplCopyWith<_$RuleEditorStateErrorImpl>
@@ -968,7 +1042,10 @@ abstract class RuleEditorStateError implements RuleEditorState {
       _$RuleEditorStateErrorImpl;
 
   String get error;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RuleEditorState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RuleEditorStateErrorImplCopyWith<_$RuleEditorStateErrorImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -991,6 +1068,9 @@ class _$StatusCopyWithImpl<$Res, $Val extends Status>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of Status
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1007,6 +1087,9 @@ class __$$StatusInitialImplCopyWithImpl<$Res>
   __$$StatusInitialImplCopyWithImpl(
       _$StatusInitialImpl _value, $Res Function(_$StatusInitialImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of Status
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1047,6 +1130,9 @@ class __$$StatusInProgressImplCopyWithImpl<$Res>
   __$$StatusInProgressImplCopyWithImpl(_$StatusInProgressImpl _value,
       $Res Function(_$StatusInProgressImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of Status
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1090,6 +1176,8 @@ class __$$StatusErrorImplCopyWithImpl<$Res>
       _$StatusErrorImpl _value, $Res Function(_$StatusErrorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Status
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1128,7 +1216,9 @@ class _$StatusErrorImpl implements StatusError {
   @override
   int get hashCode => Object.hash(runtimeType, error);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Status
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StatusErrorImplCopyWith<_$StatusErrorImpl> get copyWith =>
@@ -1139,7 +1229,10 @@ abstract class StatusError implements Status {
   const factory StatusError({required final String error}) = _$StatusErrorImpl;
 
   String get error;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Status
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StatusErrorImplCopyWith<_$StatusErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1158,6 +1251,9 @@ class __$$StatusCompletedImplCopyWithImpl<$Res>
   __$$StatusCompletedImplCopyWithImpl(
       _$StatusCompletedImpl _value, $Res Function(_$StatusCompletedImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of Status
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

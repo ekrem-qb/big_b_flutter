@@ -27,7 +27,9 @@ mixin _$TextLine {
   String get text => throw _privateConstructorUsedError;
   List<Highlight> get highlights => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TextLine
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TextLineCopyWith<TextLine> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -50,6 +52,8 @@ class _$TextLineCopyWithImpl<$Res, $Val extends TextLine>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TextLine
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -93,6 +97,8 @@ class __$$TextLineImplCopyWithImpl<$Res>
       _$TextLineImpl _value, $Res Function(_$TextLineImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TextLine
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -160,12 +166,14 @@ class _$TextLineImpl implements _TextLine {
                 .equals(other._highlights, _highlights));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, time, text,
       const DeepCollectionEquality().hash(_highlights));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TextLine
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TextLineImplCopyWith<_$TextLineImpl> get copyWith =>
@@ -181,18 +189,20 @@ abstract class _TextLine implements TextLine {
   factory _TextLine.fromJson(Map<String, dynamic> json) =
       _$TextLineImpl.fromJson;
 
-  @override
-
   /// Duration at which the line should be displayed
-  Duration get time;
   @override
+  Duration get time;
 
   /// Content of the line
+  @override
   String get text;
   @override
   List<Highlight> get highlights;
+
+  /// Create a copy of TextLine
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TextLineImplCopyWith<_$TextLineImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

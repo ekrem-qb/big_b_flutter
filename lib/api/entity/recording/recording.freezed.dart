@@ -26,7 +26,9 @@ mixin _$Recording {
   bool get hasLines => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Recording
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RecordingCopyWith<Recording> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -53,6 +55,8 @@ class _$RecordingCopyWithImpl<$Res, $Val extends Recording>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Recording
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -105,6 +109,8 @@ class __$$RecordingImplCopyWithImpl<$Res>
       _$RecordingImpl _value, $Res Function(_$RecordingImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Recording
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -175,12 +181,14 @@ class _$RecordingImpl implements _Recording {
                 other.createdAt == createdAt));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, audioUrl, hasLines, createdAt);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Recording
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RecordingImplCopyWith<_$RecordingImpl> get copyWith =>
@@ -206,8 +214,11 @@ abstract class _Recording implements Recording {
   bool get hasLines;
   @override
   DateTime get createdAt;
+
+  /// Create a copy of Recording
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RecordingImplCopyWith<_$RecordingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -31,8 +31,12 @@ mixin _$PlannedTask {
   @JsonKey(includeToJson: false)
   List<Profile> get executives => throw _privateConstructorUsedError;
 
+  /// Serializes this PlannedTask to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PlannedTask
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PlannedTaskCopyWith<PlannedTask> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -63,6 +67,8 @@ class _$PlannedTaskCopyWithImpl<$Res, $Val extends PlannedTask>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PlannedTask
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -133,6 +139,8 @@ class __$$PlannedTaskImplCopyWithImpl<$Res>
       _$PlannedTaskImpl _value, $Res Function(_$PlannedTaskImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PlannedTask
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -241,7 +249,7 @@ class _$PlannedTaskImpl implements _PlannedTask {
                 .equals(other._executives, _executives));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -253,7 +261,9 @@ class _$PlannedTaskImpl implements _PlannedTask {
       weekdays,
       const DeepCollectionEquality().hash(_executives));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PlannedTask
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PlannedTaskImplCopyWith<_$PlannedTaskImpl> get copyWith =>
@@ -293,12 +303,15 @@ abstract class _PlannedTask implements PlannedTask {
   @override
   DateTime get updatedAt;
   @override
-  int get weekdays;
-  @override // ignore: always_put_required_named_parameters_first
+  int get weekdays; // ignore: always_put_required_named_parameters_first
+  @override
   @JsonKey(includeToJson: false)
   List<Profile> get executives;
+
+  /// Create a copy of PlannedTask
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PlannedTaskImplCopyWith<_$PlannedTaskImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

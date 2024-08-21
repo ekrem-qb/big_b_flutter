@@ -25,7 +25,9 @@ mixin _$Highlight {
   int get endIndex => throw _privateConstructorUsedError;
   int get type => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Highlight
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $HighlightCopyWith<Highlight> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +50,8 @@ class _$HighlightCopyWithImpl<$Res, $Val extends Highlight>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Highlight
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -96,6 +100,8 @@ class __$$HighlightImplCopyWithImpl<$Res>
       _$HighlightImpl _value, $Res Function(_$HighlightImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Highlight
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -164,11 +170,13 @@ class _$HighlightImpl implements _Highlight {
             (identical(other.type, type) || other.type == type));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, startIndex, endIndex, type);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Highlight
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$HighlightImplCopyWith<_$HighlightImpl> get copyWith =>
@@ -193,8 +201,11 @@ abstract class _Highlight implements Highlight {
   int get endIndex;
   @override
   int get type;
+
+  /// Create a copy of Highlight
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$HighlightImplCopyWith<_$HighlightImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -23,8 +23,12 @@ mixin _$ProfileJoin {
   int get id => throw _privateConstructorUsedError;
   String get profile => throw _privateConstructorUsedError;
 
+  /// Serializes this ProfileJoin to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ProfileJoin
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ProfileJoinCopyWith<ProfileJoin> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +52,8 @@ class _$ProfileJoinCopyWithImpl<$Res, $Val extends ProfileJoin>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ProfileJoin
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -86,6 +92,8 @@ class __$$ProfileJoinImplCopyWithImpl<$Res>
       _$ProfileJoinImpl _value, $Res Function(_$ProfileJoinImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ProfileJoin
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -132,11 +140,13 @@ class _$ProfileJoinImpl implements _ProfileJoin {
             (identical(other.profile, profile) || other.profile == profile));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, profile);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ProfileJoin
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ProfileJoinImplCopyWith<_$ProfileJoinImpl> get copyWith =>
@@ -162,8 +172,11 @@ abstract class _ProfileJoin implements ProfileJoin {
   int get id;
   @override
   String get profile;
+
+  /// Create a copy of ProfileJoin
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProfileJoinImplCopyWith<_$ProfileJoinImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

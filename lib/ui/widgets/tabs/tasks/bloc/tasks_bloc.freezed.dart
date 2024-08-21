@@ -33,6 +33,9 @@ class _$TasksEventCopyWithImpl<$Res, $Val extends TasksEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of TasksEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -51,6 +54,9 @@ class __$$TasksEventLoadRequestedImplCopyWithImpl<$Res>
       _$TasksEventLoadRequestedImpl _value,
       $Res Function(_$TasksEventLoadRequestedImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of TasksEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -97,6 +103,9 @@ class _$TasksStateCopyWithImpl<$Res, $Val extends TasksState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of TasksState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -116,6 +125,8 @@ class __$$TasksStateDataImplCopyWithImpl<$Res>
       _$TasksStateDataImpl _value, $Res Function(_$TasksStateDataImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TasksState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -161,7 +172,9 @@ class _$TasksStateDataImpl implements TasksStateData {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_tasks));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TasksState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TasksStateDataImplCopyWith<_$TasksStateDataImpl> get copyWith =>
@@ -174,7 +187,10 @@ abstract class TasksStateData implements TasksState {
       _$TasksStateDataImpl;
 
   List<Task> get tasks;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TasksState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TasksStateDataImplCopyWith<_$TasksStateDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -193,6 +209,9 @@ class __$$TasksStateLoadingImplCopyWithImpl<$Res>
   __$$TasksStateLoadingImplCopyWithImpl(_$TasksStateLoadingImpl _value,
       $Res Function(_$TasksStateLoadingImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of TasksState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -236,6 +255,8 @@ class __$$TasksStateErrorImplCopyWithImpl<$Res>
       _$TasksStateErrorImpl _value, $Res Function(_$TasksStateErrorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TasksState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -274,7 +295,9 @@ class _$TasksStateErrorImpl implements TasksStateError {
   @override
   int get hashCode => Object.hash(runtimeType, error);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TasksState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TasksStateErrorImplCopyWith<_$TasksStateErrorImpl> get copyWith =>
@@ -287,7 +310,10 @@ abstract class TasksStateError implements TasksState {
       _$TasksStateErrorImpl;
 
   String get error;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TasksState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TasksStateErrorImplCopyWith<_$TasksStateErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

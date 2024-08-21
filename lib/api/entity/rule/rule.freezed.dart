@@ -27,8 +27,12 @@ mixin _$Rule {
   @JsonKey(fromJson: Color.new, toJson: colorToJson)
   Color get color => throw _privateConstructorUsedError;
 
+  /// Serializes this Rule to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Rule
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RuleCopyWith<Rule> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -54,6 +58,8 @@ class _$RuleCopyWithImpl<$Res, $Val extends Rule>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Rule
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -104,6 +110,8 @@ class __$$RuleImplCopyWithImpl<$Res>
   __$$RuleImplCopyWithImpl(_$RuleImpl _value, $Res Function(_$RuleImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Rule
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -173,11 +181,13 @@ class _$RuleImpl implements _Rule {
             (identical(other.color, color) || other.color == color));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, description, details, color);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Rule
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RuleImplCopyWith<_$RuleImpl> get copyWith =>
@@ -211,8 +221,11 @@ abstract class _Rule implements Rule {
   @override
   @JsonKey(fromJson: Color.new, toJson: colorToJson)
   Color get color;
+
+  /// Create a copy of Rule
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RuleImplCopyWith<_$RuleImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

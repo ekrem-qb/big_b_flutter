@@ -32,6 +32,9 @@ class _$AppEventCopyWithImpl<$Res, $Val extends AppEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of AppEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -48,6 +51,9 @@ class __$$AppEventSignedInImplCopyWithImpl<$Res>
   __$$AppEventSignedInImplCopyWithImpl(_$AppEventSignedInImpl _value,
       $Res Function(_$AppEventSignedInImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AppEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -90,6 +96,9 @@ class __$$AppEventSignOutRequestedImplCopyWithImpl<$Res>
       _$AppEventSignOutRequestedImpl _value,
       $Res Function(_$AppEventSignOutRequestedImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AppEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -133,6 +142,9 @@ class __$$AppEventSessionExpiredImplCopyWithImpl<$Res>
       _$AppEventSessionExpiredImpl _value,
       $Res Function(_$AppEventSessionExpiredImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AppEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -178,6 +190,9 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of AppState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -194,6 +209,9 @@ class __$$AppStateSignedInImplCopyWithImpl<$Res>
   __$$AppStateSignedInImplCopyWithImpl(_$AppStateSignedInImpl _value,
       $Res Function(_$AppStateSignedInImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AppState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -234,6 +252,9 @@ class __$$AppStateSignedOutImplCopyWithImpl<$Res>
   __$$AppStateSignedOutImplCopyWithImpl(_$AppStateSignedOutImpl _value,
       $Res Function(_$AppStateSignedOutImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AppState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

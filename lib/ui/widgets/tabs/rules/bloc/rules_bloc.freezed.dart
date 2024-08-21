@@ -33,6 +33,9 @@ class _$RulesEventCopyWithImpl<$Res, $Val extends RulesEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of RulesEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -51,6 +54,9 @@ class __$$RulesEventLoadRequestedImplCopyWithImpl<$Res>
       _$RulesEventLoadRequestedImpl _value,
       $Res Function(_$RulesEventLoadRequestedImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of RulesEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -97,6 +103,9 @@ class _$RulesStateCopyWithImpl<$Res, $Val extends RulesState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of RulesState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -116,6 +125,8 @@ class __$$RulesStateDataImplCopyWithImpl<$Res>
       _$RulesStateDataImpl _value, $Res Function(_$RulesStateDataImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RulesState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -161,7 +172,9 @@ class _$RulesStateDataImpl implements RulesStateData {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(_rules));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RulesState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RulesStateDataImplCopyWith<_$RulesStateDataImpl> get copyWith =>
@@ -174,7 +187,10 @@ abstract class RulesStateData implements RulesState {
       _$RulesStateDataImpl;
 
   List<Rule> get rules;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RulesState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RulesStateDataImplCopyWith<_$RulesStateDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -193,6 +209,9 @@ class __$$RulesStateLoadingImplCopyWithImpl<$Res>
   __$$RulesStateLoadingImplCopyWithImpl(_$RulesStateLoadingImpl _value,
       $Res Function(_$RulesStateLoadingImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of RulesState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -236,6 +255,8 @@ class __$$RulesStateErrorImplCopyWithImpl<$Res>
       _$RulesStateErrorImpl _value, $Res Function(_$RulesStateErrorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RulesState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -274,7 +295,9 @@ class _$RulesStateErrorImpl implements RulesStateError {
   @override
   int get hashCode => Object.hash(runtimeType, error);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RulesState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RulesStateErrorImplCopyWith<_$RulesStateErrorImpl> get copyWith =>
@@ -287,7 +310,10 @@ abstract class RulesStateError implements RulesState {
       _$RulesStateErrorImpl;
 
   String get error;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RulesState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RulesStateErrorImplCopyWith<_$RulesStateErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
