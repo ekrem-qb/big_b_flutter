@@ -231,11 +231,13 @@ class _ItemContent extends StatelessWidget {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
-      subtitle: Text(
-        rule?.details ?? '',
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-      ),
+      subtitle: rule?.details?.isNotEmpty ?? false
+          ? Text(
+              rule?.details ?? '',
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            )
+          : null,
       onTap: () => context.pushRoute(RuleEditorRoute(id: rule!.id)),
     );
   }
