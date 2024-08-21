@@ -106,16 +106,11 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
   Future<void> _onRecordingLoadRequested(final _PlayerEventLoadRequested event, final Emitter<PlayerState> emit) async {
     try {
-      final recording = await db.from(Recording.tableName).select(Recording.fieldNames).eq($RecordingImplJsonKeys.id, state.id).single().withConverter(Recording.fromJson).onError(<E>(final e, final _) => _onRecordingLoadError<E>(e, emit));
+      final recording = await db.from(Recording.tableName).select(Recording.fieldNames).eq($RecordingImplJsonKeys.id, state.id).single().withConverter(Recording.fromJson);
       add(_PlayerEventRecordingLoaded(recording: recording));
     } on Exception catch (e) {
-      _onRecordingLoadError(e, emit);
+      emit(state.copyWith(error: e.toString()));
     }
-  }
-
-  E _onRecordingLoadError<E>(final E e, final Emitter<PlayerState> emit) {
-    emit(state.copyWith(error: e.toString()));
-    return e;
   }
 
   Future<void> _onRecordingLoaded(final _PlayerEventRecordingLoaded event, final Emitter<PlayerState> emit) async {
@@ -141,7 +136,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         return;
       }
 
-      final textLines = await db.from(TextLine.tableName).select(TextLine.fieldNames).eq('record', state.id).order($TextLineImplJsonKeys.time, ascending: true).withConverter(TextLine.converter).onError(<E>(final e, final _) => _onTextLoadError<E>(e, emit));
+      final textLines = await db.from(TextLine.tableName).select(TextLine.fieldNames).eq('record', state.id).order($TextLineImplJsonKeys.time, ascending: true).withConverter(TextLine.converter);
 
       if (textLines == null || textLines.isEmpty) {
         emit(state.copyWith(textState: const PlayerTextStateProcessing()));
@@ -159,13 +154,8 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         ),
       );
     } on Exception catch (e) {
-      _onTextLoadError(e, emit);
+      emit(state.copyWith(textState: PlayerTextStateError(error: e.toString())));
     }
-  }
-
-  E _onTextLoadError<E>(final E e, final Emitter<PlayerState> emit) {
-    emit(state.copyWith(textState: PlayerTextStateError(error: e.toString())));
-    return e;
   }
 
   List<TextSpan> _generateTextSpans(final List<TextLine> textLines) {
