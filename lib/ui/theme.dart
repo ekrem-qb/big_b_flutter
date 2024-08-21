@@ -27,12 +27,21 @@ const _inputDecorationTheme = InputDecorationTheme(
   border: OutlineInputBorder(),
 );
 
+const _progressIndicatorLightTheme = ProgressIndicatorThemeData(
+  linearTrackColor: Color(0xffebe1d4), // surfaceContainerHighest
+);
+
+const _progressIndicatorDarkTheme = ProgressIndicatorThemeData(
+  linearTrackColor: Color(0xff39342b), // surfaceContainerHighest
+);
+
 final lightTheme = ThemeData(
   brightness: Brightness.light,
   appBarTheme: _appBarTheme,
   cardTheme: _cardTheme,
   listTileTheme: _listTileTheme,
   inputDecorationTheme: _inputDecorationTheme,
+  progressIndicatorTheme: _progressIndicatorLightTheme,
   colorScheme: lightColorScheme,
 );
 
@@ -138,6 +147,7 @@ final darkTheme = ThemeData(
   cardTheme: _cardTheme,
   listTileTheme: _listTileTheme,
   inputDecorationTheme: _inputDecorationTheme,
+  progressIndicatorTheme: _progressIndicatorDarkTheme,
   chipTheme: ChipThemeData(
     checkmarkColor: darkColorScheme.onSecondaryContainer,
   ),
