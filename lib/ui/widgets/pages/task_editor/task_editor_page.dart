@@ -9,6 +9,7 @@ import '../../../../extensions/weekdays.dart';
 import '../../../theme.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
+import '../../save_button.dart';
 import 'task_editor_model.dart';
 
 @RoutePage()
@@ -392,27 +393,9 @@ class _SaveButton extends StatelessWidget {
       return model.isUploading;
     });
 
-    return AnimatedCrossFade(
-      firstChild: const Padding(
-        padding: EdgeInsets.all(8),
-        child: LinearProgressIndicator(
-          minHeight: 56,
-          borderRadius: BorderRadius.all(Radius.circular(16)),
-        ),
-      ),
-      secondChild: Padding(
-        padding: const EdgeInsets.all(8),
-        child: FractionallySizedBox(
-          widthFactor: 1,
-          child: FloatingActionButton.extended(
-            icon: const Icon(Icons.save),
-            label: const Text('Kaydet'),
-            onPressed: model.save,
-          ),
-        ),
-      ),
-      crossFadeState: model.isUploading ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-      duration: const Duration(milliseconds: 500),
+    return SaveButton(
+      isLoading: model.isUploading,
+      onPressed: model.save,
     );
   }
 }

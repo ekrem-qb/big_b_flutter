@@ -9,6 +9,7 @@ import '../../dialogs/delete_dialog.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import '../../extensions/snackbar.dart';
+import '../../save_button.dart';
 import 'bloc/rule_editor_bloc.dart';
 
 @RoutePage()
@@ -322,27 +323,9 @@ class _SaveButton extends StatelessWidget {
       };
     });
 
-    return AnimatedCrossFade(
-      firstChild: const Padding(
-        padding: EdgeInsets.all(8),
-        child: LinearProgressIndicator(
-          minHeight: 56,
-          borderRadius: BorderRadius.all(Radius.circular(16)),
-        ),
-      ),
-      secondChild: Padding(
-        padding: const EdgeInsets.all(8),
-        child: FractionallySizedBox(
-          widthFactor: 1,
-          child: FloatingActionButton.extended(
-            icon: const Icon(Icons.save),
-            label: const Text('Kaydet'),
-            onPressed: () => bloc.add(const RuleEditorEventSaveRequested()),
-          ),
-        ),
-      ),
-      crossFadeState: uploadState is StatusInProgress ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-      duration: const Duration(milliseconds: 500),
+    return SaveButton(
+      isLoading: uploadState is StatusInProgress,
+      onPressed: () => bloc.add(const RuleEditorEventSaveRequested()),
     );
   }
 }
