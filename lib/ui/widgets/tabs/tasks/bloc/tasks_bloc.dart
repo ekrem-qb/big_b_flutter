@@ -44,7 +44,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   Future<void> _onLoadRequested(final Emitter<TasksState> emit, final TasksEventLoadRequested event) async {
     try {
       if (state is TasksStateError) {
-        emit(const TasksState.loading());
+        emit(const TasksStateLoading());
       }
 
       final tasks = await db.from(Task.tableName).select(Task.fieldNames).order($TaskImplJsonKeys.updatedAt).withConverter(Task.converter) ?? List.empty();

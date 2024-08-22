@@ -37,7 +37,7 @@ class RulesBloc extends Bloc<RulesEvent, RulesState> {
   Future<void> _onLoadRequested(final Emitter<RulesState> emit, final RulesEventLoadRequested event) async {
     try {
       if (state is RulesStateError) {
-        emit(const RulesState.loading());
+        emit(const RulesStateLoading());
       }
 
       final rules = await db.from(Rule.tableName).select(Rule.fieldNames).order($RuleImplJsonKeys.description, ascending: true).withConverter(Rule.converter) ?? List.empty();
