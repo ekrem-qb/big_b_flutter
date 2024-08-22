@@ -4,8 +4,11 @@ import 'extensions/shimmer.dart';
 
 class ListViewShimmer extends StatelessWidget {
   const ListViewShimmer({
+    this.hasSubtitle = true,
     super.key,
   });
+
+  final bool hasSubtitle;
 
   @override
   Widget build(final BuildContext context) {
@@ -17,10 +20,10 @@ class ListViewShimmer extends StatelessWidget {
       child: ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (final BuildContext context, final int index) {
-          return const Card(
+          return Card(
             child: ListTile(
-              title: Text(''),
-              subtitle: Text(''),
+              title: const Text(''),
+              subtitle: hasSubtitle ? const Text('') : null,
             ),
           );
         },
