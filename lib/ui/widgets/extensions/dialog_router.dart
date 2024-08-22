@@ -150,7 +150,11 @@ class DialogRoute<T> extends CustomRoute<T> {
 
         return PopScope(
           canPop: false,
-          onPopInvokedWithResult: (final didPop, final result) => animationController?.reverse().then((final _) => context.router.removeLast()),
+          onPopInvokedWithResult: (final didPop, final result) => animationController?.reverse().then((final _) {
+            if (context.mounted) {
+              context.router.removeLast();
+            }
+          }),
           child: child,
         );
       },
