@@ -1,12 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../api/entity/task/task.dart';
+import '../../../app_router/app_router.dart';
+import '../../../entity/status.dart';
 import '../../../theme.dart';
+import '../../error_panel.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
-import 'task_viewer_model.dart';
+import '../../extensions/snackbar.dart';
+import '../delete_dialog.dart';
+import 'bloc/task_viewer_bloc.dart';
 
 @RoutePage()
 class TaskViewerDialog extends StatelessWidget {
@@ -17,9 +22,38 @@ class TaskViewerDialog extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
+    return BlocProvider(
+      create: (final context) => TaskViewerBloc(id, task),
+      child: const TaskViewerView(),
+    );
+  }
+}
+
+class TaskViewerView extends StatelessWidget {
+  const TaskViewerView({
+    super.key,
+  });
+
+  @override
+  Widget build(final BuildContext context) {
+    final bloc = context.read<TaskViewerBloc>();
+
     return MouseNavigator(
-      child: ChangeNotifierProvider(
-        create: (final context) => TaskViewer(context, id, task),
+      child: BlocListener<TaskViewerBloc, TaskViewerState>(
+        listener: (final context, final state) async {
+          switch (state.deleteState) {
+            case StatusInProgress():
+              final isDeleted = await showDeleteDialog(itemName: 'görevi', context: context);
+              bloc.add(TaskViewerEventDeleteDialogClosed(isDeleted: isDeleted));
+            case StatusCompleted():
+              Navigator.pop(context);
+            case StatusError(
+                :final error
+              ):
+              showSnackbar(text: error, context: context);
+            default:
+          }
+        },
         child: AlertDialog(
           insetPadding: const EdgeInsets.all(16),
           title: Row(
@@ -71,31 +105,35 @@ class _Task extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskViewer model;
+    late final TaskViewerBloc bloc;
     var isInitialized = false;
-    context.select((final TaskViewer newModel) {
+    context.select((final TaskViewerBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.task == null;
+      return bloc.state.task.runtimeType;
     });
 
-    return model.task == null
-        ? Text(
-            'Silinmiş',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.displaySmall?.copyWith(color: Colors.red),
-          )
-        : const Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _Image(),
-              SizedBox(height: 16),
-              _Time(),
-            ],
-          );
+    return switch (bloc.state.task) {
+      StatusOfData() => const Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _Image(),
+            SizedBox(height: 16),
+            _Time(),
+          ],
+        ),
+      StatusOfLoading() => const Center(child: CircularProgressIndicator()),
+      StatusOfError(
+        :final error,
+      ) =>
+        ErrorPanel(
+          error: error,
+          onRefresh: () => bloc.add(const TaskViewerEventLoadRequested()),
+        ),
+    };
   }
 }
 
@@ -104,18 +142,24 @@ class _IsDoneIcon extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskViewer model;
+    late final TaskViewerBloc bloc;
     var isInitialized = false;
-    context.select((final TaskViewer newModel) {
+    final isDone = context.select((final TaskViewerBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.task?.isDone;
+      return switch (bloc.state.task) {
+        StatusOfData(
+          :final data
+        ) =>
+          data.isDone,
+        _ => false,
+      };
     });
 
     return Icon(
-      model.task?.isDone ?? false ? Icons.check_circle : Icons.circle_outlined,
+      isDone ? Icons.check_circle : Icons.circle_outlined,
       size: 32,
     );
   }
@@ -126,18 +170,24 @@ class _Text extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskViewer model;
+    late final TaskViewerBloc bloc;
     var isInitialized = false;
-    context.select((final TaskViewer newModel) {
+    final text = context.select((final TaskViewerBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.task?.text;
+      return switch (bloc.state.task) {
+        StatusOfData(
+          :final data
+        ) =>
+          data.text,
+        _ => '',
+      };
     });
 
     return Text(
-      model.task?.text ?? '',
+      text,
       style: const TextStyle(fontWeight: FontWeight.w500),
     );
   }
@@ -148,28 +198,32 @@ class _Image extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskViewer model;
+    late final TaskViewerBloc bloc;
     var isInitialized = false;
-    context.select((final TaskViewer newModel) {
+    final imageUrl = context.select((final TaskViewerBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.task?.imageUrl;
+      return switch (bloc.state.task) {
+        StatusOfData(
+          :final data
+        ) =>
+          data.imageUrl,
+        _ => null,
+      };
     });
 
-    return model.task?.imageUrl == null
+    return imageUrl == null
         ? const SizedBox.shrink()
         : GestureDetector(
-            onTap: () {
-              // TODO(ekrem-qb): Fullscreen image viewer
-            },
+            onTap: () {},
             child: Material(
               elevation: 3,
               clipBehavior: Clip.antiAlias,
               borderRadius: kDefaultRadius,
               child: Image.network(
-                model.task?.imageUrl!.toString() ?? '',
+                imageUrl.toString(),
                 fit: BoxFit.cover,
                 frameBuilder: (final context, final child, final frame, final wasSynchronouslyLoaded) {
                   return wasSynchronouslyLoaded || frame != null
@@ -203,14 +257,20 @@ class _Time extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskViewer model;
+    late final TaskViewerBloc bloc;
     var isInitialized = false;
-    context.select((final TaskViewer newModel) {
+    final isDone = context.select((final TaskViewerBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.task?.isDone;
+      return switch (bloc.state.task) {
+        StatusOfData(
+          :final data
+        ) =>
+          data.isDone,
+        _ => false,
+      };
     });
 
     return Row(
@@ -218,7 +278,7 @@ class _Time extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         const Flexible(child: _Deadline()),
-        if (model.task?.isDone ?? false) const Flexible(child: _Delay()),
+        if (isDone) const Flexible(child: _Delay()),
       ],
     );
   }
@@ -229,14 +289,20 @@ class _Deadline extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskViewer model;
+    late final TaskViewerBloc bloc;
     var isInitialized = false;
-    context.select((final TaskViewer newModel) {
+    final deadline = context.select((final TaskViewerBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.task?.deadline;
+      return switch (bloc.state.task) {
+        StatusOfData(
+          :final data
+        ) =>
+          data.deadline,
+        _ => null,
+      };
     });
 
     return Row(
@@ -246,7 +312,7 @@ class _Deadline extends StatelessWidget {
         const SizedBox(width: 8),
         Flexible(
           child: Text(
-            model.task?.deadline.toString() ?? '',
+            deadline.toString(),
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
@@ -260,14 +326,20 @@ class _Delay extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskViewer model;
+    late final TaskViewerBloc bloc;
     var isInitialized = false;
-    context.select((final TaskViewer newModel) {
+    final delay = context.select((final TaskViewerBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.task?.delay;
+      return switch (bloc.state.task) {
+        StatusOfData(
+          :final data
+        ) =>
+          data.delay,
+        _ => null,
+      };
     });
 
     return Padding(
@@ -275,7 +347,7 @@ class _Delay extends StatelessWidget {
       child: DecoratedBox(
         decoration: UnderlineTabIndicator(
           borderSide: BorderSide(
-            color: model.task?.delay == Duration.zero ? Colors.green : Colors.red,
+            color: delay == Duration.zero ? Colors.green : Colors.red,
             width: 4,
           ),
           borderRadius: const BorderRadius.all(
@@ -290,7 +362,7 @@ class _Delay extends StatelessWidget {
             const SizedBox(width: 8),
             Flexible(
               child: Text(
-                model.task?.delay == Duration.zero ? 'Tam zamanında yapıldı' : '${model.task?.delay.abs()} Geç yapıldı',
+                delay == Duration.zero ? 'Tam zamanında yapıldı' : '${delay?.abs()} Geç yapıldı',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
@@ -306,12 +378,12 @@ class _DeleteButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<TaskViewer>();
+    final bloc = context.read<TaskViewerBloc>();
 
     return TextButton.icon(
       icon: const Icon(Icons.delete),
       label: const Text('Sil'),
-      onPressed: model.delete,
+      onPressed: () => bloc.add(const TaskViewerEventDeleteDialogOpened()),
     );
   }
 }
@@ -321,12 +393,23 @@ class _EditButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<TaskViewer>();
+    final bloc = context.read<TaskViewerBloc>();
 
     return TextButton.icon(
       icon: const Icon(Icons.edit),
       label: const Text('Düzenle'),
-      onPressed: model.edit,
+      onPressed: () => context.pushRoute(
+        TaskEditorRoute(
+          taskId: bloc.state.id,
+          task: switch (bloc.state.task) {
+            StatusOfData(
+              :final data
+            ) =>
+              data,
+            _ => null,
+          },
+        ),
+      ),
     );
   }
 }
