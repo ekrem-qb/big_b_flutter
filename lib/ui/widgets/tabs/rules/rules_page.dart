@@ -7,8 +7,8 @@ import '../../../theme.dart';
 import '../../error_panel.dart';
 import '../../extensions/fade_transition_builder.dart';
 import '../../extensions/mouse_navigator.dart';
-import '../../extensions/shimmer.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
+import '../../list_view_shimmer.dart';
 import 'bloc/rules_bloc.dart';
 
 @RoutePage()
@@ -68,27 +68,12 @@ class _RulesList extends StatelessWidget {
       }
       return bloc.state.runtimeType;
     });
-    final colorScheme = Theme.of(context).colorScheme;
 
     return AnimatedSwitcher(
       duration: Durations.medium1,
       transitionBuilder: fadeTransitionBuilder,
       child: switch (bloc.state) {
-        RulesStateLoading() => Shimmer.fromColors(
-            baseColor: colorScheme.surfaceContainerLow,
-            highlightColor: colorScheme.surfaceTint,
-            child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (final BuildContext context, final int index) {
-                return const Card(
-                  child: ListTile(
-                    title: Text(''),
-                    subtitle: Text(''),
-                  ),
-                );
-              },
-            ),
-          ),
+        RulesStateLoading() => const ListViewShimmer(),
         RulesStateData() => const _RulesListContent(),
         RulesStateError(
           :final error
