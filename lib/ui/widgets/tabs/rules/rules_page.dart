@@ -32,7 +32,6 @@ class RulesView extends StatelessWidget {
     return MouseNavigator(
       child: Scaffold(
         appBar: AppBar(
-          shadowColor: Theme.of(context).shadowColor,
           title: const Text('Kurallar'),
         ),
         body: const _RulesList(),

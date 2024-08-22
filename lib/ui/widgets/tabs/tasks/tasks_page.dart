@@ -43,7 +43,6 @@ class _Scaffold extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        shadowColor: Theme.of(context).shadowColor,
         title: const Text('Görevler'),
         notificationPredicate: appBar.onScroll,
         actions: const [

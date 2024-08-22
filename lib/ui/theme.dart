@@ -11,7 +11,13 @@ const kDefaultShape = RoundedRectangleBorder(
   borderRadius: kDefaultRadius,
 );
 
-const _appBarTheme = AppBarTheme(
+final _appBarLightTheme = AppBarTheme(
+  shadowColor: lightColorScheme.shadow,
+  centerTitle: false,
+);
+
+final _appBarDarkTheme = AppBarTheme(
+  shadowColor: darkColorScheme.shadow,
   centerTitle: false,
 );
 
@@ -37,7 +43,7 @@ const _progressIndicatorDarkTheme = ProgressIndicatorThemeData(
 
 final lightTheme = ThemeData(
   brightness: Brightness.light,
-  appBarTheme: _appBarTheme,
+  appBarTheme: _appBarLightTheme,
   cardTheme: _cardTheme,
   listTileTheme: _listTileTheme,
   inputDecorationTheme: _inputDecorationTheme,
@@ -143,7 +149,7 @@ const darkColorScheme = ColorScheme(
 
 final darkTheme = ThemeData(
   brightness: Brightness.dark,
-  appBarTheme: _appBarTheme,
+  appBarTheme: _appBarDarkTheme,
   cardTheme: _cardTheme,
   listTileTheme: _listTileTheme,
   inputDecorationTheme: _inputDecorationTheme,
