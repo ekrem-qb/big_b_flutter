@@ -12,27 +12,29 @@ class ErrorPanel extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Icon(
-          Icons.error_outline_rounded,
-          size: 64,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(32),
-          child: Text(
-            error,
-            maxLines: 4,
-            overflow: TextOverflow.ellipsis,
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.error_outline_rounded,
+            size: 64,
           ),
-        ),
-        ElevatedButton.icon(
-          onPressed: onRefresh,
-          icon: const Icon(Icons.refresh_rounded),
-          label: const Text('Yenile'),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.all(32),
+            child: Text(
+              error,
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          ElevatedButton.icon(
+            onPressed: onRefresh,
+            icon: const Icon(Icons.refresh_rounded),
+            label: const Text('Yenile'),
+          ),
+        ],
+      ),
     );
   }
 }
