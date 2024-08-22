@@ -6,6 +6,7 @@ import '../../../../../api/database.dart';
 import '../../../../../api/entity/profile/profile.dart';
 import '../../../../../api/enums/role.dart';
 import '../../../../../extensions/case_helpers.dart';
+import '../../../../entity/status.dart';
 
 part 'profile_editor_bloc.freezed.dart';
 part 'profile_editor_event.dart';

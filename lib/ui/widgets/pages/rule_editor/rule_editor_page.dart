@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../api/entity/rule/rule.dart';
+import '../../../entity/status.dart';
 import '../../../theme.dart';
 import '../../dialogs/delete_dialog.dart';
 import '../../extensions/mouse_navigator.dart';

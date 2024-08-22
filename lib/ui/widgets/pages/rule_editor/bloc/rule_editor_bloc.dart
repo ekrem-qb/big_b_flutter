@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../api/database.dart';
 import '../../../../../api/entity/rule/rule.dart';
+import '../../../../entity/status.dart';
 
 part 'rule_editor_bloc.freezed.dart';
 part 'rule_editor_event.dart';

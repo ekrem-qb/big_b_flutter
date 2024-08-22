@@ -28,13 +28,3 @@ sealed class RuleEditorState with _$RuleEditorState {
     required final String error,
   }) = RuleEditorStateError;
 }
-
-@freezed
-sealed class Status with _$Status {
-  const factory Status.initial() = StatusInitial;
-  const factory Status.inProgress() = StatusInProgress;
-  const factory Status.error({
-    required final String error,
-  }) = StatusError;
-  const factory Status.completed() = StatusCompleted;
-}

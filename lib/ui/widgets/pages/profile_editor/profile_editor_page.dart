@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../api/entity/profile/profile.dart';
 import '../../../../api/enums/role.dart';
+import '../../../entity/status.dart';
 import '../../dialogs/delete_dialog.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';

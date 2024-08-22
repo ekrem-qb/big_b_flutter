@@ -32,13 +32,3 @@ sealed class ProfileEditorState with _$ProfileEditorState {
     required final String error,
   }) = ProfileEditorStateError;
 }
-
-@freezed
-sealed class Status with _$Status {
-  const factory Status.initial() = StatusInitial;
-  const factory Status.inProgress() = StatusInProgress;
-  const factory Status.error({
-    required final String error,
-  }) = StatusError;
-  const factory Status.completed() = StatusCompleted;
-}
