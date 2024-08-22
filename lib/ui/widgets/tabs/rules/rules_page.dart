@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app_router/app_router.dart';
 import '../../../theme.dart';
+import '../../error_panel.dart';
 import '../../extensions/fade_transition_builder.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/shimmer.dart';
@@ -92,27 +93,9 @@ class _RulesList extends StatelessWidget {
         RulesStateError(
           :final error
         ) =>
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.error_outline_rounded,
-                size: 64,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(32),
-                child: Text(
-                  error,
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              ElevatedButton.icon(
-                onPressed: () => bloc.add(const RulesEventLoadRequested()),
-                icon: const Icon(Icons.refresh_rounded),
-                label: const Text('Yenile'),
-              ),
-            ],
+          ErrorPanel(
+            error: error,
+            onRefresh: () => bloc.add(const RulesEventLoadRequested()),
           ),
       },
     );
