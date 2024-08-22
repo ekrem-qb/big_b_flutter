@@ -33,12 +33,12 @@ const _inputDecorationTheme = InputDecorationTheme(
   border: OutlineInputBorder(),
 );
 
-const _progressIndicatorLightTheme = ProgressIndicatorThemeData(
-  linearTrackColor: Color(0xffebe1d4), // surfaceContainerHighest
+final _progressIndicatorLightTheme = ProgressIndicatorThemeData(
+  linearTrackColor: lightColorScheme.surfaceContainerHighest,
 );
 
-const _progressIndicatorDarkTheme = ProgressIndicatorThemeData(
-  linearTrackColor: Color(0xff39342b), // surfaceContainerHighest
+final _progressIndicatorDarkTheme = ProgressIndicatorThemeData(
+  linearTrackColor: darkColorScheme.surfaceContainerHighest,
 );
 
 final lightTheme = ThemeData(
