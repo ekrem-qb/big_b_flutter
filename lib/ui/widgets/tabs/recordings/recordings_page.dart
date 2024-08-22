@@ -1,9 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../app_router/app_router.dart';
+import '../../error_panel.dart';
+import '../../extensions/fade_transition_builder.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
-import 'recordings_model.dart';
+import '../../list_view_shimmer.dart';
+import 'bloc/recordings_bloc.dart';
 
 @RoutePage()
 class RecordingsPage extends StatelessWidget {
@@ -11,9 +15,25 @@ class RecordingsPage extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return ChangeNotifierProvider(
-      create: Recordings.new,
-      child: const _RecordingsList(),
+    return BlocProvider(
+      create: (final context) => RecordingsBloc(),
+      child: const RecordingsView(),
+    );
+  }
+}
+
+class RecordingsView extends StatelessWidget {
+  const RecordingsView({
+    super.key,
+  });
+
+  @override
+  Widget build(final BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Kayıtlar'),
+      ),
+      body: const _RecordingsList(),
     );
   }
 }
@@ -23,21 +43,31 @@ class _RecordingsList extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Recordings model;
+    late final RecordingsBloc bloc;
     var isInitialized = false;
-    context.select((final Recordings newModel) {
+    context.select((final RecordingsBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.isLoading;
+      return bloc.state.runtimeType;
     });
 
-    return model.isLoading
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
-        : const _RecordingsListContent();
+    return AnimatedSwitcher(
+      duration: Durations.medium1,
+      transitionBuilder: fadeTransitionBuilder,
+      child: switch (bloc.state) {
+        RecordingsStateLoading() => const ListViewShimmer(),
+        RecordingsStateError(
+          :final error
+        ) =>
+          ErrorPanel(
+            error: error,
+            onRefresh: () => bloc.add(const RecordingsEventLoadRequested()),
+          ),
+        RecordingsStateData() => const _RecordingsListContent(),
+      },
+    );
   }
 }
 
@@ -46,23 +76,23 @@ class _RecordingsListContent extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Recordings model;
-    var isInitialized = false;
-    context.select((final Recordings newModel) {
-      if (!isInitialized) {
-        model = newModel;
-        isInitialized = true;
-      }
-      return model.recordings.length;
+    final count = context.select((final RecordingsBloc bloc) {
+      return switch (bloc.state) {
+        RecordingsStateData(
+          :final recordings
+        ) =>
+          recordings.length,
+        _ => 0,
+      };
     });
 
-    return model.recordings.isEmpty
+    return count == 0
         ? const Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
-                  Icons.sentiment_very_dissatisfied,
+                  Icons.mic,
                   size: 64,
                 ),
                 Text('Kayıtlar bulunamadı'),
@@ -75,7 +105,7 @@ class _RecordingsListContent extends StatelessWidget {
                 controller: controller,
                 physics: physics,
                 itemBuilder: _Item.new,
-                itemCount: model.recordings.length,
+                itemCount: count,
               );
             },
           );
@@ -89,32 +119,37 @@ class _Item extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Recordings model;
-    var isInitialized = false;
-    context.select((final Recordings newModel) {
-      if (!isInitialized) {
-        model = newModel;
-        isInitialized = true;
-      }
-      return model.recordings.elementAtOrNull(index);
+    final recording = context.select((final RecordingsBloc bloc) {
+      return switch (bloc.state) {
+        RecordingsStateData(
+          :final recordings,
+        ) =>
+          recordings.elementAtOrNull(index),
+        _ => null,
+      };
     });
 
     return Card(
-      child: model.recordings.length >= index
+      child: recording != null
           ? ListTile(
               title: Text(
-                model.recordings[index].createdAt.toString(),
+                recording.createdAt.toString(),
               ),
               trailing: SizedBox.square(
                 dimension: 24,
-                child: !model.recordings[index].hasLines
+                child: !recording.hasLines
                     ? const Icon(
                         Icons.font_download_off_outlined,
                         size: 24,
                       )
                     : null,
               ),
-              onTap: () => model.open(index),
+              onTap: () => context.router.push(
+                PlayerRoute(
+                  id: recording.id,
+                  recording: recording,
+                ),
+              ),
             )
           : const _DeletedItemContent(),
     );
