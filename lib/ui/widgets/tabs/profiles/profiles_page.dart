@@ -1,10 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../api/enums/role.dart';
+import '../../../app_router/app_router.dart';
+import '../../error_panel.dart';
+import '../../extensions/fade_transition_builder.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
-import 'profiles_model.dart';
+import '../../list_view_shimmer.dart';
+import 'bloc/profiles_bloc.dart';
 
 @RoutePage()
 class ProfilesPage extends StatelessWidget {
@@ -12,12 +16,26 @@ class ProfilesPage extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return ChangeNotifierProvider(
-      create: Profiles.new,
-      child: const Scaffold(
-        body: _ProfilesList(),
-        floatingActionButton: _NewProfileButton(),
+    return BlocProvider(
+      create: (final context) => ProfilesBloc(),
+      child: const ProfilesView(),
+    );
+  }
+}
+
+class ProfilesView extends StatelessWidget {
+  const ProfilesView({
+    super.key,
+  });
+
+  @override
+  Widget build(final BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Çalışanlar'),
       ),
+      body: const _ProfilesList(),
+      floatingActionButton: const _NewProfileButton(),
     );
   }
 }
@@ -27,10 +45,8 @@ class _NewProfileButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<Profiles>();
-
     return FloatingActionButton(
-      onPressed: model.newProfile,
+      onPressed: () => context.pushRoute(const NewProfileEditorRoute()),
       child: const Icon(Icons.add),
     );
   }
@@ -41,21 +57,31 @@ class _ProfilesList extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Profiles model;
+    late final ProfilesBloc bloc;
     var isInitialized = false;
-    context.select((final Profiles newModel) {
+    context.select((final ProfilesBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.isLoading;
+      return bloc.state.runtimeType;
     });
 
-    return model.isLoading
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
-        : const _ProfilesListContent();
+    return AnimatedSwitcher(
+      duration: Durations.medium1,
+      transitionBuilder: fadeTransitionBuilder,
+      child: switch (bloc.state) {
+        ProfilesStateLoading() => const ListViewShimmer(),
+        ProfilesStateError(
+          :final error
+        ) =>
+          ErrorPanel(
+            error: error,
+            onRefresh: () => bloc.add(const ProfilesEventLoadRequested()),
+          ),
+        ProfilesStateData() => const _ProfilesListContent(),
+      },
+    );
   }
 }
 
@@ -64,26 +90,26 @@ class _ProfilesListContent extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Profiles model;
-    var isInitialized = false;
-    context.select((final Profiles newModel) {
-      if (!isInitialized) {
-        model = newModel;
-        isInitialized = true;
-      }
-      return model.profiles.length;
+    final count = context.select((final ProfilesBloc bloc) {
+      return switch (bloc.state) {
+        ProfilesStateData(
+          :final profiles
+        ) =>
+          profiles.length,
+        _ => 0,
+      };
     });
 
-    return model.profiles.isEmpty
+    return count == 0
         ? const Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
-                  Icons.sentiment_very_dissatisfied,
+                  Icons.person,
                   size: 64,
                 ),
-                Text('No Profiles'),
+                Text('Çalışan yok'),
               ],
             ),
           )
@@ -93,7 +119,7 @@ class _ProfilesListContent extends StatelessWidget {
                 controller: controller,
                 physics: physics,
                 itemBuilder: _Item.new,
-                itemCount: model.profiles.length,
+                itemCount: count,
               );
             },
           );
@@ -120,30 +146,35 @@ class _ItemContent extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final Profiles model;
-    var isInitialized = false;
-    context.select((final Profiles newModel) {
-      if (!isInitialized) {
-        model = newModel;
-        isInitialized = true;
-      }
-      return model.profiles.elementAtOrNull(index);
+    final profile = context.select((final ProfilesBloc bloc) {
+      return switch (bloc.state) {
+        ProfilesStateData(
+          :final profiles,
+        ) =>
+          profiles.elementAtOrNull(index),
+        _ => null,
+      };
     });
 
-    return model.profiles.length >= index
+    return profile != null
         ? ListTile(
             title: Text(
-              model.profiles[index].name,
+              profile.name,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
             subtitle: Text(
-              model.profiles[index].login,
+              profile.login,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            trailing: model.profiles[index].role == Role.manager ? const Icon(Icons.security) : null,
-            onTap: () => model.open(index),
+            trailing: profile.role == Role.manager ? const Icon(Icons.security) : null,
+            onTap: () => context.pushRoute(
+              ProfileEditorRoute(
+                uid: profile.uid,
+                profile: profile,
+              ),
+            ),
           )
         : const _DeletedItemContent();
   }
