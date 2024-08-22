@@ -7,12 +7,6 @@ import 'package:flutter/material.dart';
 final isDesktop = !kIsWeb && (Platform.isLinux || Platform.isMacOS || Platform.isWindows);
 final skippedFocusNode = FocusNode(canRequestFocus: false, skipTraversal: true);
 
-const highlightColors = [
-  Colors.red,
-  Colors.orange,
-  Colors.yellow,
-];
-
 const weekdayNames = [
   'Pzt',
   'Sal',

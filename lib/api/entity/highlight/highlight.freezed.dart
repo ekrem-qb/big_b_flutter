@@ -23,7 +23,7 @@ mixin _$Highlight {
   int get id => throw _privateConstructorUsedError;
   int get startIndex => throw _privateConstructorUsedError;
   int get endIndex => throw _privateConstructorUsedError;
-  int get type => throw _privateConstructorUsedError;
+  Rule get rule => throw _privateConstructorUsedError;
 
   /// Create a copy of Highlight
   /// with the given fields replaced by the non-null parameter values.
@@ -37,7 +37,9 @@ abstract class $HighlightCopyWith<$Res> {
   factory $HighlightCopyWith(Highlight value, $Res Function(Highlight) then) =
       _$HighlightCopyWithImpl<$Res, Highlight>;
   @useResult
-  $Res call({int id, int startIndex, int endIndex, int type});
+  $Res call({int id, int startIndex, int endIndex, Rule rule});
+
+  $RuleCopyWith<$Res> get rule;
 }
 
 /// @nodoc
@@ -58,7 +60,7 @@ class _$HighlightCopyWithImpl<$Res, $Val extends Highlight>
     Object? id = null,
     Object? startIndex = null,
     Object? endIndex = null,
-    Object? type = null,
+    Object? rule = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -73,11 +75,21 @@ class _$HighlightCopyWithImpl<$Res, $Val extends Highlight>
           ? _value.endIndex
           : endIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as int,
+      rule: null == rule
+          ? _value.rule
+          : rule // ignore: cast_nullable_to_non_nullable
+              as Rule,
     ) as $Val);
+  }
+
+  /// Create a copy of Highlight
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $RuleCopyWith<$Res> get rule {
+    return $RuleCopyWith<$Res>(_value.rule, (value) {
+      return _then(_value.copyWith(rule: value) as $Val);
+    });
   }
 }
 
@@ -89,7 +101,10 @@ abstract class _$$HighlightImplCopyWith<$Res>
       __$$HighlightImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, int startIndex, int endIndex, int type});
+  $Res call({int id, int startIndex, int endIndex, Rule rule});
+
+  @override
+  $RuleCopyWith<$Res> get rule;
 }
 
 /// @nodoc
@@ -108,7 +123,7 @@ class __$$HighlightImplCopyWithImpl<$Res>
     Object? id = null,
     Object? startIndex = null,
     Object? endIndex = null,
-    Object? type = null,
+    Object? rule = null,
   }) {
     return _then(_$HighlightImpl(
       id: null == id
@@ -123,10 +138,10 @@ class __$$HighlightImplCopyWithImpl<$Res>
           ? _value.endIndex
           : endIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as int,
+      rule: null == rule
+          ? _value.rule
+          : rule // ignore: cast_nullable_to_non_nullable
+              as Rule,
     ));
   }
 }
@@ -138,7 +153,7 @@ class _$HighlightImpl implements _Highlight {
       {required this.id,
       required this.startIndex,
       required this.endIndex,
-      required this.type});
+      required this.rule});
 
   factory _$HighlightImpl.fromJson(Map<String, dynamic> json) =>
       _$$HighlightImplFromJson(json);
@@ -150,11 +165,11 @@ class _$HighlightImpl implements _Highlight {
   @override
   final int endIndex;
   @override
-  final int type;
+  final Rule rule;
 
   @override
   String toString() {
-    return 'Highlight(id: $id, startIndex: $startIndex, endIndex: $endIndex, type: $type)';
+    return 'Highlight(id: $id, startIndex: $startIndex, endIndex: $endIndex, rule: $rule)';
   }
 
   @override
@@ -167,12 +182,12 @@ class _$HighlightImpl implements _Highlight {
                 other.startIndex == startIndex) &&
             (identical(other.endIndex, endIndex) ||
                 other.endIndex == endIndex) &&
-            (identical(other.type, type) || other.type == type));
+            (identical(other.rule, rule) || other.rule == rule));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, startIndex, endIndex, type);
+  int get hashCode => Object.hash(runtimeType, id, startIndex, endIndex, rule);
 
   /// Create a copy of Highlight
   /// with the given fields replaced by the non-null parameter values.
@@ -188,7 +203,7 @@ abstract class _Highlight implements Highlight {
       {required final int id,
       required final int startIndex,
       required final int endIndex,
-      required final int type}) = _$HighlightImpl;
+      required final Rule rule}) = _$HighlightImpl;
 
   factory _Highlight.fromJson(Map<String, dynamic> json) =
       _$HighlightImpl.fromJson;
@@ -200,7 +215,7 @@ abstract class _Highlight implements Highlight {
   @override
   int get endIndex;
   @override
-  int get type;
+  Rule get rule;
 
   /// Create a copy of Highlight
   /// with the given fields replaced by the non-null parameter values.

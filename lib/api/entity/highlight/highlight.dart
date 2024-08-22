@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../rule/rule.dart';
+
 part 'highlight.freezed.dart';
 part 'highlight.g.dart';
 
@@ -9,7 +11,7 @@ class Highlight with _$Highlight {
     required final int id,
     required final int startIndex,
     required final int endIndex,
-    required final int type,
+    required final Rule rule,
   }) = _Highlight;
 
   factory Highlight.fromJson(final Map<String, dynamic> json) => _$HighlightFromJson(json);

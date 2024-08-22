@@ -11,7 +11,6 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../../../api/database.dart';
 import '../../../../../api/entity/recording/recording.dart';
 import '../../../../../api/entity/text_line/text_line.dart';
-import '../../../../../constants.dart';
 import '../../../../theme.dart';
 
 part 'player_bloc.freezed.dart';
@@ -175,7 +174,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
           parts.add(
             TextSpan(
               text: substring2,
-              style: TextStyle(color: _getHighlightColor(textLines, i, j)),
+              style: TextStyle(color: textLines[i].highlights[j].rule.color),
             ),
           );
 
@@ -191,14 +190,6 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       },
       growable: false,
     );
-  }
-
-  Color? _getHighlightColor(final List<TextLine> textLines, final int textLineIndex, final int highlightIndex) {
-    try {
-      return highlightColors[textLines[textLineIndex].highlights[highlightIndex].type];
-    } on Exception {
-      return null;
-    }
   }
 
   Future<void> _onRecordingLoadingError(final _PlayerEventRecordingLoadingError event, final Emitter<PlayerState> emit) async {

@@ -11,19 +11,19 @@ _$HighlightImpl _$$HighlightImplFromJson(Map<String, dynamic> json) =>
       id: (json['id'] as num).toInt(),
       startIndex: (json['start_index'] as num).toInt(),
       endIndex: (json['end_index'] as num).toInt(),
-      type: (json['type'] as num).toInt(),
+      rule: Rule.fromJson(json['rule'] as Map<String, dynamic>),
     );
 
 const _$$HighlightImplFieldMap = <String, String>{
   'id': 'id',
   'startIndex': 'start_index',
   'endIndex': 'end_index',
-  'type': 'type',
+  'rule': 'rule',
 };
 
 abstract final class $HighlightImplJsonKeys {
   static const String id = 'id';
   static const String startIndex = 'start_index';
   static const String endIndex = 'end_index';
-  static const String type = 'type';
+  static const String rule = 'rule';
 }
