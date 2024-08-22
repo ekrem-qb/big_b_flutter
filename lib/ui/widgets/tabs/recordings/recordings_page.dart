@@ -57,7 +57,9 @@ class _RecordingsList extends StatelessWidget {
       duration: Durations.medium1,
       transitionBuilder: fadeTransitionBuilder,
       child: switch (bloc.state) {
-        RecordingsStateLoading() => const ListViewShimmer(),
+        RecordingsStateLoading() => const ListViewShimmer(
+            hasSubtitle: false,
+          ),
         RecordingsStateError(
           :final error
         ) =>
