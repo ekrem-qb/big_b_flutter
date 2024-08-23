@@ -161,7 +161,7 @@ class _TasksListContent extends StatelessWidget {
               return ListView.builder(
                 controller: controller,
                 physics: physics,
-                itemBuilder: _ItemCard.new,
+                itemBuilder: _Item.new,
                 itemCount: count,
               );
             },
@@ -169,21 +169,8 @@ class _TasksListContent extends StatelessWidget {
   }
 }
 
-class _ItemCard extends StatelessWidget {
-  const _ItemCard(final BuildContext _, this.index);
-
-  final int index;
-
-  @override
-  Widget build(final BuildContext context) {
-    return Card(
-      child: _Item(index),
-    );
-  }
-}
-
 class _Item extends StatelessWidget {
-  const _Item(this.index);
+  const _Item(final BuildContext _, this.index);
 
   final int index;
 
@@ -199,7 +186,11 @@ class _Item extends StatelessWidget {
       };
     });
 
-    return exists ? _ItemContent(index) : const _DeletedItemContent();
+    return exists
+        ? Card(
+            child: _ItemContent(index),
+          )
+        : const SizedBox.shrink();
   }
 }
 
@@ -267,60 +258,47 @@ class _ItemTile extends StatelessWidget {
       };
     });
 
-    return ListTile(
-      mouseCursor: SystemMouseCursors.click,
-      enabled: !(task?.isDone ?? false),
-      leading: task?.isDone ?? false
-          ? const Icon(
-              Icons.check_circle,
-            )
-          : const Icon(
-              Icons.circle_outlined,
+    return task != null
+        ? ListTile(
+            mouseCursor: SystemMouseCursors.click,
+            enabled: !task.isDone,
+            leading: task.isDone
+                ? const Icon(
+                    Icons.check_circle,
+                  )
+                : const Icon(
+                    Icons.circle_outlined,
+                  ),
+            title: Text(
+              task.text,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: task.isDone
+                  ? const TextStyle(
+                      decoration: TextDecoration.lineThrough,
+                    )
+                  : null,
             ),
-      title: Text(
-        task?.text ?? '',
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-        style: task?.isDone ?? false
-            ? const TextStyle(
-                decoration: TextDecoration.lineThrough,
-              )
-            : null,
-      ),
-      subtitle: Row(
-        children: [
-          if (task?.imageUrl != null)
-            const Padding(
-              padding: EdgeInsets.only(right: 8),
-              child: Icon(
-                Icons.photo,
-                size: 16,
-              ),
+            subtitle: Row(
+              children: [
+                if (task.imageUrl != null)
+                  const Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Icon(
+                      Icons.photo,
+                      size: 16,
+                    ),
+                  ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: Text(
+                    task.deadline.toString(),
+                  ),
+                ),
+              ],
             ),
-          Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: Text(
-              task?.deadline.toString() ?? '',
-            ),
-          ),
-        ],
-      ),
-      onTap: () => _open(index, context, bloc),
-    );
-  }
-}
-
-class _DeletedItemContent extends StatelessWidget {
-  const _DeletedItemContent();
-
-  @override
-  Widget build(final BuildContext context) {
-    return const ListTile(
-      mouseCursor: SystemMouseCursors.click,
-      title: Text(
-        'Silinmiş',
-        style: TextStyle(color: Colors.red),
-      ),
-    );
+            onTap: () => _open(index, context, bloc),
+          )
+        : const SizedBox.shrink();
   }
 }

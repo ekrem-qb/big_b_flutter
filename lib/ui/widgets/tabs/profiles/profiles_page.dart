@@ -133,9 +133,21 @@ class _Item extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return Card(
-      child: _ItemContent(index),
-    );
+    final exists = context.select((final ProfilesBloc bloc) {
+      return switch (bloc.state) {
+        ProfilesStateData(
+          :final profiles,
+        ) =>
+          profiles.length >= index,
+        _ => false,
+      };
+    });
+
+    return exists
+        ? Card(
+            child: _ItemContent(index),
+          )
+        : const SizedBox.shrink();
   }
 }
 
@@ -176,21 +188,6 @@ class _ItemContent extends StatelessWidget {
               ),
             ),
           )
-        : const _DeletedItemContent();
-  }
-}
-
-class _DeletedItemContent extends StatelessWidget {
-  const _DeletedItemContent();
-
-  @override
-  Widget build(final BuildContext context) {
-    return const ListTile(
-      mouseCursor: SystemMouseCursors.click,
-      title: Text(
-        'Silinmiş',
-        style: TextStyle(color: Colors.red),
-      ),
-    );
+        : const SizedBox.shrink();
   }
 }

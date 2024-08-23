@@ -115,9 +115,15 @@ class _Item extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return Card(
-      child: _ItemContent(index),
-    );
+    final exists = context.select((final PlannedTasks model) {
+      return model.plannedTasks.length >= index;
+    });
+
+    return exists
+        ? Card(
+            child: _ItemContent(index),
+          )
+        : const SizedBox.shrink();
   }
 }
 
@@ -137,7 +143,7 @@ class _ItemContent extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final PlannedTasks model;
     var isInitialized = false;
-    context.select((final PlannedTasks newModel) {
+    final plannedTask = context.select((final PlannedTasks newModel) {
       if (!isInitialized) {
         model = newModel;
         isInitialized = true;
@@ -145,16 +151,16 @@ class _ItemContent extends StatelessWidget {
       return model.plannedTasks.elementAtOrNull(index);
     });
 
-    return model.plannedTasks.length >= index
+    return plannedTask != null
         ? ListTile(
             title: Text(
-              model.plannedTasks[index].text,
+              plannedTask.text,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
             subtitle: Row(
               children: [
-                if (model.plannedTasks[index].isImageRequired)
+                if (plannedTask.isImageRequired)
                   const Padding(
                     padding: EdgeInsets.only(right: 8),
                     child: Icon(
@@ -165,21 +171,21 @@ class _ItemContent extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: Text(
-                    _formatTime(model.plannedTasks[index].deadline.toTime()),
+                    _formatTime(plannedTask.deadline.toTime()),
                   ),
                 ),
-                if (isWeekdaySelected(0, model.plannedTasks[index].weekdays)) _Day(day: 0, text: weekdayNames[0]),
-                if (isWeekdaySelected(1, model.plannedTasks[index].weekdays)) _Day(day: 1, text: weekdayNames[1]),
-                if (isWeekdaySelected(2, model.plannedTasks[index].weekdays)) _Day(day: 2, text: weekdayNames[2]),
-                if (isWeekdaySelected(3, model.plannedTasks[index].weekdays)) _Day(day: 3, text: weekdayNames[3]),
-                if (isWeekdaySelected(4, model.plannedTasks[index].weekdays)) _Day(day: 4, text: weekdayNames[4]),
-                if (isWeekdaySelected(5, model.plannedTasks[index].weekdays)) _Day(day: 5, text: weekdayNames[5]),
-                if (isWeekdaySelected(6, model.plannedTasks[index].weekdays)) _Day(day: 6, text: weekdayNames[6]),
+                if (isWeekdaySelected(0, plannedTask.weekdays)) _Day(day: 0, text: weekdayNames[0]),
+                if (isWeekdaySelected(1, plannedTask.weekdays)) _Day(day: 1, text: weekdayNames[1]),
+                if (isWeekdaySelected(2, plannedTask.weekdays)) _Day(day: 2, text: weekdayNames[2]),
+                if (isWeekdaySelected(3, plannedTask.weekdays)) _Day(day: 3, text: weekdayNames[3]),
+                if (isWeekdaySelected(4, plannedTask.weekdays)) _Day(day: 4, text: weekdayNames[4]),
+                if (isWeekdaySelected(5, plannedTask.weekdays)) _Day(day: 5, text: weekdayNames[5]),
+                if (isWeekdaySelected(6, plannedTask.weekdays)) _Day(day: 6, text: weekdayNames[6]),
               ],
             ),
             onTap: () => model.open(index),
           )
-        : const _DeletedItemContent();
+        : const SizedBox.shrink();
   }
 }
 
@@ -218,21 +224,6 @@ class _Day extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _DeletedItemContent extends StatelessWidget {
-  const _DeletedItemContent();
-
-  @override
-  Widget build(final BuildContext context) {
-    return const ListTile(
-      mouseCursor: SystemMouseCursors.click,
-      title: Text(
-        'Silinmiş',
-        style: TextStyle(color: Colors.red),
       ),
     );
   }

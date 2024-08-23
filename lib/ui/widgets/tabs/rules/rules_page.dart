@@ -119,7 +119,7 @@ class _RulesListContent extends StatelessWidget {
               return ListView.builder(
                 controller: controller,
                 physics: physics,
-                itemBuilder: _ItemCard.new,
+                itemBuilder: _Item.new,
                 itemCount: count,
               );
             },
@@ -127,21 +127,8 @@ class _RulesListContent extends StatelessWidget {
   }
 }
 
-class _ItemCard extends StatelessWidget {
-  const _ItemCard(final BuildContext _, this.index);
-
-  final int index;
-
-  @override
-  Widget build(final BuildContext context) {
-    return Card(
-      child: _Item(index),
-    );
-  }
-}
-
 class _Item extends StatelessWidget {
-  const _Item(this.index);
+  const _Item(final BuildContext _, this.index);
 
   final int index;
 
@@ -157,7 +144,11 @@ class _Item extends StatelessWidget {
       };
     });
 
-    return exists ? _ItemContent(index) : const _DeletedItemContent();
+    return exists
+        ? Card(
+            child: _ItemContent(index),
+          )
+        : const SizedBox.shrink();
   }
 }
 
@@ -184,43 +175,30 @@ class _ItemContent extends StatelessWidget {
       };
     });
 
-    return ListTile(
-      mouseCursor: SystemMouseCursors.click,
-      shape: RoundedRectangleBorder(
-        borderRadius: kDefaultRadius,
-        side: BorderSide(
-          width: 2,
-          color: rule?.color ?? Colors.grey,
-        ),
-      ),
-      title: Text(
-        rule?.description ?? '',
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-      subtitle: rule?.details?.isNotEmpty ?? false
-          ? Text(
-              rule?.details ?? '',
-              maxLines: 2,
+    return rule != null
+        ? ListTile(
+            mouseCursor: SystemMouseCursors.click,
+            shape: RoundedRectangleBorder(
+              borderRadius: kDefaultRadius,
+              side: BorderSide(
+                width: 2,
+                color: rule.color,
+              ),
+            ),
+            title: Text(
+              rule.description,
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
-            )
-          : null,
-      onTap: () => context.pushRoute(RuleEditorRoute(id: rule!.id)),
-    );
-  }
-}
-
-class _DeletedItemContent extends StatelessWidget {
-  const _DeletedItemContent();
-
-  @override
-  Widget build(final BuildContext context) {
-    return const ListTile(
-      mouseCursor: SystemMouseCursors.click,
-      title: Text(
-        'Silinmiş',
-        style: TextStyle(color: Colors.red),
-      ),
-    );
+            ),
+            subtitle: rule.details?.isNotEmpty ?? false
+                ? Text(
+                    rule.details ?? '',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  )
+                : null,
+            onTap: () => context.pushRoute(RuleEditorRoute(id: rule.id)),
+          )
+        : const SizedBox.shrink();
   }
 }

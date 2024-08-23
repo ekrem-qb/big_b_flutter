@@ -121,7 +121,38 @@ class _Item extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final recording = context.select((final RecordingsBloc bloc) {
+    final exists = context.select((final RecordingsBloc bloc) {
+      return switch (bloc.state) {
+        RecordingsStateData(
+          :final recordings,
+        ) =>
+          recordings.length >= index,
+        _ => false,
+      };
+    });
+
+    return exists
+        ? Card(
+            child: _ItemContent(index),
+          )
+        : const SizedBox.shrink();
+  }
+}
+
+class _ItemContent extends StatelessWidget {
+  const _ItemContent(this.index);
+
+  final int index;
+
+  @override
+  Widget build(final BuildContext context) {
+    late final RecordingsBloc bloc;
+    var isInitialized = false;
+    final recording = context.select((final RecordingsBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
       return switch (bloc.state) {
         RecordingsStateData(
           :final recordings,
@@ -131,47 +162,27 @@ class _Item extends StatelessWidget {
       };
     });
 
-    return Card(
-      child: recording != null
-          ? ListTile(
-              title: Text(
-                recording.createdAt.toString(),
+    return recording != null
+        ? ListTile(
+            title: Text(
+              recording.createdAt.toString(),
+            ),
+            trailing: SizedBox.square(
+              dimension: 24,
+              child: !recording.hasLines
+                  ? const Icon(
+                      Icons.font_download_off_outlined,
+                      size: 24,
+                    )
+                  : null,
+            ),
+            onTap: () => context.router.push(
+              PlayerRoute(
+                id: recording.id,
+                recording: recording,
               ),
-              trailing: SizedBox.square(
-                dimension: 24,
-                child: !recording.hasLines
-                    ? const Icon(
-                        Icons.font_download_off_outlined,
-                        size: 24,
-                      )
-                    : null,
-              ),
-              onTap: () => context.router.push(
-                PlayerRoute(
-                  id: recording.id,
-                  recording: recording,
-                ),
-              ),
-            )
-          : const _DeletedItemContent(),
-    );
-  }
-}
-
-class _DeletedItemContent extends StatelessWidget {
-  const _DeletedItemContent();
-
-  @override
-  Widget build(final BuildContext context) {
-    return const ListTile(
-      mouseCursor: SystemMouseCursors.click,
-      title: Text(
-        'Silinmiş',
-        style: TextStyle(color: Colors.red),
-      ),
-      trailing: SizedBox.square(
-        dimension: 24,
-      ),
-    );
+            ),
+          )
+        : const SizedBox.shrink();
   }
 }
