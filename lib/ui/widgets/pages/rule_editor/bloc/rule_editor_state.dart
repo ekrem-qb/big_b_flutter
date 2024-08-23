@@ -5,7 +5,7 @@ sealed class RuleEditorState with _$RuleEditorState {
   const factory RuleEditorState.edit({
     required final int id,
     required final String description,
-    required final String? details,
+    required final String details,
     required final Color color,
     final String? descriptionError,
     @Default(StatusInitial()) final Status uploadState,
@@ -15,7 +15,7 @@ sealed class RuleEditorState with _$RuleEditorState {
   const factory RuleEditorState.create({
     @Default('') final String description,
     final String? descriptionError,
-    @Default('') final String? details,
+    @Default('') final String details,
     @Default(Colors.red) final Color color,
     @Default(StatusInitial()) final Status uploadState,
   }) = RuleEditorStateCreate;

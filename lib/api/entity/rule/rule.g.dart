@@ -9,7 +9,7 @@ part of 'rule.dart';
 _$RuleImpl _$$RuleImplFromJson(Map<String, dynamic> json) => _$RuleImpl(
       id: (json['id'] as num).toInt(),
       description: json['description'] as String,
-      details: json['details'] as String?,
+      details: json['details'] as String,
       color: Color((json['color'] as num).toInt()),
     );
 

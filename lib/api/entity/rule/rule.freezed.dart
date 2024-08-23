@@ -23,7 +23,7 @@ mixin _$Rule {
   @JsonKey(includeToJson: false)
   int get id => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
-  String? get details => throw _privateConstructorUsedError;
+  String get details => throw _privateConstructorUsedError;
   @JsonKey(fromJson: Color.new, toJson: colorToJson)
   Color get color => throw _privateConstructorUsedError;
 
@@ -44,7 +44,7 @@ abstract class $RuleCopyWith<$Res> {
   $Res call(
       {@JsonKey(includeToJson: false) int id,
       String description,
-      String? details,
+      String details,
       @JsonKey(fromJson: Color.new, toJson: colorToJson) Color color});
 }
 
@@ -65,7 +65,7 @@ class _$RuleCopyWithImpl<$Res, $Val extends Rule>
   $Res call({
     Object? id = null,
     Object? description = null,
-    Object? details = freezed,
+    Object? details = null,
     Object? color = null,
   }) {
     return _then(_value.copyWith(
@@ -77,10 +77,10 @@ class _$RuleCopyWithImpl<$Res, $Val extends Rule>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      details: freezed == details
+      details: null == details
           ? _value.details
           : details // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       color: null == color
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -99,7 +99,7 @@ abstract class _$$RuleImplCopyWith<$Res> implements $RuleCopyWith<$Res> {
   $Res call(
       {@JsonKey(includeToJson: false) int id,
       String description,
-      String? details,
+      String details,
       @JsonKey(fromJson: Color.new, toJson: colorToJson) Color color});
 }
 
@@ -117,7 +117,7 @@ class __$$RuleImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? description = null,
-    Object? details = freezed,
+    Object? details = null,
     Object? color = null,
   }) {
     return _then(_$RuleImpl(
@@ -129,10 +129,10 @@ class __$$RuleImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      details: freezed == details
+      details: null == details
           ? _value.details
           : details // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       color: null == color
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -159,7 +159,7 @@ class _$RuleImpl implements _Rule {
   @override
   final String description;
   @override
-  final String? details;
+  final String details;
   @override
   @JsonKey(fromJson: Color.new, toJson: colorToJson)
   final Color color;
@@ -205,7 +205,7 @@ abstract class _Rule implements Rule {
   const factory _Rule(
       {@JsonKey(includeToJson: false) required final int id,
       required final String description,
-      required final String? details,
+      required final String details,
       @JsonKey(fromJson: Color.new, toJson: colorToJson)
       required final Color color}) = _$RuleImpl;
 
@@ -217,7 +217,7 @@ abstract class _Rule implements Rule {
   @override
   String get description;
   @override
-  String? get details;
+  String get details;
   @override
   @JsonKey(fromJson: Color.new, toJson: colorToJson)
   Color get color;

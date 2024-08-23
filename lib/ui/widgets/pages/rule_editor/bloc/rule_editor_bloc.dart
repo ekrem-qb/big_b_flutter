@@ -141,7 +141,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
 
         emit(
           currentState.copyWith(
-            details: currentState.details?.trim(),
+            details: currentState.details.trim(),
           ),
         );
 

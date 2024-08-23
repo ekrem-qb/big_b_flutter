@@ -561,7 +561,7 @@ abstract class _$$RuleEditorStateEditImplCopyWith<$Res> {
   $Res call(
       {int id,
       String description,
-      String? details,
+      String details,
       Color color,
       String? descriptionError,
       Status uploadState,
@@ -586,7 +586,7 @@ class __$$RuleEditorStateEditImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? description = null,
-    Object? details = freezed,
+    Object? details = null,
     Object? color = null,
     Object? descriptionError = freezed,
     Object? uploadState = null,
@@ -601,10 +601,10 @@ class __$$RuleEditorStateEditImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      details: freezed == details
+      details: null == details
           ? _value.details
           : details // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       color: null == color
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -662,7 +662,7 @@ class _$RuleEditorStateEditImpl implements RuleEditorStateEdit {
   @override
   final String description;
   @override
-  final String? details;
+  final String details;
   @override
   final Color color;
   @override
@@ -715,7 +715,7 @@ abstract class RuleEditorStateEdit implements RuleEditorState {
   const factory RuleEditorStateEdit(
       {required final int id,
       required final String description,
-      required final String? details,
+      required final String details,
       required final Color color,
       final String? descriptionError,
       final Status uploadState,
@@ -723,7 +723,7 @@ abstract class RuleEditorStateEdit implements RuleEditorState {
 
   int get id;
   String get description;
-  String? get details;
+  String get details;
   Color get color;
   String? get descriptionError;
   Status get uploadState;
@@ -746,7 +746,7 @@ abstract class _$$RuleEditorStateCreateImplCopyWith<$Res> {
   $Res call(
       {String description,
       String? descriptionError,
-      String? details,
+      String details,
       Color color,
       Status uploadState});
 
@@ -768,7 +768,7 @@ class __$$RuleEditorStateCreateImplCopyWithImpl<$Res>
   $Res call({
     Object? description = null,
     Object? descriptionError = freezed,
-    Object? details = freezed,
+    Object? details = null,
     Object? color = null,
     Object? uploadState = null,
   }) {
@@ -781,10 +781,10 @@ class __$$RuleEditorStateCreateImplCopyWithImpl<$Res>
           ? _value.descriptionError
           : descriptionError // ignore: cast_nullable_to_non_nullable
               as String?,
-      details: freezed == details
+      details: null == details
           ? _value.details
           : details // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       color: null == color
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -824,7 +824,7 @@ class _$RuleEditorStateCreateImpl implements RuleEditorStateCreate {
   final String? descriptionError;
   @override
   @JsonKey()
-  final String? details;
+  final String details;
   @override
   @JsonKey()
   final Color color;
@@ -870,13 +870,13 @@ abstract class RuleEditorStateCreate implements RuleEditorState {
   const factory RuleEditorStateCreate(
       {final String description,
       final String? descriptionError,
-      final String? details,
+      final String details,
       final Color color,
       final Status uploadState}) = _$RuleEditorStateCreateImpl;
 
   String get description;
   String? get descriptionError;
-  String? get details;
+  String get details;
   Color get color;
   Status get uploadState;
 

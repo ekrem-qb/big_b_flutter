@@ -10,7 +10,7 @@ class Rule with _$Rule {
   const factory Rule({
     @JsonKey(includeToJson: false) required final int id,
     required final String description,
-    required final String? details,
+    required final String details,
     @JsonKey(
       fromJson: Color.new,
       toJson: colorToJson,
