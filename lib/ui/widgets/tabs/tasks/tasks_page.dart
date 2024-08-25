@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../api/entity/task/task.dart';
 import '../../../app_router/app_router.dart';
 import '../../../theme.dart';
 import '../../error_panel.dart';
@@ -11,7 +12,8 @@ import '../../extensions/dialog_router.dart';
 import '../../extensions/fade_transition_builder.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import '../../list_view_shimmer.dart';
-import 'bloc/tasks_bloc.dart';
+import '../../lister/bloc/lister_bloc.dart';
+import 'tasks_bloc.dart';
 
 @RoutePage()
 class TasksPage extends StatelessWidget {
@@ -114,14 +116,14 @@ class _TasksList extends StatelessWidget {
       duration: Durations.medium1,
       transitionBuilder: fadeTransitionBuilder,
       child: switch (bloc.state) {
-        TasksStateLoading() => const ListViewShimmer(),
-        TasksStateData() => const _TasksListContent(),
-        TasksStateError(
+        ListerStateLoading() => const ListViewShimmer(),
+        ListerStateData() => const _TasksListContent(),
+        ListerStateError(
           :final error
         ) =>
           ErrorPanel(
             error: error,
-            onRefresh: () => bloc.add(const TasksEventLoadRequested()),
+            onRefresh: () => bloc.add(const ListerEventLoadRequested()),
           ),
       },
     );
@@ -135,10 +137,10 @@ class _TasksListContent extends StatelessWidget {
   Widget build(final BuildContext context) {
     final count = context.select((final TasksBloc bloc) {
       return switch (bloc.state) {
-        TasksStateData(
-          :final tasks
+        ListerStateData(
+          :final items
         ) =>
-          tasks.length,
+          items.length,
         _ => 0,
       };
     });
@@ -178,10 +180,10 @@ class _Item extends StatelessWidget {
   Widget build(final BuildContext context) {
     final exists = context.select((final TasksBloc bloc) {
       return switch (bloc.state) {
-        TasksStateData(
-          :final tasks,
+        ListerStateData(
+          :final items,
         ) =>
-          tasks.length >= index,
+          items.length >= index,
         _ => false,
       };
     });
@@ -196,10 +198,10 @@ class _Item extends StatelessWidget {
 
 void _open(final int index, final BuildContext context, final TasksBloc bloc) {
   final state = bloc.state;
-  if (state is! TasksStateData) return;
-  if (state.tasks.length < index) return;
+  if (state is! ListerStateData<Task>) return;
+  if (state.items.length < index) return;
 
-  context.router.push(TaskViewerRoute(id: state.tasks[index].id, task: state.tasks[index]));
+  context.router.push(TaskViewerRoute(id: state.items[index].id, task: state.items[index]));
 }
 
 class _ItemContent extends StatelessWidget {
@@ -217,10 +219,10 @@ class _ItemContent extends StatelessWidget {
         isInitialized = true;
       }
       return switch (bloc.state) {
-        TasksStateData(
-          :final tasks,
+        ListerStateData(
+          :final items,
         ) =>
-          tasks.elementAtOrNull(index)?.isDone ?? false,
+          items.elementAtOrNull(index)?.isDone ?? false,
         _ => false,
       };
     });
@@ -250,10 +252,10 @@ class _ItemTile extends StatelessWidget {
         isInitialized = true;
       }
       return switch (bloc.state) {
-        TasksStateData(
-          :final tasks,
+        ListerStateData(
+          :final items,
         ) =>
-          tasks.elementAtOrNull(index),
+          items.elementAtOrNull(index),
         _ => null,
       };
     });
