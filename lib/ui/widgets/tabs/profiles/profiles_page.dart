@@ -8,7 +8,8 @@ import '../../error_panel.dart';
 import '../../extensions/fade_transition_builder.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import '../../list_view_shimmer.dart';
-import 'bloc/profiles_bloc.dart';
+import '../../lister/bloc/lister_bloc.dart';
+import 'profiles_bloc.dart';
 
 @RoutePage()
 class ProfilesPage extends StatelessWidget {
@@ -71,15 +72,15 @@ class _ProfilesList extends StatelessWidget {
       duration: Durations.medium1,
       transitionBuilder: fadeTransitionBuilder,
       child: switch (bloc.state) {
-        ProfilesStateLoading() => const ListViewShimmer(),
-        ProfilesStateError(
+        ListerStateLoading() => const ListViewShimmer(),
+        ListerStateError(
           :final error
         ) =>
           ErrorPanel(
             error: error,
-            onRefresh: () => bloc.add(const ProfilesEventLoadRequested()),
+            onRefresh: () => bloc.add(const ListerEventLoadRequested()),
           ),
-        ProfilesStateData() => const _ProfilesListContent(),
+        ListerStateData() => const _ProfilesListContent(),
       },
     );
   }
@@ -92,10 +93,10 @@ class _ProfilesListContent extends StatelessWidget {
   Widget build(final BuildContext context) {
     final count = context.select((final ProfilesBloc bloc) {
       return switch (bloc.state) {
-        ProfilesStateData(
-          :final profiles
+        ListerStateData(
+          :final items
         ) =>
-          profiles.length,
+          items.length,
         _ => 0,
       };
     });
@@ -135,10 +136,10 @@ class _Item extends StatelessWidget {
   Widget build(final BuildContext context) {
     final exists = context.select((final ProfilesBloc bloc) {
       return switch (bloc.state) {
-        ProfilesStateData(
-          :final profiles,
+        ListerStateData(
+          :final items,
         ) =>
-          profiles.length >= index,
+          items.length >= index,
         _ => false,
       };
     });
@@ -160,10 +161,10 @@ class _ItemContent extends StatelessWidget {
   Widget build(final BuildContext context) {
     final profile = context.select((final ProfilesBloc bloc) {
       return switch (bloc.state) {
-        ProfilesStateData(
-          :final profiles,
+        ListerStateData(
+          :final items,
         ) =>
-          profiles.elementAtOrNull(index),
+          items.elementAtOrNull(index),
         _ => null,
       };
     });

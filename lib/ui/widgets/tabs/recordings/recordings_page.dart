@@ -7,7 +7,8 @@ import '../../error_panel.dart';
 import '../../extensions/fade_transition_builder.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import '../../list_view_shimmer.dart';
-import 'bloc/recordings_bloc.dart';
+import '../../lister/bloc/lister_bloc.dart';
+import 'recordings_bloc.dart';
 
 @RoutePage()
 class RecordingsPage extends StatelessWidget {
@@ -57,17 +58,17 @@ class _RecordingsList extends StatelessWidget {
       duration: Durations.medium1,
       transitionBuilder: fadeTransitionBuilder,
       child: switch (bloc.state) {
-        RecordingsStateLoading() => const ListViewShimmer(
+        ListerStateLoading() => const ListViewShimmer(
             hasSubtitle: false,
           ),
-        RecordingsStateError(
+        ListerStateError(
           :final error
         ) =>
           ErrorPanel(
             error: error,
-            onRefresh: () => bloc.add(const RecordingsEventLoadRequested()),
+            onRefresh: () => bloc.add(const ListerEventLoadRequested()),
           ),
-        RecordingsStateData() => const _RecordingsListContent(),
+        ListerStateData() => const _RecordingsListContent(),
       },
     );
   }
@@ -80,10 +81,10 @@ class _RecordingsListContent extends StatelessWidget {
   Widget build(final BuildContext context) {
     final count = context.select((final RecordingsBloc bloc) {
       return switch (bloc.state) {
-        RecordingsStateData(
-          :final recordings
+        ListerStateData(
+          :final items
         ) =>
-          recordings.length,
+          items.length,
         _ => 0,
       };
     });
@@ -123,10 +124,10 @@ class _Item extends StatelessWidget {
   Widget build(final BuildContext context) {
     final exists = context.select((final RecordingsBloc bloc) {
       return switch (bloc.state) {
-        RecordingsStateData(
-          :final recordings,
+        ListerStateData(
+          :final items,
         ) =>
-          recordings.length >= index,
+          items.length >= index,
         _ => false,
       };
     });
@@ -154,10 +155,10 @@ class _ItemContent extends StatelessWidget {
         isInitialized = true;
       }
       return switch (bloc.state) {
-        RecordingsStateData(
-          :final recordings,
+        ListerStateData(
+          :final items,
         ) =>
-          recordings.elementAtOrNull(index),
+          items.elementAtOrNull(index),
         _ => null,
       };
     });

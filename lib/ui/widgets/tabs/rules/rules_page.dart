@@ -9,7 +9,8 @@ import '../../extensions/fade_transition_builder.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import '../../list_view_shimmer.dart';
-import 'bloc/rules_bloc.dart';
+import '../../lister/bloc/lister_bloc.dart';
+import 'rules_bloc.dart';
 
 @RoutePage()
 class RulesPage extends StatelessWidget {
@@ -72,14 +73,14 @@ class _RulesList extends StatelessWidget {
       duration: Durations.medium1,
       transitionBuilder: fadeTransitionBuilder,
       child: switch (bloc.state) {
-        RulesStateLoading() => const ListViewShimmer(),
-        RulesStateData() => const _RulesListContent(),
-        RulesStateError(
+        ListerStateLoading() => const ListViewShimmer(),
+        ListerStateData() => const _RulesListContent(),
+        ListerStateError(
           :final error
         ) =>
           ErrorPanel(
             error: error,
-            onRefresh: () => bloc.add(const RulesEventLoadRequested()),
+            onRefresh: () => bloc.add(const ListerEventLoadRequested()),
           ),
       },
     );
@@ -93,10 +94,10 @@ class _RulesListContent extends StatelessWidget {
   Widget build(final BuildContext context) {
     final count = context.select((final RulesBloc bloc) {
       return switch (bloc.state) {
-        RulesStateData(
-          :final rules
+        ListerStateData(
+          :final items
         ) =>
-          rules.length,
+          items.length,
         _ => 0,
       };
     });
@@ -136,10 +137,10 @@ class _Item extends StatelessWidget {
   Widget build(final BuildContext context) {
     final exists = context.select((final RulesBloc bloc) {
       return switch (bloc.state) {
-        RulesStateData(
-          :final rules,
+        ListerStateData(
+          :final items,
         ) =>
-          rules.length >= index,
+          items.length >= index,
         _ => false,
       };
     });
@@ -167,10 +168,10 @@ class _ItemContent extends StatelessWidget {
         isInitialized = true;
       }
       return switch (bloc.state) {
-        RulesStateData(
-          :final rules,
+        ListerStateData(
+          :final items,
         ) =>
-          rules.elementAtOrNull(index),
+          items.elementAtOrNull(index),
         _ => null,
       };
     });
