@@ -14,7 +14,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, ListerStat
     on<ListerEvent>((final event, final emit) {
       return switch (event) {
         ListerEventLoadRequested() => _onLoadRequested(emit, event),
-        _ListerEventDataUpdated() => _onDataUpdated(emit, event),
+        ListerEventDataUpdated() => onDataUpdated(emit, event),
       };
     });
 
@@ -23,7 +23,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, ListerStat
         .onPostgresChanges(
           table: tableName,
           event: PostgresChangeEvent.all,
-          callback: (final payload) => add(_ListerEventDataUpdated(payload: payload)),
+          callback: (final payload) => add(ListerEventDataUpdated(payload: payload)),
         )
         .subscribe();
 
@@ -54,7 +54,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, ListerStat
     }
   }
 
-  Future<void> _onDataUpdated(final Emitter<ListerState> emit, final _ListerEventDataUpdated event) async {
+  Future<void> onDataUpdated(final Emitter<ListerState> emit, final ListerEventDataUpdated event) async {
     final currentState = state;
     if (currentState is! ListerStateData<T>) return;
 

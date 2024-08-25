@@ -121,7 +121,7 @@ class __$$ListerEventDataUpdatedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ListerEventDataUpdatedImpl implements _ListerEventDataUpdated {
+class _$ListerEventDataUpdatedImpl implements ListerEventDataUpdated {
   const _$ListerEventDataUpdatedImpl({required this.payload});
 
   @override
@@ -153,8 +153,8 @@ class _$ListerEventDataUpdatedImpl implements _ListerEventDataUpdated {
           _$ListerEventDataUpdatedImpl>(this, _$identity);
 }
 
-abstract class _ListerEventDataUpdated implements ListerEvent {
-  const factory _ListerEventDataUpdated(
+abstract class ListerEventDataUpdated implements ListerEvent {
+  const factory ListerEventDataUpdated(
           {required final PostgresChangePayload payload}) =
       _$ListerEventDataUpdatedImpl;
 
