@@ -1,10 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../entity.dart';
+
 part 'recording.freezed.dart';
 part 'recording.g.dart';
 
 @Freezed(toJson: false)
-class Recording with _$Recording {
+class Recording with _$Recording implements Entity {
   const factory Recording({
     required final int id,
     @JsonKey(name: 'url') required final String audioUrl,

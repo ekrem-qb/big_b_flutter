@@ -1,12 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../entity.dart';
 import '../profile/profile.dart';
 
 part 'task.freezed.dart';
 part 'task.g.dart';
 
 @freezed
-class Task with _$Task {
+class Task with _$Task implements Entity {
   const factory Task({
     @JsonKey(defaultValue: -1, includeToJson: false) required final int id,
     required final String text,

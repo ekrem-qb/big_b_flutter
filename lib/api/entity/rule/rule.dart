@@ -2,11 +2,13 @@ import 'dart:ui';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../entity.dart';
+
 part 'rule.freezed.dart';
 part 'rule.g.dart';
 
 @freezed
-class Rule with _$Rule {
+class Rule with _$Rule implements Entity {
   const factory Rule({
     @JsonKey(includeToJson: false) required final int id,
     required final String description,

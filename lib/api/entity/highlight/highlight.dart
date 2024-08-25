@@ -1,12 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../entity.dart';
 import '../rule/rule.dart';
 
 part 'highlight.freezed.dart';
 part 'highlight.g.dart';
 
 @Freezed(toJson: false)
-class Highlight with _$Highlight {
+class Highlight with _$Highlight implements Entity {
   factory Highlight({
     required final int id,
     required final int startIndex,
