@@ -1,13 +1,20 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../constants.dart';
 import '../../../../extensions/date_time.dart';
 import '../../../../extensions/weekdays.dart';
+import '../../../app_router/app_router.dart';
+import '../../error_panel.dart';
+import '../../extensions/app_bar_controller.dart';
+import '../../extensions/fade_transition_builder.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
-import 'planned_tasks_model.dart';
+import '../../list_view_shimmer.dart';
+import '../../lister/bloc/lister_bloc.dart';
+import 'planned_tasks_bloc.dart';
 
 @RoutePage()
 class PlannedTasksPage extends StatelessWidget {
@@ -16,8 +23,11 @@ class PlannedTasksPage extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return MouseNavigator(
-      child: ChangeNotifierProvider(
-        create: PlannedTasks.new,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (final _) => AppBarController()),
+          BlocProvider(create: (final context) => PlannedTasksBloc()),
+        ],
         child: Scaffold(
           appBar: AppBar(
             title: const Text('Görev Planlama'),
@@ -35,10 +45,8 @@ class _NewPlannedTaskButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<PlannedTasks>();
-
     return FloatingActionButton(
-      onPressed: model.newPlannedTask,
+      onPressed: () => context.pushRoute(const NewTaskEditorRoute()),
       child: const Icon(Icons.add),
     );
   }
@@ -49,21 +57,31 @@ class _PlannedTasksList extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final PlannedTasks model;
+    late final PlannedTasksBloc bloc;
     var isInitialized = false;
-    context.select((final PlannedTasks newModel) {
+    context.select((final PlannedTasksBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.isLoading;
+      return bloc.state.runtimeType;
     });
 
-    return model.isLoading
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
-        : const _PlannedTasksListContent();
+    return AnimatedSwitcher(
+      duration: Durations.medium1,
+      transitionBuilder: fadeTransitionBuilder,
+      child: switch (bloc.state) {
+        ListerStateLoading() => const ListViewShimmer(),
+        ListerStateData() => const _PlannedTasksListContent(),
+        ListerStateError(
+          :final error
+        ) =>
+          ErrorPanel(
+            error: error,
+            onRefresh: () => bloc.add(const ListerEventLoadRequested()),
+          ),
+      },
+    );
   }
 }
 
@@ -72,17 +90,17 @@ class _PlannedTasksListContent extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final PlannedTasks model;
-    var isInitialized = false;
-    context.select((final PlannedTasks newModel) {
-      if (!isInitialized) {
-        model = newModel;
-        isInitialized = true;
-      }
-      return model.plannedTasks.length;
+    final count = context.select((final PlannedTasksBloc bloc) {
+      return switch (bloc.state) {
+        ListerStateData(
+          :final items
+        ) =>
+          items.length,
+        _ => 0,
+      };
     });
 
-    return model.plannedTasks.isEmpty
+    return count == 0
         ? const Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -101,7 +119,7 @@ class _PlannedTasksListContent extends StatelessWidget {
                 controller: controller,
                 physics: physics,
                 itemBuilder: _Item.new,
-                itemCount: model.plannedTasks.length,
+                itemCount: count,
               );
             },
           );
@@ -115,8 +133,14 @@ class _Item extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final exists = context.select((final PlannedTasks model) {
-      return model.plannedTasks.length >= index;
+    final exists = context.select((final PlannedTasksBloc bloc) {
+      return switch (bloc.state) {
+        ListerStateData(
+          :final items,
+        ) =>
+          items.length >= index,
+        _ => false,
+      };
     });
 
     return exists
@@ -141,14 +165,20 @@ class _ItemContent extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final PlannedTasks model;
+    late final PlannedTasksBloc bloc;
     var isInitialized = false;
-    final plannedTask = context.select((final PlannedTasks newModel) {
+    final plannedTask = context.select((final PlannedTasksBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.plannedTasks.elementAtOrNull(index);
+      return switch (bloc.state) {
+        ListerStateData(
+          :final items,
+        ) =>
+          items.elementAtOrNull(index),
+        _ => null,
+      };
     });
 
     return plannedTask != null
@@ -183,7 +213,7 @@ class _ItemContent extends StatelessWidget {
                 if (isWeekdaySelected(6, plannedTask.weekdays)) _Day(day: 6, text: weekdayNames[6]),
               ],
             ),
-            onTap: () => model.open(index),
+            onTap: () => context.router.push(PlannedTaskEditorRoute(plannedTaskId: plannedTask.id, plannedTask: plannedTask)),
           )
         : const SizedBox.shrink();
   }
