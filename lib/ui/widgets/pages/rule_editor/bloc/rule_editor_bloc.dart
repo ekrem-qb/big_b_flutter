@@ -226,7 +226,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
 
           switch (currentState) {
             case RuleEditorStateCreate():
-              await db.from(Rule.tableName).insert(rule.toJson()).eq($RuleImplJsonKeys.id, rule.id);
+              await db.from(Rule.tableName).insert(rule.toJson());
             case RuleEditorStateEdit(
                 :final id,
               ):
