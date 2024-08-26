@@ -25,6 +25,7 @@ mixin _$Recording {
   String get audioUrl => throw _privateConstructorUsedError;
   bool get hasLines => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
+  Profile get employee => throw _privateConstructorUsedError;
 
   /// Create a copy of Recording
   /// with the given fields replaced by the non-null parameter values.
@@ -42,7 +43,10 @@ abstract class $RecordingCopyWith<$Res> {
       {int id,
       @JsonKey(name: 'url') String audioUrl,
       bool hasLines,
-      DateTime createdAt});
+      DateTime createdAt,
+      Profile employee});
+
+  $ProfileCopyWith<$Res> get employee;
 }
 
 /// @nodoc
@@ -64,6 +68,7 @@ class _$RecordingCopyWithImpl<$Res, $Val extends Recording>
     Object? audioUrl = null,
     Object? hasLines = null,
     Object? createdAt = null,
+    Object? employee = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -82,7 +87,21 @@ class _$RecordingCopyWithImpl<$Res, $Val extends Recording>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      employee: null == employee
+          ? _value.employee
+          : employee // ignore: cast_nullable_to_non_nullable
+              as Profile,
     ) as $Val);
+  }
+
+  /// Create a copy of Recording
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProfileCopyWith<$Res> get employee {
+    return $ProfileCopyWith<$Res>(_value.employee, (value) {
+      return _then(_value.copyWith(employee: value) as $Val);
+    });
   }
 }
 
@@ -98,7 +117,11 @@ abstract class _$$RecordingImplCopyWith<$Res>
       {int id,
       @JsonKey(name: 'url') String audioUrl,
       bool hasLines,
-      DateTime createdAt});
+      DateTime createdAt,
+      Profile employee});
+
+  @override
+  $ProfileCopyWith<$Res> get employee;
 }
 
 /// @nodoc
@@ -118,6 +141,7 @@ class __$$RecordingImplCopyWithImpl<$Res>
     Object? audioUrl = null,
     Object? hasLines = null,
     Object? createdAt = null,
+    Object? employee = null,
   }) {
     return _then(_$RecordingImpl(
       id: null == id
@@ -136,6 +160,10 @@ class __$$RecordingImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      employee: null == employee
+          ? _value.employee
+          : employee // ignore: cast_nullable_to_non_nullable
+              as Profile,
     ));
   }
 }
@@ -147,7 +175,8 @@ class _$RecordingImpl implements _Recording {
       {required this.id,
       @JsonKey(name: 'url') required this.audioUrl,
       required this.hasLines,
-      required this.createdAt});
+      required this.createdAt,
+      required this.employee});
 
   factory _$RecordingImpl.fromJson(Map<String, dynamic> json) =>
       _$$RecordingImplFromJson(json);
@@ -161,10 +190,12 @@ class _$RecordingImpl implements _Recording {
   final bool hasLines;
   @override
   final DateTime createdAt;
+  @override
+  final Profile employee;
 
   @override
   String toString() {
-    return 'Recording(id: $id, audioUrl: $audioUrl, hasLines: $hasLines, createdAt: $createdAt)';
+    return 'Recording(id: $id, audioUrl: $audioUrl, hasLines: $hasLines, createdAt: $createdAt, employee: $employee)';
   }
 
   @override
@@ -178,13 +209,15 @@ class _$RecordingImpl implements _Recording {
             (identical(other.hasLines, hasLines) ||
                 other.hasLines == hasLines) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+                other.createdAt == createdAt) &&
+            (identical(other.employee, employee) ||
+                other.employee == employee));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, audioUrl, hasLines, createdAt);
+      Object.hash(runtimeType, id, audioUrl, hasLines, createdAt, employee);
 
   /// Create a copy of Recording
   /// with the given fields replaced by the non-null parameter values.
@@ -200,7 +233,8 @@ abstract class _Recording implements Recording {
       {required final int id,
       @JsonKey(name: 'url') required final String audioUrl,
       required final bool hasLines,
-      required final DateTime createdAt}) = _$RecordingImpl;
+      required final DateTime createdAt,
+      required final Profile employee}) = _$RecordingImpl;
 
   factory _Recording.fromJson(Map<String, dynamic> json) =
       _$RecordingImpl.fromJson;
@@ -214,6 +248,8 @@ abstract class _Recording implements Recording {
   bool get hasLines;
   @override
   DateTime get createdAt;
+  @override
+  Profile get employee;
 
   /// Create a copy of Recording
   /// with the given fields replaced by the non-null parameter values.

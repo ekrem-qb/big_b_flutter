@@ -12,6 +12,7 @@ _$RecordingImpl _$$RecordingImplFromJson(Map<String, dynamic> json) =>
       audioUrl: json['url'] as String,
       hasLines: json['has_lines'] as bool,
       createdAt: DateTime.parse(json['created_at'] as String).toLocal(),
+      employee: Profile.fromJson(json['employee'] as Map<String, dynamic>),
     );
 
 const _$$RecordingImplFieldMap = <String, String>{
@@ -19,6 +20,7 @@ const _$$RecordingImplFieldMap = <String, String>{
   'audioUrl': 'url',
   'hasLines': 'has_lines',
   'createdAt': 'created_at',
+  'employee': 'employee',
 };
 
 abstract final class $RecordingImplJsonKeys {
@@ -26,4 +28,5 @@ abstract final class $RecordingImplJsonKeys {
   static const String audioUrl = 'url';
   static const String hasLines = 'has_lines';
   static const String createdAt = 'created_at';
+  static const String employee = 'employee';
 }
