@@ -37,6 +37,9 @@ class _Item extends StatelessWidget {
       title: Text(
         recording.createdAt.toString(),
       ),
+      subtitle: Text(
+        recording.employee.name,
+      ),
       trailing: SizedBox.square(
         dimension: 24,
         child: !recording.hasLines
