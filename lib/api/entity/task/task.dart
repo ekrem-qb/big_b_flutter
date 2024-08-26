@@ -9,7 +9,7 @@ part 'task.g.dart';
 @freezed
 class Task with _$Task implements Entity {
   const factory Task({
-    @JsonKey(defaultValue: -1, includeToJson: false) required final int id,
+    @JsonKey(includeToJson: false) required final int id,
     required final String text,
     required final bool isDone,
     required final DateTime updatedAt,

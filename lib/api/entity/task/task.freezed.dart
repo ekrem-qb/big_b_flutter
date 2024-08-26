@@ -20,7 +20,7 @@ Task _$TaskFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Task {
-  @JsonKey(defaultValue: -1, includeToJson: false)
+  @JsonKey(includeToJson: false)
   int get id => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   bool get isDone => throw _privateConstructorUsedError;
@@ -48,7 +48,7 @@ abstract class $TaskCopyWith<$Res> {
       _$TaskCopyWithImpl<$Res, Task>;
   @useResult
   $Res call(
-      {@JsonKey(defaultValue: -1, includeToJson: false) int id,
+      {@JsonKey(includeToJson: false) int id,
       String text,
       bool isDone,
       DateTime updatedAt,
@@ -133,7 +133,7 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(defaultValue: -1, includeToJson: false) int id,
+      {@JsonKey(includeToJson: false) int id,
       String text,
       bool isDone,
       DateTime updatedAt,
@@ -211,7 +211,7 @@ class __$$TaskImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TaskImpl implements _Task {
   const _$TaskImpl(
-      {@JsonKey(defaultValue: -1, includeToJson: false) required this.id,
+      {@JsonKey(includeToJson: false) required this.id,
       required this.text,
       required this.isDone,
       required this.updatedAt,
@@ -226,7 +226,7 @@ class _$TaskImpl implements _Task {
       _$$TaskImplFromJson(json);
 
   @override
-  @JsonKey(defaultValue: -1, includeToJson: false)
+  @JsonKey(includeToJson: false)
   final int id;
   @override
   final String text;
@@ -311,7 +311,7 @@ class _$TaskImpl implements _Task {
 
 abstract class _Task implements Task {
   const factory _Task(
-      {@JsonKey(defaultValue: -1, includeToJson: false) required final int id,
+      {@JsonKey(includeToJson: false) required final int id,
       required final String text,
       required final bool isDone,
       required final DateTime updatedAt,
@@ -325,7 +325,7 @@ abstract class _Task implements Task {
   factory _Task.fromJson(Map<String, dynamic> json) = _$TaskImpl.fromJson;
 
   @override
-  @JsonKey(defaultValue: -1, includeToJson: false)
+  @JsonKey(includeToJson: false)
   int get id;
   @override
   String get text;

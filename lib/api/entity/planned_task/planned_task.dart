@@ -9,7 +9,7 @@ part 'planned_task.g.dart';
 @freezed
 class PlannedTask with _$PlannedTask implements Entity {
   const factory PlannedTask({
-    @JsonKey(defaultValue: -1, includeToJson: false) required final int id,
+    @JsonKey(includeToJson: false) required final int id,
     required final String text,
     required final DateTime deadline,
     required final bool isImageRequired,

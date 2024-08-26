@@ -7,7 +7,7 @@ part of 'task.dart';
 // **************************************************************************
 
 _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
-      id: (json['id'] as num?)?.toInt() ?? -1,
+      id: (json['id'] as num).toInt(),
       text: json['text'] as String,
       isDone: json['is_done'] as bool,
       updatedAt: DateTime.parse(json['updated_at'] as String).toLocal(),

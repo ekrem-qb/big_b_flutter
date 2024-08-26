@@ -8,7 +8,7 @@ part of 'planned_task.dart';
 
 _$PlannedTaskImpl _$$PlannedTaskImplFromJson(Map<String, dynamic> json) =>
     _$PlannedTaskImpl(
-      id: (json['id'] as num?)?.toInt() ?? -1,
+      id: (json['id'] as num).toInt(),
       text: json['text'] as String,
       deadline: DateTime.parse(json['deadline'] as String).toLocal(),
       isImageRequired: json['is_image_required'] as bool,

@@ -20,7 +20,7 @@ PlannedTask _$PlannedTaskFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PlannedTask {
-  @JsonKey(defaultValue: -1, includeToJson: false)
+  @JsonKey(includeToJson: false)
   int get id => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   DateTime get deadline => throw _privateConstructorUsedError;
@@ -48,7 +48,7 @@ abstract class $PlannedTaskCopyWith<$Res> {
       _$PlannedTaskCopyWithImpl<$Res, PlannedTask>;
   @useResult
   $Res call(
-      {@JsonKey(defaultValue: -1, includeToJson: false) int id,
+      {@JsonKey(includeToJson: false) int id,
       String text,
       DateTime deadline,
       bool isImageRequired,
@@ -122,7 +122,7 @@ abstract class _$$PlannedTaskImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(defaultValue: -1, includeToJson: false) int id,
+      {@JsonKey(includeToJson: false) int id,
       String text,
       DateTime deadline,
       bool isImageRequired,
@@ -189,7 +189,7 @@ class __$$PlannedTaskImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PlannedTaskImpl implements _PlannedTask {
   const _$PlannedTaskImpl(
-      {@JsonKey(defaultValue: -1, includeToJson: false) required this.id,
+      {@JsonKey(includeToJson: false) required this.id,
       required this.text,
       required this.deadline,
       required this.isImageRequired,
@@ -202,7 +202,7 @@ class _$PlannedTaskImpl implements _PlannedTask {
       _$$PlannedTaskImplFromJson(json);
 
   @override
-  @JsonKey(defaultValue: -1, includeToJson: false)
+  @JsonKey(includeToJson: false)
   final int id;
   @override
   final String text;
@@ -279,7 +279,7 @@ class _$PlannedTaskImpl implements _PlannedTask {
 
 abstract class _PlannedTask implements PlannedTask {
   const factory _PlannedTask(
-      {@JsonKey(defaultValue: -1, includeToJson: false) required final int id,
+      {@JsonKey(includeToJson: false) required final int id,
       required final String text,
       required final DateTime deadline,
       required final bool isImageRequired,
@@ -292,7 +292,7 @@ abstract class _PlannedTask implements PlannedTask {
       _$PlannedTaskImpl.fromJson;
 
   @override
-  @JsonKey(defaultValue: -1, includeToJson: false)
+  @JsonKey(includeToJson: false)
   int get id;
   @override
   String get text;
