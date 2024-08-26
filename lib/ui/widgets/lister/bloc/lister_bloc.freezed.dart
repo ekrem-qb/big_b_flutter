@@ -85,6 +85,91 @@ abstract class ListerEventLoadRequested implements ListerEvent {
 }
 
 /// @nodoc
+abstract class _$$ListerEventLoadAfterRequestedImplCopyWith<$Res> {
+  factory _$$ListerEventLoadAfterRequestedImplCopyWith(
+          _$ListerEventLoadAfterRequestedImpl value,
+          $Res Function(_$ListerEventLoadAfterRequestedImpl) then) =
+      __$$ListerEventLoadAfterRequestedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int index});
+}
+
+/// @nodoc
+class __$$ListerEventLoadAfterRequestedImplCopyWithImpl<$Res>
+    extends _$ListerEventCopyWithImpl<$Res, _$ListerEventLoadAfterRequestedImpl>
+    implements _$$ListerEventLoadAfterRequestedImplCopyWith<$Res> {
+  __$$ListerEventLoadAfterRequestedImplCopyWithImpl(
+      _$ListerEventLoadAfterRequestedImpl _value,
+      $Res Function(_$ListerEventLoadAfterRequestedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ListerEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? index = null,
+  }) {
+    return _then(_$ListerEventLoadAfterRequestedImpl(
+      null == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ListerEventLoadAfterRequestedImpl
+    implements ListerEventLoadAfterRequested {
+  const _$ListerEventLoadAfterRequestedImpl(this.index);
+
+  @override
+  final int index;
+
+  @override
+  String toString() {
+    return 'ListerEvent.loadAfterRequested(index: $index)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ListerEventLoadAfterRequestedImpl &&
+            (identical(other.index, index) || other.index == index));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, index);
+
+  /// Create a copy of ListerEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ListerEventLoadAfterRequestedImplCopyWith<
+          _$ListerEventLoadAfterRequestedImpl>
+      get copyWith => __$$ListerEventLoadAfterRequestedImplCopyWithImpl<
+          _$ListerEventLoadAfterRequestedImpl>(this, _$identity);
+}
+
+abstract class ListerEventLoadAfterRequested implements ListerEvent {
+  const factory ListerEventLoadAfterRequested(final int index) =
+      _$ListerEventLoadAfterRequestedImpl;
+
+  int get index;
+
+  /// Create a copy of ListerEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ListerEventLoadAfterRequestedImplCopyWith<
+          _$ListerEventLoadAfterRequestedImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 abstract class _$$ListerEventDataUpdatedImplCopyWith<$Res> {
   factory _$$ListerEventDataUpdatedImplCopyWith(
           _$ListerEventDataUpdatedImpl value,
@@ -197,7 +282,7 @@ abstract class _$$ListerStateDataImplCopyWith<T, $Res> {
           $Res Function(_$ListerStateDataImpl<T>) then) =
       __$$ListerStateDataImplCopyWithImpl<T, $Res>;
   @useResult
-  $Res call({List<T> items});
+  $Res call({int totalCount, List<T> items});
 }
 
 /// @nodoc
@@ -213,9 +298,14 @@ class __$$ListerStateDataImplCopyWithImpl<T, $Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? totalCount = null,
     Object? items = null,
   }) {
     return _then(_$ListerStateDataImpl<T>(
+      totalCount: null == totalCount
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
       items: null == items
           ? _value._items
           : items // ignore: cast_nullable_to_non_nullable
@@ -227,8 +317,12 @@ class __$$ListerStateDataImplCopyWithImpl<T, $Res>
 /// @nodoc
 
 class _$ListerStateDataImpl<T> implements ListerStateData<T> {
-  const _$ListerStateDataImpl({required final List<T> items}) : _items = items;
+  const _$ListerStateDataImpl(
+      {required this.totalCount, required final List<T> items})
+      : _items = items;
 
+  @override
+  final int totalCount;
   final List<T> _items;
   @override
   List<T> get items {
@@ -239,7 +333,7 @@ class _$ListerStateDataImpl<T> implements ListerStateData<T> {
 
   @override
   String toString() {
-    return 'ListerState<$T>.data(items: $items)';
+    return 'ListerState<$T>.data(totalCount: $totalCount, items: $items)';
   }
 
   @override
@@ -247,12 +341,14 @@ class _$ListerStateDataImpl<T> implements ListerStateData<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ListerStateDataImpl<T> &&
+            (identical(other.totalCount, totalCount) ||
+                other.totalCount == totalCount) &&
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_items));
+  int get hashCode => Object.hash(
+      runtimeType, totalCount, const DeepCollectionEquality().hash(_items));
 
   /// Create a copy of ListerState
   /// with the given fields replaced by the non-null parameter values.
@@ -265,9 +361,11 @@ class _$ListerStateDataImpl<T> implements ListerStateData<T> {
 }
 
 abstract class ListerStateData<T> implements ListerState<T> {
-  const factory ListerStateData({required final List<T> items}) =
-      _$ListerStateDataImpl<T>;
+  const factory ListerStateData(
+      {required final int totalCount,
+      required final List<T> items}) = _$ListerStateDataImpl<T>;
 
+  int get totalCount;
   List<T> get items;
 
   /// Create a copy of ListerState
