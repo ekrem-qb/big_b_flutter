@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../api/entity/profile/profile.dart';
 import '../../../../api/enums/role.dart';
+import '../../../entity/status.dart';
 import '../../../theme.dart';
+import '../../error_panel.dart';
 import '../../extensions/mouse_navigator.dart';
-import 'profile_picker_model.dart';
+import 'bloc/profile_picker_bloc.dart';
 
-Future<List<Profile>> showProfilesPicker(final BuildContext context, {final List<Profile>? excluded}) async {
+Future<List<Profile>> showProfilesPicker(final BuildContext context, {required final List<Profile> excluded}) async {
   final profiles = await showCupertinoModalPopup<List<Profile>>(
     context: context,
     builder: (final context) {
@@ -22,40 +24,38 @@ Future<List<Profile>> showProfilesPicker(final BuildContext context, {final List
 class _ProfilePickerDialog extends StatelessWidget {
   const _ProfilePickerDialog(this._excluded);
 
-  final List<Profile>? _excluded;
+  final List<Profile> _excluded;
 
   @override
   Widget build(final BuildContext context) {
     return MouseNavigator(
-      child: ChangeNotifierProvider(
-        create: (final context) => ProfilePicker(context, _excluded),
-        builder: (final context, final child) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Flexible(
-                child: Padding(
-                  padding: EdgeInsets.all(8),
-                  child: FractionallySizedBox(
-                    heightFactor: 0.5,
-                    child: CupertinoPopupSurface(
-                      child: _Profiles(),
-                    ),
+      child: BlocProvider(
+        create: (final context) => ProfilePickerBloc(excluded: _excluded),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Flexible(
+              child: Padding(
+                padding: EdgeInsets.all(8),
+                child: FractionallySizedBox(
+                  heightFactor: 0.5,
+                  child: CupertinoPopupSurface(
+                    child: _Profiles(),
                   ),
                 ),
               ),
-              MediaQuery.removePadding(
-                context: context,
-                removeTop: true,
-                child: const CupertinoActionSheet(
-                  actions: [
-                    _Ok(),
-                  ],
-                ),
+            ),
+            MediaQuery.removePadding(
+              context: context,
+              removeTop: true,
+              child: const CupertinoActionSheet(
+                actions: [
+                  _Ok(),
+                ],
               ),
-            ],
-          );
-        },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -66,19 +66,21 @@ class _Profiles extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final ProfilePicker model;
+    late final ProfilePickerBloc bloc;
     var isInitialized = false;
-    context.select((final ProfilePicker newModel) {
+    context.select((final ProfilePickerBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.isLoading;
+      return bloc.state.all.runtimeType;
     });
 
-    return model.isLoading
-        ? const Center(child: CircularProgressIndicator())
-        : model.all.isEmpty
+    return switch (bloc.state.all) {
+      StatusOfData<List<Profile>>(
+        :final data,
+      ) =>
+        data.isEmpty
             ? const Material(
                 color: Colors.transparent,
                 child: Center(
@@ -93,9 +95,18 @@ class _Profiles extends StatelessWidget {
               )
             : ListView.builder(
                 padding: const EdgeInsets.all(8),
-                itemCount: model.all.length,
+                itemCount: data.length,
                 itemBuilder: (final BuildContext context, final int index) => _Profile(index),
-              );
+              ),
+      StatusOfLoading<List<Profile>>() => const Center(child: CircularProgressIndicator()),
+      StatusOfError<List<Profile>>(
+        :final error,
+      ) =>
+        ErrorPanel(
+          error: error,
+          onRefresh: () => bloc.add(const ProfilePickerEventLoadRequested()),
+        ),
+    };
   }
 }
 
@@ -106,14 +117,20 @@ class _Profile extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final ProfilePicker model;
+    late final ProfilePickerBloc bloc;
     var isInitialized = false;
-    final isSelected = context.select((final ProfilePicker newModel) {
+    final isSelected = context.select((final ProfilePickerBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.isSelected(index);
+      return switch (bloc.state.all) {
+        StatusOfData<List<Profile>>(
+          :final data,
+        ) =>
+          bloc.state.selected.contains(data[index]),
+        _ => false,
+      };
     });
 
     return Card(
@@ -126,23 +143,29 @@ class _Profile extends StatelessWidget {
               )
             : BorderSide.none,
       ),
-      child: ListTile(
-        leading: Icon(model.all[index].role == Role.manager ? Icons.security : Icons.person),
-        title: Text(model.all[index].name),
-        selected: isSelected,
-        trailing: AnimatedOpacity(
-          opacity: isSelected ? 1 : 0,
-          curve: Curves.easeInOutExpo,
-          duration: const Duration(milliseconds: 250),
-          child: AnimatedScale(
-            scale: isSelected ? 1 : 0,
-            curve: Curves.easeInOutExpo,
-            duration: const Duration(milliseconds: 250),
-            child: const Icon(Icons.check_circle),
+      child: switch (bloc.state.all) {
+        StatusOfData<List<Profile>>(
+          :final data,
+        ) =>
+          ListTile(
+            leading: Icon(data[index].role == Role.manager ? Icons.security : Icons.person),
+            title: Text(data[index].name),
+            selected: isSelected,
+            trailing: AnimatedOpacity(
+              opacity: isSelected ? 1 : 0,
+              curve: Curves.easeInOutExpo,
+              duration: const Duration(milliseconds: 250),
+              child: AnimatedScale(
+                scale: isSelected ? 1 : 0,
+                curve: Curves.easeInOutExpo,
+                duration: const Duration(milliseconds: 250),
+                child: const Icon(Icons.check_circle),
+              ),
+            ),
+            onTap: () => isSelected ? bloc.add(ProfilePickerEventDeselected(index)) : bloc.add(ProfilePickerEventSelected(index)),
           ),
-        ),
-        onTap: () => isSelected ? model.unselect(index) : model.select(index),
-      ),
+        _ => const SizedBox.shrink(),
+      },
     );
   }
 }
@@ -152,11 +175,11 @@ class _Ok extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<ProfilePicker>();
+    final bloc = context.read<ProfilePickerBloc>();
 
     return CupertinoActionSheetAction(
       isDefaultAction: true,
-      onPressed: model.ok,
+      onPressed: () => Navigator.of(context).pop(bloc.state.selected),
       child: const Text('OK'),
     );
   }
