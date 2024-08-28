@@ -19,7 +19,7 @@ class RulesPage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Kurallar'),
         ),
-        body: const Lister<RulesBloc, Rule>(
+        body: const Lister<RulesBloc, Rule>.cards(
           blocCreator: RulesBloc.new,
           itemContentBuilder: _Item.new,
           noItemsIcon: Icons.rule,

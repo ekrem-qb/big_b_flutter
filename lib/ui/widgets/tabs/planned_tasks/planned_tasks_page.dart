@@ -21,7 +21,7 @@ class PlannedTasksPage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Görev Planlama'),
         ),
-        body: const Lister<PlannedTasksBloc, PlannedTask>(
+        body: const Lister<PlannedTasksBloc, PlannedTask>.cards(
           blocCreator: PlannedTasksBloc.new,
           itemContentBuilder: _Item.new,
           noItemsIcon: Icons.event_available,

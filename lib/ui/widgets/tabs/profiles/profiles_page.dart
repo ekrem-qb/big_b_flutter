@@ -17,7 +17,7 @@ class ProfilesPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Çalışanlar'),
       ),
-      body: const Lister<ProfilesBloc, Profile>(
+      body: const Lister<ProfilesBloc, Profile>.cards(
         blocCreator: ProfilesBloc.new,
         itemContentBuilder: _Item.new,
         noItemsIcon: Icons.person,

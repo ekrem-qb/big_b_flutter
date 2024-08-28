@@ -16,7 +16,7 @@ class RecordingsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Kayıtlar'),
       ),
-      body: const Lister<RecordingsBloc, Recording>(
+      body: const Lister<RecordingsBloc, Recording>.cards(
         blocCreator: RecordingsBloc.new,
         itemContentBuilder: _Item.new,
         noItemsIcon: Icons.mic,

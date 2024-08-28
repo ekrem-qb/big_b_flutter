@@ -44,7 +44,7 @@ class _Scaffold extends StatelessWidget {
           SizedBox(width: 8),
         ],
       ),
-      body: const Lister<TasksBloc, Task>(
+      body: const Lister<TasksBloc, Task>.cards(
         blocCreator: TasksBloc.new,
         itemContentBuilder: _Item.new,
         noItemsIcon: Icons.task_alt,
