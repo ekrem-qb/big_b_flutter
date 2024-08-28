@@ -305,9 +305,9 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
     } on Exception catch (e) {
       switch (currentState) {
         case ProfileEditorStateCreate():
-          emit(currentState.copyWith(uploadState: StatusError(error: e.toString())));
+          emit(currentState.copyWith(uploadState: StatusError(e.toString())));
         case ProfileEditorStateEdit():
-          emit(currentState.copyWith(uploadState: StatusError(error: e.toString())));
+          emit(currentState.copyWith(uploadState: StatusError(e.toString())));
         default:
       }
       return false;
@@ -352,7 +352,7 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
       } on Exception catch (e) {
         emit(
           currentState.copyWith(
-            deleteState: StatusError(error: e.toString()),
+            deleteState: StatusError(e.toString()),
           ),
         );
         return;

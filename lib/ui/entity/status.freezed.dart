@@ -148,7 +148,7 @@ class __$$StatusErrorImplCopyWithImpl<$Res>
     Object? error = null,
   }) {
     return _then(_$StatusErrorImpl(
-      error: null == error
+      null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
@@ -159,7 +159,7 @@ class __$$StatusErrorImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$StatusErrorImpl implements StatusError {
-  const _$StatusErrorImpl({required this.error});
+  const _$StatusErrorImpl(this.error);
 
   @override
   final String error;
@@ -190,7 +190,7 @@ class _$StatusErrorImpl implements StatusError {
 }
 
 abstract class StatusError implements Status {
-  const factory StatusError({required final String error}) = _$StatusErrorImpl;
+  const factory StatusError(final String error) = _$StatusErrorImpl;
 
   String get error;
 
@@ -293,7 +293,7 @@ class __$$StatusOfDataImplCopyWithImpl<T, $Res>
     Object? data = freezed,
   }) {
     return _then(_$StatusOfDataImpl<T>(
-      data: freezed == data
+      freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as T,
@@ -304,7 +304,7 @@ class __$$StatusOfDataImplCopyWithImpl<T, $Res>
 /// @nodoc
 
 class _$StatusOfDataImpl<T> implements StatusOfData<T> {
-  const _$StatusOfDataImpl({required this.data});
+  const _$StatusOfDataImpl(this.data);
 
   @override
   final T data;
@@ -337,7 +337,7 @@ class _$StatusOfDataImpl<T> implements StatusOfData<T> {
 }
 
 abstract class StatusOfData<T> implements StatusOf<T> {
-  const factory StatusOfData({required final T data}) = _$StatusOfDataImpl<T>;
+  const factory StatusOfData(final T data) = _$StatusOfDataImpl<T>;
 
   T get data;
 
@@ -416,7 +416,7 @@ class __$$StatusOfErrorImplCopyWithImpl<T, $Res>
     Object? error = null,
   }) {
     return _then(_$StatusOfErrorImpl<T>(
-      error: null == error
+      null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
@@ -427,7 +427,7 @@ class __$$StatusOfErrorImplCopyWithImpl<T, $Res>
 /// @nodoc
 
 class _$StatusOfErrorImpl<T> implements StatusOfError<T> {
-  const _$StatusOfErrorImpl({required this.error});
+  const _$StatusOfErrorImpl(this.error);
 
   @override
   final String error;
@@ -459,8 +459,7 @@ class _$StatusOfErrorImpl<T> implements StatusOfError<T> {
 }
 
 abstract class StatusOfError<T> implements StatusOf<T> {
-  const factory StatusOfError({required final String error}) =
-      _$StatusOfErrorImpl<T>;
+  const factory StatusOfError(final String error) = _$StatusOfErrorImpl<T>;
 
   String get error;
 

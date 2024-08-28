@@ -15,7 +15,7 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
       : super(
           TaskViewerState(
             id: id,
-            task: originalTask != null ? StatusOfData(data: originalTask) : const StatusOfLoading(),
+            task: originalTask != null ? StatusOfData(originalTask) : const StatusOfLoading(),
           ),
         ) {
     on<TaskViewerEvent>((final event, final emit) {
@@ -63,31 +63,13 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
       final task = await db.from(Task.tableName).select(Task.fieldNames).eq($TaskImplJsonKeys.id, state.id).maybeSingle().withConverter(Task.maybeFromJson);
 
       if (task == null) {
-        emit(
-          state.copyWith(
-            task: const StatusOfError(
-              error: 'Görev bulunamadı',
-            ),
-          ),
-        );
+        emit(state.copyWith(task: const StatusOfError('Görev bulunamadı')));
         return;
       }
 
-      emit(
-        state.copyWith(
-          task: StatusOfData(
-            data: task,
-          ),
-        ),
-      );
+      emit(state.copyWith(task: StatusOfData(task)));
     } on Exception catch (e) {
-      emit(
-        state.copyWith(
-          task: StatusOfError(
-            error: e.toString(),
-          ),
-        ),
-      );
+      emit(state.copyWith(task: StatusOfError(e.toString())));
     }
   }
 
@@ -112,7 +94,7 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
       } on Exception catch (e) {
         emit(
           state.copyWith(
-            deleteState: StatusError(error: e.toString()),
+            deleteState: StatusError(e.toString()),
           ),
         );
       }
