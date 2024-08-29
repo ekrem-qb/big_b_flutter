@@ -60,7 +60,13 @@ class RuleEditorView extends StatelessWidget {
         bloc = newBloc;
         isInitialized = true;
       }
-      return bloc.state.runtimeType;
+      return switch (bloc.state) {
+        RuleEditorStateEdit(
+          :final editState,
+        ) =>
+          editState.runtimeType,
+        RuleEditorStateCreate() => null,
+      };
     });
 
     return MouseNavigator(
@@ -71,7 +77,11 @@ class RuleEditorView extends StatelessWidget {
                     :final uploadState,
                   ) ||
                   RuleEditorStateEdit(
-                    :final uploadState,
+                    editState: StatusOfData(
+                      data: RuleEditorStateEditState(
+                        :final uploadState,
+                      )
+                    )
                   ):
               switch (uploadState) {
                 case StatusCompleted():
@@ -84,7 +94,11 @@ class RuleEditorView extends StatelessWidget {
               }
               switch (state) {
                 case RuleEditorStateEdit(
-                    :final deleteState
+                    editState: StatusOfData(
+                      data: RuleEditorStateEditState(
+                        :final deleteState,
+                      )
+                    )
                   ):
                   switch (deleteState) {
                     case StatusInProgress():
@@ -111,19 +125,31 @@ class RuleEditorView extends StatelessWidget {
             ],
           ),
           body: switch (bloc.state) {
-            RuleEditorStateLoading() => const Center(
-                child: CircularProgressIndicator(),
-              ),
-            RuleEditorStateError(
-              :final error
+            RuleEditorStateEdit(
+              :final editState,
             ) =>
-              ErrorPanel(
-                error: error,
-                onRefresh: () => bloc.add(const RuleEditorEventLoadRequested()),
-              ),
+              switch (editState) {
+                StatusOfLoading() => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                StatusOfError(
+                  :final error
+                ) =>
+                  ErrorPanel(
+                    error: error,
+                    onRefresh: () => bloc.add(const RuleEditorEventLoadRequested()),
+                  ),
+                _ => _Body(isNew: isNew),
+              },
             _ => _Body(isNew: isNew),
           },
-          bottomNavigationBar: bloc.state is RuleEditorStateCreate || bloc.state is RuleEditorStateEdit ? const _SaveButton() : null,
+          bottomNavigationBar: switch (bloc.state) {
+            RuleEditorStateEdit(
+              editState: StatusOfLoading() || StatusOfError(),
+            ) =>
+              null,
+            _ => const _SaveButton(),
+          },
         ),
       ),
     );
@@ -202,7 +228,11 @@ class _Description extends StatelessWidget {
           :final descriptionError
         ) ||
         RuleEditorStateEdit(
-          :final descriptionError
+          editState: StatusOfData(
+            data: RuleEditorStateEditState(
+              :final descriptionError,
+            ),
+          ),
         ) =>
           descriptionError,
         _ => '',
@@ -213,7 +243,11 @@ class _Description extends StatelessWidget {
         :final description
       ) ||
       RuleEditorStateEdit(
-        :final description
+        editState: StatusOfData(
+          data: RuleEditorStateEditState(
+            :final description,
+          ),
+        ),
       ) =>
         description,
       _ => '',
@@ -242,7 +276,11 @@ class _Details extends StatelessWidget {
         :final details
       ) ||
       RuleEditorStateEdit(
-        :final details
+        editState: StatusOfData(
+          data: RuleEditorStateEditState(
+            :final details,
+          ),
+        ),
       ) =>
         details,
       _ => '',
@@ -279,7 +317,11 @@ class _ColorState extends State<_Color> {
           :final color
         ) ||
         RuleEditorStateEdit(
-          :final color
+          editState: StatusOfData(
+            data: RuleEditorStateEditState(
+              :final color,
+            ),
+          ),
         ) =>
           color,
         _ => Colors.red,
@@ -325,7 +367,11 @@ class _SaveButton extends StatelessWidget {
           :final uploadState
         ) ||
         RuleEditorStateEdit(
-          :final uploadState
+          editState: StatusOfData(
+            data: RuleEditorStateEditState(
+              :final uploadState,
+            ),
+          ),
         ) =>
           uploadState,
         _ => const StatusInitial(),

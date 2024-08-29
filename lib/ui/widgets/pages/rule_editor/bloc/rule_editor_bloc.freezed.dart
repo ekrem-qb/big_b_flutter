@@ -553,190 +553,6 @@ class _$RuleEditorStateCopyWithImpl<$Res, $Val extends RuleEditorState>
 }
 
 /// @nodoc
-abstract class _$$RuleEditorStateEditImplCopyWith<$Res> {
-  factory _$$RuleEditorStateEditImplCopyWith(_$RuleEditorStateEditImpl value,
-          $Res Function(_$RuleEditorStateEditImpl) then) =
-      __$$RuleEditorStateEditImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call(
-      {int id,
-      String description,
-      String details,
-      Color color,
-      String? descriptionError,
-      Status uploadState,
-      Status deleteState});
-
-  $StatusCopyWith<$Res> get uploadState;
-  $StatusCopyWith<$Res> get deleteState;
-}
-
-/// @nodoc
-class __$$RuleEditorStateEditImplCopyWithImpl<$Res>
-    extends _$RuleEditorStateCopyWithImpl<$Res, _$RuleEditorStateEditImpl>
-    implements _$$RuleEditorStateEditImplCopyWith<$Res> {
-  __$$RuleEditorStateEditImplCopyWithImpl(_$RuleEditorStateEditImpl _value,
-      $Res Function(_$RuleEditorStateEditImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of RuleEditorState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? description = null,
-    Object? details = null,
-    Object? color = null,
-    Object? descriptionError = freezed,
-    Object? uploadState = null,
-    Object? deleteState = null,
-  }) {
-    return _then(_$RuleEditorStateEditImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      details: null == details
-          ? _value.details
-          : details // ignore: cast_nullable_to_non_nullable
-              as String,
-      color: null == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as Color,
-      descriptionError: freezed == descriptionError
-          ? _value.descriptionError
-          : descriptionError // ignore: cast_nullable_to_non_nullable
-              as String?,
-      uploadState: null == uploadState
-          ? _value.uploadState
-          : uploadState // ignore: cast_nullable_to_non_nullable
-              as Status,
-      deleteState: null == deleteState
-          ? _value.deleteState
-          : deleteState // ignore: cast_nullable_to_non_nullable
-              as Status,
-    ));
-  }
-
-  /// Create a copy of RuleEditorState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $StatusCopyWith<$Res> get uploadState {
-    return $StatusCopyWith<$Res>(_value.uploadState, (value) {
-      return _then(_value.copyWith(uploadState: value));
-    });
-  }
-
-  /// Create a copy of RuleEditorState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $StatusCopyWith<$Res> get deleteState {
-    return $StatusCopyWith<$Res>(_value.deleteState, (value) {
-      return _then(_value.copyWith(deleteState: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$RuleEditorStateEditImpl implements RuleEditorStateEdit {
-  const _$RuleEditorStateEditImpl(
-      {required this.id,
-      required this.description,
-      required this.details,
-      required this.color,
-      this.descriptionError,
-      this.uploadState = const StatusInitial(),
-      this.deleteState = const StatusInitial()});
-
-  @override
-  final int id;
-  @override
-  final String description;
-  @override
-  final String details;
-  @override
-  final Color color;
-  @override
-  final String? descriptionError;
-  @override
-  @JsonKey()
-  final Status uploadState;
-  @override
-  @JsonKey()
-  final Status deleteState;
-
-  @override
-  String toString() {
-    return 'RuleEditorState.edit(id: $id, description: $description, details: $details, color: $color, descriptionError: $descriptionError, uploadState: $uploadState, deleteState: $deleteState)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$RuleEditorStateEditImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.details, details) || other.details == details) &&
-            (identical(other.color, color) || other.color == color) &&
-            (identical(other.descriptionError, descriptionError) ||
-                other.descriptionError == descriptionError) &&
-            (identical(other.uploadState, uploadState) ||
-                other.uploadState == uploadState) &&
-            (identical(other.deleteState, deleteState) ||
-                other.deleteState == deleteState));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, id, description, details, color,
-      descriptionError, uploadState, deleteState);
-
-  /// Create a copy of RuleEditorState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$RuleEditorStateEditImplCopyWith<_$RuleEditorStateEditImpl> get copyWith =>
-      __$$RuleEditorStateEditImplCopyWithImpl<_$RuleEditorStateEditImpl>(
-          this, _$identity);
-}
-
-abstract class RuleEditorStateEdit implements RuleEditorState {
-  const factory RuleEditorStateEdit(
-      {required final int id,
-      required final String description,
-      required final String details,
-      required final Color color,
-      final String? descriptionError,
-      final Status uploadState,
-      final Status deleteState}) = _$RuleEditorStateEditImpl;
-
-  int get id;
-  String get description;
-  String get details;
-  Color get color;
-  String? get descriptionError;
-  Status get uploadState;
-  Status get deleteState;
-
-  /// Create a copy of RuleEditorState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$RuleEditorStateEditImplCopyWith<_$RuleEditorStateEditImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
 abstract class _$$RuleEditorStateCreateImplCopyWith<$Res> {
   factory _$$RuleEditorStateCreateImplCopyWith(
           _$RuleEditorStateCreateImpl value,
@@ -888,22 +704,22 @@ abstract class RuleEditorStateCreate implements RuleEditorState {
 }
 
 /// @nodoc
-abstract class _$$RuleEditorStateLoadingImplCopyWith<$Res> {
-  factory _$$RuleEditorStateLoadingImplCopyWith(
-          _$RuleEditorStateLoadingImpl value,
-          $Res Function(_$RuleEditorStateLoadingImpl) then) =
-      __$$RuleEditorStateLoadingImplCopyWithImpl<$Res>;
+abstract class _$$RuleEditorStateEditImplCopyWith<$Res> {
+  factory _$$RuleEditorStateEditImplCopyWith(_$RuleEditorStateEditImpl value,
+          $Res Function(_$RuleEditorStateEditImpl) then) =
+      __$$RuleEditorStateEditImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({int id});
+  $Res call({int id, StatusOf<RuleEditorStateEditState> editState});
+
+  $StatusOfCopyWith<RuleEditorStateEditState, $Res> get editState;
 }
 
 /// @nodoc
-class __$$RuleEditorStateLoadingImplCopyWithImpl<$Res>
-    extends _$RuleEditorStateCopyWithImpl<$Res, _$RuleEditorStateLoadingImpl>
-    implements _$$RuleEditorStateLoadingImplCopyWith<$Res> {
-  __$$RuleEditorStateLoadingImplCopyWithImpl(
-      _$RuleEditorStateLoadingImpl _value,
-      $Res Function(_$RuleEditorStateLoadingImpl) _then)
+class __$$RuleEditorStateEditImplCopyWithImpl<$Res>
+    extends _$RuleEditorStateCopyWithImpl<$Res, _$RuleEditorStateEditImpl>
+    implements _$$RuleEditorStateEditImplCopyWith<$Res> {
+  __$$RuleEditorStateEditImplCopyWithImpl(_$RuleEditorStateEditImpl _value,
+      $Res Function(_$RuleEditorStateEditImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of RuleEditorState
@@ -912,150 +728,356 @@ class __$$RuleEditorStateLoadingImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? editState = null,
   }) {
-    return _then(_$RuleEditorStateLoadingImpl(
+    return _then(_$RuleEditorStateEditImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      editState: null == editState
+          ? _value.editState
+          : editState // ignore: cast_nullable_to_non_nullable
+              as StatusOf<RuleEditorStateEditState>,
     ));
+  }
+
+  /// Create a copy of RuleEditorState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StatusOfCopyWith<RuleEditorStateEditState, $Res> get editState {
+    return $StatusOfCopyWith<RuleEditorStateEditState, $Res>(_value.editState,
+        (value) {
+      return _then(_value.copyWith(editState: value));
+    });
   }
 }
 
 /// @nodoc
 
-class _$RuleEditorStateLoadingImpl implements RuleEditorStateLoading {
-  const _$RuleEditorStateLoadingImpl({required this.id});
+class _$RuleEditorStateEditImpl implements RuleEditorStateEdit {
+  const _$RuleEditorStateEditImpl(
+      {required this.id, this.editState = const StatusOfLoading()});
 
   @override
   final int id;
+  @override
+  @JsonKey()
+  final StatusOf<RuleEditorStateEditState> editState;
 
   @override
   String toString() {
-    return 'RuleEditorState.loading(id: $id)';
+    return 'RuleEditorState.edit(id: $id, editState: $editState)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$RuleEditorStateLoadingImpl &&
-            (identical(other.id, id) || other.id == id));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, id);
-
-  /// Create a copy of RuleEditorState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$RuleEditorStateLoadingImplCopyWith<_$RuleEditorStateLoadingImpl>
-      get copyWith => __$$RuleEditorStateLoadingImplCopyWithImpl<
-          _$RuleEditorStateLoadingImpl>(this, _$identity);
-}
-
-abstract class RuleEditorStateLoading implements RuleEditorState {
-  const factory RuleEditorStateLoading({required final int id}) =
-      _$RuleEditorStateLoadingImpl;
-
-  int get id;
-
-  /// Create a copy of RuleEditorState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$RuleEditorStateLoadingImplCopyWith<_$RuleEditorStateLoadingImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$RuleEditorStateErrorImplCopyWith<$Res> {
-  factory _$$RuleEditorStateErrorImplCopyWith(_$RuleEditorStateErrorImpl value,
-          $Res Function(_$RuleEditorStateErrorImpl) then) =
-      __$$RuleEditorStateErrorImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({int id, String error});
-}
-
-/// @nodoc
-class __$$RuleEditorStateErrorImplCopyWithImpl<$Res>
-    extends _$RuleEditorStateCopyWithImpl<$Res, _$RuleEditorStateErrorImpl>
-    implements _$$RuleEditorStateErrorImplCopyWith<$Res> {
-  __$$RuleEditorStateErrorImplCopyWithImpl(_$RuleEditorStateErrorImpl _value,
-      $Res Function(_$RuleEditorStateErrorImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of RuleEditorState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? error = null,
-  }) {
-    return _then(_$RuleEditorStateErrorImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      error: null == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$RuleEditorStateErrorImpl implements RuleEditorStateError {
-  const _$RuleEditorStateErrorImpl({required this.id, required this.error});
-
-  @override
-  final int id;
-  @override
-  final String error;
-
-  @override
-  String toString() {
-    return 'RuleEditorState.error(id: $id, error: $error)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$RuleEditorStateErrorImpl &&
+            other is _$RuleEditorStateEditImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.error, error) || other.error == error));
+            (identical(other.editState, editState) ||
+                other.editState == editState));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, error);
+  int get hashCode => Object.hash(runtimeType, id, editState);
 
   /// Create a copy of RuleEditorState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$RuleEditorStateErrorImplCopyWith<_$RuleEditorStateErrorImpl>
-      get copyWith =>
-          __$$RuleEditorStateErrorImplCopyWithImpl<_$RuleEditorStateErrorImpl>(
-              this, _$identity);
+  _$$RuleEditorStateEditImplCopyWith<_$RuleEditorStateEditImpl> get copyWith =>
+      __$$RuleEditorStateEditImplCopyWithImpl<_$RuleEditorStateEditImpl>(
+          this, _$identity);
 }
 
-abstract class RuleEditorStateError implements RuleEditorState {
-  const factory RuleEditorStateError(
-      {required final int id,
-      required final String error}) = _$RuleEditorStateErrorImpl;
+abstract class RuleEditorStateEdit implements RuleEditorState {
+  const factory RuleEditorStateEdit(
+          {required final int id,
+          final StatusOf<RuleEditorStateEditState> editState}) =
+      _$RuleEditorStateEditImpl;
 
   int get id;
-  String get error;
+  StatusOf<RuleEditorStateEditState> get editState;
 
   /// Create a copy of RuleEditorState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$RuleEditorStateErrorImplCopyWith<_$RuleEditorStateErrorImpl>
+  _$$RuleEditorStateEditImplCopyWith<_$RuleEditorStateEditImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$RuleEditorStateEditState {
+  String get description => throw _privateConstructorUsedError;
+  String get details => throw _privateConstructorUsedError;
+  Color get color => throw _privateConstructorUsedError;
+  String? get descriptionError => throw _privateConstructorUsedError;
+  Status get uploadState => throw _privateConstructorUsedError;
+  Status get deleteState => throw _privateConstructorUsedError;
+
+  /// Create a copy of RuleEditorStateEditState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RuleEditorStateEditStateCopyWith<RuleEditorStateEditState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RuleEditorStateEditStateCopyWith<$Res> {
+  factory $RuleEditorStateEditStateCopyWith(RuleEditorStateEditState value,
+          $Res Function(RuleEditorStateEditState) then) =
+      _$RuleEditorStateEditStateCopyWithImpl<$Res, RuleEditorStateEditState>;
+  @useResult
+  $Res call(
+      {String description,
+      String details,
+      Color color,
+      String? descriptionError,
+      Status uploadState,
+      Status deleteState});
+
+  $StatusCopyWith<$Res> get uploadState;
+  $StatusCopyWith<$Res> get deleteState;
+}
+
+/// @nodoc
+class _$RuleEditorStateEditStateCopyWithImpl<$Res,
+        $Val extends RuleEditorStateEditState>
+    implements $RuleEditorStateEditStateCopyWith<$Res> {
+  _$RuleEditorStateEditStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of RuleEditorStateEditState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? description = null,
+    Object? details = null,
+    Object? color = null,
+    Object? descriptionError = freezed,
+    Object? uploadState = null,
+    Object? deleteState = null,
+  }) {
+    return _then(_value.copyWith(
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      details: null == details
+          ? _value.details
+          : details // ignore: cast_nullable_to_non_nullable
+              as String,
+      color: null == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as Color,
+      descriptionError: freezed == descriptionError
+          ? _value.descriptionError
+          : descriptionError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uploadState: null == uploadState
+          ? _value.uploadState
+          : uploadState // ignore: cast_nullable_to_non_nullable
+              as Status,
+      deleteState: null == deleteState
+          ? _value.deleteState
+          : deleteState // ignore: cast_nullable_to_non_nullable
+              as Status,
+    ) as $Val);
+  }
+
+  /// Create a copy of RuleEditorStateEditState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StatusCopyWith<$Res> get uploadState {
+    return $StatusCopyWith<$Res>(_value.uploadState, (value) {
+      return _then(_value.copyWith(uploadState: value) as $Val);
+    });
+  }
+
+  /// Create a copy of RuleEditorStateEditState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StatusCopyWith<$Res> get deleteState {
+    return $StatusCopyWith<$Res>(_value.deleteState, (value) {
+      return _then(_value.copyWith(deleteState: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$RuleEditorStateEditStateImplCopyWith<$Res>
+    implements $RuleEditorStateEditStateCopyWith<$Res> {
+  factory _$$RuleEditorStateEditStateImplCopyWith(
+          _$RuleEditorStateEditStateImpl value,
+          $Res Function(_$RuleEditorStateEditStateImpl) then) =
+      __$$RuleEditorStateEditStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String description,
+      String details,
+      Color color,
+      String? descriptionError,
+      Status uploadState,
+      Status deleteState});
+
+  @override
+  $StatusCopyWith<$Res> get uploadState;
+  @override
+  $StatusCopyWith<$Res> get deleteState;
+}
+
+/// @nodoc
+class __$$RuleEditorStateEditStateImplCopyWithImpl<$Res>
+    extends _$RuleEditorStateEditStateCopyWithImpl<$Res,
+        _$RuleEditorStateEditStateImpl>
+    implements _$$RuleEditorStateEditStateImplCopyWith<$Res> {
+  __$$RuleEditorStateEditStateImplCopyWithImpl(
+      _$RuleEditorStateEditStateImpl _value,
+      $Res Function(_$RuleEditorStateEditStateImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RuleEditorStateEditState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? description = null,
+    Object? details = null,
+    Object? color = null,
+    Object? descriptionError = freezed,
+    Object? uploadState = null,
+    Object? deleteState = null,
+  }) {
+    return _then(_$RuleEditorStateEditStateImpl(
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      details: null == details
+          ? _value.details
+          : details // ignore: cast_nullable_to_non_nullable
+              as String,
+      color: null == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as Color,
+      descriptionError: freezed == descriptionError
+          ? _value.descriptionError
+          : descriptionError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uploadState: null == uploadState
+          ? _value.uploadState
+          : uploadState // ignore: cast_nullable_to_non_nullable
+              as Status,
+      deleteState: null == deleteState
+          ? _value.deleteState
+          : deleteState // ignore: cast_nullable_to_non_nullable
+              as Status,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$RuleEditorStateEditStateImpl implements _RuleEditorStateEditState {
+  const _$RuleEditorStateEditStateImpl(
+      {required this.description,
+      required this.details,
+      required this.color,
+      this.descriptionError,
+      this.uploadState = const StatusInitial(),
+      this.deleteState = const StatusInitial()});
+
+  @override
+  final String description;
+  @override
+  final String details;
+  @override
+  final Color color;
+  @override
+  final String? descriptionError;
+  @override
+  @JsonKey()
+  final Status uploadState;
+  @override
+  @JsonKey()
+  final Status deleteState;
+
+  @override
+  String toString() {
+    return 'RuleEditorStateEditState(description: $description, details: $details, color: $color, descriptionError: $descriptionError, uploadState: $uploadState, deleteState: $deleteState)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RuleEditorStateEditStateImpl &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.details, details) || other.details == details) &&
+            (identical(other.color, color) || other.color == color) &&
+            (identical(other.descriptionError, descriptionError) ||
+                other.descriptionError == descriptionError) &&
+            (identical(other.uploadState, uploadState) ||
+                other.uploadState == uploadState) &&
+            (identical(other.deleteState, deleteState) ||
+                other.deleteState == deleteState));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, description, details, color,
+      descriptionError, uploadState, deleteState);
+
+  /// Create a copy of RuleEditorStateEditState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RuleEditorStateEditStateImplCopyWith<_$RuleEditorStateEditStateImpl>
+      get copyWith => __$$RuleEditorStateEditStateImplCopyWithImpl<
+          _$RuleEditorStateEditStateImpl>(this, _$identity);
+}
+
+abstract class _RuleEditorStateEditState implements RuleEditorStateEditState {
+  const factory _RuleEditorStateEditState(
+      {required final String description,
+      required final String details,
+      required final Color color,
+      final String? descriptionError,
+      final Status uploadState,
+      final Status deleteState}) = _$RuleEditorStateEditStateImpl;
+
+  @override
+  String get description;
+  @override
+  String get details;
+  @override
+  Color get color;
+  @override
+  String? get descriptionError;
+  @override
+  Status get uploadState;
+  @override
+  Status get deleteState;
+
+  /// Create a copy of RuleEditorStateEditState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RuleEditorStateEditStateImplCopyWith<_$RuleEditorStateEditStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -2,16 +2,6 @@ part of 'rule_editor_bloc.dart';
 
 @freezed
 sealed class RuleEditorState with _$RuleEditorState {
-  const factory RuleEditorState.edit({
-    required final int id,
-    required final String description,
-    required final String details,
-    required final Color color,
-    final String? descriptionError,
-    @Default(StatusInitial()) final Status uploadState,
-    @Default(StatusInitial()) final Status deleteState,
-  }) = RuleEditorStateEdit;
-
   const factory RuleEditorState.create({
     @Default('') final String description,
     final String? descriptionError,
@@ -20,12 +10,20 @@ sealed class RuleEditorState with _$RuleEditorState {
     @Default(StatusInitial()) final Status uploadState,
   }) = RuleEditorStateCreate;
 
-  const factory RuleEditorState.loading({
+  const factory RuleEditorState.edit({
     required final int id,
-  }) = RuleEditorStateLoading;
+    @Default(StatusOfLoading()) final StatusOf<RuleEditorStateEditState> editState,
+  }) = RuleEditorStateEdit;
+}
 
-  const factory RuleEditorState.error({
-    required final int id,
-    required final String error,
-  }) = RuleEditorStateError;
+@freezed
+class RuleEditorStateEditState with _$RuleEditorStateEditState {
+  const factory RuleEditorStateEditState({
+    required final String description,
+    required final String details,
+    required final Color color,
+    final String? descriptionError,
+    @Default(StatusInitial()) final Status uploadState,
+    @Default(StatusInitial()) final Status deleteState,
+  }) = _RuleEditorStateEditState;
 }
