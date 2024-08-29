@@ -21,9 +21,12 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
                       ? const StatusOfLoading()
                       : StatusOfData(
                           RuleEditorStateEditState(
-                            description: originalRule.description,
-                            details: originalRule.details,
-                            color: originalRule.color,
+                            rule: Rule(
+                              id: originalRule.id,
+                              description: originalRule.description,
+                              details: originalRule.details,
+                              color: originalRule.color,
+                            ),
                           ),
                         ),
                 ),
@@ -69,9 +72,12 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
           currentState.copyWith(
             editState: StatusOfData(
               RuleEditorStateEditState(
-                description: rule.description,
-                details: rule.details,
-                color: rule.color,
+                rule: Rule(
+                  id: rule.id,
+                  description: rule.description,
+                  details: rule.details,
+                  color: rule.color,
+                ),
               ),
             ),
           ),
@@ -99,7 +105,9 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
           currentState.copyWith(
             editState: StatusOfData(
               data.copyWith(
-                description: event.value,
+                rule: data.rule.copyWith(
+                  description: event.value,
+                ),
                 descriptionError: null,
               ),
             ),
@@ -108,7 +116,9 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
       case RuleEditorStateCreate():
         emit(
           currentState.copyWith(
-            description: event.value,
+            rule: currentState.rule.copyWith(
+              description: event.value,
+            ),
             descriptionError: null,
           ),
         );
@@ -129,7 +139,9 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
           currentState.copyWith(
             editState: StatusOfData(
               data.copyWith(
-                details: event.value,
+                rule: data.rule.copyWith(
+                  details: event.value,
+                ),
               ),
             ),
           ),
@@ -137,7 +149,9 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
       case RuleEditorStateCreate():
         emit(
           currentState.copyWith(
-            details: event.value,
+            rule: currentState.rule.copyWith(
+              details: event.value,
+            ),
           ),
         );
       default:
@@ -151,7 +165,9 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
       case RuleEditorStateCreate():
         emit(
           currentState.copyWith(
-            color: event.value,
+            rule: currentState.rule.copyWith(
+              color: event.value,
+            ),
           ),
         );
       case RuleEditorStateEdit(
@@ -163,7 +179,9 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
           currentState.copyWith(
             editState: StatusOfData(
               data.copyWith(
-                color: event.value,
+                rule: data.rule.copyWith(
+                  color: event.value,
+                ),
               ),
             ),
           ),
@@ -179,11 +197,13 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
       case RuleEditorStateCreate():
         emit(
           currentState.copyWith(
-            description: currentState.description.trim(),
+            rule: currentState.rule.copyWith(
+              description: currentState.rule.description.trim(),
+            ),
           ),
         );
 
-        if (currentState.description.isEmpty) {
+        if (currentState.rule.description.isEmpty) {
           emit(
             currentState.copyWith(
               descriptionError: 'Açıklama giriniz',
@@ -194,7 +214,9 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
 
         emit(
           currentState.copyWith(
-            details: currentState.details.trim(),
+            rule: currentState.rule.copyWith(
+              details: currentState.rule.details.trim(),
+            ),
           ),
         );
 
@@ -226,13 +248,15 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
           currentState.copyWith(
             editState: StatusOfData(
               data.copyWith(
-                description: data.description.trim(),
+                rule: data.rule.copyWith(
+                  description: data.rule.description.trim(),
+                ),
               ),
             ),
           ),
         );
 
-        if (data.description.isEmpty) {
+        if (data.rule.description.isEmpty) {
           emit(
             currentState.copyWith(
               editState: StatusOfData(
@@ -285,26 +309,15 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
     try {
       switch (currentState) {
         case RuleEditorStateCreate(
-                :final description,
-                :final details,
-                :final color,
+                :final rule,
               ) ||
               RuleEditorStateEdit(
                 editState: StatusOfData(
                   data: RuleEditorStateEditState(
-                    :final description,
-                    :final details,
-                    :final color,
+                    :final rule,
                   )
                 ),
               ):
-          final rule = Rule(
-            id: -1,
-            description: description,
-            details: details,
-            color: color,
-          );
-
           switch (currentState) {
             case RuleEditorStateCreate():
               await db.from(Rule.tableName).insert(rule.toJson());

@@ -240,12 +240,16 @@ class _Description extends StatelessWidget {
     });
     final description = switch (bloc.state) {
       RuleEditorStateCreate(
-        :final description
+        rule: Rule(
+          :final description,
+        ),
       ) ||
       RuleEditorStateEdit(
         editState: StatusOfData(
           data: RuleEditorStateEditState(
-            :final description,
+            rule: Rule(
+              :final description,
+            ),
           ),
         ),
       ) =>
@@ -273,12 +277,16 @@ class _Details extends StatelessWidget {
     final bloc = context.read<RuleEditorBloc>();
     final details = switch (bloc.state) {
       RuleEditorStateCreate(
-        :final details
+        rule: Rule(
+          :final details,
+        ),
       ) ||
       RuleEditorStateEdit(
         editState: StatusOfData(
           data: RuleEditorStateEditState(
-            :final details,
+            rule: Rule(
+              :final details,
+            ),
           ),
         ),
       ) =>
@@ -314,12 +322,16 @@ class _ColorState extends State<_Color> {
       }
       return switch (newBloc.state) {
         RuleEditorStateCreate(
-          :final color
+          rule: Rule(
+            :final color,
+          ),
         ) ||
         RuleEditorStateEdit(
           editState: StatusOfData(
             data: RuleEditorStateEditState(
-              :final color,
+              rule: Rule(
+                :final color,
+              ),
             ),
           ),
         ) =>
