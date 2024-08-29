@@ -25,6 +25,7 @@ class ErrorPanel extends StatelessWidget {
             child: Text(
               error,
               maxLines: 4,
+              textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
             ),
           ),
