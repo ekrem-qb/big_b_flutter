@@ -25,6 +25,7 @@ sealed class RuleEditorState with _$RuleEditorState {
   }) = RuleEditorStateLoading;
 
   const factory RuleEditorState.error({
+    required final int id,
     required final String error,
   }) = RuleEditorStateError;
 }

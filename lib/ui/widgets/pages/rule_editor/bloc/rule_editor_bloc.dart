@@ -26,7 +26,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
         ) {
     on<RuleEditorEvent>((final event, final emit) {
       return switch (event) {
-        _RuleEditorEventLoadRequested() => _onLoadRequested(event, emit),
+        RuleEditorEventLoadRequested() => _onLoadRequested(event, emit),
         RuleEditorEventDescriptionChanged() => _onDescriptionChanged(event, emit),
         RuleEditorEventDetailsChanged() => _onDetailsChanged(event, emit),
         RuleEditorEventColorChanged() => _onColorChanged(event, emit),
@@ -36,11 +36,18 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
       };
     });
     if (state is RuleEditorStateLoading) {
-      add(const _RuleEditorEventLoadRequested());
+      add(const RuleEditorEventLoadRequested());
     }
   }
 
   Future<void> _onLoadRequested(final RuleEditorEvent event, final Emitter<RuleEditorState> emit) async {
+    if (state
+        case RuleEditorStateError(
+          :final id,
+        )) {
+      emit(RuleEditorStateLoading(id: id));
+    }
+
     final currentState = state;
 
     if (currentState is! RuleEditorStateLoading) return;
@@ -58,6 +65,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
     } on Exception catch (e) {
       emit(
         RuleEditorStateError(
+          id: currentState.id,
           error: e.toString(),
         ),
       );

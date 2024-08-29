@@ -7,6 +7,7 @@ import '../../../../api/entity/rule/rule.dart';
 import '../../../entity/status.dart';
 import '../../../theme.dart';
 import '../../dialogs/delete_dialog.dart';
+import '../../error_panel.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import '../../extensions/snackbar.dart';
@@ -99,11 +100,6 @@ class RuleEditorView extends StatelessWidget {
                   }
                 default:
               }
-            case RuleEditorStateError(
-                :final error
-              ):
-              showSnackbar(text: error, context: context);
-              Navigator.pop(context);
             default:
           }
         },
@@ -114,8 +110,20 @@ class RuleEditorView extends StatelessWidget {
               if (!isNew) const _DeleteButton(),
             ],
           ),
-          body: bloc.state is RuleEditorStateLoading ? const Center(child: CircularProgressIndicator()) : _Body(isNew: isNew),
-          bottomNavigationBar: bloc.state is! RuleEditorStateLoading ? const _SaveButton() : null,
+          body: switch (bloc.state) {
+            RuleEditorStateLoading() => const Center(
+                child: CircularProgressIndicator(),
+              ),
+            RuleEditorStateError(
+              :final error
+            ) =>
+              ErrorPanel(
+                error: error,
+                onRefresh: () => bloc.add(const RuleEditorEventLoadRequested()),
+              ),
+            _ => _Body(isNew: isNew),
+          },
+          bottomNavigationBar: bloc.state is RuleEditorStateCreate || bloc.state is RuleEditorStateEdit ? const _SaveButton() : null,
         ),
       ),
     );

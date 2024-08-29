@@ -63,7 +63,7 @@ class __$$RuleEditorEventLoadRequestedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$RuleEditorEventLoadRequestedImpl
-    implements _RuleEditorEventLoadRequested {
+    implements RuleEditorEventLoadRequested {
   const _$RuleEditorEventLoadRequestedImpl();
 
   @override
@@ -82,8 +82,8 @@ class _$RuleEditorEventLoadRequestedImpl
   int get hashCode => runtimeType.hashCode;
 }
 
-abstract class _RuleEditorEventLoadRequested implements RuleEditorEvent {
-  const factory _RuleEditorEventLoadRequested() =
+abstract class RuleEditorEventLoadRequested implements RuleEditorEvent {
+  const factory RuleEditorEventLoadRequested() =
       _$RuleEditorEventLoadRequestedImpl;
 }
 
@@ -975,7 +975,7 @@ abstract class _$$RuleEditorStateErrorImplCopyWith<$Res> {
           $Res Function(_$RuleEditorStateErrorImpl) then) =
       __$$RuleEditorStateErrorImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String error});
+  $Res call({int id, String error});
 }
 
 /// @nodoc
@@ -991,9 +991,14 @@ class __$$RuleEditorStateErrorImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? error = null,
   }) {
     return _then(_$RuleEditorStateErrorImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       error: null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -1005,14 +1010,16 @@ class __$$RuleEditorStateErrorImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$RuleEditorStateErrorImpl implements RuleEditorStateError {
-  const _$RuleEditorStateErrorImpl({required this.error});
+  const _$RuleEditorStateErrorImpl({required this.id, required this.error});
 
+  @override
+  final int id;
   @override
   final String error;
 
   @override
   String toString() {
-    return 'RuleEditorState.error(error: $error)';
+    return 'RuleEditorState.error(id: $id, error: $error)';
   }
 
   @override
@@ -1020,11 +1027,12 @@ class _$RuleEditorStateErrorImpl implements RuleEditorStateError {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RuleEditorStateErrorImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, error);
+  int get hashCode => Object.hash(runtimeType, id, error);
 
   /// Create a copy of RuleEditorState
   /// with the given fields replaced by the non-null parameter values.
@@ -1038,9 +1046,11 @@ class _$RuleEditorStateErrorImpl implements RuleEditorStateError {
 }
 
 abstract class RuleEditorStateError implements RuleEditorState {
-  const factory RuleEditorStateError({required final String error}) =
-      _$RuleEditorStateErrorImpl;
+  const factory RuleEditorStateError(
+      {required final int id,
+      required final String error}) = _$RuleEditorStateErrorImpl;
 
+  int get id;
   String get error;
 
   /// Create a copy of RuleEditorState
