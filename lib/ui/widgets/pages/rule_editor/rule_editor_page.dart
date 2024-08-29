@@ -21,7 +21,7 @@ class NewRuleEditorPage extends StatelessWidget {
   Widget build(final BuildContext context) {
     return BlocProvider(
       create: (final context) => RuleEditorBloc(),
-      child: const TaskEditorView(isNew: true),
+      child: const RuleEditorView(isNew: true),
     );
   }
 }
@@ -37,13 +37,13 @@ class RuleEditorPage extends StatelessWidget {
   Widget build(final BuildContext context) {
     return BlocProvider(
       create: (final context) => RuleEditorBloc(id: id, originalRule: rule),
-      child: const TaskEditorView(isNew: false),
+      child: const RuleEditorView(isNew: false),
     );
   }
 }
 
-class TaskEditorView extends StatelessWidget {
-  const TaskEditorView({
+class RuleEditorView extends StatelessWidget {
+  const RuleEditorView({
     required this.isNew,
     super.key,
   });
