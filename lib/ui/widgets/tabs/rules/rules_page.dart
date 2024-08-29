@@ -70,7 +70,7 @@ class _Item extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             )
           : null,
-      onTap: () => context.pushRoute(RuleEditorRoute(id: rule.id)),
+      onTap: () => context.pushRoute(RuleEditorRoute(id: rule.id, rule: rule)),
     );
   }
 }
