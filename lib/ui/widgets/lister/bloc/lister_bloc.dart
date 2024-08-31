@@ -64,7 +64,17 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, ListerStat
       }
 
       final count = await db.from(tableName).count();
-      final items = await db.from(tableName).select(fieldNames).limit(itemsPerLoad).order(orderBy, ascending: ascending).withConverter(converter) ?? List.empty();
+      final endIndex = max(
+        itemsPerLoad,
+        switch (state) {
+          ListerStateData(
+            :final items,
+          ) =>
+            items.length,
+          _ => 0
+        },
+      );
+      final items = await db.from(tableName).select(fieldNames).limit(endIndex).order(orderBy, ascending: ascending).withConverter(converter) ?? List.empty();
 
       emit(
         ListerStateData<T>(
@@ -84,7 +94,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, ListerStat
       if (event.index < currentState.items.length) return;
       if (currentState.items.length >= currentState.totalCount) return;
 
-      final endIndex = min<int>((currentState.items.length - 1) + itemsPerLoad, currentState.totalCount - 1);
+      final endIndex = min((currentState.items.length - 1) + itemsPerLoad, currentState.totalCount - 1);
       final items = await db.from(tableName).select(fieldNames).range(currentState.items.length, endIndex).order(orderBy, ascending: ascending).withConverter(converter) ?? List.empty();
 
       emit(
