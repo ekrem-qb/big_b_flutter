@@ -1,16 +1,24 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../api/entity/planned_task/planned_task.dart';
 import '../../../../api/entity/task/task.dart';
 import '../../../../constants.dart';
+import '../../../../extensions/date_time.dart';
 import '../../../../extensions/weekdays.dart';
+import '../../../entity/status.dart';
 import '../../../theme.dart';
+import '../../dialogs/delete_dialog.dart';
+import '../../dialogs/profiles_picker/profiles_picker_dialog.dart';
+import '../../error_panel.dart';
 import '../../extensions/mouse_navigator.dart';
+import '../../extensions/pickers/date_picker.dart';
+import '../../extensions/pickers/time_picker.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
+import '../../extensions/snackbar.dart';
 import '../../save_button.dart';
-import 'task_editor_model.dart';
+import 'bloc/task_editor_bloc.dart';
 
 @RoutePage()
 class NewTaskEditorPage extends StatelessWidget {
@@ -20,8 +28,8 @@ class NewTaskEditorPage extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return ChangeNotifierProvider(
-      create: TaskEditor.new,
+    return BlocProvider(
+      create: (final context) => TaskEditorBloc(),
       child: const TaskEditorView(isNew: true),
     );
   }
@@ -40,9 +48,8 @@ class TaskEditorPage extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (final context) => TaskEditor(
-        context,
+    return BlocProvider(
+      create: (final context) => TaskEditorBloc(
         taskId: taskId,
         originalTask: task,
       ),
@@ -64,9 +71,8 @@ class PlannedTaskEditorPage extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (final context) => TaskEditor(
-        context,
+    return BlocProvider(
+      create: (final context) => TaskEditorBloc(
         plannedTaskId: plannedTaskId,
         originalPlannedTask: plannedTask,
       ),
@@ -85,18 +91,61 @@ class TaskEditorView extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final isLoading = context.select((final TaskEditor model) => model.isLoading);
+    late final TaskEditorBloc bloc;
+    var isInitialized = false;
+    context.select((final TaskEditorBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return bloc.state.loadingState.runtimeType;
+    });
 
     return MouseNavigator(
-      child: Scaffold(
-        appBar: AppBar(
-          title: isNew ? const Text('Yeni görev') : null,
-          actions: [
-            if (!isNew) const _DeleteButton(),
-          ],
+      child: BlocListener<TaskEditorBloc, TaskEditorState>(
+        listener: (final context, final state) async {
+          switch (state.uploadState) {
+            case OperationStatusCompleted():
+              Navigator.pop(context);
+            case OperationStatusError(
+                :final error
+              ):
+              showSnackbar(text: error, context: context);
+            default:
+          }
+          switch (state.deleteState) {
+            case OperationStatusInProgress():
+              final isDeleted = await showDeleteDialog(itemName: 'kuralı', context: context);
+              bloc.add(TaskEditorEventDeleteDialogClosed(isDeleted: isDeleted));
+            case OperationStatusCompleted():
+              Navigator.pop(context);
+            case OperationStatusError(
+                :final error
+              ):
+              showSnackbar(text: error, context: context);
+            default:
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: isNew ? const Text('Yeni görev') : null,
+            actions: [
+              if (!isNew) const _DeleteButton(),
+            ],
+          ),
+          body: switch (bloc.state.loadingState) {
+            StatusLoading() => const Center(child: CircularProgressIndicator()),
+            StatusError(
+              :final error
+            ) =>
+              ErrorPanel(
+                error: error,
+                onRefresh: () => bloc.add(const TaskEditorEventLoadRequested()),
+              ),
+            StatusCompleted() => const _Body(),
+          },
+          bottomNavigationBar: bloc.state.loadingState is StatusCompleted ? const _SaveButton() : null,
         ),
-        body: isLoading ? const Center(child: CircularProgressIndicator()) : const _Body(),
-        bottomNavigationBar: !isLoading ? const _SaveButton() : null,
       ),
     );
   }
@@ -185,14 +234,14 @@ class _DeleteButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<TaskEditor>();
+    final bloc = context.read<TaskEditorBloc>();
 
     return ConstrainedBox(
       constraints: const BoxConstraints.tightFor(width: kToolbarHeight, height: kToolbarHeight),
       child: IconButton(
         icon: const Icon(Icons.delete),
         tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
-        onPressed: model.delete,
+        onPressed: () => bloc.add(const TaskEditorEventDeleteDialogOpened()),
       ),
     );
   }
@@ -203,10 +252,10 @@ class _Text extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<TaskEditor>();
+    final text = context.select((final TaskEditorBloc bloc) => bloc.state.text);
 
-    return TextField(
-      controller: model.textController,
+    return TextFormField(
+      initialValue: text,
       minLines: 3,
       maxLines: 8,
     );
@@ -218,14 +267,14 @@ class _ImageToggle extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskEditor model;
+    late final TaskEditorBloc bloc;
     var isInitialized = false;
-    context.select((final TaskEditor newModel) {
+    final isImageRequired = context.select((final TaskEditorBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.isImageRequired;
+      return bloc.state.isImageRequired;
     });
 
     return Chip(
@@ -235,13 +284,20 @@ class _ImageToggle extends StatelessWidget {
       label: CheckboxListTile(
         title: const Text('Fotoğraf eklenmesi lazım'),
         controlAffinity: ListTileControlAffinity.leading,
-        value: model.isImageRequired,
+        value: isImageRequired,
         focusNode: skippedFocusNode,
         contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-        onChanged: model.setIsImageRequired,
+        onChanged: (final value) => bloc.add(TaskEditorEventIsImageRequiredChanged(value: value ?? false)),
       ),
     );
   }
+}
+
+String _formatTime(final Duration duration) {
+  final minutes = duration.inHours.toString().padLeft(2, '0');
+  final seconds = (duration.inMinutes % 60).toString().padLeft(2, '0');
+  final time = '$minutes:$seconds';
+  return time;
 }
 
 class _Time extends StatelessWidget {
@@ -249,24 +305,41 @@ class _Time extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskEditor model;
+    late final TaskEditorBloc bloc;
     var isInitialized = false;
-    context.select((final TaskEditor newModel) {
+    final time = context.select((final TaskEditorBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.time;
+      return bloc.state.time;
     });
 
     return ActionChip(
       label: Text(
-        model.time,
+        _formatTime(time),
         style: largeTextStyle,
       ),
-      onPressed: model.changeTime,
+      onPressed: () async {
+        final newTime = await showCupertinoTimePicker(
+          context: context,
+          initialTime: time,
+        );
+
+        if (newTime == null) return;
+
+        bloc.add(TaskEditorEventTimeChanged(newTime));
+      },
     );
   }
+}
+
+String _formatDate(final DateTime date) {
+  final day = date.day.toString().padLeft(2, '0');
+  final month = date.month.toString().padLeft(2, '0');
+  final year = date.year.toString();
+  final formattedDate = '$day.$month.$year';
+  return formattedDate;
 }
 
 class _Date extends StatelessWidget {
@@ -274,30 +347,45 @@ class _Date extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskEditor model;
+    late final TaskEditorBloc bloc;
     var isInitialized = false;
     context
-      ..select((final TaskEditor newModel) {
+      ..select((final TaskEditorBloc newBloc) {
         if (!isInitialized) {
-          model = newModel;
+          bloc = newBloc;
           isInitialized = true;
         }
-        return model.date;
+        return bloc.state.date;
       })
-      ..select((final TaskEditor newModel) {
+      ..select((final TaskEditorBloc newBloc) {
         if (!isInitialized) {
-          model = newModel;
+          bloc = newBloc;
           isInitialized = true;
         }
-        return model.isRepeated;
+        return bloc.state.isRepeated;
       });
 
     return ActionChip(
       label: Text(
-        model.date,
+        _formatDate(bloc.state.date),
         style: largeTextStyle,
       ),
-      onPressed: (model.isRepeated || (model.isAlreadyPlanned ?? false)) ? null : model.changeDate,
+      onPressed: bloc.state.isRepeated || bloc.state.isPlanned
+          ? null
+          : () async {
+              final now = DateTime.now();
+
+              final newDate = await showCupertinoDatePicker(
+                context: context,
+                initialDate: bloc.state.date,
+                minimumDate: bloc.state.date.isBefore(now) ? bloc.state.date : now.copyWithTime(Duration.zero),
+                showDayOfWeek: true,
+              );
+
+              if (newDate == null) return;
+
+              bloc.add(TaskEditorEventDateChanged(newDate));
+            },
     );
   }
 }
@@ -313,22 +401,22 @@ class _Day extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskEditor model;
+    late final TaskEditorBloc bloc;
     var isInitialized = false;
-    context.select((final TaskEditor newModel) {
+    context.select((final TaskEditorBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return isWeekdaySelected(day, model.weekdays);
+      return isWeekdaySelected(day, bloc.state.weekdays);
     });
 
     return Flexible(
       child: InputChip(
-        isEnabled: model.isAlreadyPlanned ?? true,
+        isEnabled: bloc.state.isNew || bloc.state.isPlanned,
         showCheckmark: MediaQuery.of(context).size.width > 600,
-        selected: isWeekdaySelected(day, model.weekdays),
-        onSelected: (final value) => model.setDay(day, value: value),
+        selected: isWeekdaySelected(day, bloc.state.weekdays),
+        onSelected: (final value) => bloc.add(TaskEditorEventWeekdayToggled(day: day, value: value)),
         labelPadding: EdgeInsets.zero,
         label: FittedBox(
           fit: BoxFit.fitHeight,
@@ -347,31 +435,36 @@ class _Executives extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskEditor model;
+    late final TaskEditorBloc bloc;
     var isInitialized = false;
-    context.select((final TaskEditor newModel) {
+    context.select((final TaskEditorBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.executives.length;
+      return bloc.state.executives.length;
     });
 
     return Wrap(
       spacing: 8,
       runSpacing: 8,
       children: [
-        for (var i = 0; i < model.executives.length; i++)
+        for (var i = 0; i < bloc.state.executives.length; i++)
           InputChip(
-            label: Text(model.executives[i].name),
+            label: Text(bloc.state.executives[i].name),
             deleteIcon: const Icon(Icons.cancel, size: 18),
-            onDeleted: () => model.removeExecutive(i),
+            onDeleted: () => bloc.add(TaskEditorEventExecutiveRemoved(i)),
           ),
         IconButton.filledTonal(
           visualDensity: VisualDensity.compact,
           padding: EdgeInsets.zero,
           icon: const Icon(Icons.add),
-          onPressed: model.addExecutives,
+          onPressed: () async {
+            final newExecutives = await showProfilesPicker(context, excluded: bloc.state.executives);
+            if (newExecutives.isEmpty) return;
+
+            bloc.add(TaskEditorEventExecutivesAdded(newExecutives));
+          },
         ),
       ],
     );
@@ -383,19 +476,19 @@ class _SaveButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskEditor model;
+    late final TaskEditorBloc bloc;
     var isInitialized = false;
-    context.select((final TaskEditor newModel) {
+    context.select((final TaskEditorBloc newBloc) {
       if (!isInitialized) {
-        model = newModel;
+        bloc = newBloc;
         isInitialized = true;
       }
-      return model.isUploading;
+      return bloc.state.uploadState;
     });
 
     return SaveButton(
-      isLoading: model.isUploading,
-      onPressed: model.save,
+      isLoading: bloc.state.uploadState is OperationStatusInProgress,
+      onPressed: () => bloc.add(const TaskEditorEventSaveRequested()),
     );
   }
 }
