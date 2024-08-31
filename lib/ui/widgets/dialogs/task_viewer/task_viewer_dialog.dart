@@ -8,10 +8,13 @@ import '../../../entity/status.dart';
 import '../../../theme.dart';
 import '../../error_panel.dart';
 import '../../extensions/mouse_navigator.dart';
+import '../../extensions/shimmer.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import '../../extensions/snackbar.dart';
 import '../delete_dialog.dart';
 import 'bloc/task_viewer_bloc.dart';
+
+const kImageAspectRatio = 16 / 9;
 
 @RoutePage()
 class TaskViewerDialog extends StatelessWidget {
@@ -226,22 +229,36 @@ class _Image extends StatelessWidget {
                 imageUrl.toString(),
                 fit: BoxFit.cover,
                 frameBuilder: (final context, final child, final frame, final wasSynchronouslyLoaded) {
-                  return wasSynchronouslyLoaded || frame != null
-                      ? child
-                      : const Center(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 64),
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
+                  final colorScheme = Theme.of(context).colorScheme;
+                  final isLoaded = frame != null;
+
+                  return AnimatedSize(
+                    duration: Durations.medium1,
+                    child: Shimmer.fromColors(
+                      baseColor: colorScheme.surfaceContainerLow,
+                      highlightColor: Color.lerp(colorScheme.onSurface, colorScheme.surfaceContainerLow, 0.85)!,
+                      enabled: !isLoaded,
+                      child: isLoaded
+                          ? child
+                          : const ColoredBox(
+                              color: Colors.white,
+                              child: AspectRatio(
+                                aspectRatio: kImageAspectRatio,
+                              ),
+                            ),
+                    ),
+                  );
                 },
                 errorBuilder: (final context, final error, final stackTrace) {
-                  return const Center(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 64),
-                      child: Icon(
-                        Icons.image_not_supported,
-                        color: Colors.red,
+                  return const AspectRatio(
+                    aspectRatio: kImageAspectRatio,
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(64),
+                        child: Icon(
+                          Icons.image_not_supported,
+                          color: Colors.red,
+                        ),
                       ),
                     ),
                   );
