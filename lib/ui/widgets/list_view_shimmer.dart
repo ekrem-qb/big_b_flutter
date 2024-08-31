@@ -16,7 +16,7 @@ class ListViewShimmer extends StatelessWidget {
 
     return Shimmer.fromColors(
       baseColor: colorScheme.surfaceContainerLow,
-      highlightColor: colorScheme.surfaceTint,
+      highlightColor: Color.lerp(colorScheme.onSurface, colorScheme.surfaceContainerLow, 0.85)!,
       child: ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (final BuildContext context, final int index) {

@@ -229,7 +229,7 @@ class _Item<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends State
     return exists
         ? Shimmer.fromColors(
             baseColor: colorScheme.surfaceContainerLow,
-            highlightColor: colorScheme.surfaceTint,
+            highlightColor: Color.lerp(colorScheme.onSurface, colorScheme.surfaceContainerLow, 0.85)!,
             enabled: !isLoaded,
             child: _ItemContent<TBloc, TItem>(index, itemBuilder),
           )
