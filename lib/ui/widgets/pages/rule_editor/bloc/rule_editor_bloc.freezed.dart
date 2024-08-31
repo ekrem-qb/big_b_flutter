@@ -559,10 +559,10 @@ abstract class _$$RuleEditorStateCreateImplCopyWith<$Res> {
           $Res Function(_$RuleEditorStateCreateImpl) then) =
       __$$RuleEditorStateCreateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Rule rule, String? descriptionError, Status uploadState});
+  $Res call({Rule rule, String? descriptionError, OperationStatus uploadState});
 
   $RuleCopyWith<$Res> get rule;
-  $StatusCopyWith<$Res> get uploadState;
+  $OperationStatusCopyWith<$Res> get uploadState;
 }
 
 /// @nodoc
@@ -594,7 +594,7 @@ class __$$RuleEditorStateCreateImplCopyWithImpl<$Res>
       uploadState: null == uploadState
           ? _value.uploadState
           : uploadState // ignore: cast_nullable_to_non_nullable
-              as Status,
+              as OperationStatus,
     ));
   }
 
@@ -612,8 +612,8 @@ class __$$RuleEditorStateCreateImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StatusCopyWith<$Res> get uploadState {
-    return $StatusCopyWith<$Res>(_value.uploadState, (value) {
+  $OperationStatusCopyWith<$Res> get uploadState {
+    return $OperationStatusCopyWith<$Res>(_value.uploadState, (value) {
       return _then(_value.copyWith(uploadState: value));
     });
   }
@@ -626,7 +626,7 @@ class _$RuleEditorStateCreateImpl implements RuleEditorStateCreate {
       {this.rule =
           const Rule(id: -1, description: '', details: '', color: Colors.red),
       this.descriptionError,
-      this.uploadState = const StatusInitial()});
+      this.uploadState = const OperationStatusInitial()});
 
   @override
   @JsonKey()
@@ -635,7 +635,7 @@ class _$RuleEditorStateCreateImpl implements RuleEditorStateCreate {
   final String? descriptionError;
   @override
   @JsonKey()
-  final Status uploadState;
+  final OperationStatus uploadState;
 
   @override
   String toString() {
@@ -672,11 +672,11 @@ abstract class RuleEditorStateCreate implements RuleEditorState {
   const factory RuleEditorStateCreate(
       {final Rule rule,
       final String? descriptionError,
-      final Status uploadState}) = _$RuleEditorStateCreateImpl;
+      final OperationStatus uploadState}) = _$RuleEditorStateCreateImpl;
 
   Rule get rule;
   String? get descriptionError;
-  Status get uploadState;
+  OperationStatus get uploadState;
 
   /// Create a copy of RuleEditorState
   /// with the given fields replaced by the non-null parameter values.
@@ -796,8 +796,8 @@ abstract class RuleEditorStateEdit implements RuleEditorState {
 mixin _$RuleEditorStateEditState {
   Rule get rule => throw _privateConstructorUsedError;
   String? get descriptionError => throw _privateConstructorUsedError;
-  Status get uploadState => throw _privateConstructorUsedError;
-  Status get deleteState => throw _privateConstructorUsedError;
+  OperationStatus get uploadState => throw _privateConstructorUsedError;
+  OperationStatus get deleteState => throw _privateConstructorUsedError;
 
   /// Create a copy of RuleEditorStateEditState
   /// with the given fields replaced by the non-null parameter values.
@@ -815,12 +815,12 @@ abstract class $RuleEditorStateEditStateCopyWith<$Res> {
   $Res call(
       {Rule rule,
       String? descriptionError,
-      Status uploadState,
-      Status deleteState});
+      OperationStatus uploadState,
+      OperationStatus deleteState});
 
   $RuleCopyWith<$Res> get rule;
-  $StatusCopyWith<$Res> get uploadState;
-  $StatusCopyWith<$Res> get deleteState;
+  $OperationStatusCopyWith<$Res> get uploadState;
+  $OperationStatusCopyWith<$Res> get deleteState;
 }
 
 /// @nodoc
@@ -856,11 +856,11 @@ class _$RuleEditorStateEditStateCopyWithImpl<$Res,
       uploadState: null == uploadState
           ? _value.uploadState
           : uploadState // ignore: cast_nullable_to_non_nullable
-              as Status,
+              as OperationStatus,
       deleteState: null == deleteState
           ? _value.deleteState
           : deleteState // ignore: cast_nullable_to_non_nullable
-              as Status,
+              as OperationStatus,
     ) as $Val);
   }
 
@@ -878,8 +878,8 @@ class _$RuleEditorStateEditStateCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StatusCopyWith<$Res> get uploadState {
-    return $StatusCopyWith<$Res>(_value.uploadState, (value) {
+  $OperationStatusCopyWith<$Res> get uploadState {
+    return $OperationStatusCopyWith<$Res>(_value.uploadState, (value) {
       return _then(_value.copyWith(uploadState: value) as $Val);
     });
   }
@@ -888,8 +888,8 @@ class _$RuleEditorStateEditStateCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StatusCopyWith<$Res> get deleteState {
-    return $StatusCopyWith<$Res>(_value.deleteState, (value) {
+  $OperationStatusCopyWith<$Res> get deleteState {
+    return $OperationStatusCopyWith<$Res>(_value.deleteState, (value) {
       return _then(_value.copyWith(deleteState: value) as $Val);
     });
   }
@@ -907,15 +907,15 @@ abstract class _$$RuleEditorStateEditStateImplCopyWith<$Res>
   $Res call(
       {Rule rule,
       String? descriptionError,
-      Status uploadState,
-      Status deleteState});
+      OperationStatus uploadState,
+      OperationStatus deleteState});
 
   @override
   $RuleCopyWith<$Res> get rule;
   @override
-  $StatusCopyWith<$Res> get uploadState;
+  $OperationStatusCopyWith<$Res> get uploadState;
   @override
-  $StatusCopyWith<$Res> get deleteState;
+  $OperationStatusCopyWith<$Res> get deleteState;
 }
 
 /// @nodoc
@@ -950,11 +950,11 @@ class __$$RuleEditorStateEditStateImplCopyWithImpl<$Res>
       uploadState: null == uploadState
           ? _value.uploadState
           : uploadState // ignore: cast_nullable_to_non_nullable
-              as Status,
+              as OperationStatus,
       deleteState: null == deleteState
           ? _value.deleteState
           : deleteState // ignore: cast_nullable_to_non_nullable
-              as Status,
+              as OperationStatus,
     ));
   }
 }
@@ -965,8 +965,8 @@ class _$RuleEditorStateEditStateImpl implements _RuleEditorStateEditState {
   const _$RuleEditorStateEditStateImpl(
       {required this.rule,
       this.descriptionError,
-      this.uploadState = const StatusInitial(),
-      this.deleteState = const StatusInitial()});
+      this.uploadState = const OperationStatusInitial(),
+      this.deleteState = const OperationStatusInitial()});
 
   @override
   final Rule rule;
@@ -974,10 +974,10 @@ class _$RuleEditorStateEditStateImpl implements _RuleEditorStateEditState {
   final String? descriptionError;
   @override
   @JsonKey()
-  final Status uploadState;
+  final OperationStatus uploadState;
   @override
   @JsonKey()
-  final Status deleteState;
+  final OperationStatus deleteState;
 
   @override
   String toString() {
@@ -1016,17 +1016,17 @@ abstract class _RuleEditorStateEditState implements RuleEditorStateEditState {
   const factory _RuleEditorStateEditState(
       {required final Rule rule,
       final String? descriptionError,
-      final Status uploadState,
-      final Status deleteState}) = _$RuleEditorStateEditStateImpl;
+      final OperationStatus uploadState,
+      final OperationStatus deleteState}) = _$RuleEditorStateEditStateImpl;
 
   @override
   Rule get rule;
   @override
   String? get descriptionError;
   @override
-  Status get uploadState;
+  OperationStatus get uploadState;
   @override
-  Status get deleteState;
+  OperationStatus get deleteState;
 
   /// Create a copy of RuleEditorStateEditState
   /// with the given fields replaced by the non-null parameter values.

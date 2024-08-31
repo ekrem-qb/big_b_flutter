@@ -5,6 +5,6 @@ class TaskViewerState with _$TaskViewerState {
   const factory TaskViewerState({
     required final int id,
     required final StatusOf<Task> task,
-    @Default(StatusInitial()) final Status deleteState,
+    @Default(OperationStatusInitial()) final OperationStatus deleteState,
   }) = _TaskViewerState;
 }

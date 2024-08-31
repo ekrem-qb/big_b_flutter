@@ -72,9 +72,9 @@ class TaskEditorView extends StatelessWidget {
                     :final uploadState,
                   ):
               switch (uploadState) {
-                case StatusCompleted():
+                case OperationStatusCompleted():
                   Navigator.pop(context);
-                case StatusError(
+                case OperationStatusError(
                     :final error
                   ):
                   showSnackbar(text: error, context: context);
@@ -85,12 +85,12 @@ class TaskEditorView extends StatelessWidget {
                     :final deleteState
                   ):
                   switch (deleteState) {
-                    case StatusInProgress():
+                    case OperationStatusInProgress():
                       final isDeleted = await showDeleteDialog(itemName: 'çalışanı', context: context);
                       bloc.add(ProfileEditorEventDeleteDialogClosed(isDeleted: isDeleted));
-                    case StatusCompleted():
+                    case OperationStatusCompleted():
                       Navigator.pop(context);
-                    case StatusError(
+                    case OperationStatusError(
                         :final error
                       ):
                       showSnackbar(text: error, context: context);
@@ -525,12 +525,12 @@ class _SaveButton extends StatelessWidget {
           :final uploadState
         ) =>
           uploadState,
-        _ => const StatusInitial(),
+        _ => const OperationStatusInitial(),
       };
     });
 
     return SaveButton(
-      isLoading: uploadState is StatusInProgress,
+      isLoading: uploadState is OperationStatusInProgress,
       onPressed: () => bloc.add(const ProfileEditorEventSaveRequested()),
     );
   }

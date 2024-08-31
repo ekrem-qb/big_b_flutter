@@ -84,9 +84,9 @@ class RuleEditorView extends StatelessWidget {
                     )
                   ):
               switch (uploadState) {
-                case StatusCompleted():
+                case OperationStatusCompleted():
                   Navigator.pop(context);
-                case StatusError(
+                case OperationStatusError(
                     :final error
                   ):
                   showSnackbar(text: error, context: context);
@@ -101,12 +101,12 @@ class RuleEditorView extends StatelessWidget {
                     )
                   ):
                   switch (deleteState) {
-                    case StatusInProgress():
+                    case OperationStatusInProgress():
                       final isDeleted = await showDeleteDialog(itemName: 'kuralı', context: context);
                       bloc.add(RuleEditorEventDeleteDialogClosed(isDeleted: isDeleted));
-                    case StatusCompleted():
+                    case OperationStatusCompleted():
                       Navigator.pop(context);
-                    case StatusError(
+                    case OperationStatusError(
                         :final error
                       ):
                       showSnackbar(text: error, context: context);
@@ -386,12 +386,12 @@ class _SaveButton extends StatelessWidget {
           ),
         ) =>
           uploadState,
-        _ => const StatusInitial(),
+        _ => const OperationStatusInitial(),
       };
     });
 
     return SaveButton(
-      isLoading: uploadState is StatusInProgress,
+      isLoading: uploadState is OperationStatusInProgress,
       onPressed: () => bloc.add(const RuleEditorEventSaveRequested()),
     );
   }

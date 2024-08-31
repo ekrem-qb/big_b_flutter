@@ -709,11 +709,11 @@ abstract class _$$ProfileEditorStateEditImplCopyWith<$Res> {
       String login,
       Role role,
       String? nameError,
-      Status uploadState,
-      Status deleteState});
+      OperationStatus uploadState,
+      OperationStatus deleteState});
 
-  $StatusCopyWith<$Res> get uploadState;
-  $StatusCopyWith<$Res> get deleteState;
+  $OperationStatusCopyWith<$Res> get uploadState;
+  $OperationStatusCopyWith<$Res> get deleteState;
 }
 
 /// @nodoc
@@ -762,11 +762,11 @@ class __$$ProfileEditorStateEditImplCopyWithImpl<$Res>
       uploadState: null == uploadState
           ? _value.uploadState
           : uploadState // ignore: cast_nullable_to_non_nullable
-              as Status,
+              as OperationStatus,
       deleteState: null == deleteState
           ? _value.deleteState
           : deleteState // ignore: cast_nullable_to_non_nullable
-              as Status,
+              as OperationStatus,
     ));
   }
 
@@ -774,8 +774,8 @@ class __$$ProfileEditorStateEditImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StatusCopyWith<$Res> get uploadState {
-    return $StatusCopyWith<$Res>(_value.uploadState, (value) {
+  $OperationStatusCopyWith<$Res> get uploadState {
+    return $OperationStatusCopyWith<$Res>(_value.uploadState, (value) {
       return _then(_value.copyWith(uploadState: value));
     });
   }
@@ -784,8 +784,8 @@ class __$$ProfileEditorStateEditImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StatusCopyWith<$Res> get deleteState {
-    return $StatusCopyWith<$Res>(_value.deleteState, (value) {
+  $OperationStatusCopyWith<$Res> get deleteState {
+    return $OperationStatusCopyWith<$Res>(_value.deleteState, (value) {
       return _then(_value.copyWith(deleteState: value));
     });
   }
@@ -800,8 +800,8 @@ class _$ProfileEditorStateEditImpl implements ProfileEditorStateEdit {
       required this.login,
       required this.role,
       this.nameError,
-      this.uploadState = const StatusInitial(),
-      this.deleteState = const StatusInitial()});
+      this.uploadState = const OperationStatusInitial(),
+      this.deleteState = const OperationStatusInitial()});
 
   @override
   final String uid;
@@ -815,10 +815,10 @@ class _$ProfileEditorStateEditImpl implements ProfileEditorStateEdit {
   final String? nameError;
   @override
   @JsonKey()
-  final Status uploadState;
+  final OperationStatus uploadState;
   @override
   @JsonKey()
-  final Status deleteState;
+  final OperationStatus deleteState;
 
   @override
   String toString() {
@@ -863,16 +863,16 @@ abstract class ProfileEditorStateEdit implements ProfileEditorState {
       required final String login,
       required final Role role,
       final String? nameError,
-      final Status uploadState,
-      final Status deleteState}) = _$ProfileEditorStateEditImpl;
+      final OperationStatus uploadState,
+      final OperationStatus deleteState}) = _$ProfileEditorStateEditImpl;
 
   String get uid;
   String get name;
   String get login;
   Role get role;
   String? get nameError;
-  Status get uploadState;
-  Status get deleteState;
+  OperationStatus get uploadState;
+  OperationStatus get deleteState;
 
   /// Create a copy of ProfileEditorState
   /// with the given fields replaced by the non-null parameter values.
@@ -897,9 +897,9 @@ abstract class _$$ProfileEditorStateCreateImplCopyWith<$Res> {
       String password,
       String? passwordError,
       bool isPasswordVisible,
-      Status uploadState});
+      OperationStatus uploadState});
 
-  $StatusCopyWith<$Res> get uploadState;
+  $OperationStatusCopyWith<$Res> get uploadState;
 }
 
 /// @nodoc
@@ -963,7 +963,7 @@ class __$$ProfileEditorStateCreateImplCopyWithImpl<$Res>
       uploadState: null == uploadState
           ? _value.uploadState
           : uploadState // ignore: cast_nullable_to_non_nullable
-              as Status,
+              as OperationStatus,
     ));
   }
 
@@ -971,8 +971,8 @@ class __$$ProfileEditorStateCreateImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StatusCopyWith<$Res> get uploadState {
-    return $StatusCopyWith<$Res>(_value.uploadState, (value) {
+  $OperationStatusCopyWith<$Res> get uploadState {
+    return $OperationStatusCopyWith<$Res>(_value.uploadState, (value) {
       return _then(_value.copyWith(uploadState: value));
     });
   }
@@ -990,7 +990,7 @@ class _$ProfileEditorStateCreateImpl implements ProfileEditorStateCreate {
       this.password = '',
       this.passwordError,
       this.isPasswordVisible = false,
-      this.uploadState = const StatusInitial()});
+      this.uploadState = const OperationStatusInitial()});
 
   @override
   @JsonKey()
@@ -1015,7 +1015,7 @@ class _$ProfileEditorStateCreateImpl implements ProfileEditorStateCreate {
   final bool isPasswordVisible;
   @override
   @JsonKey()
-  final Status uploadState;
+  final OperationStatus uploadState;
 
   @override
   String toString() {
@@ -1077,7 +1077,7 @@ abstract class ProfileEditorStateCreate implements ProfileEditorState {
       final String password,
       final String? passwordError,
       final bool isPasswordVisible,
-      final Status uploadState}) = _$ProfileEditorStateCreateImpl;
+      final OperationStatus uploadState}) = _$ProfileEditorStateCreateImpl;
 
   String get name;
   String? get nameError;
@@ -1087,7 +1087,7 @@ abstract class ProfileEditorStateCreate implements ProfileEditorState {
   String get password;
   String? get passwordError;
   bool get isPasswordVisible;
-  Status get uploadState;
+  OperationStatus get uploadState;
 
   /// Create a copy of ProfileEditorState
   /// with the given fields replaced by the non-null parameter values.

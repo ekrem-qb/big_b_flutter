@@ -222,20 +222,20 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
 
         emit(
           currentState.copyWith(
-            uploadState: const StatusInProgress(),
+            uploadState: const OperationStatusInProgress(),
           ),
         );
 
         if (await _upload(emit: emit)) {
           emit(
             currentState.copyWith(
-              uploadState: const StatusCompleted(),
+              uploadState: const OperationStatusCompleted(),
             ),
           );
         } else {
           emit(
             currentState.copyWith(
-              uploadState: const StatusInitial(),
+              uploadState: const OperationStatusInitial(),
             ),
           );
         }
@@ -272,7 +272,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
           currentState.copyWith(
             editState: StatusOfData(
               data.copyWith(
-                uploadState: const StatusInProgress(),
+                uploadState: const OperationStatusInProgress(),
               ),
             ),
           ),
@@ -283,7 +283,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
             currentState.copyWith(
               editState: StatusOfData(
                 data.copyWith(
-                  uploadState: const StatusCompleted(),
+                  uploadState: const OperationStatusCompleted(),
                 ),
               ),
             ),
@@ -294,7 +294,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
             currentState.copyWith(
               editState: StatusOfData(
                 data.copyWith(
-                  uploadState: const StatusInitial(),
+                  uploadState: const OperationStatusInitial(),
                 ),
               ),
             ),
@@ -335,13 +335,13 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
     } on Exception catch (e) {
       switch (currentState) {
         case RuleEditorStateCreate():
-          emit(currentState.copyWith(uploadState: StatusError(e.toString())));
+          emit(currentState.copyWith(uploadState: OperationStatusError(e.toString())));
         case RuleEditorStateEdit(
             editState: StatusOfData(
               :final data,
             )
           ):
-          emit(currentState.copyWith(editState: StatusOfData(data.copyWith(uploadState: StatusError(e.toString())))));
+          emit(currentState.copyWith(editState: StatusOfData(data.copyWith(uploadState: OperationStatusError(e.toString())))));
         default:
       }
       return false;
@@ -361,7 +361,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
         currentState.copyWith(
           editState: StatusOfData(
             data.copyWith(
-              deleteState: const StatusInProgress(),
+              deleteState: const OperationStatusInProgress(),
             ),
           ),
         ),
@@ -386,7 +386,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
             currentState.copyWith(
               editState: StatusOfData(
                 data.copyWith(
-                  deleteState: const StatusCompleted(),
+                  deleteState: const OperationStatusCompleted(),
                 ),
               ),
             ),
@@ -397,7 +397,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
             currentState.copyWith(
               editState: StatusOfData(
                 data.copyWith(
-                  deleteState: StatusError(e.toString()),
+                  deleteState: OperationStatusError(e.toString()),
                 ),
               ),
             ),
@@ -410,7 +410,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
         currentState.copyWith(
           editState: StatusOfData(
             data.copyWith(
-              deleteState: const Status.initial(),
+              deleteState: const OperationStatusInitial(),
             ),
           ),
         ),

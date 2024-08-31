@@ -13,7 +13,7 @@ sealed class RuleEditorState with _$RuleEditorState {
     )
     final Rule rule,
     final String? descriptionError,
-    @Default(StatusInitial()) final Status uploadState,
+    @Default(OperationStatusInitial()) final OperationStatus uploadState,
   }) = RuleEditorStateCreate;
 
   const factory RuleEditorState.edit({
@@ -27,7 +27,7 @@ class RuleEditorStateEditState with _$RuleEditorStateEditState {
   const factory RuleEditorStateEditState({
     required final Rule rule,
     final String? descriptionError,
-    @Default(StatusInitial()) final Status uploadState,
-    @Default(StatusInitial()) final Status deleteState,
+    @Default(OperationStatusInitial()) final OperationStatus uploadState,
+    @Default(OperationStatusInitial()) final OperationStatus deleteState,
   }) = _RuleEditorStateEditState;
 }

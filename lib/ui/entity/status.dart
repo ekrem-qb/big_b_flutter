@@ -3,9 +3,16 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'status.freezed.dart';
 
 @freezed
+sealed class OperationStatus with _$OperationStatus {
+  const factory OperationStatus.initial() = OperationStatusInitial;
+  const factory OperationStatus.inProgress() = OperationStatusInProgress;
+  const factory OperationStatus.error(final String error) = OperationStatusError;
+  const factory OperationStatus.completed() = OperationStatusCompleted;
+}
+
+@freezed
 sealed class Status with _$Status {
-  const factory Status.initial() = StatusInitial;
-  const factory Status.inProgress() = StatusInProgress;
+  const factory Status.loading() = StatusLoading;
   const factory Status.error(final String error) = StatusError;
   const factory Status.completed() = StatusCompleted;
 }

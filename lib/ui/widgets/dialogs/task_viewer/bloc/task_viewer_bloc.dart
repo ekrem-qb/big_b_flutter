@@ -76,7 +76,7 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
   Future<void> _onDeleteDialogOpened(final TaskViewerEventDeleteDialogOpened event, final Emitter<TaskViewerState> emit) async {
     emit(
       state.copyWith(
-        deleteState: const StatusInProgress(),
+        deleteState: const OperationStatusInProgress(),
       ),
     );
   }
@@ -88,20 +88,20 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
 
         emit(
           state.copyWith(
-            deleteState: const StatusCompleted(),
+            deleteState: const OperationStatusCompleted(),
           ),
         );
       } on Exception catch (e) {
         emit(
           state.copyWith(
-            deleteState: StatusError(e.toString()),
+            deleteState: OperationStatusError(e.toString()),
           ),
         );
       }
     } else {
       emit(
         state.copyWith(
-          deleteState: const StatusInitial(),
+          deleteState: const OperationStatusInitial(),
         ),
       );
     }

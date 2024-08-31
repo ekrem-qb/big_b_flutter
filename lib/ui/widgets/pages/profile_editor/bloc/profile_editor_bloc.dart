@@ -202,20 +202,20 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
 
         emit(
           currentState.copyWith(
-            uploadState: const StatusInProgress(),
+            uploadState: const OperationStatusInProgress(),
           ),
         );
 
         if (await _upload(emit: emit)) {
           emit(
             currentState.copyWith(
-              uploadState: const StatusCompleted(),
+              uploadState: const OperationStatusCompleted(),
             ),
           );
         } else {
           emit(
             currentState.copyWith(
-              uploadState: const StatusInitial(),
+              uploadState: const OperationStatusInitial(),
             ),
           );
         }
@@ -236,21 +236,21 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
 
         emit(
           currentState.copyWith(
-            uploadState: const StatusInProgress(),
+            uploadState: const OperationStatusInProgress(),
           ),
         );
 
         if (await _upload(emit: emit)) {
           emit(
             currentState.copyWith(
-              uploadState: const StatusCompleted(),
+              uploadState: const OperationStatusCompleted(),
             ),
           );
           return;
         } else {
           emit(
             currentState.copyWith(
-              uploadState: const StatusInitial(),
+              uploadState: const OperationStatusInitial(),
             ),
           );
         }
@@ -305,9 +305,9 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
     } on Exception catch (e) {
       switch (currentState) {
         case ProfileEditorStateCreate():
-          emit(currentState.copyWith(uploadState: StatusError(e.toString())));
+          emit(currentState.copyWith(uploadState: OperationStatusError(e.toString())));
         case ProfileEditorStateEdit():
-          emit(currentState.copyWith(uploadState: StatusError(e.toString())));
+          emit(currentState.copyWith(uploadState: OperationStatusError(e.toString())));
         default:
       }
       return false;
@@ -327,7 +327,7 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
 
     emit(
       currentState.copyWith(
-        deleteState: const StatusInProgress(),
+        deleteState: const OperationStatusInProgress(),
       ),
     );
   }
@@ -345,14 +345,14 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
 
         emit(
           currentState.copyWith(
-            deleteState: const StatusCompleted(),
+            deleteState: const OperationStatusCompleted(),
           ),
         );
         return;
       } on Exception catch (e) {
         emit(
           currentState.copyWith(
-            deleteState: StatusError(e.toString()),
+            deleteState: OperationStatusError(e.toString()),
           ),
         );
         return;
@@ -361,7 +361,7 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
 
     emit(
       currentState.copyWith(
-        deleteState: const Status.initial(),
+        deleteState: const OperationStatusInitial(),
       ),
     );
   }

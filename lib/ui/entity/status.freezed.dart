@@ -15,6 +15,249 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
+mixin _$OperationStatus {}
+
+/// @nodoc
+abstract class $OperationStatusCopyWith<$Res> {
+  factory $OperationStatusCopyWith(
+          OperationStatus value, $Res Function(OperationStatus) then) =
+      _$OperationStatusCopyWithImpl<$Res, OperationStatus>;
+}
+
+/// @nodoc
+class _$OperationStatusCopyWithImpl<$Res, $Val extends OperationStatus>
+    implements $OperationStatusCopyWith<$Res> {
+  _$OperationStatusCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of OperationStatus
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+abstract class _$$OperationStatusInitialImplCopyWith<$Res> {
+  factory _$$OperationStatusInitialImplCopyWith(
+          _$OperationStatusInitialImpl value,
+          $Res Function(_$OperationStatusInitialImpl) then) =
+      __$$OperationStatusInitialImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$OperationStatusInitialImplCopyWithImpl<$Res>
+    extends _$OperationStatusCopyWithImpl<$Res, _$OperationStatusInitialImpl>
+    implements _$$OperationStatusInitialImplCopyWith<$Res> {
+  __$$OperationStatusInitialImplCopyWithImpl(
+      _$OperationStatusInitialImpl _value,
+      $Res Function(_$OperationStatusInitialImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of OperationStatus
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$OperationStatusInitialImpl implements OperationStatusInitial {
+  const _$OperationStatusInitialImpl();
+
+  @override
+  String toString() {
+    return 'OperationStatus.initial()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OperationStatusInitialImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+}
+
+abstract class OperationStatusInitial implements OperationStatus {
+  const factory OperationStatusInitial() = _$OperationStatusInitialImpl;
+}
+
+/// @nodoc
+abstract class _$$OperationStatusInProgressImplCopyWith<$Res> {
+  factory _$$OperationStatusInProgressImplCopyWith(
+          _$OperationStatusInProgressImpl value,
+          $Res Function(_$OperationStatusInProgressImpl) then) =
+      __$$OperationStatusInProgressImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$OperationStatusInProgressImplCopyWithImpl<$Res>
+    extends _$OperationStatusCopyWithImpl<$Res, _$OperationStatusInProgressImpl>
+    implements _$$OperationStatusInProgressImplCopyWith<$Res> {
+  __$$OperationStatusInProgressImplCopyWithImpl(
+      _$OperationStatusInProgressImpl _value,
+      $Res Function(_$OperationStatusInProgressImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of OperationStatus
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$OperationStatusInProgressImpl implements OperationStatusInProgress {
+  const _$OperationStatusInProgressImpl();
+
+  @override
+  String toString() {
+    return 'OperationStatus.inProgress()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OperationStatusInProgressImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+}
+
+abstract class OperationStatusInProgress implements OperationStatus {
+  const factory OperationStatusInProgress() = _$OperationStatusInProgressImpl;
+}
+
+/// @nodoc
+abstract class _$$OperationStatusErrorImplCopyWith<$Res> {
+  factory _$$OperationStatusErrorImplCopyWith(_$OperationStatusErrorImpl value,
+          $Res Function(_$OperationStatusErrorImpl) then) =
+      __$$OperationStatusErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String error});
+}
+
+/// @nodoc
+class __$$OperationStatusErrorImplCopyWithImpl<$Res>
+    extends _$OperationStatusCopyWithImpl<$Res, _$OperationStatusErrorImpl>
+    implements _$$OperationStatusErrorImplCopyWith<$Res> {
+  __$$OperationStatusErrorImplCopyWithImpl(_$OperationStatusErrorImpl _value,
+      $Res Function(_$OperationStatusErrorImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of OperationStatus
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? error = null,
+  }) {
+    return _then(_$OperationStatusErrorImpl(
+      null == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$OperationStatusErrorImpl implements OperationStatusError {
+  const _$OperationStatusErrorImpl(this.error);
+
+  @override
+  final String error;
+
+  @override
+  String toString() {
+    return 'OperationStatus.error(error: $error)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OperationStatusErrorImpl &&
+            (identical(other.error, error) || other.error == error));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, error);
+
+  /// Create a copy of OperationStatus
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OperationStatusErrorImplCopyWith<_$OperationStatusErrorImpl>
+      get copyWith =>
+          __$$OperationStatusErrorImplCopyWithImpl<_$OperationStatusErrorImpl>(
+              this, _$identity);
+}
+
+abstract class OperationStatusError implements OperationStatus {
+  const factory OperationStatusError(final String error) =
+      _$OperationStatusErrorImpl;
+
+  String get error;
+
+  /// Create a copy of OperationStatus
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$OperationStatusErrorImplCopyWith<_$OperationStatusErrorImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$OperationStatusCompletedImplCopyWith<$Res> {
+  factory _$$OperationStatusCompletedImplCopyWith(
+          _$OperationStatusCompletedImpl value,
+          $Res Function(_$OperationStatusCompletedImpl) then) =
+      __$$OperationStatusCompletedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$OperationStatusCompletedImplCopyWithImpl<$Res>
+    extends _$OperationStatusCopyWithImpl<$Res, _$OperationStatusCompletedImpl>
+    implements _$$OperationStatusCompletedImplCopyWith<$Res> {
+  __$$OperationStatusCompletedImplCopyWithImpl(
+      _$OperationStatusCompletedImpl _value,
+      $Res Function(_$OperationStatusCompletedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of OperationStatus
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$OperationStatusCompletedImpl implements OperationStatusCompleted {
+  const _$OperationStatusCompletedImpl();
+
+  @override
+  String toString() {
+    return 'OperationStatus.completed()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OperationStatusCompletedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+}
+
+abstract class OperationStatusCompleted implements OperationStatus {
+  const factory OperationStatusCompleted() = _$OperationStatusCompletedImpl;
+}
+
+/// @nodoc
 mixin _$Status {}
 
 /// @nodoc
@@ -38,18 +281,18 @@ class _$StatusCopyWithImpl<$Res, $Val extends Status>
 }
 
 /// @nodoc
-abstract class _$$StatusInitialImplCopyWith<$Res> {
-  factory _$$StatusInitialImplCopyWith(
-          _$StatusInitialImpl value, $Res Function(_$StatusInitialImpl) then) =
-      __$$StatusInitialImplCopyWithImpl<$Res>;
+abstract class _$$StatusLoadingImplCopyWith<$Res> {
+  factory _$$StatusLoadingImplCopyWith(
+          _$StatusLoadingImpl value, $Res Function(_$StatusLoadingImpl) then) =
+      __$$StatusLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$StatusInitialImplCopyWithImpl<$Res>
-    extends _$StatusCopyWithImpl<$Res, _$StatusInitialImpl>
-    implements _$$StatusInitialImplCopyWith<$Res> {
-  __$$StatusInitialImplCopyWithImpl(
-      _$StatusInitialImpl _value, $Res Function(_$StatusInitialImpl) _then)
+class __$$StatusLoadingImplCopyWithImpl<$Res>
+    extends _$StatusCopyWithImpl<$Res, _$StatusLoadingImpl>
+    implements _$$StatusLoadingImplCopyWith<$Res> {
+  __$$StatusLoadingImplCopyWithImpl(
+      _$StatusLoadingImpl _value, $Res Function(_$StatusLoadingImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of Status
@@ -58,69 +301,26 @@ class __$$StatusInitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$StatusInitialImpl implements StatusInitial {
-  const _$StatusInitialImpl();
+class _$StatusLoadingImpl implements StatusLoading {
+  const _$StatusLoadingImpl();
 
   @override
   String toString() {
-    return 'Status.initial()';
+    return 'Status.loading()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$StatusInitialImpl);
+        (other.runtimeType == runtimeType && other is _$StatusLoadingImpl);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 }
 
-abstract class StatusInitial implements Status {
-  const factory StatusInitial() = _$StatusInitialImpl;
-}
-
-/// @nodoc
-abstract class _$$StatusInProgressImplCopyWith<$Res> {
-  factory _$$StatusInProgressImplCopyWith(_$StatusInProgressImpl value,
-          $Res Function(_$StatusInProgressImpl) then) =
-      __$$StatusInProgressImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$StatusInProgressImplCopyWithImpl<$Res>
-    extends _$StatusCopyWithImpl<$Res, _$StatusInProgressImpl>
-    implements _$$StatusInProgressImplCopyWith<$Res> {
-  __$$StatusInProgressImplCopyWithImpl(_$StatusInProgressImpl _value,
-      $Res Function(_$StatusInProgressImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of Status
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$StatusInProgressImpl implements StatusInProgress {
-  const _$StatusInProgressImpl();
-
-  @override
-  String toString() {
-    return 'Status.inProgress()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$StatusInProgressImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-}
-
-abstract class StatusInProgress implements Status {
-  const factory StatusInProgress() = _$StatusInProgressImpl;
+abstract class StatusLoading implements Status {
+  const factory StatusLoading() = _$StatusLoadingImpl;
 }
 
 /// @nodoc

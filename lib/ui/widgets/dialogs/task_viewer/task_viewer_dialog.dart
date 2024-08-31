@@ -42,12 +42,12 @@ class TaskViewerView extends StatelessWidget {
       child: BlocListener<TaskViewerBloc, TaskViewerState>(
         listener: (final context, final state) async {
           switch (state.deleteState) {
-            case StatusInProgress():
+            case OperationStatusInProgress():
               final isDeleted = await showDeleteDialog(itemName: 'görevi', context: context);
               bloc.add(TaskViewerEventDeleteDialogClosed(isDeleted: isDeleted));
-            case StatusCompleted():
+            case OperationStatusCompleted():
               Navigator.pop(context);
-            case StatusError(
+            case OperationStatusError(
                 :final error
               ):
               showSnackbar(text: error, context: context);
