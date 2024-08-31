@@ -17,18 +17,17 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
       : super(
           uid == null
               ? const ProfileEditorStateCreate()
-              : originalProfile == null
-                  ? ProfileEditorStateLoading(uid: uid)
-                  : ProfileEditorStateEdit(
-                      uid: uid,
-                      name: originalProfile.name,
-                      login: originalProfile.login,
-                      role: originalProfile.role,
-                    ),
+              : ProfileEditorStateEdit(
+                  uid: uid,
+                  loadingState: originalProfile == null ? const StatusLoading() : const StatusCompleted(),
+                  name: originalProfile?.name ?? '',
+                  login: originalProfile?.login ?? '',
+                  role: originalProfile?.role ?? Role.employee,
+                ),
         ) {
     on<ProfileEditorEvent>((final event, final emit) {
       return switch (event) {
-        _ProfileEditorEventLoadRequested() => _onLoadRequested(event, emit),
+        ProfileEditorEventLoadRequested() => _onLoadRequested(event, emit),
         ProfileEditorEventNameChanged() => _onNameChanged(event, emit),
         ProfileEditorEventLoginChanged() => _onLoginChanged(event, emit),
         ProfileEditorEventPasswordChanged() => _onPasswordChanged(event, emit),
@@ -39,21 +38,30 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
         ProfileEditorEventDeleteDialogClosed() => _onDeleteDialogClosed(event, emit),
       };
     });
-    if (state is ProfileEditorStateLoading) {
-      add(const _ProfileEditorEventLoadRequested());
+    if (state
+        case ProfileEditorStateEdit(
+          loadingState: StatusLoading(),
+        )) {
+      add(const ProfileEditorEventLoadRequested());
     }
   }
 
   Future<void> _onLoadRequested(final ProfileEditorEvent event, final Emitter<ProfileEditorState> emit) async {
     final currentState = state;
 
-    if (currentState is! ProfileEditorStateLoading) return;
+    if (currentState is! ProfileEditorStateEdit) return;
+
+    emit(
+      currentState.copyWith(
+        loadingState: const StatusLoading(),
+      ),
+    );
 
     try {
       final profile = await db.from(Profile.tableName).select(Profile.fieldNames).eq($ProfileImplJsonKeys.uid, currentState.uid).single().withConverter(Profile.fromJson);
       emit(
-        ProfileEditorStateEdit(
-          uid: currentState.uid,
+        currentState.copyWith(
+          loadingState: const StatusCompleted(),
           name: profile.name,
           login: profile.login,
           role: profile.role,
@@ -61,8 +69,8 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
       );
     } on Exception catch (e) {
       emit(
-        ProfileEditorStateError(
-          error: e.toString(),
+        currentState.copyWith(
+          loadingState: StatusError(e.toString()),
         ),
       );
     }

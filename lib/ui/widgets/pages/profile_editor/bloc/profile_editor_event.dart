@@ -2,7 +2,7 @@ part of 'profile_editor_bloc.dart';
 
 @freezed
 sealed class ProfileEditorEvent with _$ProfileEditorEvent {
-  const factory ProfileEditorEvent.loadRequested() = _ProfileEditorEventLoadRequested;
+  const factory ProfileEditorEvent.loadRequested() = ProfileEditorEventLoadRequested;
   const factory ProfileEditorEvent.nameChanged(final String value) = ProfileEditorEventNameChanged;
   const factory ProfileEditorEvent.loginChanged(final String value) = ProfileEditorEventLoginChanged;
   const factory ProfileEditorEvent.passwordChanged(final String value) = ProfileEditorEventPasswordChanged;

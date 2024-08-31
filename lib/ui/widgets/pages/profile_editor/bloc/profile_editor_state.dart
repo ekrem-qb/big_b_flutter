@@ -4,6 +4,7 @@ part of 'profile_editor_bloc.dart';
 sealed class ProfileEditorState with _$ProfileEditorState {
   const factory ProfileEditorState.edit({
     required final String uid,
+    required final Status loadingState,
     required final String name,
     required final String login,
     required final Role role,
@@ -23,12 +24,4 @@ sealed class ProfileEditorState with _$ProfileEditorState {
     @Default(false) final bool isPasswordVisible,
     @Default(OperationStatusInitial()) final OperationStatus uploadState,
   }) = ProfileEditorStateCreate;
-
-  const factory ProfileEditorState.loading({
-    required final String uid,
-  }) = ProfileEditorStateLoading;
-
-  const factory ProfileEditorState.error({
-    required final String error,
-  }) = ProfileEditorStateError;
 }

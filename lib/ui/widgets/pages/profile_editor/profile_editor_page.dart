@@ -6,6 +6,7 @@ import '../../../../api/entity/profile/profile.dart';
 import '../../../../api/enums/role.dart';
 import '../../../entity/status.dart';
 import '../../dialogs/delete_dialog.dart';
+import '../../error_panel.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import '../../extensions/snackbar.dart';
@@ -35,7 +36,10 @@ class ProfileEditorPage extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return BlocProvider(
-      create: (final context) => ProfileEditorBloc(uid: uid, originalProfile: profile),
+      create: (final context) => ProfileEditorBloc(
+        uid: uid,
+        originalProfile: profile,
+      ),
       child: const TaskEditorView(isNew: false),
     );
   }
@@ -58,20 +62,35 @@ class TaskEditorView extends StatelessWidget {
         bloc = newBloc;
         isInitialized = true;
       }
-      return bloc.state.runtimeType;
+      return switch (bloc.state) {
+        ProfileEditorStateEdit(
+          :final loadingState
+        ) =>
+          loadingState.runtimeType,
+        _ => null,
+      };
     });
 
     return MouseNavigator(
       child: BlocListener<ProfileEditorBloc, ProfileEditorState>(
         listener: (final context, final state) async {
+          switch (state.uploadState) {
+            case OperationStatusCompleted():
+              Navigator.pop(context);
+            case OperationStatusError(
+                :final error
+              ):
+              showSnackbar(text: error, context: context);
+            default:
+          }
           switch (state) {
-            case ProfileEditorStateCreate(
-                    :final uploadState,
-                  ) ||
-                  ProfileEditorStateEdit(
-                    :final uploadState,
-                  ):
-              switch (uploadState) {
+            case ProfileEditorStateEdit(
+                :final deleteState
+              ):
+              switch (deleteState) {
+                case OperationStatusInProgress():
+                  final isDeleted = await showDeleteDialog(itemName: 'çalışanı', context: context);
+                  bloc.add(ProfileEditorEventDeleteDialogClosed(isDeleted: isDeleted));
                 case OperationStatusCompleted():
                   Navigator.pop(context);
                 case OperationStatusError(
@@ -80,29 +99,6 @@ class TaskEditorView extends StatelessWidget {
                   showSnackbar(text: error, context: context);
                 default:
               }
-              switch (state) {
-                case ProfileEditorStateEdit(
-                    :final deleteState
-                  ):
-                  switch (deleteState) {
-                    case OperationStatusInProgress():
-                      final isDeleted = await showDeleteDialog(itemName: 'çalışanı', context: context);
-                      bloc.add(ProfileEditorEventDeleteDialogClosed(isDeleted: isDeleted));
-                    case OperationStatusCompleted():
-                      Navigator.pop(context);
-                    case OperationStatusError(
-                        :final error
-                      ):
-                      showSnackbar(text: error, context: context);
-                    default:
-                  }
-                default:
-              }
-            case ProfileEditorStateError(
-                :final error
-              ):
-              showSnackbar(text: error, context: context);
-              Navigator.pop(context);
             default:
           }
         },
@@ -113,8 +109,30 @@ class TaskEditorView extends StatelessWidget {
               if (!isNew) const _DeleteButton(),
             ],
           ),
-          body: bloc.state is ProfileEditorStateLoading ? const Center(child: CircularProgressIndicator()) : _Body(isNew: isNew),
-          bottomNavigationBar: bloc.state is! ProfileEditorStateLoading ? const _SaveButton() : null,
+          body: switch (bloc.state) {
+            ProfileEditorStateEdit(
+              :final loadingState,
+            ) =>
+              switch (loadingState) {
+                StatusLoading() => const Center(child: CircularProgressIndicator()),
+                StatusError(
+                  :final error
+                ) =>
+                  ErrorPanel(
+                    error: error,
+                    onRefresh: () => bloc.add(const ProfileEditorEventLoadRequested()),
+                  ),
+                StatusCompleted() => _Body(isNew: isNew),
+              },
+            _ => _Body(isNew: isNew),
+          },
+          bottomNavigationBar: switch (bloc.state) {
+            ProfileEditorStateEdit(
+              loadingState: StatusCompleted(),
+            ) =>
+              const _SaveButton(),
+            _ => null,
+          },
         ),
       ),
     );

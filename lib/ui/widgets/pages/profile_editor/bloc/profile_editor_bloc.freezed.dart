@@ -63,7 +63,7 @@ class __$$ProfileEditorEventLoadRequestedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ProfileEditorEventLoadRequestedImpl
-    implements _ProfileEditorEventLoadRequested {
+    implements ProfileEditorEventLoadRequested {
   const _$ProfileEditorEventLoadRequestedImpl();
 
   @override
@@ -82,8 +82,8 @@ class _$ProfileEditorEventLoadRequestedImpl
   int get hashCode => runtimeType.hashCode;
 }
 
-abstract class _ProfileEditorEventLoadRequested implements ProfileEditorEvent {
-  const factory _ProfileEditorEventLoadRequested() =
+abstract class ProfileEditorEventLoadRequested implements ProfileEditorEvent {
+  const factory ProfileEditorEventLoadRequested() =
       _$ProfileEditorEventLoadRequestedImpl;
 }
 
@@ -673,13 +673,34 @@ abstract class ProfileEditorEventDeleteDialogClosed
 }
 
 /// @nodoc
-mixin _$ProfileEditorState {}
+mixin _$ProfileEditorState {
+  String get name => throw _privateConstructorUsedError;
+  String get login => throw _privateConstructorUsedError;
+  Role get role => throw _privateConstructorUsedError;
+  String? get nameError => throw _privateConstructorUsedError;
+  OperationStatus get uploadState => throw _privateConstructorUsedError;
+
+  /// Create a copy of ProfileEditorState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ProfileEditorStateCopyWith<ProfileEditorState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
 
 /// @nodoc
 abstract class $ProfileEditorStateCopyWith<$Res> {
   factory $ProfileEditorStateCopyWith(
           ProfileEditorState value, $Res Function(ProfileEditorState) then) =
       _$ProfileEditorStateCopyWithImpl<$Res, ProfileEditorState>;
+  @useResult
+  $Res call(
+      {String name,
+      String login,
+      Role role,
+      String? nameError,
+      OperationStatus uploadState});
+
+  $OperationStatusCopyWith<$Res> get uploadState;
 }
 
 /// @nodoc
@@ -694,17 +715,62 @@ class _$ProfileEditorStateCopyWithImpl<$Res, $Val extends ProfileEditorState>
 
   /// Create a copy of ProfileEditorState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = null,
+    Object? login = null,
+    Object? role = null,
+    Object? nameError = freezed,
+    Object? uploadState = null,
+  }) {
+    return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      login: null == login
+          ? _value.login
+          : login // ignore: cast_nullable_to_non_nullable
+              as String,
+      role: null == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as Role,
+      nameError: freezed == nameError
+          ? _value.nameError
+          : nameError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uploadState: null == uploadState
+          ? _value.uploadState
+          : uploadState // ignore: cast_nullable_to_non_nullable
+              as OperationStatus,
+    ) as $Val);
+  }
+
+  /// Create a copy of ProfileEditorState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $OperationStatusCopyWith<$Res> get uploadState {
+    return $OperationStatusCopyWith<$Res>(_value.uploadState, (value) {
+      return _then(_value.copyWith(uploadState: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$ProfileEditorStateEditImplCopyWith<$Res> {
+abstract class _$$ProfileEditorStateEditImplCopyWith<$Res>
+    implements $ProfileEditorStateCopyWith<$Res> {
   factory _$$ProfileEditorStateEditImplCopyWith(
           _$ProfileEditorStateEditImpl value,
           $Res Function(_$ProfileEditorStateEditImpl) then) =
       __$$ProfileEditorStateEditImplCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call(
       {String uid,
+      Status loadingState,
       String name,
       String login,
       Role role,
@@ -712,6 +778,8 @@ abstract class _$$ProfileEditorStateEditImplCopyWith<$Res> {
       OperationStatus uploadState,
       OperationStatus deleteState});
 
+  $StatusCopyWith<$Res> get loadingState;
+  @override
   $OperationStatusCopyWith<$Res> get uploadState;
   $OperationStatusCopyWith<$Res> get deleteState;
 }
@@ -731,6 +799,7 @@ class __$$ProfileEditorStateEditImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? uid = null,
+    Object? loadingState = null,
     Object? name = null,
     Object? login = null,
     Object? role = null,
@@ -743,6 +812,10 @@ class __$$ProfileEditorStateEditImplCopyWithImpl<$Res>
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
+      loadingState: null == loadingState
+          ? _value.loadingState
+          : loadingState // ignore: cast_nullable_to_non_nullable
+              as Status,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -774,9 +847,9 @@ class __$$ProfileEditorStateEditImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $OperationStatusCopyWith<$Res> get uploadState {
-    return $OperationStatusCopyWith<$Res>(_value.uploadState, (value) {
-      return _then(_value.copyWith(uploadState: value));
+  $StatusCopyWith<$Res> get loadingState {
+    return $StatusCopyWith<$Res>(_value.loadingState, (value) {
+      return _then(_value.copyWith(loadingState: value));
     });
   }
 
@@ -796,6 +869,7 @@ class __$$ProfileEditorStateEditImplCopyWithImpl<$Res>
 class _$ProfileEditorStateEditImpl implements ProfileEditorStateEdit {
   const _$ProfileEditorStateEditImpl(
       {required this.uid,
+      required this.loadingState,
       required this.name,
       required this.login,
       required this.role,
@@ -805,6 +879,8 @@ class _$ProfileEditorStateEditImpl implements ProfileEditorStateEdit {
 
   @override
   final String uid;
+  @override
+  final Status loadingState;
   @override
   final String name;
   @override
@@ -822,7 +898,7 @@ class _$ProfileEditorStateEditImpl implements ProfileEditorStateEdit {
 
   @override
   String toString() {
-    return 'ProfileEditorState.edit(uid: $uid, name: $name, login: $login, role: $role, nameError: $nameError, uploadState: $uploadState, deleteState: $deleteState)';
+    return 'ProfileEditorState.edit(uid: $uid, loadingState: $loadingState, name: $name, login: $login, role: $role, nameError: $nameError, uploadState: $uploadState, deleteState: $deleteState)';
   }
 
   @override
@@ -831,6 +907,8 @@ class _$ProfileEditorStateEditImpl implements ProfileEditorStateEdit {
         (other.runtimeType == runtimeType &&
             other is _$ProfileEditorStateEditImpl &&
             (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.loadingState, loadingState) ||
+                other.loadingState == loadingState) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.login, login) || other.login == login) &&
             (identical(other.role, role) || other.role == role) &&
@@ -843,8 +921,8 @@ class _$ProfileEditorStateEditImpl implements ProfileEditorStateEdit {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, uid, name, login, role, nameError, uploadState, deleteState);
+  int get hashCode => Object.hash(runtimeType, uid, loadingState, name, login,
+      role, nameError, uploadState, deleteState);
 
   /// Create a copy of ProfileEditorState
   /// with the given fields replaced by the non-null parameter values.
@@ -859,6 +937,7 @@ class _$ProfileEditorStateEditImpl implements ProfileEditorStateEdit {
 abstract class ProfileEditorStateEdit implements ProfileEditorState {
   const factory ProfileEditorStateEdit(
       {required final String uid,
+      required final Status loadingState,
       required final String name,
       required final String login,
       required final Role role,
@@ -867,26 +946,35 @@ abstract class ProfileEditorStateEdit implements ProfileEditorState {
       final OperationStatus deleteState}) = _$ProfileEditorStateEditImpl;
 
   String get uid;
+  Status get loadingState;
+  @override
   String get name;
+  @override
   String get login;
+  @override
   Role get role;
+  @override
   String? get nameError;
+  @override
   OperationStatus get uploadState;
   OperationStatus get deleteState;
 
   /// Create a copy of ProfileEditorState
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProfileEditorStateEditImplCopyWith<_$ProfileEditorStateEditImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ProfileEditorStateCreateImplCopyWith<$Res> {
+abstract class _$$ProfileEditorStateCreateImplCopyWith<$Res>
+    implements $ProfileEditorStateCopyWith<$Res> {
   factory _$$ProfileEditorStateCreateImplCopyWith(
           _$ProfileEditorStateCreateImpl value,
           $Res Function(_$ProfileEditorStateCreateImpl) then) =
       __$$ProfileEditorStateCreateImplCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call(
       {String name,
@@ -899,6 +987,7 @@ abstract class _$$ProfileEditorStateCreateImplCopyWith<$Res> {
       bool isPasswordVisible,
       OperationStatus uploadState});
 
+  @override
   $OperationStatusCopyWith<$Res> get uploadState;
 }
 
@@ -965,16 +1054,6 @@ class __$$ProfileEditorStateCreateImplCopyWithImpl<$Res>
           : uploadState // ignore: cast_nullable_to_non_nullable
               as OperationStatus,
     ));
-  }
-
-  /// Create a copy of ProfileEditorState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $OperationStatusCopyWith<$Res> get uploadState {
-    return $OperationStatusCopyWith<$Res>(_value.uploadState, (value) {
-      return _then(_value.copyWith(uploadState: value));
-    });
   }
 }
 
@@ -1079,185 +1158,25 @@ abstract class ProfileEditorStateCreate implements ProfileEditorState {
       final bool isPasswordVisible,
       final OperationStatus uploadState}) = _$ProfileEditorStateCreateImpl;
 
+  @override
   String get name;
+  @override
   String? get nameError;
+  @override
   String get login;
   String? get loginError;
+  @override
   Role get role;
   String get password;
   String? get passwordError;
   bool get isPasswordVisible;
+  @override
   OperationStatus get uploadState;
 
   /// Create a copy of ProfileEditorState
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProfileEditorStateCreateImplCopyWith<_$ProfileEditorStateCreateImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$ProfileEditorStateLoadingImplCopyWith<$Res> {
-  factory _$$ProfileEditorStateLoadingImplCopyWith(
-          _$ProfileEditorStateLoadingImpl value,
-          $Res Function(_$ProfileEditorStateLoadingImpl) then) =
-      __$$ProfileEditorStateLoadingImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String uid});
-}
-
-/// @nodoc
-class __$$ProfileEditorStateLoadingImplCopyWithImpl<$Res>
-    extends _$ProfileEditorStateCopyWithImpl<$Res,
-        _$ProfileEditorStateLoadingImpl>
-    implements _$$ProfileEditorStateLoadingImplCopyWith<$Res> {
-  __$$ProfileEditorStateLoadingImplCopyWithImpl(
-      _$ProfileEditorStateLoadingImpl _value,
-      $Res Function(_$ProfileEditorStateLoadingImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ProfileEditorState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? uid = null,
-  }) {
-    return _then(_$ProfileEditorStateLoadingImpl(
-      uid: null == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$ProfileEditorStateLoadingImpl implements ProfileEditorStateLoading {
-  const _$ProfileEditorStateLoadingImpl({required this.uid});
-
-  @override
-  final String uid;
-
-  @override
-  String toString() {
-    return 'ProfileEditorState.loading(uid: $uid)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ProfileEditorStateLoadingImpl &&
-            (identical(other.uid, uid) || other.uid == uid));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, uid);
-
-  /// Create a copy of ProfileEditorState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ProfileEditorStateLoadingImplCopyWith<_$ProfileEditorStateLoadingImpl>
-      get copyWith => __$$ProfileEditorStateLoadingImplCopyWithImpl<
-          _$ProfileEditorStateLoadingImpl>(this, _$identity);
-}
-
-abstract class ProfileEditorStateLoading implements ProfileEditorState {
-  const factory ProfileEditorStateLoading({required final String uid}) =
-      _$ProfileEditorStateLoadingImpl;
-
-  String get uid;
-
-  /// Create a copy of ProfileEditorState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProfileEditorStateLoadingImplCopyWith<_$ProfileEditorStateLoadingImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$ProfileEditorStateErrorImplCopyWith<$Res> {
-  factory _$$ProfileEditorStateErrorImplCopyWith(
-          _$ProfileEditorStateErrorImpl value,
-          $Res Function(_$ProfileEditorStateErrorImpl) then) =
-      __$$ProfileEditorStateErrorImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String error});
-}
-
-/// @nodoc
-class __$$ProfileEditorStateErrorImplCopyWithImpl<$Res>
-    extends _$ProfileEditorStateCopyWithImpl<$Res,
-        _$ProfileEditorStateErrorImpl>
-    implements _$$ProfileEditorStateErrorImplCopyWith<$Res> {
-  __$$ProfileEditorStateErrorImplCopyWithImpl(
-      _$ProfileEditorStateErrorImpl _value,
-      $Res Function(_$ProfileEditorStateErrorImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ProfileEditorState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? error = null,
-  }) {
-    return _then(_$ProfileEditorStateErrorImpl(
-      error: null == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$ProfileEditorStateErrorImpl implements ProfileEditorStateError {
-  const _$ProfileEditorStateErrorImpl({required this.error});
-
-  @override
-  final String error;
-
-  @override
-  String toString() {
-    return 'ProfileEditorState.error(error: $error)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ProfileEditorStateErrorImpl &&
-            (identical(other.error, error) || other.error == error));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, error);
-
-  /// Create a copy of ProfileEditorState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ProfileEditorStateErrorImplCopyWith<_$ProfileEditorStateErrorImpl>
-      get copyWith => __$$ProfileEditorStateErrorImplCopyWithImpl<
-          _$ProfileEditorStateErrorImpl>(this, _$identity);
-}
-
-abstract class ProfileEditorStateError implements ProfileEditorState {
-  const factory ProfileEditorStateError({required final String error}) =
-      _$ProfileEditorStateErrorImpl;
-
-  String get error;
-
-  /// Create a copy of ProfileEditorState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProfileEditorStateErrorImplCopyWith<_$ProfileEditorStateErrorImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
