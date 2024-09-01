@@ -1497,8 +1497,8 @@ class _$PlayerTextStateDataImpl
     implements PlayerTextStateData {
   const _$PlayerTextStateDataImpl(
       {this.currentTextLine = 0,
-      final List<TextSpan> textSpans = const <TextSpan>[],
-      final List<TextLine> textLines = const <TextLine>[]})
+      final List<TextSpan> textSpans = const [],
+      final List<TextLine> textLines = const []})
       : _textSpans = textSpans,
         _textLines = textLines;
 

@@ -24,8 +24,8 @@ class PlayerAudioState with _$PlayerAudioState {
 sealed class PlayerTextState with _$PlayerTextState {
   const factory PlayerTextState.data({
     @Default(0) final int currentTextLine,
-    @Default(<TextSpan>[]) final List<TextSpan> textSpans,
-    @Default(<TextLine>[]) final List<TextLine> textLines,
+    @Default([]) final List<TextSpan> textSpans,
+    @Default([]) final List<TextLine> textLines,
   }) = PlayerTextStateData;
 
   const factory PlayerTextState.processing() = PlayerTextStateProcessing;
