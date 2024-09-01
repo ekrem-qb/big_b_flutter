@@ -114,6 +114,7 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
     emit(
       state.copyWith(
         text: event.text,
+        textError: null,
       ),
     );
   }
