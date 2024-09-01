@@ -218,27 +218,9 @@ class _Name extends StatelessWidget {
         bloc = newBloc;
         isInitialized = true;
       }
-      return switch (newBloc.state) {
-        ProfileEditorStateCreate(
-          :final nameError
-        ) ||
-        ProfileEditorStateEdit(
-          :final nameError
-        ) =>
-          nameError,
-        _ => '',
-      };
+      return newBloc.state.nameError;
     });
-    final name = switch (bloc.state) {
-      ProfileEditorStateCreate(
-        :final name
-      ) ||
-      ProfileEditorStateEdit(
-        :final name
-      ) =>
-        name,
-      _ => '',
-    };
+    final name = bloc.state.name;
 
     return TextFormField(
       decoration: InputDecoration(
@@ -264,17 +246,7 @@ class _LoginState extends State<_Login> {
 
   @override
   void initState() {
-    final state = context.read<ProfileEditorBloc>().state;
-    _controller.text = switch (state) {
-      ProfileEditorStateCreate(
-        :final login
-      ) ||
-      ProfileEditorStateEdit(
-        :final login
-      ) =>
-        login,
-      _ => '',
-    };
+    _controller.text = context.read<ProfileEditorBloc>().state.login;
     super.initState();
   }
 
@@ -430,16 +402,7 @@ class _Role extends StatelessWidget {
         bloc = newBloc;
         isInitialized = true;
       }
-      return switch (bloc.state) {
-        ProfileEditorStateCreate(
-          :final role
-        ) ||
-        ProfileEditorStateEdit(
-          :final role
-        ) =>
-          role,
-        _ => Role.employee,
-      };
+      return bloc.state.role;
     });
 
     return Expanded(
@@ -535,16 +498,7 @@ class _SaveButton extends StatelessWidget {
         bloc = newBloc;
         isInitialized = true;
       }
-      return switch (bloc.state) {
-        ProfileEditorStateCreate(
-          :final uploadState
-        ) ||
-        ProfileEditorStateEdit(
-          :final uploadState
-        ) =>
-          uploadState,
-        _ => const OperationStatusInitial(),
-      };
+      return bloc.state.uploadState;
     });
 
     return SaveButton(
