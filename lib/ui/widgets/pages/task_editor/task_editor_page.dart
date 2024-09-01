@@ -252,12 +252,25 @@ class _Text extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final text = context.select((final TaskEditorBloc bloc) => bloc.state.text);
+    late final TaskEditorBloc bloc;
+    var isInitialized = false;
+    final error = context.select((final TaskEditorBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return newBloc.state.textError;
+    });
+    final text = bloc.state.text;
 
     return TextFormField(
+      decoration: InputDecoration(
+        errorText: error,
+      ),
       initialValue: text,
       minLines: 3,
       maxLines: 8,
+      onChanged: (final value) => bloc.add(TaskEditorEventTextChanged(value)),
     );
   }
 }
