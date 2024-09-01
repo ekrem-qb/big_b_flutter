@@ -977,7 +977,8 @@ abstract class PlayerEventStartedSeeking implements PlayerEvent {
 mixin _$PlayerState {
   int get id => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
-  PlayerAudioState get audioState => throw _privateConstructorUsedError;
+  StatusOf<PlayerAudioState> get audioState =>
+      throw _privateConstructorUsedError;
   PlayerTextState get textState => throw _privateConstructorUsedError;
 
   /// Create a copy of PlayerState
@@ -996,10 +997,10 @@ abstract class $PlayerStateCopyWith<$Res> {
   $Res call(
       {int id,
       String? error,
-      PlayerAudioState audioState,
+      StatusOf<PlayerAudioState> audioState,
       PlayerTextState textState});
 
-  $PlayerAudioStateCopyWith<$Res> get audioState;
+  $StatusOfCopyWith<PlayerAudioState, $Res> get audioState;
   $PlayerTextStateCopyWith<$Res> get textState;
 }
 
@@ -1035,7 +1036,7 @@ class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
       audioState: null == audioState
           ? _value.audioState
           : audioState // ignore: cast_nullable_to_non_nullable
-              as PlayerAudioState,
+              as StatusOf<PlayerAudioState>,
       textState: null == textState
           ? _value.textState
           : textState // ignore: cast_nullable_to_non_nullable
@@ -1047,8 +1048,9 @@ class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $PlayerAudioStateCopyWith<$Res> get audioState {
-    return $PlayerAudioStateCopyWith<$Res>(_value.audioState, (value) {
+  $StatusOfCopyWith<PlayerAudioState, $Res> get audioState {
+    return $StatusOfCopyWith<PlayerAudioState, $Res>(_value.audioState,
+        (value) {
       return _then(_value.copyWith(audioState: value) as $Val);
     });
   }
@@ -1075,11 +1077,11 @@ abstract class _$$PlayerStateImplCopyWith<$Res>
   $Res call(
       {int id,
       String? error,
-      PlayerAudioState audioState,
+      StatusOf<PlayerAudioState> audioState,
       PlayerTextState textState});
 
   @override
-  $PlayerAudioStateCopyWith<$Res> get audioState;
+  $StatusOfCopyWith<PlayerAudioState, $Res> get audioState;
   @override
   $PlayerTextStateCopyWith<$Res> get textState;
 }
@@ -1114,7 +1116,7 @@ class __$$PlayerStateImplCopyWithImpl<$Res>
       audioState: null == audioState
           ? _value.audioState
           : audioState // ignore: cast_nullable_to_non_nullable
-              as PlayerAudioState,
+              as StatusOf<PlayerAudioState>,
       textState: null == textState
           ? _value.textState
           : textState // ignore: cast_nullable_to_non_nullable
@@ -1129,7 +1131,7 @@ class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
   const _$PlayerStateImpl(
       {required this.id,
       this.error,
-      this.audioState = const PlayerAudioStateLoading(),
+      this.audioState = const StatusOfLoading(),
       this.textState = const PlayerTextStateLoading()});
 
   @override
@@ -1138,7 +1140,7 @@ class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
   final String? error;
   @override
   @JsonKey()
-  final PlayerAudioState audioState;
+  final StatusOf<PlayerAudioState> audioState;
   @override
   @JsonKey()
   final PlayerTextState textState;
@@ -1189,7 +1191,7 @@ abstract class _PlayerState implements PlayerState {
   const factory _PlayerState(
       {required final int id,
       final String? error,
-      final PlayerAudioState audioState,
+      final StatusOf<PlayerAudioState> audioState,
       final PlayerTextState textState}) = _$PlayerStateImpl;
 
   @override
@@ -1197,7 +1199,7 @@ abstract class _PlayerState implements PlayerState {
   @override
   String? get error;
   @override
-  PlayerAudioState get audioState;
+  StatusOf<PlayerAudioState> get audioState;
   @override
   PlayerTextState get textState;
 
@@ -1210,13 +1212,27 @@ abstract class _PlayerState implements PlayerState {
 }
 
 /// @nodoc
-mixin _$PlayerAudioState {}
+mixin _$PlayerAudioState {
+  Duration get position => throw _privateConstructorUsedError;
+  Duration get duration => throw _privateConstructorUsedError;
+  bool get isPlaying => throw _privateConstructorUsedError;
+  bool get isSeeking => throw _privateConstructorUsedError;
+
+  /// Create a copy of PlayerAudioState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $PlayerAudioStateCopyWith<PlayerAudioState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
 
 /// @nodoc
 abstract class $PlayerAudioStateCopyWith<$Res> {
   factory $PlayerAudioStateCopyWith(
           PlayerAudioState value, $Res Function(PlayerAudioState) then) =
       _$PlayerAudioStateCopyWithImpl<$Res, PlayerAudioState>;
+  @useResult
+  $Res call(
+      {Duration position, Duration duration, bool isPlaying, bool isSeeking});
 }
 
 /// @nodoc
@@ -1231,24 +1247,53 @@ class _$PlayerAudioStateCopyWithImpl<$Res, $Val extends PlayerAudioState>
 
   /// Create a copy of PlayerAudioState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? position = null,
+    Object? duration = null,
+    Object? isPlaying = null,
+    Object? isSeeking = null,
+  }) {
+    return _then(_value.copyWith(
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      duration: null == duration
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      isPlaying: null == isPlaying
+          ? _value.isPlaying
+          : isPlaying // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSeeking: null == isSeeking
+          ? _value.isSeeking
+          : isSeeking // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$PlayerAudioStateDataImplCopyWith<$Res> {
-  factory _$$PlayerAudioStateDataImplCopyWith(_$PlayerAudioStateDataImpl value,
-          $Res Function(_$PlayerAudioStateDataImpl) then) =
-      __$$PlayerAudioStateDataImplCopyWithImpl<$Res>;
+abstract class _$$PlayerAudioStateImplCopyWith<$Res>
+    implements $PlayerAudioStateCopyWith<$Res> {
+  factory _$$PlayerAudioStateImplCopyWith(_$PlayerAudioStateImpl value,
+          $Res Function(_$PlayerAudioStateImpl) then) =
+      __$$PlayerAudioStateImplCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call(
       {Duration position, Duration duration, bool isPlaying, bool isSeeking});
 }
 
 /// @nodoc
-class __$$PlayerAudioStateDataImplCopyWithImpl<$Res>
-    extends _$PlayerAudioStateCopyWithImpl<$Res, _$PlayerAudioStateDataImpl>
-    implements _$$PlayerAudioStateDataImplCopyWith<$Res> {
-  __$$PlayerAudioStateDataImplCopyWithImpl(_$PlayerAudioStateDataImpl _value,
-      $Res Function(_$PlayerAudioStateDataImpl) _then)
+class __$$PlayerAudioStateImplCopyWithImpl<$Res>
+    extends _$PlayerAudioStateCopyWithImpl<$Res, _$PlayerAudioStateImpl>
+    implements _$$PlayerAudioStateImplCopyWith<$Res> {
+  __$$PlayerAudioStateImplCopyWithImpl(_$PlayerAudioStateImpl _value,
+      $Res Function(_$PlayerAudioStateImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of PlayerAudioState
@@ -1261,7 +1306,7 @@ class __$$PlayerAudioStateDataImplCopyWithImpl<$Res>
     Object? isPlaying = null,
     Object? isSeeking = null,
   }) {
-    return _then(_$PlayerAudioStateDataImpl(
+    return _then(_$PlayerAudioStateImpl(
       position: null == position
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
@@ -1284,10 +1329,10 @@ class __$$PlayerAudioStateDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PlayerAudioStateDataImpl
+class _$PlayerAudioStateImpl
     with DiagnosticableTreeMixin
-    implements PlayerAudioStateData {
-  const _$PlayerAudioStateDataImpl(
+    implements _PlayerAudioState {
+  const _$PlayerAudioStateImpl(
       {this.position = Duration.zero,
       this.duration = const Duration(seconds: 1),
       this.isPlaying = false,
@@ -1308,14 +1353,14 @@ class _$PlayerAudioStateDataImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PlayerAudioState.data(position: $position, duration: $duration, isPlaying: $isPlaying, isSeeking: $isSeeking)';
+    return 'PlayerAudioState(position: $position, duration: $duration, isPlaying: $isPlaying, isSeeking: $isSeeking)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'PlayerAudioState.data'))
+      ..add(DiagnosticsProperty('type', 'PlayerAudioState'))
       ..add(DiagnosticsProperty('position', position))
       ..add(DiagnosticsProperty('duration', duration))
       ..add(DiagnosticsProperty('isPlaying', isPlaying))
@@ -1326,7 +1371,7 @@ class _$PlayerAudioStateDataImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PlayerAudioStateDataImpl &&
+            other is _$PlayerAudioStateImpl &&
             (identical(other.position, position) ||
                 other.position == position) &&
             (identical(other.duration, duration) ||
@@ -1346,174 +1391,33 @@ class _$PlayerAudioStateDataImpl
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$PlayerAudioStateDataImplCopyWith<_$PlayerAudioStateDataImpl>
-      get copyWith =>
-          __$$PlayerAudioStateDataImplCopyWithImpl<_$PlayerAudioStateDataImpl>(
-              this, _$identity);
+  _$$PlayerAudioStateImplCopyWith<_$PlayerAudioStateImpl> get copyWith =>
+      __$$PlayerAudioStateImplCopyWithImpl<_$PlayerAudioStateImpl>(
+          this, _$identity);
 }
 
-abstract class PlayerAudioStateData implements PlayerAudioState {
-  const factory PlayerAudioStateData(
+abstract class _PlayerAudioState implements PlayerAudioState {
+  const factory _PlayerAudioState(
       {final Duration position,
       final Duration duration,
       final bool isPlaying,
-      final bool isSeeking}) = _$PlayerAudioStateDataImpl;
+      final bool isSeeking}) = _$PlayerAudioStateImpl;
 
+  @override
   Duration get position;
+  @override
   Duration get duration;
+  @override
   bool get isPlaying;
+  @override
   bool get isSeeking;
 
   /// Create a copy of PlayerAudioState
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PlayerAudioStateDataImplCopyWith<_$PlayerAudioStateDataImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$PlayerAudioStateLoadingImplCopyWith<$Res> {
-  factory _$$PlayerAudioStateLoadingImplCopyWith(
-          _$PlayerAudioStateLoadingImpl value,
-          $Res Function(_$PlayerAudioStateLoadingImpl) then) =
-      __$$PlayerAudioStateLoadingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$PlayerAudioStateLoadingImplCopyWithImpl<$Res>
-    extends _$PlayerAudioStateCopyWithImpl<$Res, _$PlayerAudioStateLoadingImpl>
-    implements _$$PlayerAudioStateLoadingImplCopyWith<$Res> {
-  __$$PlayerAudioStateLoadingImplCopyWithImpl(
-      _$PlayerAudioStateLoadingImpl _value,
-      $Res Function(_$PlayerAudioStateLoadingImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of PlayerAudioState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$PlayerAudioStateLoadingImpl
-    with DiagnosticableTreeMixin
-    implements PlayerAudioStateLoading {
-  const _$PlayerAudioStateLoadingImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PlayerAudioState.loading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'PlayerAudioState.loading'));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PlayerAudioStateLoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-}
-
-abstract class PlayerAudioStateLoading implements PlayerAudioState {
-  const factory PlayerAudioStateLoading() = _$PlayerAudioStateLoadingImpl;
-}
-
-/// @nodoc
-abstract class _$$PlayerAudioStateErrorImplCopyWith<$Res> {
-  factory _$$PlayerAudioStateErrorImplCopyWith(
-          _$PlayerAudioStateErrorImpl value,
-          $Res Function(_$PlayerAudioStateErrorImpl) then) =
-      __$$PlayerAudioStateErrorImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String error});
-}
-
-/// @nodoc
-class __$$PlayerAudioStateErrorImplCopyWithImpl<$Res>
-    extends _$PlayerAudioStateCopyWithImpl<$Res, _$PlayerAudioStateErrorImpl>
-    implements _$$PlayerAudioStateErrorImplCopyWith<$Res> {
-  __$$PlayerAudioStateErrorImplCopyWithImpl(_$PlayerAudioStateErrorImpl _value,
-      $Res Function(_$PlayerAudioStateErrorImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of PlayerAudioState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? error = null,
-  }) {
-    return _then(_$PlayerAudioStateErrorImpl(
-      error: null == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$PlayerAudioStateErrorImpl
-    with DiagnosticableTreeMixin
-    implements PlayerAudioStateError {
-  const _$PlayerAudioStateErrorImpl({required this.error});
-
-  @override
-  final String error;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PlayerAudioState.error(error: $error)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'PlayerAudioState.error'))
-      ..add(DiagnosticsProperty('error', error));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PlayerAudioStateErrorImpl &&
-            (identical(other.error, error) || other.error == error));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, error);
-
-  /// Create a copy of PlayerAudioState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$PlayerAudioStateErrorImplCopyWith<_$PlayerAudioStateErrorImpl>
-      get copyWith => __$$PlayerAudioStateErrorImplCopyWithImpl<
-          _$PlayerAudioStateErrorImpl>(this, _$identity);
-}
-
-abstract class PlayerAudioStateError implements PlayerAudioState {
-  const factory PlayerAudioStateError({required final String error}) =
-      _$PlayerAudioStateErrorImpl;
-
-  String get error;
-
-  /// Create a copy of PlayerAudioState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PlayerAudioStateErrorImplCopyWith<_$PlayerAudioStateErrorImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$PlayerAudioStateImplCopyWith<_$PlayerAudioStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../../api/entity/recording/recording.dart';
+import '../../../entity/status.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/separator.dart';
 import '../../extensions/smooth_mouse_scroll/positioned_smooth_mouse_scroll.dart';
@@ -49,9 +50,11 @@ class PlayerView extends StatelessWidget {
           Navigator.of(context).pop();
           return;
         }
-        final audioState = state.audioState;
-        if (audioState is PlayerAudioStateError) {
-          showSnackbar(text: audioState.error, context: context);
+        if (state.audioState
+            case StatusOfError(
+              :final error,
+            )) {
+          showSnackbar(text: error, context: context);
           return;
         }
         final textState = state.textState;
@@ -311,8 +314,10 @@ class _CurrentTime extends StatelessWidget {
         isInitialized = true;
       }
       return switch (bloc.state.audioState) {
-        PlayerAudioStateData(
-          :final position,
+        StatusOfData<PlayerAudioState>(
+          data: PlayerAudioState(
+            :final position,
+          ),
         ) =>
           position,
         _ => null,
@@ -336,8 +341,10 @@ class _TotalTime extends StatelessWidget {
         isInitialized = true;
       }
       return switch (bloc.state.audioState) {
-        PlayerAudioStateData(
-          :final duration,
+        StatusOfData<PlayerAudioState>(
+          data: PlayerAudioState(
+            :final duration,
+          ),
         ) =>
           duration,
         _ => null,
@@ -362,8 +369,10 @@ class _Slider extends StatelessWidget {
           isInitialized = true;
         }
         return switch (bloc.state.audioState) {
-          PlayerAudioStateData(
-            :final position
+          StatusOfData<PlayerAudioState>(
+            data: PlayerAudioState(
+              :final position,
+            )
           ) =>
             position,
           _ => null,
@@ -380,9 +389,11 @@ class _Slider extends StatelessWidget {
     return MediaQuery(
       data: const MediaQueryData(navigationMode: NavigationMode.directional),
       child: switch (bloc.state.audioState) {
-        PlayerAudioStateData(
-          :final position,
-          :final duration,
+        StatusOfData<PlayerAudioState>(
+          data: PlayerAudioState(
+            :final position,
+            :final duration,
+          ),
         ) =>
           Slider(
             max: duration.inMilliseconds.toDouble(),
@@ -415,13 +426,13 @@ class _PlayButton extends StatelessWidget {
       return bloc.state.audioState.runtimeType;
     });
 
-    return bloc.state.audioState is! PlayerAudioStateLoading
+    return bloc.state.audioState is! StatusOfLoading
         ? IconButton.filled(
             visualDensity: const VisualDensity(
               horizontal: 2,
               vertical: 2,
             ),
-            onPressed: bloc.state.audioState is PlayerAudioStateData ? () => bloc.add(const PlayerEventPlayPauseButtonPressed()) : null,
+            onPressed: bloc.state.audioState is StatusOfData<PlayerAudioState> ? () => bloc.add(const PlayerEventPlayPauseButtonPressed()) : null,
             icon: const _PlayButtonIcon(),
           )
         : const IconButton.filled(
@@ -451,8 +462,10 @@ class _PlayButtonIcon extends StatelessWidget {
         isInitialized = true;
       }
       return switch (bloc.state.audioState) {
-        PlayerAudioStateData(
-          :final isPlaying,
+        StatusOfData<PlayerAudioState>(
+          data: PlayerAudioState(
+            :final isPlaying,
+          ),
         ) =>
           isPlaying,
         _ => false,
