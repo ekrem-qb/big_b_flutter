@@ -83,10 +83,10 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
     final textState = state.textState;
 
-    if (textState is! PlayerTextStateData) return;
+    if (textState is! StatusOfData<PlayerTextStateData>) return;
 
-    for (var i = textState.textLines.length - 1; i >= 0; i--) {
-      if (newPosition.inMilliseconds >= textState.textLines[i].time.inMilliseconds) {
+    for (var i = textState.data.textLines.length - 1; i >= 0; i--) {
+      if (newPosition.inMilliseconds >= textState.data.textLines[i].time.inMilliseconds) {
         add(PlayerEventJumpToLineRequested(i, seekPlayer: false));
         return;
       }
@@ -132,14 +132,14 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   Future<void> _loadText(final _PlayerEventRecordingLoaded event, final Emitter<PlayerState> emit) async {
     try {
       if (!event.recording.hasLines) {
-        emit(state.copyWith(textState: const PlayerTextStateProcessing()));
+        emit(state.copyWith(textState: const StatusOfData(PlayerTextStateProcessing())));
         return;
       }
 
       final textLines = await db.from(TextLine.tableName).select(TextLine.fieldNames).eq('record', state.id).order($TextLineImplJsonKeys.time, ascending: true).withConverter(TextLine.converter);
 
       if (textLines == null || textLines.isEmpty) {
-        emit(state.copyWith(textState: const PlayerTextStateProcessing()));
+        emit(state.copyWith(textState: const StatusOfData(PlayerTextStateProcessing())));
         return;
       }
 
@@ -147,14 +147,16 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
       emit(
         state.copyWith(
-          textState: PlayerTextStateData(
-            textSpans: textSpans,
-            textLines: textLines,
+          textState: StatusOfData(
+            PlayerTextStateData(
+              textSpans: textSpans,
+              textLines: textLines,
+            ),
           ),
         ),
       );
     } on Exception catch (e) {
-      emit(state.copyWith(textState: PlayerTextStateError(error: e.toString())));
+      emit(state.copyWith(textState: StatusOfError(e.toString())));
     }
   }
 
@@ -224,16 +226,16 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
   Future<void> _onJumpedToLine(final PlayerEventJumpToLineRequested event, final Emitter<PlayerState> emit) async {
     final textState = state.textState;
-    if (textState is! PlayerTextStateData) return;
+    if (textState is! StatusOfData<PlayerTextStateData>) return;
 
-    if (textState.currentTextLine == event.index) return;
+    if (textState.data.currentTextLine == event.index) return;
     if (event.index < 0) return;
-    if (event.index >= textState.textLines.length) return;
+    if (event.index >= textState.data.textLines.length) return;
 
-    emit(state.copyWith(textState: textState.copyWith(currentTextLine: event.index)));
+    emit(state.copyWith(textState: StatusOfData(textState.data.copyWith(currentTextLine: event.index))));
 
     if (event.seekPlayer) {
-      add(PlayerEventSeekRequested(textState.textLines[event.index].time + const Duration(milliseconds: 1)));
+      add(PlayerEventSeekRequested(textState.data.textLines[event.index].time + const Duration(milliseconds: 1)));
     }
 
     if (scrollController.isAttached) {

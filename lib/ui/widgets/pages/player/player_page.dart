@@ -58,8 +58,11 @@ class PlayerView extends StatelessWidget {
           return;
         }
         final textState = state.textState;
-        if (textState is PlayerTextStateError) {
-          showSnackbar(text: textState.error, context: context);
+        if (textState
+            case StatusOfError(
+              :final error,
+            )) {
+          showSnackbar(text: error, context: context);
           return;
         }
       },
@@ -119,6 +122,48 @@ class _Player extends StatelessWidget {
 class _Text extends StatelessWidget {
   const _Text();
 
+  @override
+  Widget build(final BuildContext context) {
+    late final PlayerBloc bloc;
+    var isInitialized = false;
+    context.select((final PlayerBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return bloc.state.textState.runtimeType;
+    });
+
+    return Expanded(
+      child: switch (bloc.state.textState) {
+        StatusOfLoading() => const Center(
+            child: CircularProgressIndicator(),
+          ),
+        StatusOfError() => const Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.error_outline_rounded,
+                  size: 64,
+                ),
+                SizedBox(height: 36),
+                Text(
+                  'Hata oluştu',
+                  style: TextStyle(fontSize: 24),
+                ),
+              ],
+            ),
+          ),
+        StatusOfData() => const _LoadedText(),
+      },
+    );
+  }
+}
+
+class _LoadedText extends StatelessWidget {
+  const _LoadedText();
+
   Widget _item(final PlayerBloc bloc, final int index) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -165,73 +210,64 @@ class _Text extends StatelessWidget {
         bloc = newBloc;
         isInitialized = true;
       }
-      return bloc.state.textState.runtimeType;
+      return switch (bloc.state.textState) {
+        StatusOfData<PlayerTextState>(
+          :final data,
+        ) =>
+          data.runtimeType,
+        _ => null,
+      };
     });
 
-    return Expanded(
-      child: switch (bloc.state.textState) {
-        PlayerTextStateData(
-          :final textSpans,
-          :final currentTextLine,
-        ) =>
-          ShaderMask(
-            shaderCallback: _gradient.createShader,
-            child: LayoutBuilder(
-              builder: (final context, final constraints) {
-                return PositionedSmoothMouseScroll(
-                  builder: (final context, final child, final controller, final physics) {
-                    return ScrollablePositionedList.separated(
-                      itemScrollController: bloc.scrollController,
-                      scrollOffsetController: controller,
-                      initialScrollIndex: currentTextLine,
-                      physics: physics,
-                      itemCount: textSpans.length,
-                      padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.5),
-                      separatorBuilder: separatorBuilder,
-                      itemBuilder: (final context, final index) => _item(bloc, index),
-                    );
-                  },
-                );
-              },
+    return switch (bloc.state.textState) {
+      StatusOfData<PlayerTextState>(
+        :final data,
+      ) =>
+        switch (data) {
+          PlayerTextStateData(
+            :final textSpans,
+            :final currentTextLine,
+          ) =>
+            ShaderMask(
+              shaderCallback: _gradient.createShader,
+              child: LayoutBuilder(
+                builder: (final context, final constraints) {
+                  return PositionedSmoothMouseScroll(
+                    builder: (final context, final child, final controller, final physics) {
+                      return ScrollablePositionedList.separated(
+                        itemScrollController: bloc.scrollController,
+                        scrollOffsetController: controller,
+                        initialScrollIndex: currentTextLine,
+                        physics: physics,
+                        itemCount: textSpans.length,
+                        padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.5),
+                        separatorBuilder: separatorBuilder,
+                        itemBuilder: (final context, final index) => _item(bloc, index),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
-          ),
-        PlayerTextStateLoading() => const Center(
-            child: CircularProgressIndicator(),
-          ),
-        PlayerTextStateProcessing() => const Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.cloud_sync_rounded,
-                  size: 64,
-                ),
-                SizedBox(height: 36),
-                Text(
-                  'AI is processing audio in cloud',
-                  style: TextStyle(fontSize: 24),
-                ),
-              ],
+          PlayerTextStateProcessing() => const Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.cloud_sync_rounded,
+                    size: 64,
+                  ),
+                  SizedBox(height: 36),
+                  Text(
+                    'AI is processing audio in cloud',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                ],
+              ),
             ),
-          ),
-        PlayerTextStateError() => const Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.error_outline_rounded,
-                  size: 64,
-                ),
-                SizedBox(height: 36),
-                Text(
-                  'Hata oluştu',
-                  style: TextStyle(fontSize: 24),
-                ),
-              ],
-            ),
-          ),
-      },
-    );
+        },
+      _ => const SizedBox.shrink(),
+    };
   }
 }
 
@@ -260,9 +296,11 @@ class _TextLine extends StatelessWidget {
     final textStyle = Theme.of(context).textTheme.titleLarge;
 
     return switch (bloc.state.textState) {
-      PlayerTextStateData(
-        :final currentTextLine,
-        :final textSpans,
+      StatusOfData(
+        data: PlayerTextStateData(
+          :final currentTextLine,
+          :final textSpans,
+        ),
       ) =>
         Opacity(
           opacity: currentTextLine != index ? 0.5 : 1,

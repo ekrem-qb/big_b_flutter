@@ -979,7 +979,7 @@ mixin _$PlayerState {
   String? get error => throw _privateConstructorUsedError;
   StatusOf<PlayerAudioState> get audioState =>
       throw _privateConstructorUsedError;
-  PlayerTextState get textState => throw _privateConstructorUsedError;
+  StatusOf<PlayerTextState> get textState => throw _privateConstructorUsedError;
 
   /// Create a copy of PlayerState
   /// with the given fields replaced by the non-null parameter values.
@@ -998,10 +998,10 @@ abstract class $PlayerStateCopyWith<$Res> {
       {int id,
       String? error,
       StatusOf<PlayerAudioState> audioState,
-      PlayerTextState textState});
+      StatusOf<PlayerTextState> textState});
 
   $StatusOfCopyWith<PlayerAudioState, $Res> get audioState;
-  $PlayerTextStateCopyWith<$Res> get textState;
+  $StatusOfCopyWith<PlayerTextState, $Res> get textState;
 }
 
 /// @nodoc
@@ -1040,7 +1040,7 @@ class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
       textState: null == textState
           ? _value.textState
           : textState // ignore: cast_nullable_to_non_nullable
-              as PlayerTextState,
+              as StatusOf<PlayerTextState>,
     ) as $Val);
   }
 
@@ -1059,8 +1059,8 @@ class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $PlayerTextStateCopyWith<$Res> get textState {
-    return $PlayerTextStateCopyWith<$Res>(_value.textState, (value) {
+  $StatusOfCopyWith<PlayerTextState, $Res> get textState {
+    return $StatusOfCopyWith<PlayerTextState, $Res>(_value.textState, (value) {
       return _then(_value.copyWith(textState: value) as $Val);
     });
   }
@@ -1078,12 +1078,12 @@ abstract class _$$PlayerStateImplCopyWith<$Res>
       {int id,
       String? error,
       StatusOf<PlayerAudioState> audioState,
-      PlayerTextState textState});
+      StatusOf<PlayerTextState> textState});
 
   @override
   $StatusOfCopyWith<PlayerAudioState, $Res> get audioState;
   @override
-  $PlayerTextStateCopyWith<$Res> get textState;
+  $StatusOfCopyWith<PlayerTextState, $Res> get textState;
 }
 
 /// @nodoc
@@ -1120,7 +1120,7 @@ class __$$PlayerStateImplCopyWithImpl<$Res>
       textState: null == textState
           ? _value.textState
           : textState // ignore: cast_nullable_to_non_nullable
-              as PlayerTextState,
+              as StatusOf<PlayerTextState>,
     ));
   }
 }
@@ -1132,7 +1132,7 @@ class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
       {required this.id,
       this.error,
       this.audioState = const StatusOfLoading(),
-      this.textState = const PlayerTextStateLoading()});
+      this.textState = const StatusOfLoading()});
 
   @override
   final int id;
@@ -1143,7 +1143,7 @@ class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
   final StatusOf<PlayerAudioState> audioState;
   @override
   @JsonKey()
-  final PlayerTextState textState;
+  final StatusOf<PlayerTextState> textState;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -1192,7 +1192,7 @@ abstract class _PlayerState implements PlayerState {
       {required final int id,
       final String? error,
       final StatusOf<PlayerAudioState> audioState,
-      final PlayerTextState textState}) = _$PlayerStateImpl;
+      final StatusOf<PlayerTextState> textState}) = _$PlayerStateImpl;
 
   @override
   int get id;
@@ -1201,7 +1201,7 @@ abstract class _PlayerState implements PlayerState {
   @override
   StatusOf<PlayerAudioState> get audioState;
   @override
-  PlayerTextState get textState;
+  StatusOf<PlayerTextState> get textState;
 
   /// Create a copy of PlayerState
   /// with the given fields replaced by the non-null parameter values.
@@ -1586,60 +1586,6 @@ abstract class PlayerTextStateData implements PlayerTextState {
 }
 
 /// @nodoc
-abstract class _$$PlayerTextStateLoadingImplCopyWith<$Res> {
-  factory _$$PlayerTextStateLoadingImplCopyWith(
-          _$PlayerTextStateLoadingImpl value,
-          $Res Function(_$PlayerTextStateLoadingImpl) then) =
-      __$$PlayerTextStateLoadingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$PlayerTextStateLoadingImplCopyWithImpl<$Res>
-    extends _$PlayerTextStateCopyWithImpl<$Res, _$PlayerTextStateLoadingImpl>
-    implements _$$PlayerTextStateLoadingImplCopyWith<$Res> {
-  __$$PlayerTextStateLoadingImplCopyWithImpl(
-      _$PlayerTextStateLoadingImpl _value,
-      $Res Function(_$PlayerTextStateLoadingImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of PlayerTextState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$PlayerTextStateLoadingImpl
-    with DiagnosticableTreeMixin
-    implements PlayerTextStateLoading {
-  const _$PlayerTextStateLoadingImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PlayerTextState.loading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'PlayerTextState.loading'));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PlayerTextStateLoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-}
-
-abstract class PlayerTextStateLoading implements PlayerTextState {
-  const factory PlayerTextStateLoading() = _$PlayerTextStateLoadingImpl;
-}
-
-/// @nodoc
 abstract class _$$PlayerTextStateProcessingImplCopyWith<$Res> {
   factory _$$PlayerTextStateProcessingImplCopyWith(
           _$PlayerTextStateProcessingImpl value,
@@ -1691,95 +1637,4 @@ class _$PlayerTextStateProcessingImpl
 
 abstract class PlayerTextStateProcessing implements PlayerTextState {
   const factory PlayerTextStateProcessing() = _$PlayerTextStateProcessingImpl;
-}
-
-/// @nodoc
-abstract class _$$PlayerTextStateErrorImplCopyWith<$Res> {
-  factory _$$PlayerTextStateErrorImplCopyWith(_$PlayerTextStateErrorImpl value,
-          $Res Function(_$PlayerTextStateErrorImpl) then) =
-      __$$PlayerTextStateErrorImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String error});
-}
-
-/// @nodoc
-class __$$PlayerTextStateErrorImplCopyWithImpl<$Res>
-    extends _$PlayerTextStateCopyWithImpl<$Res, _$PlayerTextStateErrorImpl>
-    implements _$$PlayerTextStateErrorImplCopyWith<$Res> {
-  __$$PlayerTextStateErrorImplCopyWithImpl(_$PlayerTextStateErrorImpl _value,
-      $Res Function(_$PlayerTextStateErrorImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of PlayerTextState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? error = null,
-  }) {
-    return _then(_$PlayerTextStateErrorImpl(
-      error: null == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$PlayerTextStateErrorImpl
-    with DiagnosticableTreeMixin
-    implements PlayerTextStateError {
-  const _$PlayerTextStateErrorImpl({required this.error});
-
-  @override
-  final String error;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PlayerTextState.error(error: $error)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'PlayerTextState.error'))
-      ..add(DiagnosticsProperty('error', error));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PlayerTextStateErrorImpl &&
-            (identical(other.error, error) || other.error == error));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, error);
-
-  /// Create a copy of PlayerTextState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$PlayerTextStateErrorImplCopyWith<_$PlayerTextStateErrorImpl>
-      get copyWith =>
-          __$$PlayerTextStateErrorImplCopyWithImpl<_$PlayerTextStateErrorImpl>(
-              this, _$identity);
-}
-
-abstract class PlayerTextStateError implements PlayerTextState {
-  const factory PlayerTextStateError({required final String error}) =
-      _$PlayerTextStateErrorImpl;
-
-  String get error;
-
-  /// Create a copy of PlayerTextState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PlayerTextStateErrorImplCopyWith<_$PlayerTextStateErrorImpl>
-      get copyWith => throw _privateConstructorUsedError;
 }

@@ -6,7 +6,7 @@ sealed class PlayerState with _$PlayerState {
     required final int id,
     final String? error,
     @Default(StatusOfLoading()) final StatusOf<PlayerAudioState> audioState,
-    @Default(PlayerTextStateLoading()) final PlayerTextState textState,
+    @Default(StatusOfLoading()) final StatusOf<PlayerTextState> textState,
   }) = _PlayerState;
 }
 
@@ -28,11 +28,5 @@ sealed class PlayerTextState with _$PlayerTextState {
     @Default(<TextLine>[]) final List<TextLine> textLines,
   }) = PlayerTextStateData;
 
-  const factory PlayerTextState.loading() = PlayerTextStateLoading;
-
   const factory PlayerTextState.processing() = PlayerTextStateProcessing;
-
-  const factory PlayerTextState.error({
-    required final String error,
-  }) = PlayerTextStateError;
 }
