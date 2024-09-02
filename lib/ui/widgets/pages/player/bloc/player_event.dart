@@ -20,7 +20,7 @@ sealed class PlayerEvent with _$PlayerEvent {
 
   const factory PlayerEvent.positionChanged({
     required final Duration position,
-  }) = PlayerEventPositionChanged;
+  }) = _PlayerEventPositionChanged;
 
   const factory PlayerEvent.jumpToLineRequested(
     final int index, {
@@ -32,5 +32,4 @@ sealed class PlayerEvent with _$PlayerEvent {
   ) = PlayerEventSeekRequested;
 
   const factory PlayerEvent.playPauseButtonPressed() = PlayerEventPlayPauseButtonPressed;
-  const factory PlayerEvent.startedSeeking() = PlayerEventStartedSeeking;
 }

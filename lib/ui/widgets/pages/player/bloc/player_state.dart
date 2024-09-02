@@ -16,7 +16,6 @@ class PlayerAudioState with _$PlayerAudioState {
     @Default(Duration.zero) final Duration position,
     @Default(Duration(seconds: 1)) final Duration duration,
     @Default(false) final bool isPlaying,
-    @Default(false) final bool isSeeking,
   }) = _PlayerAudioState;
 }
 

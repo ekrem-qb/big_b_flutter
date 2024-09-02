@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:interactive_slider/interactive_slider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../../api/entity/recording/recording.dart';
@@ -134,8 +135,6 @@ class _Player extends StatelessWidget {
               children: [
                 _Text(),
                 _Slider(),
-                _Time(),
-                _PlayButton(),
               ],
             ),
           ),
@@ -368,47 +367,13 @@ String _formatTime(final Duration duration) {
 }
 
 class _Time extends StatelessWidget {
-  const _Time();
+  const _Time(this.time);
+
+  final Duration time;
 
   @override
   Widget build(final BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _CurrentTime(),
-          _TotalTime(),
-        ],
-      ),
-    );
-  }
-}
-
-class _CurrentTime extends StatelessWidget {
-  const _CurrentTime();
-
-  @override
-  Widget build(final BuildContext context) {
-    late final PlayerBloc bloc;
-    var isInitialized = false;
-    final position = context.select((final PlayerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return switch (bloc.state.audioState) {
-        StatusOfData<PlayerAudioState>(
-          data: PlayerAudioState(
-            :final position,
-          ),
-        ) =>
-          position,
-        _ => null,
-      };
-    });
-
-    return Text(_formatTime(position ?? Duration.zero));
+    return Text(_formatTime(time));
   }
 }
 
@@ -435,62 +400,99 @@ class _TotalTime extends StatelessWidget {
       };
     });
 
-    return Text(_formatTime(duration ?? const Duration(seconds: 1)));
+    return _Time(duration ?? const Duration(seconds: 1));
   }
 }
 
-class _Slider extends StatelessWidget {
+class _Slider extends StatefulWidget {
   const _Slider();
+
+  @override
+  State<_Slider> createState() => _SliderState();
+}
+
+class _SliderState extends State<_Slider> {
+  final _controller = InteractiveSliderController(0);
+
+  Duration _duration = const Duration(seconds: 1);
 
   @override
   Widget build(final BuildContext context) {
     late final PlayerBloc bloc;
     var isInitialized = false;
-    context
-      ..select((final PlayerBloc newBloc) {
-        if (!isInitialized) {
-          bloc = newBloc;
-          isInitialized = true;
-        }
-        return switch (bloc.state.audioState) {
+    context.select((final PlayerBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return bloc.state.audioState.runtimeType;
+    });
+
+    final colorScheme = Theme.of(context).colorScheme;
+    final textStyle = TextStyle(
+      color: colorScheme.onSurface,
+    );
+    return BlocListener<PlayerBloc, PlayerState>(
+      listenWhen: (final previous, final current) {
+        final previousAudioState = switch (previous.audioState) {
           StatusOfData<PlayerAudioState>(
-            data: PlayerAudioState(
-              :final position,
-            )
+            :final data
           ) =>
-            position,
+            data,
           _ => null,
         };
-      })
-      ..select((final PlayerBloc newBloc) {
-        if (!isInitialized) {
-          bloc = newBloc;
-          isInitialized = true;
-        }
-        return bloc.state.audioState.runtimeType;
-      });
-
-    return MediaQuery(
-      data: const MediaQueryData(navigationMode: NavigationMode.directional),
-      child: switch (bloc.state.audioState) {
-        StatusOfData<PlayerAudioState>(
-          data: PlayerAudioState(
-            :final position,
-            :final duration,
-          ),
-        ) =>
-          Slider(
-            max: duration.inMilliseconds.toDouble(),
-            value: position.inMilliseconds.toDouble(),
-            onChangeStart: (final _) => bloc.add(const PlayerEventStartedSeeking()),
-            onChanged: (final newValue) => bloc.add(PlayerEventPositionChanged(position: Duration(milliseconds: newValue.toInt()))),
-            onChangeEnd: (final newValue) => bloc.add(PlayerEventSeekRequested(Duration(milliseconds: newValue.toInt()))),
-          ),
-        _ => const Slider(
-            value: 0,
-            onChanged: null,
-          ),
+        final currentAudioState = switch (current.audioState) {
+          StatusOfData<PlayerAudioState>(
+            :final data
+          ) =>
+            data,
+          _ => null,
+        };
+        return previousAudioState?.duration != currentAudioState?.duration || previousAudioState?.position != currentAudioState?.position;
       },
+      listener: (final context, final state) {
+        final audioState = state.audioState;
+        if (audioState is! StatusOfData<PlayerAudioState>) return;
+
+        _duration = audioState.data.duration;
+        _controller.value = audioState.data.position.inMicroseconds / audioState.data.duration.inMicroseconds;
+      },
+      child: MediaQuery(
+        data: const MediaQueryData(navigationMode: NavigationMode.directional),
+        child: IgnorePointer(
+          ignoring: switch (bloc.state.audioState) {
+            StatusOfData<PlayerAudioState>(
+              data: PlayerAudioState(),
+            ) =>
+              false,
+            _ => true,
+          },
+          child: InteractiveSlider(
+            unfocusedOpacity: 1,
+            foregroundColor: colorScheme.primary,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            iconPosition: IconPosition.below,
+            iconColor: colorScheme.onPrimary,
+            iconGap: 24,
+            iconSize: 24,
+            iconCrossAxisAlignment: CrossAxisAlignment.start,
+            controller: _controller,
+            startIcon: DefaultTextStyle(
+              style: textStyle,
+              child: ListenableBuilder(
+                listenable: _controller,
+                builder: (final _, final __) => _Time(_duration * _controller.value),
+              ),
+            ),
+            centerIcon: const _PlayButton(),
+            endIcon: DefaultTextStyle(
+              style: textStyle,
+              child: const _TotalTime(),
+            ),
+            onProgressUpdated: (final newValue) => bloc.add(PlayerEventSeekRequested(_duration * newValue)),
+          ),
+        ),
+      ),
     );
   }
 }

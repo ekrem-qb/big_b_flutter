@@ -519,7 +519,7 @@ class __$$PlayerEventPositionChangedImplCopyWithImpl<$Res>
 
 class _$PlayerEventPositionChangedImpl
     with DiagnosticableTreeMixin
-    implements PlayerEventPositionChanged {
+    implements _PlayerEventPositionChanged {
   const _$PlayerEventPositionChangedImpl({required this.position});
 
   @override
@@ -560,9 +560,9 @@ class _$PlayerEventPositionChangedImpl
           _$PlayerEventPositionChangedImpl>(this, _$identity);
 }
 
-abstract class PlayerEventPositionChanged implements PlayerEvent {
-  const factory PlayerEventPositionChanged({required final Duration position}) =
-      _$PlayerEventPositionChangedImpl;
+abstract class _PlayerEventPositionChanged implements PlayerEvent {
+  const factory _PlayerEventPositionChanged(
+      {required final Duration position}) = _$PlayerEventPositionChangedImpl;
 
   Duration get position;
 
@@ -832,60 +832,6 @@ abstract class PlayerEventPlayPauseButtonPressed implements PlayerEvent {
 }
 
 /// @nodoc
-abstract class _$$PlayerEventStartedSeekingImplCopyWith<$Res> {
-  factory _$$PlayerEventStartedSeekingImplCopyWith(
-          _$PlayerEventStartedSeekingImpl value,
-          $Res Function(_$PlayerEventStartedSeekingImpl) then) =
-      __$$PlayerEventStartedSeekingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$PlayerEventStartedSeekingImplCopyWithImpl<$Res>
-    extends _$PlayerEventCopyWithImpl<$Res, _$PlayerEventStartedSeekingImpl>
-    implements _$$PlayerEventStartedSeekingImplCopyWith<$Res> {
-  __$$PlayerEventStartedSeekingImplCopyWithImpl(
-      _$PlayerEventStartedSeekingImpl _value,
-      $Res Function(_$PlayerEventStartedSeekingImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of PlayerEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$PlayerEventStartedSeekingImpl
-    with DiagnosticableTreeMixin
-    implements PlayerEventStartedSeeking {
-  const _$PlayerEventStartedSeekingImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PlayerEvent.startedSeeking()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'PlayerEvent.startedSeeking'));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PlayerEventStartedSeekingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-}
-
-abstract class PlayerEventStartedSeeking implements PlayerEvent {
-  const factory PlayerEventStartedSeeking() = _$PlayerEventStartedSeekingImpl;
-}
-
-/// @nodoc
 mixin _$PlayerState {
   int get id => throw _privateConstructorUsedError;
   StatusOf<Recording> get recordingState => throw _privateConstructorUsedError;
@@ -1143,7 +1089,6 @@ mixin _$PlayerAudioState {
   Duration get position => throw _privateConstructorUsedError;
   Duration get duration => throw _privateConstructorUsedError;
   bool get isPlaying => throw _privateConstructorUsedError;
-  bool get isSeeking => throw _privateConstructorUsedError;
 
   /// Create a copy of PlayerAudioState
   /// with the given fields replaced by the non-null parameter values.
@@ -1158,8 +1103,7 @@ abstract class $PlayerAudioStateCopyWith<$Res> {
           PlayerAudioState value, $Res Function(PlayerAudioState) then) =
       _$PlayerAudioStateCopyWithImpl<$Res, PlayerAudioState>;
   @useResult
-  $Res call(
-      {Duration position, Duration duration, bool isPlaying, bool isSeeking});
+  $Res call({Duration position, Duration duration, bool isPlaying});
 }
 
 /// @nodoc
@@ -1180,7 +1124,6 @@ class _$PlayerAudioStateCopyWithImpl<$Res, $Val extends PlayerAudioState>
     Object? position = null,
     Object? duration = null,
     Object? isPlaying = null,
-    Object? isSeeking = null,
   }) {
     return _then(_value.copyWith(
       position: null == position
@@ -1195,10 +1138,6 @@ class _$PlayerAudioStateCopyWithImpl<$Res, $Val extends PlayerAudioState>
           ? _value.isPlaying
           : isPlaying // ignore: cast_nullable_to_non_nullable
               as bool,
-      isSeeking: null == isSeeking
-          ? _value.isSeeking
-          : isSeeking // ignore: cast_nullable_to_non_nullable
-              as bool,
     ) as $Val);
   }
 }
@@ -1211,8 +1150,7 @@ abstract class _$$PlayerAudioStateImplCopyWith<$Res>
       __$$PlayerAudioStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Duration position, Duration duration, bool isPlaying, bool isSeeking});
+  $Res call({Duration position, Duration duration, bool isPlaying});
 }
 
 /// @nodoc
@@ -1231,7 +1169,6 @@ class __$$PlayerAudioStateImplCopyWithImpl<$Res>
     Object? position = null,
     Object? duration = null,
     Object? isPlaying = null,
-    Object? isSeeking = null,
   }) {
     return _then(_$PlayerAudioStateImpl(
       position: null == position
@@ -1246,10 +1183,6 @@ class __$$PlayerAudioStateImplCopyWithImpl<$Res>
           ? _value.isPlaying
           : isPlaying // ignore: cast_nullable_to_non_nullable
               as bool,
-      isSeeking: null == isSeeking
-          ? _value.isSeeking
-          : isSeeking // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -1262,8 +1195,7 @@ class _$PlayerAudioStateImpl
   const _$PlayerAudioStateImpl(
       {this.position = Duration.zero,
       this.duration = const Duration(seconds: 1),
-      this.isPlaying = false,
-      this.isSeeking = false});
+      this.isPlaying = false});
 
   @override
   @JsonKey()
@@ -1274,13 +1206,10 @@ class _$PlayerAudioStateImpl
   @override
   @JsonKey()
   final bool isPlaying;
-  @override
-  @JsonKey()
-  final bool isSeeking;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PlayerAudioState(position: $position, duration: $duration, isPlaying: $isPlaying, isSeeking: $isSeeking)';
+    return 'PlayerAudioState(position: $position, duration: $duration, isPlaying: $isPlaying)';
   }
 
   @override
@@ -1290,8 +1219,7 @@ class _$PlayerAudioStateImpl
       ..add(DiagnosticsProperty('type', 'PlayerAudioState'))
       ..add(DiagnosticsProperty('position', position))
       ..add(DiagnosticsProperty('duration', duration))
-      ..add(DiagnosticsProperty('isPlaying', isPlaying))
-      ..add(DiagnosticsProperty('isSeeking', isSeeking));
+      ..add(DiagnosticsProperty('isPlaying', isPlaying));
   }
 
   @override
@@ -1304,14 +1232,11 @@ class _$PlayerAudioStateImpl
             (identical(other.duration, duration) ||
                 other.duration == duration) &&
             (identical(other.isPlaying, isPlaying) ||
-                other.isPlaying == isPlaying) &&
-            (identical(other.isSeeking, isSeeking) ||
-                other.isSeeking == isSeeking));
+                other.isPlaying == isPlaying));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, position, duration, isPlaying, isSeeking);
+  int get hashCode => Object.hash(runtimeType, position, duration, isPlaying);
 
   /// Create a copy of PlayerAudioState
   /// with the given fields replaced by the non-null parameter values.
@@ -1327,8 +1252,7 @@ abstract class _PlayerAudioState implements PlayerAudioState {
   const factory _PlayerAudioState(
       {final Duration position,
       final Duration duration,
-      final bool isPlaying,
-      final bool isSeeking}) = _$PlayerAudioStateImpl;
+      final bool isPlaying}) = _$PlayerAudioStateImpl;
 
   @override
   Duration get position;
@@ -1336,8 +1260,6 @@ abstract class _PlayerAudioState implements PlayerAudioState {
   Duration get duration;
   @override
   bool get isPlaying;
-  @override
-  bool get isSeeking;
 
   /// Create a copy of PlayerAudioState
   /// with the given fields replaced by the non-null parameter values.

@@ -38,9 +38,8 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
           _PlayerEventDurationChanged() => _onDurationChanged(event, emit),
           _PlayerEventPlayingChanged() => _onPlayingChanged(event, emit),
           _PlayerEventError() => _onError(event, emit),
-          PlayerEventPositionChanged() => _onPositionChanged(event, emit),
+          _PlayerEventPositionChanged() => _onPositionChanged(event, emit),
           PlayerEventJumpToLineRequested() => _onJumpedToLine(event, emit),
-          PlayerEventStartedSeeking() => _onStartedSeeking(event, emit),
           PlayerEventSeekRequested() => _onSeekRequested(event, emit),
           PlayerEventPlayPauseButtonPressed() => _onPlayPauseButtonPressed(event, emit),
         };
@@ -90,10 +89,9 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     final audioState = state.audioState;
 
     if (audioState is! StatusOfData<PlayerAudioState>) return;
-    if (audioState.data.isSeeking) return;
     if (newPosition > audioState.data.duration) return;
 
-    add(PlayerEventPositionChanged(position: newPosition));
+    add(_PlayerEventPositionChanged(position: newPosition));
 
     final textState = state.textState;
 
@@ -223,7 +221,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     emit(state.copyWith(audioState: StatusOfData(audioState.data.copyWith(duration: event.duration))));
   }
 
-  Future<void> _onPositionChanged(final PlayerEventPositionChanged event, final Emitter<PlayerState> emit) async {
+  Future<void> _onPositionChanged(final _PlayerEventPositionChanged event, final Emitter<PlayerState> emit) async {
     final audioState = state.audioState;
     if (audioState is! StatusOfData<PlayerAudioState>) return;
 
@@ -278,9 +276,6 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     if (audioState is! StatusOfData<PlayerAudioState>) return;
 
     await _player.seek(event.position);
-
-    if (!audioState.data.isSeeking) return;
-    emit(state.copyWith(audioState: StatusOfData(audioState.data.copyWith(isSeeking: false))));
   }
 
   Future<void> _onPlayPauseButtonPressed(final PlayerEventPlayPauseButtonPressed event, final Emitter<PlayerState> emit) async {
@@ -291,15 +286,6 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       await _player.pause();
     } else {
       await _player.play();
-    }
-  }
-
-  Future<void> _onStartedSeeking(final PlayerEventStartedSeeking event, final Emitter<PlayerState> emit) async {
-    final audioState = state.audioState;
-    if (audioState is! StatusOfData<PlayerAudioState>) return;
-
-    if (!audioState.data.isSeeking) {
-      emit(state.copyWith(audioState: StatusOfData(audioState.data.copyWith(isSeeking: true))));
     }
   }
 
