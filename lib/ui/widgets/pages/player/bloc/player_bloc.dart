@@ -183,35 +183,35 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     return List.generate(
       textLines.length,
       (final i) {
-        final parts = <TextSpan>[];
+        final parts = _generateTextSpanParts(textLines[i]).toList();
 
-        var charIndex = 0;
-        for (var j = 0; j < textLines[i].highlights.length; j += 2) {
-          if (charIndex < textLines[i].highlights[j].startIndex) {
-            final substring = textLines[i].text.substring(charIndex, textLines[i].highlights[j].startIndex);
-            parts.add(TextSpan(text: substring));
-          }
-
-          final substring2 = textLines[i].text.substring(textLines[i].highlights[j].startIndex, textLines[i].highlights[j].endIndex);
-          parts.add(
-            TextSpan(
-              text: substring2,
-              style: TextStyle(color: textLines[i].highlights[j].rule.color),
-            ),
-          );
-
-          charIndex = textLines[i].highlights[j].endIndex;
-        }
-
-        if (charIndex < textLines[i].text.length) {
-          final substring = textLines[i].text.substring(charIndex);
-          parts.add(TextSpan(text: substring));
-        }
-
-        return TextSpan(children: List.castFrom(parts));
+        return TextSpan(children: parts);
       },
       growable: false,
     );
+  }
+
+  Iterable<InlineSpan> _generateTextSpanParts(final TextLine textLine) sync* {
+    var charIndex = 0;
+    for (var j = 0; j < textLine.highlights.length; j += 2) {
+      if (charIndex < textLine.highlights[j].startIndex) {
+        final substring = textLine.text.substring(charIndex, textLine.highlights[j].startIndex);
+        yield TextSpan(text: substring);
+      }
+
+      final substring2 = textLine.text.substring(textLine.highlights[j].startIndex, textLine.highlights[j].endIndex);
+      yield TextSpan(
+        text: substring2,
+        style: TextStyle(color: textLine.highlights[j].rule.color),
+      );
+
+      charIndex = textLine.highlights[j].endIndex;
+    }
+
+    if (charIndex < textLine.text.length) {
+      final substring = textLine.text.substring(charIndex);
+      yield TextSpan(text: substring);
+    }
   }
 
   Future<void> _onDurationChanged(final _PlayerEventDurationChanged event, final Emitter<PlayerState> emit) async {
