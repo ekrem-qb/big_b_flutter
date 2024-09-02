@@ -109,15 +109,19 @@ class _Player extends StatelessWidget {
       StatusOfData() => CallbackShortcuts(
           bindings: {
             const SingleActivator(LogicalKeyboardKey.arrowUp): () => switch (bloc.state.textState) {
-                  PlayerTextStateData(
-                    :final currentTextLine
+                  StatusOfData(
+                    data: PlayerTextStateData(
+                      :final currentTextLine
+                    )
                   ) =>
                     bloc.add(PlayerEventJumpToLineRequested(currentTextLine - 1)),
                   _ => null,
                 },
             const SingleActivator(LogicalKeyboardKey.arrowDown): () => switch (bloc.state.textState) {
-                  PlayerTextStateData(
-                    :final currentTextLine
+                  StatusOfData(
+                    data: PlayerTextStateData(
+                      :final currentTextLine
+                    )
                   ) =>
                     bloc.add(PlayerEventJumpToLineRequested(currentTextLine + 1)),
                   _ => null,
