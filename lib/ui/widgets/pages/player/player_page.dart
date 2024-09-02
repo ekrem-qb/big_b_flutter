@@ -73,6 +73,7 @@ class PlayerView extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           scrolledUnderElevation: 0,
+          systemOverlayStyle: Theme.of(context).brightness == Brightness.light ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light,
         ),
         extendBodyBehindAppBar: true,
         body: const _Player(),
