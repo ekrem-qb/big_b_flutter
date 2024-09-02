@@ -234,7 +234,7 @@ class _LoadedText extends StatelessWidget {
   Widget _item(final PlayerBloc bloc, final int index) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      child: GestureDetector(
+      child: InkWell(
         onTap: () => bloc.add(PlayerEventJumpToLineRequested(index)),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
