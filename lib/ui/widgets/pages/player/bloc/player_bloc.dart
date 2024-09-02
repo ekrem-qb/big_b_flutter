@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,32 +23,45 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   PlayerBloc({
     required final int id,
     final Recording? recording,
-  }) : super(PlayerState(id: id)) {
-    on<PlayerEvent>((final event, final emit) async {
-      return switch (event) {
-        _PlayerEventLoadRequested() => _onRecordingLoadRequested(event, emit),
-        _PlayerEventRecordingLoaded() => _onRecordingLoaded(event, emit),
-        _PlayerEventRecordingLoadingError() => _onRecordingLoadingError(event, emit),
-        _PlayerEventDurationChanged() => _onDurationChanged(event, emit),
-        _PlayerEventPlayingChanged() => _onPlayingChanged(event, emit),
-        _PlayerEventError() => _onError(event, emit),
-        PlayerEventPositionChanged() => _onPositionChanged(event, emit),
-        PlayerEventJumpToLineRequested() => _onJumpedToLine(event, emit),
-        PlayerEventStartedSeeking() => _onStartedSeeking(event, emit),
-        PlayerEventSeekRequested() => _onSeekRequested(event, emit),
-        PlayerEventPlayPauseButtonPressed() => _onPlayPauseButtonPressed(event, emit),
-      };
-    });
+  }) : super(
+          PlayerState(
+            id: id,
+            recordingState: recording == null ? const StatusOfLoading() : StatusOfData(recording),
+          ),
+        ) {
+    on<PlayerEvent>(
+      (final event, final emit) async {
+        return switch (event) {
+          PlayerEventLoadRequested() => _onRecordingLoadRequested(event, emit),
+          PlayerEventAudioLoadRequested() => _onAudioLoadRequested(event, emit),
+          PlayerEventTextLoadRequested() => _onTextLoadRequested(event, emit),
+          _PlayerEventDurationChanged() => _onDurationChanged(event, emit),
+          _PlayerEventPlayingChanged() => _onPlayingChanged(event, emit),
+          _PlayerEventError() => _onError(event, emit),
+          PlayerEventPositionChanged() => _onPositionChanged(event, emit),
+          PlayerEventJumpToLineRequested() => _onJumpedToLine(event, emit),
+          PlayerEventStartedSeeking() => _onStartedSeeking(event, emit),
+          PlayerEventSeekRequested() => _onSeekRequested(event, emit),
+          PlayerEventPlayPauseButtonPressed() => _onPlayPauseButtonPressed(event, emit),
+        };
+      },
+      transformer: concurrent(),
+    );
 
     _durationSubscription = _player.stream.duration.listen(_onPlayerDurationChanged);
     _positionSubscription = _player.stream.position.listen(_onPlayerPositionChanged);
     _playingSubscription = _player.stream.playing.listen(_onPlayerPlayingChanged);
     _errorSubscription = _player.stream.error.listen(_onPlayerError);
 
-    if (recording != null) {
-      add(_PlayerEventRecordingLoaded(recording: recording));
+    if (state.recordingState is StatusOfLoading) {
+      add(const PlayerEventLoadRequested());
     } else {
-      add(const _PlayerEventLoadRequested());
+      if (state.audioState is StatusOfLoading) {
+        add(const PlayerEventAudioLoadRequested());
+      }
+      if (state.textState is StatusOfLoading) {
+        add(const PlayerEventTextLoadRequested());
+      }
     }
   }
 
@@ -104,34 +118,41 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     add(_PlayerEventError(error: error));
   }
 
-  Future<void> _onRecordingLoadRequested(final _PlayerEventLoadRequested event, final Emitter<PlayerState> emit) async {
+  Future<void> _onRecordingLoadRequested(final PlayerEventLoadRequested event, final Emitter<PlayerState> emit) async {
     try {
       final recording = await db.from(Recording.tableName).select(Recording.fieldNames).eq($RecordingImplJsonKeys.id, state.id).single().withConverter(Recording.fromJson);
-      add(_PlayerEventRecordingLoaded(recording: recording));
+      emit(state.copyWith(recordingState: StatusOfData(recording)));
+      add(const PlayerEventAudioLoadRequested());
+      add(const PlayerEventTextLoadRequested());
     } on Exception catch (e) {
-      emit(state.copyWith(error: e.toString()));
+      emit(state.copyWith(recordingState: StatusOfError(e.toString())));
     }
   }
 
-  Future<void> _onRecordingLoaded(final _PlayerEventRecordingLoaded event, final Emitter<PlayerState> emit) async {
-    await Future.wait([
-      _loadAudio(event, emit),
-      _loadText(event, emit),
-    ]);
-  }
+  Future<void> _onAudioLoadRequested(final PlayerEventAudioLoadRequested event, final Emitter<PlayerState> emit) async {
+    final recordingState = state.recordingState;
 
-  Future<void> _loadAudio(final _PlayerEventRecordingLoaded event, final Emitter<PlayerState> emit) async {
+    if (recordingState is! StatusOfData<Recording>) return;
+
     try {
-      await _player.open(media.Media(event.recording.audioUrl), play: false);
+      emit(state.copyWith(audioState: const StatusOfLoading()));
+
+      await _player.open(media.Media(recordingState.data.audioUrl), play: false);
       emit(state.copyWith(audioState: const StatusOfData(PlayerAudioState())));
     } on Exception catch (e) {
       emit(state.copyWith(audioState: StatusOfError(e.toString())));
     }
   }
 
-  Future<void> _loadText(final _PlayerEventRecordingLoaded event, final Emitter<PlayerState> emit) async {
+  Future<void> _onTextLoadRequested(final PlayerEventTextLoadRequested event, final Emitter<PlayerState> emit) async {
+    final recordingState = state.recordingState;
+
+    if (recordingState is! StatusOfData<Recording>) return;
+
     try {
-      if (!event.recording.hasLines) {
+      emit(state.copyWith(textState: const StatusOfLoading()));
+
+      if (!recordingState.data.hasLines) {
         emit(state.copyWith(textState: const StatusOfData(PlayerTextStateProcessing())));
         return;
       }
@@ -193,10 +214,6 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       },
       growable: false,
     );
-  }
-
-  Future<void> _onRecordingLoadingError(final _PlayerEventRecordingLoadingError event, final Emitter<PlayerState> emit) async {
-    emit(state.copyWith(error: event.error));
   }
 
   Future<void> _onDurationChanged(final _PlayerEventDurationChanged event, final Emitter<PlayerState> emit) async {

@@ -63,7 +63,7 @@ class __$$PlayerEventLoadRequestedImplCopyWithImpl<$Res>
 
 class _$PlayerEventLoadRequestedImpl
     with DiagnosticableTreeMixin
-    implements _PlayerEventLoadRequested {
+    implements PlayerEventLoadRequested {
   const _$PlayerEventLoadRequestedImpl();
 
   @override
@@ -88,208 +88,120 @@ class _$PlayerEventLoadRequestedImpl
   int get hashCode => runtimeType.hashCode;
 }
 
-abstract class _PlayerEventLoadRequested implements PlayerEvent {
-  const factory _PlayerEventLoadRequested() = _$PlayerEventLoadRequestedImpl;
+abstract class PlayerEventLoadRequested implements PlayerEvent {
+  const factory PlayerEventLoadRequested() = _$PlayerEventLoadRequestedImpl;
 }
 
 /// @nodoc
-abstract class _$$PlayerEventRecordingLoadedImplCopyWith<$Res> {
-  factory _$$PlayerEventRecordingLoadedImplCopyWith(
-          _$PlayerEventRecordingLoadedImpl value,
-          $Res Function(_$PlayerEventRecordingLoadedImpl) then) =
-      __$$PlayerEventRecordingLoadedImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({Recording recording});
-
-  $RecordingCopyWith<$Res> get recording;
+abstract class _$$PlayerEventAudioLoadRequestedImplCopyWith<$Res> {
+  factory _$$PlayerEventAudioLoadRequestedImplCopyWith(
+          _$PlayerEventAudioLoadRequestedImpl value,
+          $Res Function(_$PlayerEventAudioLoadRequestedImpl) then) =
+      __$$PlayerEventAudioLoadRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$PlayerEventRecordingLoadedImplCopyWithImpl<$Res>
-    extends _$PlayerEventCopyWithImpl<$Res, _$PlayerEventRecordingLoadedImpl>
-    implements _$$PlayerEventRecordingLoadedImplCopyWith<$Res> {
-  __$$PlayerEventRecordingLoadedImplCopyWithImpl(
-      _$PlayerEventRecordingLoadedImpl _value,
-      $Res Function(_$PlayerEventRecordingLoadedImpl) _then)
+class __$$PlayerEventAudioLoadRequestedImplCopyWithImpl<$Res>
+    extends _$PlayerEventCopyWithImpl<$Res, _$PlayerEventAudioLoadRequestedImpl>
+    implements _$$PlayerEventAudioLoadRequestedImplCopyWith<$Res> {
+  __$$PlayerEventAudioLoadRequestedImplCopyWithImpl(
+      _$PlayerEventAudioLoadRequestedImpl _value,
+      $Res Function(_$PlayerEventAudioLoadRequestedImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of PlayerEvent
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? recording = null,
-  }) {
-    return _then(_$PlayerEventRecordingLoadedImpl(
-      recording: null == recording
-          ? _value.recording
-          : recording // ignore: cast_nullable_to_non_nullable
-              as Recording,
-    ));
-  }
-
-  /// Create a copy of PlayerEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $RecordingCopyWith<$Res> get recording {
-    return $RecordingCopyWith<$Res>(_value.recording, (value) {
-      return _then(_value.copyWith(recording: value));
-    });
-  }
 }
 
 /// @nodoc
 
-class _$PlayerEventRecordingLoadedImpl
+class _$PlayerEventAudioLoadRequestedImpl
     with DiagnosticableTreeMixin
-    implements _PlayerEventRecordingLoaded {
-  const _$PlayerEventRecordingLoadedImpl({required this.recording});
-
-  @override
-  final Recording recording;
+    implements PlayerEventAudioLoadRequested {
+  const _$PlayerEventAudioLoadRequestedImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PlayerEvent.recordingLoaded(recording: $recording)';
+    return 'PlayerEvent.audioLoadRequested()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'PlayerEvent.recordingLoaded'))
-      ..add(DiagnosticsProperty('recording', recording));
+        .add(DiagnosticsProperty('type', 'PlayerEvent.audioLoadRequested'));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PlayerEventRecordingLoadedImpl &&
-            (identical(other.recording, recording) ||
-                other.recording == recording));
+            other is _$PlayerEventAudioLoadRequestedImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, recording);
-
-  /// Create a copy of PlayerEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$PlayerEventRecordingLoadedImplCopyWith<_$PlayerEventRecordingLoadedImpl>
-      get copyWith => __$$PlayerEventRecordingLoadedImplCopyWithImpl<
-          _$PlayerEventRecordingLoadedImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 }
 
-abstract class _PlayerEventRecordingLoaded implements PlayerEvent {
-  const factory _PlayerEventRecordingLoaded(
-      {required final Recording recording}) = _$PlayerEventRecordingLoadedImpl;
-
-  Recording get recording;
-
-  /// Create a copy of PlayerEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PlayerEventRecordingLoadedImplCopyWith<_$PlayerEventRecordingLoadedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+abstract class PlayerEventAudioLoadRequested implements PlayerEvent {
+  const factory PlayerEventAudioLoadRequested() =
+      _$PlayerEventAudioLoadRequestedImpl;
 }
 
 /// @nodoc
-abstract class _$$PlayerEventRecordingLoadingErrorImplCopyWith<$Res> {
-  factory _$$PlayerEventRecordingLoadingErrorImplCopyWith(
-          _$PlayerEventRecordingLoadingErrorImpl value,
-          $Res Function(_$PlayerEventRecordingLoadingErrorImpl) then) =
-      __$$PlayerEventRecordingLoadingErrorImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String error});
+abstract class _$$PlayerEventTextLoadRequestedImplCopyWith<$Res> {
+  factory _$$PlayerEventTextLoadRequestedImplCopyWith(
+          _$PlayerEventTextLoadRequestedImpl value,
+          $Res Function(_$PlayerEventTextLoadRequestedImpl) then) =
+      __$$PlayerEventTextLoadRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$PlayerEventRecordingLoadingErrorImplCopyWithImpl<$Res>
-    extends _$PlayerEventCopyWithImpl<$Res,
-        _$PlayerEventRecordingLoadingErrorImpl>
-    implements _$$PlayerEventRecordingLoadingErrorImplCopyWith<$Res> {
-  __$$PlayerEventRecordingLoadingErrorImplCopyWithImpl(
-      _$PlayerEventRecordingLoadingErrorImpl _value,
-      $Res Function(_$PlayerEventRecordingLoadingErrorImpl) _then)
+class __$$PlayerEventTextLoadRequestedImplCopyWithImpl<$Res>
+    extends _$PlayerEventCopyWithImpl<$Res, _$PlayerEventTextLoadRequestedImpl>
+    implements _$$PlayerEventTextLoadRequestedImplCopyWith<$Res> {
+  __$$PlayerEventTextLoadRequestedImplCopyWithImpl(
+      _$PlayerEventTextLoadRequestedImpl _value,
+      $Res Function(_$PlayerEventTextLoadRequestedImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of PlayerEvent
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? error = null,
-  }) {
-    return _then(_$PlayerEventRecordingLoadingErrorImpl(
-      error: null == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$PlayerEventRecordingLoadingErrorImpl
+class _$PlayerEventTextLoadRequestedImpl
     with DiagnosticableTreeMixin
-    implements _PlayerEventRecordingLoadingError {
-  const _$PlayerEventRecordingLoadingErrorImpl({required this.error});
-
-  @override
-  final String error;
+    implements PlayerEventTextLoadRequested {
+  const _$PlayerEventTextLoadRequestedImpl();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PlayerEvent.recordingLoadingError(error: $error)';
+    return 'PlayerEvent.textLoadRequested()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'PlayerEvent.recordingLoadingError'))
-      ..add(DiagnosticsProperty('error', error));
+        .add(DiagnosticsProperty('type', 'PlayerEvent.textLoadRequested'));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PlayerEventRecordingLoadingErrorImpl &&
-            (identical(other.error, error) || other.error == error));
+            other is _$PlayerEventTextLoadRequestedImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, error);
-
-  /// Create a copy of PlayerEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$PlayerEventRecordingLoadingErrorImplCopyWith<
-          _$PlayerEventRecordingLoadingErrorImpl>
-      get copyWith => __$$PlayerEventRecordingLoadingErrorImplCopyWithImpl<
-          _$PlayerEventRecordingLoadingErrorImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 }
 
-abstract class _PlayerEventRecordingLoadingError implements PlayerEvent {
-  const factory _PlayerEventRecordingLoadingError(
-      {required final String error}) = _$PlayerEventRecordingLoadingErrorImpl;
-
-  String get error;
-
-  /// Create a copy of PlayerEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PlayerEventRecordingLoadingErrorImplCopyWith<
-          _$PlayerEventRecordingLoadingErrorImpl>
-      get copyWith => throw _privateConstructorUsedError;
+abstract class PlayerEventTextLoadRequested implements PlayerEvent {
+  const factory PlayerEventTextLoadRequested() =
+      _$PlayerEventTextLoadRequestedImpl;
 }
 
 /// @nodoc
@@ -976,7 +888,7 @@ abstract class PlayerEventStartedSeeking implements PlayerEvent {
 /// @nodoc
 mixin _$PlayerState {
   int get id => throw _privateConstructorUsedError;
-  String? get error => throw _privateConstructorUsedError;
+  StatusOf<Recording> get recordingState => throw _privateConstructorUsedError;
   StatusOf<PlayerAudioState> get audioState =>
       throw _privateConstructorUsedError;
   StatusOf<PlayerTextState> get textState => throw _privateConstructorUsedError;
@@ -996,10 +908,11 @@ abstract class $PlayerStateCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      String? error,
+      StatusOf<Recording> recordingState,
       StatusOf<PlayerAudioState> audioState,
       StatusOf<PlayerTextState> textState});
 
+  $StatusOfCopyWith<Recording, $Res> get recordingState;
   $StatusOfCopyWith<PlayerAudioState, $Res> get audioState;
   $StatusOfCopyWith<PlayerTextState, $Res> get textState;
 }
@@ -1020,7 +933,7 @@ class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
   @override
   $Res call({
     Object? id = null,
-    Object? error = freezed,
+    Object? recordingState = null,
     Object? audioState = null,
     Object? textState = null,
   }) {
@@ -1029,10 +942,10 @@ class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
+      recordingState: null == recordingState
+          ? _value.recordingState
+          : recordingState // ignore: cast_nullable_to_non_nullable
+              as StatusOf<Recording>,
       audioState: null == audioState
           ? _value.audioState
           : audioState // ignore: cast_nullable_to_non_nullable
@@ -1042,6 +955,16 @@ class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
           : textState // ignore: cast_nullable_to_non_nullable
               as StatusOf<PlayerTextState>,
     ) as $Val);
+  }
+
+  /// Create a copy of PlayerState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StatusOfCopyWith<Recording, $Res> get recordingState {
+    return $StatusOfCopyWith<Recording, $Res>(_value.recordingState, (value) {
+      return _then(_value.copyWith(recordingState: value) as $Val);
+    });
   }
 
   /// Create a copy of PlayerState
@@ -1076,10 +999,12 @@ abstract class _$$PlayerStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      String? error,
+      StatusOf<Recording> recordingState,
       StatusOf<PlayerAudioState> audioState,
       StatusOf<PlayerTextState> textState});
 
+  @override
+  $StatusOfCopyWith<Recording, $Res> get recordingState;
   @override
   $StatusOfCopyWith<PlayerAudioState, $Res> get audioState;
   @override
@@ -1100,7 +1025,7 @@ class __$$PlayerStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? error = freezed,
+    Object? recordingState = null,
     Object? audioState = null,
     Object? textState = null,
   }) {
@@ -1109,10 +1034,10 @@ class __$$PlayerStateImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
+      recordingState: null == recordingState
+          ? _value.recordingState
+          : recordingState // ignore: cast_nullable_to_non_nullable
+              as StatusOf<Recording>,
       audioState: null == audioState
           ? _value.audioState
           : audioState // ignore: cast_nullable_to_non_nullable
@@ -1130,14 +1055,15 @@ class __$$PlayerStateImplCopyWithImpl<$Res>
 class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
   const _$PlayerStateImpl(
       {required this.id,
-      this.error,
+      this.recordingState = const StatusOfLoading(),
       this.audioState = const StatusOfLoading(),
       this.textState = const StatusOfLoading()});
 
   @override
   final int id;
   @override
-  final String? error;
+  @JsonKey()
+  final StatusOf<Recording> recordingState;
   @override
   @JsonKey()
   final StatusOf<PlayerAudioState> audioState;
@@ -1147,7 +1073,7 @@ class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PlayerState(id: $id, error: $error, audioState: $audioState, textState: $textState)';
+    return 'PlayerState(id: $id, recordingState: $recordingState, audioState: $audioState, textState: $textState)';
   }
 
   @override
@@ -1156,7 +1082,7 @@ class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
     properties
       ..add(DiagnosticsProperty('type', 'PlayerState'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('error', error))
+      ..add(DiagnosticsProperty('recordingState', recordingState))
       ..add(DiagnosticsProperty('audioState', audioState))
       ..add(DiagnosticsProperty('textState', textState));
   }
@@ -1167,7 +1093,8 @@ class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
         (other.runtimeType == runtimeType &&
             other is _$PlayerStateImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.error, error) || other.error == error) &&
+            (identical(other.recordingState, recordingState) ||
+                other.recordingState == recordingState) &&
             (identical(other.audioState, audioState) ||
                 other.audioState == audioState) &&
             (identical(other.textState, textState) ||
@@ -1176,7 +1103,7 @@ class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, error, audioState, textState);
+      Object.hash(runtimeType, id, recordingState, audioState, textState);
 
   /// Create a copy of PlayerState
   /// with the given fields replaced by the non-null parameter values.
@@ -1190,14 +1117,14 @@ class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
 abstract class _PlayerState implements PlayerState {
   const factory _PlayerState(
       {required final int id,
-      final String? error,
+      final StatusOf<Recording> recordingState,
       final StatusOf<PlayerAudioState> audioState,
       final StatusOf<PlayerTextState> textState}) = _$PlayerStateImpl;
 
   @override
   int get id;
   @override
-  String? get error;
+  StatusOf<Recording> get recordingState;
   @override
   StatusOf<PlayerAudioState> get audioState;
   @override

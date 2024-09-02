@@ -6,6 +6,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../../api/entity/recording/recording.dart';
 import '../../../entity/status.dart';
+import '../../error_panel.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/separator.dart';
 import '../../extensions/smooth_mouse_scroll/positioned_smooth_mouse_scroll.dart';
@@ -42,28 +43,27 @@ class PlayerView extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return BlocListener<PlayerBloc, PlayerState>(
-      listenWhen: (final previous, final current) => previous.error != current.error || previous.audioState.runtimeType != current.audioState.runtimeType || previous.textState.runtimeType != current.textState.runtimeType,
+      listenWhen: (final previous, final current) =>
+          switch (previous.audioState) {
+            StatusOfError(
+              :final error,
+            ) =>
+              error,
+            _ => null,
+          } !=
+          switch (current.audioState) {
+            StatusOfError(
+              :final error,
+            ) =>
+              error,
+            _ => null,
+          },
       listener: (final context, final state) {
-        final error = state.error;
-        if (error != null) {
-          showSnackbar(text: error, context: context);
-          Navigator.of(context).pop();
-          return;
-        }
         if (state.audioState
             case StatusOfError(
               :final error,
             )) {
           showSnackbar(text: error, context: context);
-          return;
-        }
-        final textState = state.textState;
-        if (textState
-            case StatusOfError(
-              :final error,
-            )) {
-          showSnackbar(text: error, context: context);
-          return;
         }
       },
       child: Scaffold(
@@ -83,39 +83,58 @@ class _Player extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final bloc = context.read<PlayerBloc>();
+    late final PlayerBloc bloc;
+    var isInitialized = false;
+    context.select((final PlayerBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return bloc.state.recordingState.runtimeType;
+    });
 
-    return CallbackShortcuts(
-      bindings: {
-        const SingleActivator(LogicalKeyboardKey.arrowUp): () => switch (bloc.state.textState) {
-              PlayerTextStateData(
-                :final currentTextLine
-              ) =>
-                bloc.add(PlayerEventJumpToLineRequested(currentTextLine - 1)),
-              _ => null,
-            },
-        const SingleActivator(LogicalKeyboardKey.arrowDown): () => switch (bloc.state.textState) {
-              PlayerTextStateData(
-                :final currentTextLine
-              ) =>
-                bloc.add(PlayerEventJumpToLineRequested(currentTextLine + 1)),
-              _ => null,
-            },
-        const SingleActivator(LogicalKeyboardKey.space, includeRepeats: false): () => bloc.add(const PlayerEventPlayPauseButtonPressed()),
-      },
-      child: const Padding(
-        padding: EdgeInsets.only(bottom: 16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _Text(),
-            _Slider(),
-            _Time(),
-            _PlayButton(),
-          ],
+    return switch (bloc.state.recordingState) {
+      StatusOfLoading() => const Center(
+          child: CircularProgressIndicator(),
         ),
-      ),
-    );
+      StatusOfError(
+        :final error,
+      ) =>
+        ErrorPanel(
+          error: error,
+          onRefresh: () => bloc.add(const PlayerEventLoadRequested()),
+        ),
+      StatusOfData() => CallbackShortcuts(
+          bindings: {
+            const SingleActivator(LogicalKeyboardKey.arrowUp): () => switch (bloc.state.textState) {
+                  PlayerTextStateData(
+                    :final currentTextLine
+                  ) =>
+                    bloc.add(PlayerEventJumpToLineRequested(currentTextLine - 1)),
+                  _ => null,
+                },
+            const SingleActivator(LogicalKeyboardKey.arrowDown): () => switch (bloc.state.textState) {
+                  PlayerTextStateData(
+                    :final currentTextLine
+                  ) =>
+                    bloc.add(PlayerEventJumpToLineRequested(currentTextLine + 1)),
+                  _ => null,
+                },
+            const SingleActivator(LogicalKeyboardKey.space, includeRepeats: false): () => bloc.add(const PlayerEventPlayPauseButtonPressed()),
+          },
+          child: const Padding(
+            padding: EdgeInsets.only(bottom: 16),
+            child: Column(
+              children: [
+                _Text(),
+                _Slider(),
+                _Time(),
+                _PlayButton(),
+              ],
+            ),
+          ),
+        ),
+    };
   }
 }
 
@@ -139,21 +158,12 @@ class _Text extends StatelessWidget {
         StatusOfLoading() => const Center(
             child: CircularProgressIndicator(),
           ),
-        StatusOfError() => const Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.error_outline_rounded,
-                  size: 64,
-                ),
-                SizedBox(height: 36),
-                Text(
-                  'Hata oluştu',
-                  style: TextStyle(fontSize: 24),
-                ),
-              ],
-            ),
+        StatusOfError(
+          :final error,
+        ) =>
+          ErrorPanel(
+            error: error,
+            onRefresh: () => bloc.add(const PlayerEventTextLoadRequested()),
           ),
         StatusOfData() => const _LoadedText(),
       },

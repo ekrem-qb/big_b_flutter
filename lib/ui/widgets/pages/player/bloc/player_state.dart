@@ -4,7 +4,7 @@ part of 'player_bloc.dart';
 sealed class PlayerState with _$PlayerState {
   const factory PlayerState({
     required final int id,
-    final String? error,
+    @Default(StatusOfLoading()) final StatusOf<Recording> recordingState,
     @Default(StatusOfLoading()) final StatusOf<PlayerAudioState> audioState,
     @Default(StatusOfLoading()) final StatusOf<PlayerTextState> textState,
   }) = _PlayerState;
