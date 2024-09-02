@@ -168,7 +168,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
       emit(
         state.copyWith(
-          textState: StatusOfData(
+          textState: StatusOfData<PlayerTextStateData>(
             PlayerTextStateData(
               textSpans: textSpans,
               textLines: textLines,
@@ -249,7 +249,15 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     if (event.index < 0) return;
     if (event.index >= textState.data.textLines.length) return;
 
-    emit(state.copyWith(textState: StatusOfData(textState.data.copyWith(currentTextLine: event.index))));
+    emit(
+      state.copyWith(
+        textState: StatusOfData<PlayerTextStateData>(
+          textState.data.copyWith(
+            currentTextLine: event.index,
+          ),
+        ),
+      ),
+    );
 
     if (event.seekPlayer) {
       add(PlayerEventSeekRequested(textState.data.textLines[event.index].time + const Duration(milliseconds: 1)));
