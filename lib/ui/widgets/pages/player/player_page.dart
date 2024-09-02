@@ -415,18 +415,36 @@ class _SliderState extends State<_Slider> {
   final _controller = InteractiveSliderController(0);
 
   Duration _duration = const Duration(seconds: 1);
+  double _position = 0;
+  bool _canAnimate = true;
 
   @override
   Widget build(final BuildContext context) {
     late final PlayerBloc bloc;
     var isInitialized = false;
-    context.select((final PlayerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return bloc.state.audioState.runtimeType;
-    });
+    context
+      ..select((final PlayerBloc newBloc) {
+        if (!isInitialized) {
+          bloc = newBloc;
+          isInitialized = true;
+        }
+        return switch (bloc.state.audioState) {
+          StatusOfData<PlayerAudioState>(
+            data: PlayerAudioState(
+              :final position,
+            )
+          ) =>
+            position,
+          _ => null,
+        };
+      })
+      ..select((final PlayerBloc newBloc) {
+        if (!isInitialized) {
+          bloc = newBloc;
+          isInitialized = true;
+        }
+        return bloc.state.audioState.runtimeType;
+      });
 
     final colorScheme = Theme.of(context).colorScheme;
     final textStyle = TextStyle(
@@ -455,7 +473,7 @@ class _SliderState extends State<_Slider> {
         if (audioState is! StatusOfData<PlayerAudioState>) return;
 
         _duration = audioState.data.duration;
-        _controller.value = audioState.data.position.inMicroseconds / audioState.data.duration.inMicroseconds;
+        _position = audioState.data.position.inMicroseconds / audioState.data.duration.inMicroseconds;
       },
       child: MediaQuery(
         data: const MediaQueryData(navigationMode: NavigationMode.directional),
@@ -467,29 +485,44 @@ class _SliderState extends State<_Slider> {
               false,
             _ => true,
           },
-          child: InteractiveSlider(
-            unfocusedOpacity: 1,
-            foregroundColor: colorScheme.primary,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            iconPosition: IconPosition.below,
-            iconColor: colorScheme.onPrimary,
-            iconGap: 24,
-            iconSize: 24,
-            iconCrossAxisAlignment: CrossAxisAlignment.start,
-            controller: _controller,
-            startIcon: DefaultTextStyle(
-              style: textStyle,
-              child: ListenableBuilder(
-                listenable: _controller,
-                builder: (final _, final __) => _Time(_duration * _controller.value),
+          child: TweenAnimationBuilder(
+            tween: Tween<double>(begin: _controller.value, end: _position),
+            curve: Curves.easeOutExpo,
+            duration: _canAnimate ? Durations.short4 : Duration.zero,
+            builder: (final context, final value, final child) {
+              _controller.value = value;
+              _canAnimate = true;
+              return child!;
+            },
+            child: InteractiveSlider(
+              unfocusedOpacity: 1,
+              foregroundColor: colorScheme.primary,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              iconPosition: IconPosition.below,
+              iconColor: colorScheme.onPrimary,
+              iconGap: 24,
+              iconSize: 24,
+              iconCrossAxisAlignment: CrossAxisAlignment.start,
+              controller: _controller,
+              startIcon: DefaultTextStyle(
+                style: textStyle,
+                child: ValueListenableBuilder(
+                  valueListenable: _controller,
+                  builder: (final context, final value, final child) {
+                    return _Time(_duration * value);
+                  },
+                ),
               ),
+              centerIcon: const _PlayButton(),
+              endIcon: DefaultTextStyle(
+                style: textStyle,
+                child: const _TotalTime(),
+              ),
+              onProgressUpdated: (final newValue) {
+                bloc.add(PlayerEventSeekRequested(_duration * newValue));
+                _canAnimate = false;
+              },
             ),
-            centerIcon: const _PlayButton(),
-            endIcon: DefaultTextStyle(
-              style: textStyle,
-              child: const _TotalTime(),
-            ),
-            onProgressUpdated: (final newValue) => bloc.add(PlayerEventSeekRequested(_duration * newValue)),
           ),
         ),
       ),
