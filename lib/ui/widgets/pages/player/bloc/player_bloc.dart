@@ -258,7 +258,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     );
 
     if (event.seekPlayer) {
-      add(PlayerEventSeekRequested(textState.data.textLines[event.index].time + const Duration(milliseconds: 1)));
+      add(PlayerEventSeekRequested(textState.data.textLines[event.index].time));
     }
 
     if (scrollController.isAttached) {
@@ -275,7 +275,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     final audioState = state.audioState;
     if (audioState is! StatusOfData<PlayerAudioState>) return;
 
-    await _player.seek(event.position);
+    await _player.seek(event.position + const Duration(milliseconds: 1));
   }
 
   Future<void> _onPlayPauseButtonPressed(final PlayerEventPlayPauseButtonPressed event, final Emitter<PlayerState> emit) async {
