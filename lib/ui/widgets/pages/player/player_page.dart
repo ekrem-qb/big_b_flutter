@@ -330,8 +330,10 @@ class _TextLine extends StatelessWidget {
         isInitialized = true;
       }
       return switch (bloc.state.textState) {
-        PlayerTextStateData(
-          :final currentTextLine,
+        StatusOfData(
+          data: PlayerTextStateData(
+            :final currentTextLine,
+          )
         ) =>
           currentTextLine,
         _ => 0,
