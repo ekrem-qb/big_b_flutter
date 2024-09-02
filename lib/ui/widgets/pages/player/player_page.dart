@@ -7,8 +7,10 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../../../../api/entity/recording/recording.dart';
 import '../../../entity/status.dart';
 import '../../error_panel.dart';
+import '../../extensions/fade_transition_builder.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/separator.dart';
+import '../../extensions/shimmer.dart';
 import '../../extensions/smooth_mouse_scroll/positioned_smooth_mouse_scroll.dart';
 import '../../extensions/snackbar.dart';
 import 'bloc/player_bloc.dart';
@@ -138,6 +140,30 @@ class _Player extends StatelessWidget {
   }
 }
 
+const _gradient = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [
+    Colors.transparent,
+    Color.fromRGBO(255, 255, 255, 0.05),
+    Color.fromRGBO(255, 255, 255, 0.25),
+    Color.fromRGBO(255, 255, 255, 0.75),
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Colors.white,
+    Color.fromRGBO(255, 255, 255, 0.75),
+    Color.fromRGBO(255, 255, 255, 0.5),
+    Color.fromRGBO(255, 255, 255, 0.25),
+    Colors.transparent,
+  ],
+);
+
 class _Text extends StatelessWidget {
   const _Text();
 
@@ -152,21 +178,49 @@ class _Text extends StatelessWidget {
       }
       return bloc.state.textState.runtimeType;
     });
+    final theme = Theme.of(context);
 
     return Expanded(
-      child: switch (bloc.state.textState) {
-        StatusOfLoading() => const Center(
-            child: CircularProgressIndicator(),
-          ),
-        StatusOfError(
-          :final error,
-        ) =>
-          ErrorPanel(
-            error: error,
-            onRefresh: () => bloc.add(const PlayerEventTextLoadRequested()),
-          ),
-        StatusOfData() => const _LoadedText(),
-      },
+      child: AnimatedSwitcher(
+        duration: Durations.medium1,
+        transitionBuilder: fadeTransitionBuilder,
+        child: switch (bloc.state.textState) {
+          StatusOfLoading() => Shimmer.fromColors(
+              baseColor: Color.lerp(theme.colorScheme.onSurface, theme.colorScheme.surfaceContainerLow, 0.85)!,
+              highlightColor: theme.colorScheme.onSurface,
+              child: ShaderMask(
+                shaderCallback: _gradient.createShader,
+                child: LayoutBuilder(
+                  builder: (final context, final constraints) {
+                    return ScrollablePositionedList.separated(
+                      itemCount: 100,
+                      padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.5),
+                      separatorBuilder: separatorBuilder,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (final context, final index) {
+                        return Card(
+                          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: Text(
+                            '',
+                            style: theme.textTheme.titleLarge,
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
+          StatusOfError(
+            :final error,
+          ) =>
+            ErrorPanel(
+              error: error,
+              onRefresh: () => bloc.add(const PlayerEventTextLoadRequested()),
+            ),
+          StatusOfData() => const _LoadedText(),
+        },
+      ),
     );
   }
 }
@@ -186,30 +240,6 @@ class _LoadedText extends StatelessWidget {
       ),
     );
   }
-
-  static const _gradient = LinearGradient(
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter,
-    colors: [
-      Colors.transparent,
-      Color.fromRGBO(255, 255, 255, 0.05),
-      Color.fromRGBO(255, 255, 255, 0.25),
-      Color.fromRGBO(255, 255, 255, 0.75),
-      Colors.white,
-      Colors.white,
-      Colors.white,
-      Colors.white,
-      Colors.white,
-      Colors.white,
-      Colors.white,
-      Colors.white,
-      Colors.white,
-      Color.fromRGBO(255, 255, 255, 0.75),
-      Color.fromRGBO(255, 255, 255, 0.5),
-      Color.fromRGBO(255, 255, 255, 0.25),
-      Colors.transparent,
-    ],
-  );
 
   @override
   Widget build(final BuildContext context) {
