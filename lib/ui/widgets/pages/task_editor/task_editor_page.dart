@@ -278,6 +278,8 @@ class _Text extends StatelessWidget {
 class _ImageToggle extends StatelessWidget {
   const _ImageToggle();
 
+  static const kBorderRadius = BorderRadius.all(Radius.circular(8));
+
   @override
   Widget build(final BuildContext context) {
     late final TaskEditorBloc bloc;
@@ -290,11 +292,18 @@ class _ImageToggle extends StatelessWidget {
       return bloc.state.isImageRequired;
     });
 
-    return Chip(
-      padding: EdgeInsets.zero,
-      labelPadding: EdgeInsets.zero,
+    return Material(
+      shape: RoundedRectangleBorder(
+        borderRadius: kBorderRadius,
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.outline,
+        ),
+      ),
       clipBehavior: Clip.antiAlias,
-      label: CheckboxListTile(
+      child: CheckboxListTile(
+        shape: const RoundedRectangleBorder(
+          borderRadius: kBorderRadius,
+        ),
         title: const Text('Fotoğraf eklenmesi lazım'),
         controlAffinity: ListTileControlAffinity.leading,
         value: isImageRequired,
