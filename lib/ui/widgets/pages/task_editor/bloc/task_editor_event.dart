@@ -11,6 +11,5 @@ sealed class TaskEditorEvent with _$TaskEditorEvent {
   const factory TaskEditorEvent.executivesAdded(final List<Profile> executives) = TaskEditorEventExecutivesAdded;
   const factory TaskEditorEvent.executiveRemoved(final int index) = TaskEditorEventExecutiveRemoved;
   const factory TaskEditorEvent.saveRequested() = TaskEditorEventSaveRequested;
-  const factory TaskEditorEvent.deleteDialogOpened() = TaskEditorEventDeleteDialogOpened;
-  const factory TaskEditorEvent.deleteDialogClosed({required final bool isDeleted}) = TaskEditorEventDeleteDialogClosed;
+  const factory TaskEditorEvent.deleteRequested() = TaskEditorEventDeleteRequested;
 }

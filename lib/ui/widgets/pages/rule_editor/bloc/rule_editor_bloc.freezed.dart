@@ -392,21 +392,21 @@ abstract class RuleEditorEventSaveRequested implements RuleEditorEvent {
 }
 
 /// @nodoc
-abstract class _$$RuleEditorEventDeleteDialogOpenedImplCopyWith<$Res> {
-  factory _$$RuleEditorEventDeleteDialogOpenedImplCopyWith(
-          _$RuleEditorEventDeleteDialogOpenedImpl value,
-          $Res Function(_$RuleEditorEventDeleteDialogOpenedImpl) then) =
-      __$$RuleEditorEventDeleteDialogOpenedImplCopyWithImpl<$Res>;
+abstract class _$$RuleEditorEventDeleteRequestedImplCopyWith<$Res> {
+  factory _$$RuleEditorEventDeleteRequestedImplCopyWith(
+          _$RuleEditorEventDeleteRequestedImpl value,
+          $Res Function(_$RuleEditorEventDeleteRequestedImpl) then) =
+      __$$RuleEditorEventDeleteRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$RuleEditorEventDeleteDialogOpenedImplCopyWithImpl<$Res>
+class __$$RuleEditorEventDeleteRequestedImplCopyWithImpl<$Res>
     extends _$RuleEditorEventCopyWithImpl<$Res,
-        _$RuleEditorEventDeleteDialogOpenedImpl>
-    implements _$$RuleEditorEventDeleteDialogOpenedImplCopyWith<$Res> {
-  __$$RuleEditorEventDeleteDialogOpenedImplCopyWithImpl(
-      _$RuleEditorEventDeleteDialogOpenedImpl _value,
-      $Res Function(_$RuleEditorEventDeleteDialogOpenedImpl) _then)
+        _$RuleEditorEventDeleteRequestedImpl>
+    implements _$$RuleEditorEventDeleteRequestedImplCopyWith<$Res> {
+  __$$RuleEditorEventDeleteRequestedImplCopyWithImpl(
+      _$RuleEditorEventDeleteRequestedImpl _value,
+      $Res Function(_$RuleEditorEventDeleteRequestedImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of RuleEditorEvent
@@ -415,117 +415,29 @@ class __$$RuleEditorEventDeleteDialogOpenedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$RuleEditorEventDeleteDialogOpenedImpl
-    implements RuleEditorEventDeleteDialogOpened {
-  const _$RuleEditorEventDeleteDialogOpenedImpl();
+class _$RuleEditorEventDeleteRequestedImpl
+    implements RuleEditorEventDeleteRequested {
+  const _$RuleEditorEventDeleteRequestedImpl();
 
   @override
   String toString() {
-    return 'RuleEditorEvent.deleteDialogOpened()';
+    return 'RuleEditorEvent.deleteRequested()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$RuleEditorEventDeleteDialogOpenedImpl);
+            other is _$RuleEditorEventDeleteRequestedImpl);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 }
 
-abstract class RuleEditorEventDeleteDialogOpened implements RuleEditorEvent {
-  const factory RuleEditorEventDeleteDialogOpened() =
-      _$RuleEditorEventDeleteDialogOpenedImpl;
-}
-
-/// @nodoc
-abstract class _$$RuleEditorEventDeleteDialogClosedImplCopyWith<$Res> {
-  factory _$$RuleEditorEventDeleteDialogClosedImplCopyWith(
-          _$RuleEditorEventDeleteDialogClosedImpl value,
-          $Res Function(_$RuleEditorEventDeleteDialogClosedImpl) then) =
-      __$$RuleEditorEventDeleteDialogClosedImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({bool isDeleted});
-}
-
-/// @nodoc
-class __$$RuleEditorEventDeleteDialogClosedImplCopyWithImpl<$Res>
-    extends _$RuleEditorEventCopyWithImpl<$Res,
-        _$RuleEditorEventDeleteDialogClosedImpl>
-    implements _$$RuleEditorEventDeleteDialogClosedImplCopyWith<$Res> {
-  __$$RuleEditorEventDeleteDialogClosedImplCopyWithImpl(
-      _$RuleEditorEventDeleteDialogClosedImpl _value,
-      $Res Function(_$RuleEditorEventDeleteDialogClosedImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of RuleEditorEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? isDeleted = null,
-  }) {
-    return _then(_$RuleEditorEventDeleteDialogClosedImpl(
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$RuleEditorEventDeleteDialogClosedImpl
-    implements RuleEditorEventDeleteDialogClosed {
-  const _$RuleEditorEventDeleteDialogClosedImpl({required this.isDeleted});
-
-  @override
-  final bool isDeleted;
-
-  @override
-  String toString() {
-    return 'RuleEditorEvent.deleteDialogClosed(isDeleted: $isDeleted)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$RuleEditorEventDeleteDialogClosedImpl &&
-            (identical(other.isDeleted, isDeleted) ||
-                other.isDeleted == isDeleted));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, isDeleted);
-
-  /// Create a copy of RuleEditorEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$RuleEditorEventDeleteDialogClosedImplCopyWith<
-          _$RuleEditorEventDeleteDialogClosedImpl>
-      get copyWith => __$$RuleEditorEventDeleteDialogClosedImplCopyWithImpl<
-          _$RuleEditorEventDeleteDialogClosedImpl>(this, _$identity);
-}
-
-abstract class RuleEditorEventDeleteDialogClosed implements RuleEditorEvent {
-  const factory RuleEditorEventDeleteDialogClosed(
-          {required final bool isDeleted}) =
-      _$RuleEditorEventDeleteDialogClosedImpl;
-
-  bool get isDeleted;
-
-  /// Create a copy of RuleEditorEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$RuleEditorEventDeleteDialogClosedImplCopyWith<
-          _$RuleEditorEventDeleteDialogClosedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+abstract class RuleEditorEventDeleteRequested implements RuleEditorEvent {
+  const factory RuleEditorEventDeleteRequested() =
+      _$RuleEditorEventDeleteRequestedImpl;
 }
 
 /// @nodoc

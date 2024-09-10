@@ -9,6 +9,5 @@ sealed class ProfileEditorEvent with _$ProfileEditorEvent {
   const factory ProfileEditorEvent.passwordVisibilityToggled() = ProfileEditorEventPasswordVisibilityToggled;
   const factory ProfileEditorEvent.roleChanged(final Role value) = ProfileEditorEventRoleChanged;
   const factory ProfileEditorEvent.saveRequested() = ProfileEditorEventSaveRequested;
-  const factory ProfileEditorEvent.deleteDialogOpened() = ProfileEditorEventDeleteDialogOpened;
-  const factory ProfileEditorEvent.deleteDialogClosed({required final bool isDeleted}) = ProfileEditorEventDeleteDialogClosed;
+  const factory ProfileEditorEvent.deleteRequested() = ProfileEditorEventDeleteRequested;
 }

@@ -7,6 +7,5 @@ sealed class RuleEditorEvent with _$RuleEditorEvent {
   const factory RuleEditorEvent.detailsChanged(final String value) = RuleEditorEventDetailsChanged;
   const factory RuleEditorEvent.colorChanged(final Color value) = RuleEditorEventColorChanged;
   const factory RuleEditorEvent.saveRequested() = RuleEditorEventSaveRequested;
-  const factory RuleEditorEvent.deleteDialogOpened() = RuleEditorEventDeleteDialogOpened;
-  const factory RuleEditorEvent.deleteDialogClosed({required final bool isDeleted}) = RuleEditorEventDeleteDialogClosed;
+  const factory RuleEditorEvent.deleteRequested() = RuleEditorEventDeleteRequested;
 }

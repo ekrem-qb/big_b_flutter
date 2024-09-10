@@ -534,21 +534,21 @@ abstract class ProfileEditorEventSaveRequested implements ProfileEditorEvent {
 }
 
 /// @nodoc
-abstract class _$$ProfileEditorEventDeleteDialogOpenedImplCopyWith<$Res> {
-  factory _$$ProfileEditorEventDeleteDialogOpenedImplCopyWith(
-          _$ProfileEditorEventDeleteDialogOpenedImpl value,
-          $Res Function(_$ProfileEditorEventDeleteDialogOpenedImpl) then) =
-      __$$ProfileEditorEventDeleteDialogOpenedImplCopyWithImpl<$Res>;
+abstract class _$$ProfileEditorEventDeleteRequestedImplCopyWith<$Res> {
+  factory _$$ProfileEditorEventDeleteRequestedImplCopyWith(
+          _$ProfileEditorEventDeleteRequestedImpl value,
+          $Res Function(_$ProfileEditorEventDeleteRequestedImpl) then) =
+      __$$ProfileEditorEventDeleteRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$ProfileEditorEventDeleteDialogOpenedImplCopyWithImpl<$Res>
+class __$$ProfileEditorEventDeleteRequestedImplCopyWithImpl<$Res>
     extends _$ProfileEditorEventCopyWithImpl<$Res,
-        _$ProfileEditorEventDeleteDialogOpenedImpl>
-    implements _$$ProfileEditorEventDeleteDialogOpenedImplCopyWith<$Res> {
-  __$$ProfileEditorEventDeleteDialogOpenedImplCopyWithImpl(
-      _$ProfileEditorEventDeleteDialogOpenedImpl _value,
-      $Res Function(_$ProfileEditorEventDeleteDialogOpenedImpl) _then)
+        _$ProfileEditorEventDeleteRequestedImpl>
+    implements _$$ProfileEditorEventDeleteRequestedImplCopyWith<$Res> {
+  __$$ProfileEditorEventDeleteRequestedImplCopyWithImpl(
+      _$ProfileEditorEventDeleteRequestedImpl _value,
+      $Res Function(_$ProfileEditorEventDeleteRequestedImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of ProfileEditorEvent
@@ -557,119 +557,29 @@ class __$$ProfileEditorEventDeleteDialogOpenedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ProfileEditorEventDeleteDialogOpenedImpl
-    implements ProfileEditorEventDeleteDialogOpened {
-  const _$ProfileEditorEventDeleteDialogOpenedImpl();
+class _$ProfileEditorEventDeleteRequestedImpl
+    implements ProfileEditorEventDeleteRequested {
+  const _$ProfileEditorEventDeleteRequestedImpl();
 
   @override
   String toString() {
-    return 'ProfileEditorEvent.deleteDialogOpened()';
+    return 'ProfileEditorEvent.deleteRequested()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ProfileEditorEventDeleteDialogOpenedImpl);
+            other is _$ProfileEditorEventDeleteRequestedImpl);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 }
 
-abstract class ProfileEditorEventDeleteDialogOpened
-    implements ProfileEditorEvent {
-  const factory ProfileEditorEventDeleteDialogOpened() =
-      _$ProfileEditorEventDeleteDialogOpenedImpl;
-}
-
-/// @nodoc
-abstract class _$$ProfileEditorEventDeleteDialogClosedImplCopyWith<$Res> {
-  factory _$$ProfileEditorEventDeleteDialogClosedImplCopyWith(
-          _$ProfileEditorEventDeleteDialogClosedImpl value,
-          $Res Function(_$ProfileEditorEventDeleteDialogClosedImpl) then) =
-      __$$ProfileEditorEventDeleteDialogClosedImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({bool isDeleted});
-}
-
-/// @nodoc
-class __$$ProfileEditorEventDeleteDialogClosedImplCopyWithImpl<$Res>
-    extends _$ProfileEditorEventCopyWithImpl<$Res,
-        _$ProfileEditorEventDeleteDialogClosedImpl>
-    implements _$$ProfileEditorEventDeleteDialogClosedImplCopyWith<$Res> {
-  __$$ProfileEditorEventDeleteDialogClosedImplCopyWithImpl(
-      _$ProfileEditorEventDeleteDialogClosedImpl _value,
-      $Res Function(_$ProfileEditorEventDeleteDialogClosedImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ProfileEditorEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? isDeleted = null,
-  }) {
-    return _then(_$ProfileEditorEventDeleteDialogClosedImpl(
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$ProfileEditorEventDeleteDialogClosedImpl
-    implements ProfileEditorEventDeleteDialogClosed {
-  const _$ProfileEditorEventDeleteDialogClosedImpl({required this.isDeleted});
-
-  @override
-  final bool isDeleted;
-
-  @override
-  String toString() {
-    return 'ProfileEditorEvent.deleteDialogClosed(isDeleted: $isDeleted)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ProfileEditorEventDeleteDialogClosedImpl &&
-            (identical(other.isDeleted, isDeleted) ||
-                other.isDeleted == isDeleted));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, isDeleted);
-
-  /// Create a copy of ProfileEditorEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ProfileEditorEventDeleteDialogClosedImplCopyWith<
-          _$ProfileEditorEventDeleteDialogClosedImpl>
-      get copyWith => __$$ProfileEditorEventDeleteDialogClosedImplCopyWithImpl<
-          _$ProfileEditorEventDeleteDialogClosedImpl>(this, _$identity);
-}
-
-abstract class ProfileEditorEventDeleteDialogClosed
-    implements ProfileEditorEvent {
-  const factory ProfileEditorEventDeleteDialogClosed(
-          {required final bool isDeleted}) =
-      _$ProfileEditorEventDeleteDialogClosedImpl;
-
-  bool get isDeleted;
-
-  /// Create a copy of ProfileEditorEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ProfileEditorEventDeleteDialogClosedImplCopyWith<
-          _$ProfileEditorEventDeleteDialogClosedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+abstract class ProfileEditorEventDeleteRequested implements ProfileEditorEvent {
+  const factory ProfileEditorEventDeleteRequested() =
+      _$ProfileEditorEventDeleteRequestedImpl;
 }
 
 /// @nodoc

@@ -21,8 +21,7 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
     on<TaskViewerEvent>((final event, final emit) {
       return switch (event) {
         TaskViewerEventLoadRequested() => _onLoadRequested(event, emit),
-        TaskViewerEventDeleteDialogOpened() => _onDeleteDialogOpened(event, emit),
-        TaskViewerEventDeleteDialogClosed() => _onDeleteDialogClosed(event, emit),
+        TaskViewerEventDeleteRequested() => _onDeleteRequested(event, emit),
       };
     });
 
@@ -73,35 +72,25 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
     }
   }
 
-  Future<void> _onDeleteDialogOpened(final TaskViewerEventDeleteDialogOpened event, final Emitter<TaskViewerState> emit) async {
+  Future<void> _onDeleteRequested(final TaskViewerEventDeleteRequested event, final Emitter<TaskViewerState> emit) async {
     emit(
       state.copyWith(
         deleteState: const OperationStatusInProgress(),
       ),
     );
-  }
 
-  Future<void> _onDeleteDialogClosed(final TaskViewerEventDeleteDialogClosed event, final Emitter<TaskViewerState> emit) async {
-    if (event.isDeleted) {
-      try {
-        await db.from(Task.tableName).delete().eq($TaskImplJsonKeys.id, state.id);
+    try {
+      await db.from(Task.tableName).delete().eq($TaskImplJsonKeys.id, state.id);
 
-        emit(
-          state.copyWith(
-            deleteState: const OperationStatusCompleted(),
-          ),
-        );
-      } on Exception catch (e) {
-        emit(
-          state.copyWith(
-            deleteState: OperationStatusError(e.toString()),
-          ),
-        );
-      }
-    } else {
       emit(
         state.copyWith(
-          deleteState: const OperationStatusInitial(),
+          deleteState: const OperationStatusCompleted(),
+        ),
+      );
+    } on Exception catch (e) {
+      emit(
+        state.copyWith(
+          deleteState: OperationStatusError(e.toString()),
         ),
       );
     }

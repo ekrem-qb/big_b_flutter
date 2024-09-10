@@ -38,8 +38,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
         RuleEditorEventDetailsChanged() => _onDetailsChanged(event, emit),
         RuleEditorEventColorChanged() => _onColorChanged(event, emit),
         RuleEditorEventSaveRequested() => _onSaveRequested(event, emit),
-        RuleEditorEventDeleteDialogOpened() => _onDeleteDialogOpened(event, emit),
-        RuleEditorEventDeleteDialogClosed() => _onDeleteDialogClosed(event, emit),
+        RuleEditorEventDeleteRequested() => _onDeleteRequested(event, emit),
       };
     });
     if (state
@@ -348,7 +347,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
     }
   }
 
-  Future<void> _onDeleteDialogOpened(final RuleEditorEventDeleteDialogOpened event, final Emitter<RuleEditorState> emit) async {
+  Future<void> _onDeleteRequested(final RuleEditorEventDeleteRequested event, final Emitter<RuleEditorState> emit) async {
     final currentState = state;
 
     if (currentState
@@ -357,64 +356,46 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
             :final data,
           ),
         )) {
-      emit(
-        currentState.copyWith(
-          editState: StatusOfData(
-            data.copyWith(
-              deleteState: const OperationStatusInProgress(),
+      if (currentState
+          case RuleEditorStateEdit(
+            editState: StatusOfData(
+              :final data,
             ),
-          ),
-        ),
-      );
-    }
-  }
-
-  Future<void> _onDeleteDialogClosed(final RuleEditorEventDeleteDialogClosed event, final Emitter<RuleEditorState> emit) async {
-    final currentState = state;
-
-    if (currentState
-        case RuleEditorStateEdit(
-          editState: StatusOfData(
-            :final data,
-          ),
-        )) {
-      if (event.isDeleted) {
-        try {
-          await db.from(Rule.tableName).delete().eq($RuleImplJsonKeys.id, currentState.id);
-
-          emit(
-            currentState.copyWith(
-              editState: StatusOfData(
-                data.copyWith(
-                  deleteState: const OperationStatusCompleted(),
-                ),
+          )) {
+        emit(
+          currentState.copyWith(
+            editState: StatusOfData(
+              data.copyWith(
+                deleteState: const OperationStatusInProgress(),
               ),
             ),
-          );
-          return;
-        } on Exception catch (e) {
-          emit(
-            currentState.copyWith(
-              editState: StatusOfData(
-                data.copyWith(
-                  deleteState: OperationStatusError(e.toString()),
-                ),
-              ),
-            ),
-          );
-          return;
-        }
+          ),
+        );
       }
 
-      emit(
-        currentState.copyWith(
-          editState: StatusOfData(
-            data.copyWith(
-              deleteState: const OperationStatusInitial(),
+      try {
+        await db.from(Rule.tableName).delete().eq($RuleImplJsonKeys.id, currentState.id);
+
+        emit(
+          currentState.copyWith(
+            editState: StatusOfData(
+              data.copyWith(
+                deleteState: const OperationStatusCompleted(),
+              ),
             ),
           ),
-        ),
-      );
+        );
+      } on Exception catch (e) {
+        emit(
+          currentState.copyWith(
+            editState: StatusOfData(
+              data.copyWith(
+                deleteState: OperationStatusError(e.toString()),
+              ),
+            ),
+          ),
+        );
+      }
     }
   }
 }

@@ -751,21 +751,21 @@ abstract class TaskEditorEventSaveRequested implements TaskEditorEvent {
 }
 
 /// @nodoc
-abstract class _$$TaskEditorEventDeleteDialogOpenedImplCopyWith<$Res> {
-  factory _$$TaskEditorEventDeleteDialogOpenedImplCopyWith(
-          _$TaskEditorEventDeleteDialogOpenedImpl value,
-          $Res Function(_$TaskEditorEventDeleteDialogOpenedImpl) then) =
-      __$$TaskEditorEventDeleteDialogOpenedImplCopyWithImpl<$Res>;
+abstract class _$$TaskEditorEventDeleteRequestedImplCopyWith<$Res> {
+  factory _$$TaskEditorEventDeleteRequestedImplCopyWith(
+          _$TaskEditorEventDeleteRequestedImpl value,
+          $Res Function(_$TaskEditorEventDeleteRequestedImpl) then) =
+      __$$TaskEditorEventDeleteRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$TaskEditorEventDeleteDialogOpenedImplCopyWithImpl<$Res>
+class __$$TaskEditorEventDeleteRequestedImplCopyWithImpl<$Res>
     extends _$TaskEditorEventCopyWithImpl<$Res,
-        _$TaskEditorEventDeleteDialogOpenedImpl>
-    implements _$$TaskEditorEventDeleteDialogOpenedImplCopyWith<$Res> {
-  __$$TaskEditorEventDeleteDialogOpenedImplCopyWithImpl(
-      _$TaskEditorEventDeleteDialogOpenedImpl _value,
-      $Res Function(_$TaskEditorEventDeleteDialogOpenedImpl) _then)
+        _$TaskEditorEventDeleteRequestedImpl>
+    implements _$$TaskEditorEventDeleteRequestedImplCopyWith<$Res> {
+  __$$TaskEditorEventDeleteRequestedImplCopyWithImpl(
+      _$TaskEditorEventDeleteRequestedImpl _value,
+      $Res Function(_$TaskEditorEventDeleteRequestedImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of TaskEditorEvent
@@ -774,117 +774,29 @@ class __$$TaskEditorEventDeleteDialogOpenedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TaskEditorEventDeleteDialogOpenedImpl
-    implements TaskEditorEventDeleteDialogOpened {
-  const _$TaskEditorEventDeleteDialogOpenedImpl();
+class _$TaskEditorEventDeleteRequestedImpl
+    implements TaskEditorEventDeleteRequested {
+  const _$TaskEditorEventDeleteRequestedImpl();
 
   @override
   String toString() {
-    return 'TaskEditorEvent.deleteDialogOpened()';
+    return 'TaskEditorEvent.deleteRequested()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TaskEditorEventDeleteDialogOpenedImpl);
+            other is _$TaskEditorEventDeleteRequestedImpl);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 }
 
-abstract class TaskEditorEventDeleteDialogOpened implements TaskEditorEvent {
-  const factory TaskEditorEventDeleteDialogOpened() =
-      _$TaskEditorEventDeleteDialogOpenedImpl;
-}
-
-/// @nodoc
-abstract class _$$TaskEditorEventDeleteDialogClosedImplCopyWith<$Res> {
-  factory _$$TaskEditorEventDeleteDialogClosedImplCopyWith(
-          _$TaskEditorEventDeleteDialogClosedImpl value,
-          $Res Function(_$TaskEditorEventDeleteDialogClosedImpl) then) =
-      __$$TaskEditorEventDeleteDialogClosedImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({bool isDeleted});
-}
-
-/// @nodoc
-class __$$TaskEditorEventDeleteDialogClosedImplCopyWithImpl<$Res>
-    extends _$TaskEditorEventCopyWithImpl<$Res,
-        _$TaskEditorEventDeleteDialogClosedImpl>
-    implements _$$TaskEditorEventDeleteDialogClosedImplCopyWith<$Res> {
-  __$$TaskEditorEventDeleteDialogClosedImplCopyWithImpl(
-      _$TaskEditorEventDeleteDialogClosedImpl _value,
-      $Res Function(_$TaskEditorEventDeleteDialogClosedImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of TaskEditorEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? isDeleted = null,
-  }) {
-    return _then(_$TaskEditorEventDeleteDialogClosedImpl(
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$TaskEditorEventDeleteDialogClosedImpl
-    implements TaskEditorEventDeleteDialogClosed {
-  const _$TaskEditorEventDeleteDialogClosedImpl({required this.isDeleted});
-
-  @override
-  final bool isDeleted;
-
-  @override
-  String toString() {
-    return 'TaskEditorEvent.deleteDialogClosed(isDeleted: $isDeleted)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$TaskEditorEventDeleteDialogClosedImpl &&
-            (identical(other.isDeleted, isDeleted) ||
-                other.isDeleted == isDeleted));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, isDeleted);
-
-  /// Create a copy of TaskEditorEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$TaskEditorEventDeleteDialogClosedImplCopyWith<
-          _$TaskEditorEventDeleteDialogClosedImpl>
-      get copyWith => __$$TaskEditorEventDeleteDialogClosedImplCopyWithImpl<
-          _$TaskEditorEventDeleteDialogClosedImpl>(this, _$identity);
-}
-
-abstract class TaskEditorEventDeleteDialogClosed implements TaskEditorEvent {
-  const factory TaskEditorEventDeleteDialogClosed(
-          {required final bool isDeleted}) =
-      _$TaskEditorEventDeleteDialogClosedImpl;
-
-  bool get isDeleted;
-
-  /// Create a copy of TaskEditorEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TaskEditorEventDeleteDialogClosedImplCopyWith<
-          _$TaskEditorEventDeleteDialogClosedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+abstract class TaskEditorEventDeleteRequested implements TaskEditorEvent {
+  const factory TaskEditorEventDeleteRequested() =
+      _$TaskEditorEventDeleteRequestedImpl;
 }
 
 /// @nodoc

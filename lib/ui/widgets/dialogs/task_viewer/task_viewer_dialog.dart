@@ -39,15 +39,10 @@ class TaskViewerView extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final bloc = context.read<TaskViewerBloc>();
-
     return MouseNavigator(
       child: BlocListener<TaskViewerBloc, TaskViewerState>(
         listener: (final context, final state) async {
           switch (state.deleteState) {
-            case OperationStatusInProgress():
-              final isDeleted = await showDeleteDialog(itemName: 'görevi', context: context);
-              bloc.add(TaskViewerEventDeleteDialogClosed(isDeleted: isDeleted));
             case OperationStatusCompleted():
               Navigator.pop(context);
             case OperationStatusError(
@@ -400,7 +395,11 @@ class _DeleteButton extends StatelessWidget {
     return TextButton.icon(
       icon: const Icon(Icons.delete),
       label: const Text('Sil'),
-      onPressed: () => bloc.add(const TaskViewerEventDeleteDialogOpened()),
+      onPressed: () async {
+        if (await showDeleteDialog(itemName: 'görevi', context: context)) {
+          bloc.add(const TaskViewerEventDeleteRequested());
+        }
+      },
     );
   }
 }

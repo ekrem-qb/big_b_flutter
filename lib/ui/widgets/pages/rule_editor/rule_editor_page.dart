@@ -101,9 +101,6 @@ class RuleEditorView extends StatelessWidget {
                     )
                   ):
                   switch (deleteState) {
-                    case OperationStatusInProgress():
-                      final isDeleted = await showDeleteDialog(itemName: 'kuralı', context: context);
-                      bloc.add(RuleEditorEventDeleteDialogClosed(isDeleted: isDeleted));
                     case OperationStatusCompleted():
                       Navigator.pop(context);
                     case OperationStatusError(
@@ -205,7 +202,11 @@ class _DeleteButton extends StatelessWidget {
       child: IconButton(
         icon: const Icon(Icons.delete),
         tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
-        onPressed: () => bloc.add(const RuleEditorEventDeleteDialogOpened()),
+        onPressed: () async {
+          if (await showDeleteDialog(itemName: 'kuralı', context: context)) {
+            bloc.add(const RuleEditorEventDeleteRequested());
+          }
+        },
       ),
     );
   }

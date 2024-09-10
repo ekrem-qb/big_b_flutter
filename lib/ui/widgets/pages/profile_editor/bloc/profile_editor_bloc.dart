@@ -34,8 +34,7 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
         ProfileEditorEventPasswordVisibilityToggled() => _onPasswordVisibilityToggled(event, emit),
         ProfileEditorEventRoleChanged() => _onRoleChanged(event, emit),
         ProfileEditorEventSaveRequested() => _onSaveRequested(event, emit),
-        ProfileEditorEventDeleteDialogOpened() => _onDeleteDialogOpened(event, emit),
-        ProfileEditorEventDeleteDialogClosed() => _onDeleteDialogClosed(event, emit),
+        ProfileEditorEventDeleteRequested() => _onDeleteRequested(event, emit),
       };
     });
     if (state
@@ -328,7 +327,7 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
     return '$login@${(db.auth.currentUser?.email ?? 'mail.com').split('@')[1]}';
   }
 
-  Future<void> _onDeleteDialogOpened(final ProfileEditorEventDeleteDialogOpened event, final Emitter<ProfileEditorState> emit) async {
+  Future<void> _onDeleteRequested(final ProfileEditorEventDeleteRequested event, final Emitter<ProfileEditorState> emit) async {
     final currentState = state;
 
     if (currentState is! ProfileEditorStateEdit) return;
@@ -338,39 +337,23 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
         deleteState: const OperationStatusInProgress(),
       ),
     );
-  }
 
-  Future<void> _onDeleteDialogClosed(final ProfileEditorEventDeleteDialogClosed event, final Emitter<ProfileEditorState> emit) async {
-    final currentState = state;
+    try {
+      await db.from(Profile.tableName).update({
+        $ProfileImplJsonKeys.isDeleted: true,
+      }).eq($ProfileImplJsonKeys.uid, currentState.uid);
 
-    if (currentState is! ProfileEditorStateEdit) return;
-
-    if (event.isDeleted) {
-      try {
-        await db.from(Profile.tableName).update({
-          $ProfileImplJsonKeys.isDeleted: true,
-        }).eq($ProfileImplJsonKeys.uid, currentState.uid);
-
-        emit(
-          currentState.copyWith(
-            deleteState: const OperationStatusCompleted(),
-          ),
-        );
-        return;
-      } on Exception catch (e) {
-        emit(
-          currentState.copyWith(
-            deleteState: OperationStatusError(e.toString()),
-          ),
-        );
-        return;
-      }
+      emit(
+        currentState.copyWith(
+          deleteState: const OperationStatusCompleted(),
+        ),
+      );
+    } on Exception catch (e) {
+      emit(
+        currentState.copyWith(
+          deleteState: OperationStatusError(e.toString()),
+        ),
+      );
     }
-
-    emit(
-      currentState.copyWith(
-        deleteState: const OperationStatusInitial(),
-      ),
-    );
   }
 }

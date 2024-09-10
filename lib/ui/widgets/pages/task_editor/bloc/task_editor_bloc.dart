@@ -49,8 +49,7 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
         TaskEditorEventExecutivesAdded() => _onExecutivesAdded(event, emit),
         TaskEditorEventExecutiveRemoved() => _onExecutiveRemoved(event, emit),
         TaskEditorEventSaveRequested() => _onSaveRequested(event, emit),
-        TaskEditorEventDeleteDialogOpened() => _onDeleteDialogOpened(event, emit),
-        TaskEditorEventDeleteDialogClosed() => _onDeleteDialogClosed(event, emit),
+        TaskEditorEventDeleteRequested() => _onDeleteRequested(event, emit),
       };
     });
 
@@ -307,37 +306,25 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
     return true;
   }
 
-  Future<void> _onDeleteDialogOpened(final TaskEditorEventDeleteDialogOpened event, final Emitter<TaskEditorState> emit) async {
-    if (state.isNew) return;
-
+  Future<void> _onDeleteRequested(final TaskEditorEventDeleteRequested event, final Emitter<TaskEditorState> emit) async {
     emit(
       state.copyWith(
         deleteState: const OperationStatusInProgress(),
       ),
     );
-  }
 
-  Future<void> _onDeleteDialogClosed(final TaskEditorEventDeleteDialogClosed event, final Emitter<TaskEditorState> emit) async {
-    if (event.isDeleted) {
-      try {
-        await db.from(state.isPlanned ? PlannedTask.tableName : Task.tableName).delete().eq($TaskImplJsonKeys.id, state.id);
+    try {
+      await db.from(state.isPlanned ? PlannedTask.tableName : Task.tableName).delete().eq($TaskImplJsonKeys.id, state.id);
 
-        emit(
-          state.copyWith(
-            deleteState: const OperationStatusCompleted(),
-          ),
-        );
-      } on Exception catch (e) {
-        emit(
-          state.copyWith(
-            deleteState: OperationStatusError(e.toString()),
-          ),
-        );
-      }
-    } else {
       emit(
         state.copyWith(
-          deleteState: const OperationStatusInitial(),
+          deleteState: const OperationStatusCompleted(),
+        ),
+      );
+    } on Exception catch (e) {
+      emit(
+        state.copyWith(
+          deleteState: OperationStatusError(e.toString()),
         ),
       );
     }
