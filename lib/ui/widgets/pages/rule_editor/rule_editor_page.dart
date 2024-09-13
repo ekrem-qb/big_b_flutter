@@ -179,7 +179,7 @@ class _Body extends StatelessWidget {
                 Text('Detaylar', style: smallTextStyle),
                 SizedBox(height: 8),
                 _Details(),
-                SizedBox(height: 16),
+                SizedBox(height: 24),
                 _Color(),
               ],
             ),
@@ -335,19 +335,10 @@ class _Color extends StatelessWidget {
         _ => Colors.red,
       };
     });
-    final isLightTheme = Theme.of(context).brightness == Brightness.light;
 
     return ColorPicker(
-      hasBorder: isLightTheme,
-      wheelHasBorder: isLightTheme,
-      wheelDiameter: 148,
-      subheading: const SizedBox.shrink(),
-      pickerTypeLabels: const {
-        ColorPickerType.primary: 'Renk',
-        ColorPickerType.wheel: 'Renk tonu',
-      },
+      hasBorder: Theme.of(context).brightness == Brightness.light,
       pickersEnabled: const {
-        ColorPickerType.wheel: true,
         ColorPickerType.accent: false,
       },
       enableShadesSelection: false,
