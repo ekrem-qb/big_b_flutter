@@ -304,14 +304,9 @@ class _Details extends StatelessWidget {
   }
 }
 
-class _Color extends StatefulWidget {
+class _Color extends StatelessWidget {
   const _Color();
 
-  @override
-  State<_Color> createState() => _ColorState();
-}
-
-class _ColorState extends State<_Color> {
   @override
   Widget build(final BuildContext context) {
     late final RuleEditorBloc bloc;
