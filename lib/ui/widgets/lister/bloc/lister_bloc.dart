@@ -13,7 +13,7 @@ part 'lister_event.dart';
 part 'lister_state.dart';
 
 abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, ListerState<T>> {
-  ListerBloc() : super(const ListerStateLoading()) {
+  ListerBloc() : super(ListerStateLoading<T>()) {
     on<ListerEvent>(
       (final event, final emit) {
         return switch (event) {
@@ -60,7 +60,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, ListerStat
   Future<void> _onLoadRequested(final Emitter<ListerState> emit, final ListerEventLoadRequested event) async {
     try {
       if (state is ListerStateError) {
-        emit(const ListerStateLoading());
+        emit(ListerStateLoading<T>());
       }
 
       final count = await db.from(tableName).count();
@@ -83,7 +83,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, ListerStat
         ),
       );
     } on Exception catch (e) {
-      emit(ListerStateError(error: e.toString()));
+      emit(ListerStateError<T>(error: e.toString()));
     }
   }
 
@@ -106,7 +106,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, ListerStat
         ),
       );
     } on Exception catch (e) {
-      emit(ListerStateError(error: e.toString()));
+      emit(ListerStateError<T>(error: e.toString()));
     }
   }
 
