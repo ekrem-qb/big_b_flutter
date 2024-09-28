@@ -12,3 +12,4 @@ targets:
         options:
           map: false
           when: false
+          union_key: 'type'
