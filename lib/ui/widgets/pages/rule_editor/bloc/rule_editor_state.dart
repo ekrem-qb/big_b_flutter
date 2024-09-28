@@ -4,11 +4,10 @@ part of 'rule_editor_bloc.dart';
 sealed class RuleEditorState with _$RuleEditorState {
   const factory RuleEditorState.create({
     @Default(
-      Rule(
+      WordsRule(
         id: -1,
-        description: '',
-        details: '',
         color: Colors.red,
+        words: {},
       ),
     )
     final Rule rule,

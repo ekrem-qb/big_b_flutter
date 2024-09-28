@@ -88,6 +88,267 @@ abstract class RuleEditorEventLoadRequested implements RuleEditorEvent {
 }
 
 /// @nodoc
+abstract class _$$RuleEditorEventTypeChangedImplCopyWith<$Res> {
+  factory _$$RuleEditorEventTypeChangedImplCopyWith(
+          _$RuleEditorEventTypeChangedImpl value,
+          $Res Function(_$RuleEditorEventTypeChangedImpl) then) =
+      __$$RuleEditorEventTypeChangedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Rule value});
+
+  $RuleCopyWith<$Res> get value;
+}
+
+/// @nodoc
+class __$$RuleEditorEventTypeChangedImplCopyWithImpl<$Res>
+    extends _$RuleEditorEventCopyWithImpl<$Res,
+        _$RuleEditorEventTypeChangedImpl>
+    implements _$$RuleEditorEventTypeChangedImplCopyWith<$Res> {
+  __$$RuleEditorEventTypeChangedImplCopyWithImpl(
+      _$RuleEditorEventTypeChangedImpl _value,
+      $Res Function(_$RuleEditorEventTypeChangedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? value = null,
+  }) {
+    return _then(_$RuleEditorEventTypeChangedImpl(
+      null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as Rule,
+    ));
+  }
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $RuleCopyWith<$Res> get value {
+    return $RuleCopyWith<$Res>(_value.value, (value) {
+      return _then(_value.copyWith(value: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$RuleEditorEventTypeChangedImpl implements RuleEditorEventTypeChanged {
+  const _$RuleEditorEventTypeChangedImpl(this.value);
+
+  @override
+  final Rule value;
+
+  @override
+  String toString() {
+    return 'RuleEditorEvent.typeChanged(value: $value)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RuleEditorEventTypeChangedImpl &&
+            (identical(other.value, value) || other.value == value));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, value);
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RuleEditorEventTypeChangedImplCopyWith<_$RuleEditorEventTypeChangedImpl>
+      get copyWith => __$$RuleEditorEventTypeChangedImplCopyWithImpl<
+          _$RuleEditorEventTypeChangedImpl>(this, _$identity);
+}
+
+abstract class RuleEditorEventTypeChanged implements RuleEditorEvent {
+  const factory RuleEditorEventTypeChanged(final Rule value) =
+      _$RuleEditorEventTypeChangedImpl;
+
+  Rule get value;
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RuleEditorEventTypeChangedImplCopyWith<_$RuleEditorEventTypeChangedImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$RuleEditorEventWordsAddedImplCopyWith<$Res> {
+  factory _$$RuleEditorEventWordsAddedImplCopyWith(
+          _$RuleEditorEventWordsAddedImpl value,
+          $Res Function(_$RuleEditorEventWordsAddedImpl) then) =
+      __$$RuleEditorEventWordsAddedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Iterable<String> value});
+}
+
+/// @nodoc
+class __$$RuleEditorEventWordsAddedImplCopyWithImpl<$Res>
+    extends _$RuleEditorEventCopyWithImpl<$Res, _$RuleEditorEventWordsAddedImpl>
+    implements _$$RuleEditorEventWordsAddedImplCopyWith<$Res> {
+  __$$RuleEditorEventWordsAddedImplCopyWithImpl(
+      _$RuleEditorEventWordsAddedImpl _value,
+      $Res Function(_$RuleEditorEventWordsAddedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? value = null,
+  }) {
+    return _then(_$RuleEditorEventWordsAddedImpl(
+      null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as Iterable<String>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$RuleEditorEventWordsAddedImpl implements RuleEditorEventWordsAdded {
+  const _$RuleEditorEventWordsAddedImpl(this.value);
+
+  @override
+  final Iterable<String> value;
+
+  @override
+  String toString() {
+    return 'RuleEditorEvent.wordsAdded(value: $value)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RuleEditorEventWordsAddedImpl &&
+            const DeepCollectionEquality().equals(other.value, value));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(value));
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RuleEditorEventWordsAddedImplCopyWith<_$RuleEditorEventWordsAddedImpl>
+      get copyWith => __$$RuleEditorEventWordsAddedImplCopyWithImpl<
+          _$RuleEditorEventWordsAddedImpl>(this, _$identity);
+}
+
+abstract class RuleEditorEventWordsAdded implements RuleEditorEvent {
+  const factory RuleEditorEventWordsAdded(final Iterable<String> value) =
+      _$RuleEditorEventWordsAddedImpl;
+
+  Iterable<String> get value;
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RuleEditorEventWordsAddedImplCopyWith<_$RuleEditorEventWordsAddedImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$RuleEditorEventWordRemovedImplCopyWith<$Res> {
+  factory _$$RuleEditorEventWordRemovedImplCopyWith(
+          _$RuleEditorEventWordRemovedImpl value,
+          $Res Function(_$RuleEditorEventWordRemovedImpl) then) =
+      __$$RuleEditorEventWordRemovedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String value});
+}
+
+/// @nodoc
+class __$$RuleEditorEventWordRemovedImplCopyWithImpl<$Res>
+    extends _$RuleEditorEventCopyWithImpl<$Res,
+        _$RuleEditorEventWordRemovedImpl>
+    implements _$$RuleEditorEventWordRemovedImplCopyWith<$Res> {
+  __$$RuleEditorEventWordRemovedImplCopyWithImpl(
+      _$RuleEditorEventWordRemovedImpl _value,
+      $Res Function(_$RuleEditorEventWordRemovedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? value = null,
+  }) {
+    return _then(_$RuleEditorEventWordRemovedImpl(
+      null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$RuleEditorEventWordRemovedImpl implements RuleEditorEventWordRemoved {
+  const _$RuleEditorEventWordRemovedImpl(this.value);
+
+  @override
+  final String value;
+
+  @override
+  String toString() {
+    return 'RuleEditorEvent.wordRemoved(value: $value)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RuleEditorEventWordRemovedImpl &&
+            (identical(other.value, value) || other.value == value));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, value);
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RuleEditorEventWordRemovedImplCopyWith<_$RuleEditorEventWordRemovedImpl>
+      get copyWith => __$$RuleEditorEventWordRemovedImplCopyWithImpl<
+          _$RuleEditorEventWordRemovedImpl>(this, _$identity);
+}
+
+abstract class RuleEditorEventWordRemoved implements RuleEditorEvent {
+  const factory RuleEditorEventWordRemoved(final String value) =
+      _$RuleEditorEventWordRemovedImpl;
+
+  String get value;
+
+  /// Create a copy of RuleEditorEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RuleEditorEventWordRemovedImplCopyWith<_$RuleEditorEventWordRemovedImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 abstract class _$$RuleEditorEventDescriptionChangedImplCopyWith<$Res> {
   factory _$$RuleEditorEventDescriptionChangedImplCopyWith(
           _$RuleEditorEventDescriptionChangedImpl value,
@@ -535,8 +796,7 @@ class __$$RuleEditorStateCreateImplCopyWithImpl<$Res>
 
 class _$RuleEditorStateCreateImpl implements RuleEditorStateCreate {
   const _$RuleEditorStateCreateImpl(
-      {this.rule =
-          const Rule(id: -1, description: '', details: '', color: Colors.red),
+      {this.rule = const WordsRule(id: -1, color: Colors.red, words: {}),
       this.descriptionError,
       this.uploadState = const OperationStatusInitial()});
 

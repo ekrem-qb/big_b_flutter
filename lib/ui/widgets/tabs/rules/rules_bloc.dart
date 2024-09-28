@@ -9,13 +9,13 @@ class RulesBloc extends ListerBloc<Rule> {
   String get fieldNames => Rule.fieldNames;
 
   @override
-  String get orderBy => $RuleImplJsonKeys.description;
+  String get orderBy => $CustomRuleImplJsonKeys.id;
 
   @override
-  bool get ascending => true;
+  bool get ascending => false;
 
   @override
-  String get idFieldKey => $RuleImplJsonKeys.id;
+  String get idFieldKey => $CustomRuleImplJsonKeys.id;
 
   @override
   List<Rule>? Function(List<Map<String, dynamic>> data) get converter => Rule.converter;
@@ -24,5 +24,5 @@ class RulesBloc extends ListerBloc<Rule> {
   Rule Function(Map<String, dynamic> json) get fromJson => Rule.fromJson;
 
   @override
-  bool Function(Rule a, Rule b) get isAfter => (final a, final b) => a.description.compareTo(b.description).isNegative;
+  bool Function(Rule a, Rule b) get isAfter => (final a, final b) => a.id > b.id;
 }

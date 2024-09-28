@@ -6,6 +6,7 @@ import '../../../app_router/app_router.dart';
 import '../../../theme.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../lister/lister_widget.dart';
+import '../../rule_tile.dart';
 import 'rules_bloc.dart';
 
 @RoutePage()
@@ -50,6 +51,17 @@ class _Item extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
+    final subtitle = switch (rule) {
+      WordsRule(
+        :final words
+      ) =>
+        words.join(', '),
+      NameRule() => '',
+      CustomRule(
+        :final details
+      ) =>
+        details,
+    };
     return ListTile(
       shape: RoundedRectangleBorder(
         borderRadius: kDefaultRadius,
@@ -58,15 +70,22 @@ class _Item extends StatelessWidget {
           color: rule.color,
         ),
       ),
-      title: Text(
-        rule.description,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-      subtitle: rule.details.isNotEmpty
+      title: switch (rule) {
+        WordsRule() => const RuleTile(icon: Icons.abc, text: 'Çalışan bu kelimeleri kullanıyor mu?'),
+        NameRule() => const RuleTile(icon: Icons.person, text: 'Çalışan kendi adını söyledi mi?'),
+        CustomRule(
+          :final description,
+        ) =>
+          Text(
+            description,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+      },
+      subtitle: subtitle.isNotEmpty
           ? Text(
-              rule.details,
-              maxLines: 2,
+              subtitle,
+              maxLines: 3,
               overflow: TextOverflow.ellipsis,
             )
           : null,

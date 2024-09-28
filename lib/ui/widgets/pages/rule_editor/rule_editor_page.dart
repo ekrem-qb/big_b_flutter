@@ -11,7 +11,9 @@ import '../../error_panel.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import '../../extensions/snackbar.dart';
+import '../../rule_tile.dart';
 import '../../save_button.dart';
+import '../../words_input.dart';
 import 'bloc/rule_editor_bloc.dart';
 
 @RoutePage()
@@ -162,26 +164,87 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
+    late final RuleEditorBloc bloc;
+    var isInitialized = false;
+    context.select((final RuleEditorBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return switch (newBloc.state) {
+        RuleEditorStateCreate(
+          rule: Rule(
+            :final runtimeType,
+          ),
+        ) ||
+        RuleEditorStateEdit(
+          editState: StatusOfData(
+            data: RuleEditorStateEditState(
+              rule: Rule(
+                :final runtimeType,
+              ),
+            ),
+          ),
+        ) =>
+          runtimeType,
+        _ => null,
+      };
+    });
+    final rule = switch (bloc.state) {
+      RuleEditorStateCreate(
+        :final rule,
+      ) ||
+      RuleEditorStateEdit(
+        editState: StatusOfData(
+          data: RuleEditorStateEditState(
+            :final rule,
+          ),
+        ),
+      ) =>
+        rule,
+      _ => const NameRule(id: -1, color: Colors.red),
+    };
+
     return SmoothMouseScroll(
       builder: (final context, final child, final controller, final physics) {
         return SingleChildScrollView(
           controller: controller,
           physics: physics,
-          child: const Padding(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text('Açıklama', style: smallTextStyle),
-                SizedBox(height: 8),
-                _Description(),
-                SizedBox(height: 16),
-                Text('Detaylar', style: smallTextStyle),
-                SizedBox(height: 8),
-                _Details(),
-                SizedBox(height: 24),
-                _Color(),
-              ],
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: AnimatedSize(
+              duration: Durations.medium1,
+              curve: Curves.easeInOutExpo,
+              alignment: Alignment.bottomCenter,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text('Tür', style: smallTextStyle),
+                  const SizedBox(height: 8),
+                  const _Type(),
+                  ...?switch (rule) {
+                    WordsRule() => [
+                        const SizedBox(height: 16),
+                        const Text('Kelimeler', style: smallTextStyle),
+                        const SizedBox(height: 8),
+                        const _Words(),
+                      ],
+                    NameRule() => null,
+                    CustomRule() => [
+                        const SizedBox(height: 16),
+                        const Text('Açıklama', style: smallTextStyle),
+                        const SizedBox(height: 8),
+                        const _Description(),
+                        const SizedBox(height: 16),
+                        const Text('Detaylar', style: smallTextStyle),
+                        const SizedBox(height: 8),
+                        const _Details(),
+                      ],
+                  },
+                  const SizedBox(height: 24),
+                  const _Color(),
+                ],
+              ),
             ),
           ),
         );
@@ -208,6 +271,126 @@ class _DeleteButton extends StatelessWidget {
           }
         },
       ),
+    );
+  }
+}
+
+class _Type extends StatelessWidget {
+  const _Type();
+
+  @override
+  Widget build(final BuildContext context) {
+    late final RuleEditorBloc bloc;
+    var isInitialized = false;
+    final type = context.select((final RuleEditorBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return switch (newBloc.state) {
+        RuleEditorStateCreate(
+          :final rule,
+        ) ||
+        RuleEditorStateEdit(
+          editState: StatusOfData(
+            data: RuleEditorStateEditState(
+              :final rule,
+            ),
+          ),
+        ) =>
+          switch (rule) {
+            WordsRule() => WordsRule,
+            NameRule() => NameRule,
+            CustomRule() => CustomRule,
+          },
+        _ => CustomRule,
+      };
+    });
+
+    return DropdownButtonFormField(
+      isExpanded: true,
+      value: type,
+      onChanged: (final value) => bloc.add(
+        RuleEditorEventTypeChanged(
+          switch (value!) {
+            const (WordsRule) => const WordsRule(id: -1, words: {}, color: Colors.red),
+            const (NameRule) => const NameRule(id: -1, color: Colors.red),
+            _ => const CustomRule(id: -1, description: '', details: '', color: Colors.red),
+          },
+        ),
+      ),
+      items: const [
+        DropdownMenuItem(
+          value: WordsRule,
+          child: RuleTile(icon: Icons.abc, text: 'Çalışan bu kelimeleri kullanıyor mu?'),
+        ),
+        DropdownMenuItem(
+          value: NameRule,
+          child: RuleTile(icon: Icons.person, text: 'Çalışan kendi adını söyledi mi?'),
+        ),
+        DropdownMenuItem(
+          value: CustomRule,
+          child: RuleTile(icon: Icons.question_mark, text: 'Özel'),
+        ),
+      ],
+    );
+  }
+}
+
+class _Words extends StatelessWidget {
+  const _Words();
+
+  @override
+  Widget build(final BuildContext context) {
+    late final RuleEditorBloc bloc;
+    var isInitialized = false;
+    final words = context.select((final RuleEditorBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return switch (newBloc.state) {
+        RuleEditorStateCreate(
+          rule: WordsRule(
+            :final words,
+          ),
+        ) ||
+        RuleEditorStateEdit(
+          editState: StatusOfData(
+            data: RuleEditorStateEditState(
+              rule: WordsRule(
+                :final words,
+              ),
+            ),
+          ),
+        ) =>
+          words,
+        _ => Set<String>.unmodifiable({}),
+      };
+    });
+
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: [
+        for (final word in words)
+          Chip(
+            label: Text(word),
+            deleteIcon: const Icon(Icons.cancel, size: 18),
+            onDeleted: () => bloc.add(RuleEditorEventWordRemoved(word)),
+          ),
+        IconButton.filledTonal(
+          visualDensity: VisualDensity.compact,
+          padding: EdgeInsets.zero,
+          icon: const Icon(Icons.add),
+          onPressed: () async {
+            final newWords = await showWordsInput(context);
+            if (newWords.isEmpty) return;
+
+            bloc.add(RuleEditorEventWordsAdded(newWords));
+          },
+        ),
+      ],
     );
   }
 }
@@ -241,14 +424,14 @@ class _Description extends StatelessWidget {
     });
     final description = switch (bloc.state) {
       RuleEditorStateCreate(
-        rule: Rule(
+        rule: CustomRule(
           :final description,
         ),
       ) ||
       RuleEditorStateEdit(
         editState: StatusOfData(
           data: RuleEditorStateEditState(
-            rule: Rule(
+            rule: CustomRule(
               :final description,
             ),
           ),
@@ -278,14 +461,14 @@ class _Details extends StatelessWidget {
     final bloc = context.read<RuleEditorBloc>();
     final details = switch (bloc.state) {
       RuleEditorStateCreate(
-        rule: Rule(
+        rule: CustomRule(
           :final details,
         ),
       ) ||
       RuleEditorStateEdit(
         editState: StatusOfData(
           data: RuleEditorStateEditState(
-            rule: Rule(
+            rule: CustomRule(
               :final details,
             ),
           ),

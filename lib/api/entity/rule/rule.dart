@@ -8,8 +8,27 @@ part 'rule.freezed.dart';
 part 'rule.g.dart';
 
 @freezed
-class Rule with _$Rule implements Entity {
-  const factory Rule({
+sealed class Rule with _$Rule implements Entity {
+  const factory Rule.words({
+    @JsonKey(includeToJson: false) required final int id,
+    required final Set<String> words,
+    @JsonKey(
+      fromJson: Color.new,
+      toJson: colorToJson,
+    )
+    required final Color color,
+  }) = WordsRule;
+
+  const factory Rule.name({
+    @JsonKey(includeToJson: false) required final int id,
+    @JsonKey(
+      fromJson: Color.new,
+      toJson: colorToJson,
+    )
+    required final Color color,
+  }) = NameRule;
+
+  const factory Rule.custom({
     @JsonKey(includeToJson: false) required final int id,
     required final String description,
     required final String details,
@@ -18,12 +37,16 @@ class Rule with _$Rule implements Entity {
       toJson: colorToJson,
     )
     required final Color color,
-  }) = _Rule;
+  }) = CustomRule;
 
   factory Rule.fromJson(final Map<String, dynamic> json) => _$RuleFromJson(json);
 
   static const tableName = 'rules';
-  static final fieldNames = _$$RuleImplFieldMap.values.join(',');
+  static final fieldNames = {
+    ..._$$NameRuleImplFieldMap.values,
+    ..._$$WordsRuleImplFieldMap.values,
+    ..._$$CustomRuleImplFieldMap.values,
+  }.join(',');
 
   static List<Rule>? converter(final List<Map<String, dynamic>> data) => data.map(Rule.fromJson).toList();
 }

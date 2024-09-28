@@ -21,12 +21,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
                       ? const StatusOfLoading()
                       : StatusOfData(
                           RuleEditorStateEditState(
-                            rule: Rule(
-                              id: originalRule.id,
-                              description: originalRule.description,
-                              details: originalRule.details,
-                              color: originalRule.color,
-                            ),
+                            rule: originalRule,
                           ),
                         ),
                 ),
@@ -34,6 +29,9 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
     on<RuleEditorEvent>((final event, final emit) {
       return switch (event) {
         RuleEditorEventLoadRequested() => _onLoadRequested(event, emit),
+        RuleEditorEventTypeChanged() => _onTypeChanged(event, emit),
+        RuleEditorEventWordsAdded() => _onWordsAdded(event, emit),
+        RuleEditorEventWordRemoved() => _onWordRemoved(event, emit),
         RuleEditorEventDescriptionChanged() => _onDescriptionChanged(event, emit),
         RuleEditorEventDetailsChanged() => _onDetailsChanged(event, emit),
         RuleEditorEventColorChanged() => _onColorChanged(event, emit),
@@ -66,17 +64,12 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
       }
 
       try {
-        final rule = await db.from(Rule.tableName).select(Rule.fieldNames).eq($RuleImplJsonKeys.id, id).single().withConverter(Rule.fromJson);
+        final rule = await db.from(Rule.tableName).select(Rule.fieldNames).eq($CustomRuleImplJsonKeys.id, id).single().withConverter(Rule.fromJson);
         emit(
           currentState.copyWith(
             editState: StatusOfData(
               RuleEditorStateEditState(
-                rule: Rule(
-                  id: rule.id,
-                  description: rule.description,
-                  details: rule.details,
-                  color: rule.color,
-                ),
+                rule: rule,
               ),
             ),
           ),
@@ -91,6 +84,150 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
     }
   }
 
+  Future<void> _onTypeChanged(final RuleEditorEventTypeChanged event, final Emitter<RuleEditorState> emit) async {
+    final currentState = state;
+
+    switch (currentState) {
+      case RuleEditorStateCreate():
+        if (currentState.rule.runtimeType == event.value.runtimeType) return;
+
+        emit(
+          currentState.copyWith(
+            rule: switch (event.value) {
+              WordsRule() => WordsRule(id: currentState.rule.id, words: {}, color: currentState.rule.color),
+              NameRule() => NameRule(id: currentState.rule.id, color: currentState.rule.color),
+              CustomRule() => CustomRule(id: currentState.rule.id, description: '', details: '', color: currentState.rule.color),
+            },
+          ),
+        );
+      case RuleEditorStateEdit(
+          editState: StatusOfData(
+            :final data,
+          ),
+        ):
+        if (data.rule.runtimeType == event.value.runtimeType) return;
+
+        emit(
+          currentState.copyWith(
+            editState: StatusOfData(
+              data.copyWith(
+                rule: switch (event.value) {
+                  WordsRule() => WordsRule(id: data.rule.id, words: {}, color: data.rule.color),
+                  NameRule() => NameRule(id: data.rule.id, color: data.rule.color),
+                  CustomRule() => CustomRule(id: data.rule.id, description: '', details: '', color: data.rule.color),
+                },
+              ),
+            ),
+          ),
+        );
+      default:
+    }
+  }
+
+  Future<void> _onWordsAdded(final RuleEditorEventWordsAdded event, final Emitter<RuleEditorState> emit) async {
+    final currentState = state;
+
+    switch (currentState) {
+      case RuleEditorStateCreate(
+          :final rule,
+        ):
+        switch (rule) {
+          case WordsRule(
+              :final words,
+            ):
+            emit(
+              currentState.copyWith(
+                rule: rule.copyWith(
+                  words: {
+                    ...words,
+                    ...event.value,
+                  },
+                ),
+              ),
+            );
+          default:
+        }
+      case RuleEditorStateEdit(
+          editState: StatusOfData(
+            :final data,
+          ),
+        ):
+        final rule = data.rule;
+        switch (rule) {
+          case WordsRule(
+              :final words,
+            ):
+            emit(
+              currentState.copyWith(
+                editState: StatusOfData(
+                  data.copyWith(
+                    rule: rule.copyWith(
+                      words: {
+                        ...words,
+                        ...event.value,
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            );
+          default:
+        }
+      default:
+    }
+  }
+
+  Future<void> _onWordRemoved(final RuleEditorEventWordRemoved event, final Emitter<RuleEditorState> emit) async {
+    final currentState = state;
+
+    switch (currentState) {
+      case RuleEditorStateCreate(
+          :final rule,
+        ):
+        switch (rule) {
+          case WordsRule(
+              :final words,
+            ):
+            emit(
+              currentState.copyWith(
+                rule: rule.copyWith(
+                  words: {
+                    ...words,
+                  }..remove(event.value),
+                ),
+              ),
+            );
+          default:
+        }
+      case RuleEditorStateEdit(
+          editState: StatusOfData(
+            :final data,
+          ),
+        ):
+        final rule = data.rule;
+        switch (rule) {
+          case WordsRule(
+              :final words,
+            ):
+            emit(
+              currentState.copyWith(
+                editState: StatusOfData(
+                  data.copyWith(
+                    rule: rule.copyWith(
+                      words: {
+                        ...words,
+                      }..remove(event.value),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          default:
+        }
+      default:
+    }
+  }
+
   Future<void> _onDescriptionChanged(final RuleEditorEventDescriptionChanged event, final Emitter<RuleEditorState> emit) async {
     final currentState = state;
 
@@ -100,27 +237,31 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
             :final data,
           ),
         ):
-        emit(
-          currentState.copyWith(
-            editState: StatusOfData(
-              data.copyWith(
-                rule: data.rule.copyWith(
-                  description: event.value,
+        if (data.rule case final CustomRule rule) {
+          emit(
+            currentState.copyWith(
+              editState: StatusOfData(
+                data.copyWith(
+                  rule: rule.copyWith(
+                    description: event.value.trim(),
+                  ),
+                  descriptionError: null,
                 ),
-                descriptionError: null,
               ),
             ),
-          ),
-        );
+          );
+        }
       case RuleEditorStateCreate():
-        emit(
-          currentState.copyWith(
-            rule: currentState.rule.copyWith(
-              description: event.value,
+        if (currentState.rule case final CustomRule rule) {
+          emit(
+            currentState.copyWith(
+              rule: rule.copyWith(
+                description: event.value.trim(),
+              ),
+              descriptionError: null,
             ),
-            descriptionError: null,
-          ),
-        );
+          );
+        }
       default:
     }
   }
@@ -134,25 +275,29 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
             :final data,
           ),
         ):
-        emit(
-          currentState.copyWith(
-            editState: StatusOfData(
-              data.copyWith(
-                rule: data.rule.copyWith(
-                  details: event.value,
+        if (data.rule case final CustomRule rule) {
+          emit(
+            currentState.copyWith(
+              editState: StatusOfData(
+                data.copyWith(
+                  rule: rule.copyWith(
+                    details: event.value.trim(),
+                  ),
                 ),
               ),
             ),
-          ),
-        );
+          );
+        }
       case RuleEditorStateCreate():
-        emit(
-          currentState.copyWith(
-            rule: currentState.rule.copyWith(
-              details: event.value,
+        if (currentState.rule case final CustomRule rule) {
+          emit(
+            currentState.copyWith(
+              rule: rule.copyWith(
+                details: event.value.trim(),
+              ),
             ),
-          ),
-        );
+          );
+        }
       default:
     }
   }
@@ -194,15 +339,13 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
 
     switch (currentState) {
       case RuleEditorStateCreate():
-        emit(
-          currentState.copyWith(
-            rule: currentState.rule.copyWith(
-              description: currentState.rule.description.trim(),
-            ),
-          ),
-        );
-
-        if (currentState.rule.description.isEmpty) {
+        if (switch (currentState.rule) {
+          CustomRule(
+            :final description
+          ) =>
+            description.isEmpty,
+          _ => false,
+        }) {
           emit(
             currentState.copyWith(
               descriptionError: 'Açıklama giriniz',
@@ -210,14 +353,6 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
           );
           return;
         }
-
-        emit(
-          currentState.copyWith(
-            rule: currentState.rule.copyWith(
-              details: currentState.rule.details.trim(),
-            ),
-          ),
-        );
 
         emit(
           currentState.copyWith(
@@ -243,19 +378,13 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
             :final data,
           ),
         ):
-        emit(
-          currentState.copyWith(
-            editState: StatusOfData(
-              data.copyWith(
-                rule: data.rule.copyWith(
-                  description: data.rule.description.trim(),
-                ),
-              ),
-            ),
-          ),
-        );
-
-        if (data.rule.description.isEmpty) {
+        if (switch (data.rule) {
+          CustomRule(
+            :final description
+          ) =>
+            description.isEmpty,
+          _ => false,
+        }) {
           emit(
             currentState.copyWith(
               editState: StatusOfData(
@@ -323,7 +452,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
             case RuleEditorStateEdit(
                 :final id,
               ):
-              await db.from(Rule.tableName).update(rule.toJson()).eq($RuleImplJsonKeys.id, id);
+              await db.from(Rule.tableName).update(rule.toJson()).eq($CustomRuleImplJsonKeys.id, id);
             default:
           }
 
@@ -374,7 +503,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
       }
 
       try {
-        await db.from(Rule.tableName).delete().eq($RuleImplJsonKeys.id, currentState.id);
+        await db.from(Rule.tableName).delete().eq($CustomRuleImplJsonKeys.id, currentState.id);
 
         emit(
           currentState.copyWith(
