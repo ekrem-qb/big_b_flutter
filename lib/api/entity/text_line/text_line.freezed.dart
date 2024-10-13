@@ -25,6 +25,7 @@ mixin _$TextLine {
 
   /// Content of the line
   String get text => throw _privateConstructorUsedError;
+  bool get isEmployee => throw _privateConstructorUsedError;
   List<Highlight> get highlights => throw _privateConstructorUsedError;
 
   /// Create a copy of TextLine
@@ -39,7 +40,11 @@ abstract class $TextLineCopyWith<$Res> {
   factory $TextLineCopyWith(TextLine value, $Res Function(TextLine) then) =
       _$TextLineCopyWithImpl<$Res, TextLine>;
   @useResult
-  $Res call({Duration time, String text, List<Highlight> highlights});
+  $Res call(
+      {Duration time,
+      String text,
+      bool isEmployee,
+      List<Highlight> highlights});
 }
 
 /// @nodoc
@@ -59,6 +64,7 @@ class _$TextLineCopyWithImpl<$Res, $Val extends TextLine>
   $Res call({
     Object? time = null,
     Object? text = null,
+    Object? isEmployee = null,
     Object? highlights = null,
   }) {
     return _then(_value.copyWith(
@@ -70,6 +76,10 @@ class _$TextLineCopyWithImpl<$Res, $Val extends TextLine>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      isEmployee: null == isEmployee
+          ? _value.isEmployee
+          : isEmployee // ignore: cast_nullable_to_non_nullable
+              as bool,
       highlights: null == highlights
           ? _value.highlights
           : highlights // ignore: cast_nullable_to_non_nullable
@@ -86,7 +96,11 @@ abstract class _$$TextLineImplCopyWith<$Res>
       __$$TextLineImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Duration time, String text, List<Highlight> highlights});
+  $Res call(
+      {Duration time,
+      String text,
+      bool isEmployee,
+      List<Highlight> highlights});
 }
 
 /// @nodoc
@@ -104,6 +118,7 @@ class __$$TextLineImplCopyWithImpl<$Res>
   $Res call({
     Object? time = null,
     Object? text = null,
+    Object? isEmployee = null,
     Object? highlights = null,
   }) {
     return _then(_$TextLineImpl(
@@ -115,6 +130,10 @@ class __$$TextLineImplCopyWithImpl<$Res>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      isEmployee: null == isEmployee
+          ? _value.isEmployee
+          : isEmployee // ignore: cast_nullable_to_non_nullable
+              as bool,
       highlights: null == highlights
           ? _value._highlights
           : highlights // ignore: cast_nullable_to_non_nullable
@@ -129,6 +148,7 @@ class _$TextLineImpl implements _TextLine {
   const _$TextLineImpl(
       {required this.time,
       required this.text,
+      required this.isEmployee,
       required final List<Highlight> highlights})
       : _highlights = highlights;
 
@@ -142,6 +162,8 @@ class _$TextLineImpl implements _TextLine {
   /// Content of the line
   @override
   final String text;
+  @override
+  final bool isEmployee;
   final List<Highlight> _highlights;
   @override
   List<Highlight> get highlights {
@@ -152,7 +174,7 @@ class _$TextLineImpl implements _TextLine {
 
   @override
   String toString() {
-    return 'TextLine(time: $time, text: $text, highlights: $highlights)';
+    return 'TextLine(time: $time, text: $text, isEmployee: $isEmployee, highlights: $highlights)';
   }
 
   @override
@@ -162,13 +184,15 @@ class _$TextLineImpl implements _TextLine {
             other is _$TextLineImpl &&
             (identical(other.time, time) || other.time == time) &&
             (identical(other.text, text) || other.text == text) &&
+            (identical(other.isEmployee, isEmployee) ||
+                other.isEmployee == isEmployee) &&
             const DeepCollectionEquality()
                 .equals(other._highlights, _highlights));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, time, text,
+  int get hashCode => Object.hash(runtimeType, time, text, isEmployee,
       const DeepCollectionEquality().hash(_highlights));
 
   /// Create a copy of TextLine
@@ -184,6 +208,7 @@ abstract class _TextLine implements TextLine {
   const factory _TextLine(
       {required final Duration time,
       required final String text,
+      required final bool isEmployee,
       required final List<Highlight> highlights}) = _$TextLineImpl;
 
   factory _TextLine.fromJson(Map<String, dynamic> json) =
@@ -196,6 +221,8 @@ abstract class _TextLine implements TextLine {
   /// Content of the line
   @override
   String get text;
+  @override
+  bool get isEmployee;
   @override
   List<Highlight> get highlights;
 

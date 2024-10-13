@@ -13,6 +13,7 @@ class TextLine with _$TextLine {
 
     /// Content of the line
     required final String text,
+    required final bool isEmployee,
     required final List<Highlight> highlights,
   }) = _TextLine;
 
