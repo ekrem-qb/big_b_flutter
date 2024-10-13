@@ -7,10 +7,10 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../../api/entity/recording/recording.dart';
 import '../../../entity/status.dart';
+import '../../../theme.dart';
 import '../../error_panel.dart';
 import '../../extensions/fade_transition_builder.dart';
 import '../../extensions/mouse_navigator.dart';
-import '../../extensions/separator.dart';
 import '../../extensions/shimmer.dart';
 import '../../extensions/smooth_mouse_scroll/positioned_smooth_mouse_scroll.dart';
 import '../../extensions/snackbar.dart';
@@ -196,10 +196,9 @@ class _Text extends StatelessWidget {
                 shaderCallback: _gradient.createShader,
                 child: LayoutBuilder(
                   builder: (final context, final constraints) {
-                    return ScrollablePositionedList.separated(
+                    return ScrollablePositionedList.builder(
                       itemCount: 100,
                       padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.5),
-                      separatorBuilder: separatorBuilder,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (final context, final index) {
                         return Card(
@@ -231,19 +230,6 @@ class _Text extends StatelessWidget {
 
 class _LoadedText extends StatelessWidget {
   const _LoadedText();
-
-  Widget _item(final PlayerBloc bloc, final int index) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: InkWell(
-        onTap: () => bloc.add(PlayerEventJumpToLineRequested(index)),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: _TextLine(index: index),
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(final BuildContext context) {
@@ -278,15 +264,14 @@ class _LoadedText extends StatelessWidget {
                 builder: (final context, final constraints) {
                   return PositionedSmoothMouseScroll(
                     builder: (final context, final child, final controller, final physics) {
-                      return ScrollablePositionedList.separated(
+                      return ScrollablePositionedList.builder(
                         itemScrollController: bloc.scrollController,
                         scrollOffsetController: controller,
                         initialScrollIndex: currentTextLine,
                         physics: physics,
                         itemCount: textSpans.length,
                         padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.5),
-                        separatorBuilder: separatorBuilder,
-                        itemBuilder: (final context, final index) => _item(bloc, index),
+                        itemBuilder: _TextLine.new,
                       );
                     },
                   );
@@ -316,7 +301,7 @@ class _LoadedText extends StatelessWidget {
 }
 
 class _TextLine extends StatelessWidget {
-  const _TextLine({required this.index});
+  const _TextLine(final BuildContext _, this.index);
 
   final int index;
 
@@ -339,24 +324,71 @@ class _TextLine extends StatelessWidget {
         _ => 0,
       };
     });
-    final textStyle = Theme.of(context).textTheme.titleLarge;
 
     return switch (bloc.state.textState) {
       StatusOfData(
         data: PlayerTextStateData(
           :final currentTextLine,
           :final textSpans,
+          :final textLines,
         ),
       ) =>
         Opacity(
           opacity: currentTextLine != index ? 0.5 : 1,
-          child: Text.rich(
-            textSpans[index],
-            style: textStyle,
+          child: _TextLineContent(
+            text: textSpans[index],
+            isEmployee: textLines[index].isEmployee,
+            onTap: () => bloc.add(PlayerEventJumpToLineRequested(index)),
           ),
         ),
       _ => const SizedBox.shrink()
     };
+  }
+}
+
+class _TextLineContent extends StatelessWidget {
+  const _TextLineContent({
+    required this.text,
+    required this.isEmployee,
+    required this.onTap,
+  });
+
+  final TextSpan text;
+  final bool isEmployee;
+  final Function() onTap;
+
+  @override
+  Widget build(final BuildContext context) {
+    final theme = Theme.of(context);
+
+    return FractionallySizedBox(
+      alignment: isEmployee ? Alignment.centerRight : Alignment.centerLeft,
+      widthFactor: 0.95,
+      child: Align(
+        alignment: isEmployee ? Alignment.centerRight : Alignment.centerLeft,
+        child: Card(
+          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          color: isEmployee
+              ? Color.lerp(
+                  theme.colorScheme.surfaceContainer,
+                  theme.colorScheme.primaryContainer,
+                  0.5,
+                )
+              : null,
+          child: InkWell(
+            borderRadius: kDefaultRadius,
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Text.rich(
+                text,
+                style: theme.textTheme.bodyLarge,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
