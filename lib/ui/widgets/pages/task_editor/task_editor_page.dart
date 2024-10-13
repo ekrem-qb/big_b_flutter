@@ -76,7 +76,7 @@ class PlannedTaskEditorPage extends StatelessWidget {
         plannedTaskId: plannedTaskId,
         originalPlannedTask: plannedTask,
       ),
-      child: const TaskEditorView(isNew: true),
+      child: const TaskEditorView(isNew: false),
     );
   }
 }
