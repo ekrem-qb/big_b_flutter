@@ -25,6 +25,10 @@ const _cardTheme = CardTheme(
   shape: kDefaultShape,
 );
 
+const _sliderTheme = SliderThemeData(
+  showValueIndicator: ShowValueIndicator.always,
+);
+
 const _listTileTheme = ListTileThemeData(
   shape: kDefaultShape,
 );
@@ -45,6 +49,7 @@ final lightTheme = ThemeData(
   brightness: Brightness.light,
   appBarTheme: _appBarLightTheme,
   cardTheme: _cardTheme,
+  sliderTheme: _sliderTheme,
   listTileTheme: _listTileTheme,
   inputDecorationTheme: _inputDecorationTheme,
   progressIndicatorTheme: _progressIndicatorLightTheme,
@@ -151,6 +156,7 @@ final darkTheme = ThemeData(
   brightness: Brightness.dark,
   appBarTheme: _appBarDarkTheme,
   cardTheme: _cardTheme,
+  sliderTheme: _sliderTheme,
   listTileTheme: _listTileTheme,
   inputDecorationTheme: _inputDecorationTheme,
   progressIndicatorTheme: _progressIndicatorDarkTheme,
