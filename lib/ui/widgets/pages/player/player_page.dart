@@ -139,6 +139,18 @@ class _Player extends StatelessWidget {
               children: [
                 _Text(),
                 _Slider(),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _Time(),
+                      _PlayButton(),
+                      _TotalTime(),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -448,13 +460,23 @@ String _formatTime(final Duration duration) {
 }
 
 class _Time extends StatelessWidget {
-  const _Time(this.time);
-
-  final Duration time;
+  const _Time();
 
   @override
   Widget build(final BuildContext context) {
-    return Text(_formatTime(time));
+    final position = context.select((final PlayerBloc bloc) {
+      return switch (bloc.state.audioState) {
+        StatusOfData<PlayerAudioState>(
+          data: PlayerAudioState(
+            :final position,
+          ),
+        ) =>
+          position,
+        _ => null,
+      };
+    });
+
+    return Text(_formatTime(position ?? Duration.zero));
   }
 }
 
@@ -463,13 +485,7 @@ class _TotalTime extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final PlayerBloc bloc;
-    var isInitialized = false;
-    final duration = context.select((final PlayerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
+    final duration = context.select((final PlayerBloc bloc) {
       return switch (bloc.state.audioState) {
         StatusOfData<PlayerAudioState>(
           data: PlayerAudioState(
@@ -481,7 +497,7 @@ class _TotalTime extends StatelessWidget {
       };
     });
 
-    return _Time(duration ?? const Duration(seconds: 1));
+    return Text(_formatTime(duration ?? Duration.zero));
   }
 }
 
@@ -565,62 +581,46 @@ class _SliderState extends State<_Slider> {
           false,
         _ => true,
       },
-      child: Column(
-        children: [
-          TweenAnimationBuilder(
-            tween: Tween<double>(begin: _currentValue, end: position),
-            curve: animationCurve,
-            duration: animationDuration,
+      child: TweenAnimationBuilder(
+        tween: Tween<double>(begin: _currentValue, end: position),
+        curve: animationCurve,
+        duration: animationDuration,
+        builder: (final context, final value, final child) {
+          if (!_isSeeking) {
+            _currentValue = value;
+          }
+
+          return TweenAnimationBuilder(
+            tween: Tween<double>(begin: _squiggleAmplitude, end: isPlaying ? 1 : 0),
+            duration: Durations.short2,
             builder: (final context, final value, final child) {
-              if (!_isSeeking) {
-                _currentValue = value;
-              }
+              _squiggleAmplitude = value;
 
-              return TweenAnimationBuilder(
-                tween: Tween<double>(begin: _squiggleAmplitude, end: isPlaying ? 1 : 0),
-                duration: Durations.short2,
-                builder: (final context, final value, final child) {
-                  _squiggleAmplitude = value;
-
-                  return Material3Slider(
-                    isSquiglySliderEnabled: true,
-                    squiggleAmplitude: _squiggleAmplitude * 3,
-                    squiggleWavelength: 5,
-                    squiggleSpeed: 0.1,
-                    value: _currentValue,
-                    max: duration,
-                    onChangeStart: (final newValue) {
-                      _isSeeking = true;
-                    },
-                    onChanged: (final newValue) {
-                      setState(() {
-                        _currentValue = newValue;
-                      });
-                    },
-                    onChangeEnd: (final newValue) {
-                      bloc.add(PlayerEventSeekRequested(Duration(microseconds: newValue.toInt())));
-                      Future.delayed(Durations.short4, () {
-                        _isSeeking = false;
-                      });
-                    },
-                  );
+              return Material3Slider(
+                isSquiglySliderEnabled: true,
+                squiggleAmplitude: _squiggleAmplitude * 3,
+                squiggleWavelength: 5,
+                squiggleSpeed: 0.1,
+                value: _currentValue,
+                max: duration,
+                onChangeStart: (final newValue) {
+                  _isSeeking = true;
+                },
+                onChanged: (final newValue) {
+                  setState(() {
+                    _currentValue = newValue;
+                  });
+                },
+                onChangeEnd: (final newValue) {
+                  bloc.add(PlayerEventSeekRequested(Duration(microseconds: newValue.toInt())));
+                  Future.delayed(Durations.short4, () {
+                    _isSeeking = false;
+                  });
                 },
               );
             },
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _Time(Duration(microseconds: _currentValue.toInt())),
-                const _PlayButton(),
-                const _TotalTime(),
-              ],
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
