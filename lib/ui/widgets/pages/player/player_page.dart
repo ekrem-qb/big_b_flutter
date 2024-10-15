@@ -603,6 +603,7 @@ class _SliderState extends State<_Slider> {
                 squiggleSpeed: 0.1,
                 value: _currentValue,
                 max: duration,
+                label: _formatTime(Duration(microseconds: _currentValue.toInt())),
                 onChangeStart: (final newValue) {
                   _isSeeking = true;
                 },
