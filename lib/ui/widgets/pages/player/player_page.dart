@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:interactive_slider/interactive_slider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../../api/entity/recording/recording.dart';
@@ -10,11 +9,15 @@ import '../../../entity/status.dart';
 import '../../../theme.dart';
 import '../../error_panel.dart';
 import '../../extensions/fade_transition_builder.dart';
+import '../../extensions/md3_slider/md3_slider.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/shimmer.dart';
 import '../../extensions/smooth_mouse_scroll/positioned_smooth_mouse_scroll.dart';
 import '../../extensions/snackbar.dart';
 import 'bloc/player_bloc.dart';
+
+const animationDuration = Durations.short4;
+const animationCurve = Curves.easeOutExpo;
 
 @RoutePage()
 class PlayerPage extends StatelessWidget {
@@ -445,119 +448,134 @@ class _Slider extends StatefulWidget {
 }
 
 class _SliderState extends State<_Slider> {
-  final _controller = InteractiveSliderController(0);
-
-  Duration _duration = const Duration(seconds: 1);
-  double _position = 0;
-  bool _canAnimate = true;
+  bool _isSeeking = false;
+  double _currentValue = 0;
+  double _squiggleAmplitude = 0;
 
   @override
   Widget build(final BuildContext context) {
     late final PlayerBloc bloc;
     var isInitialized = false;
-    context
-      ..select((final PlayerBloc newBloc) {
-        if (!isInitialized) {
-          bloc = newBloc;
-          isInitialized = true;
-        }
-        return switch (bloc.state.audioState) {
-          StatusOfData<PlayerAudioState>(
-            data: PlayerAudioState(
-              :final position,
-            )
-          ) =>
-            position,
-          _ => null,
-        };
-      })
-      ..select((final PlayerBloc newBloc) {
-        if (!isInitialized) {
-          bloc = newBloc;
-          isInitialized = true;
-        }
-        return bloc.state.audioState.runtimeType;
-      });
+    context.select((final PlayerBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return bloc.state.audioState.runtimeType;
+    });
 
-    final colorScheme = Theme.of(context).colorScheme;
-    final textStyle = TextStyle(
-      color: colorScheme.onSurface,
-    );
-    return BlocListener<PlayerBloc, PlayerState>(
-      listenWhen: (final previous, final current) {
-        final previousAudioState = switch (previous.audioState) {
-          StatusOfData<PlayerAudioState>(
-            :final data
-          ) =>
-            data,
-          _ => null,
-        };
-        final currentAudioState = switch (current.audioState) {
-          StatusOfData<PlayerAudioState>(
-            :final data
-          ) =>
-            data,
-          _ => null,
-        };
-        return previousAudioState?.duration != currentAudioState?.duration || previousAudioState?.position != currentAudioState?.position;
-      },
-      listener: (final context, final state) {
-        final audioState = state.audioState;
-        if (audioState is! StatusOfData<PlayerAudioState>) return;
+    final position = context.select((final PlayerBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return switch (bloc.state.audioState) {
+        StatusOfData<PlayerAudioState>(
+          data: PlayerAudioState(
+            :final position,
+          )
+        ) =>
+          position.inMicroseconds.toDouble(),
+        _ => 0.0,
+      };
+    });
 
-        _duration = audioState.data.duration;
-        _position = audioState.data.position.inMicroseconds / audioState.data.duration.inMicroseconds;
+    final duration = context.select((final PlayerBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return switch (bloc.state.audioState) {
+        StatusOfData<PlayerAudioState>(
+          data: PlayerAudioState(
+            :final duration,
+          )
+        ) =>
+          duration.inMicroseconds.toDouble(),
+        _ => 0.0,
+      };
+    });
+
+    final isPlaying = context.select((final PlayerBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return switch (bloc.state.audioState) {
+        StatusOfData<PlayerAudioState>(
+          data: PlayerAudioState(
+            :final isPlaying,
+          )
+        ) =>
+          isPlaying,
+        _ => false,
+      };
+    });
+
+    return IgnorePointer(
+      ignoring: switch (bloc.state.audioState) {
+        StatusOfData<PlayerAudioState>(
+          data: PlayerAudioState(),
+        ) =>
+          false,
+        _ => true,
       },
-      child: MediaQuery(
-        data: const MediaQueryData(navigationMode: NavigationMode.directional),
-        child: IgnorePointer(
-          ignoring: switch (bloc.state.audioState) {
-            StatusOfData<PlayerAudioState>(
-              data: PlayerAudioState(),
-            ) =>
-              false,
-            _ => true,
-          },
-          child: TweenAnimationBuilder(
-            tween: Tween<double>(begin: _controller.value, end: _position),
-            curve: Curves.easeOutExpo,
-            duration: _canAnimate ? Durations.short4 : Duration.zero,
+      child: Column(
+        children: [
+          TweenAnimationBuilder(
+            tween: Tween<double>(begin: _currentValue, end: position),
+            curve: animationCurve,
+            duration: animationDuration,
             builder: (final context, final value, final child) {
-              _controller.value = value;
-              _canAnimate = true;
-              return child!;
+              if (!_isSeeking) {
+                _currentValue = value;
+              }
+
+              return TweenAnimationBuilder(
+                tween: Tween<double>(begin: _squiggleAmplitude, end: isPlaying ? 1 : 0),
+                duration: Durations.short2,
+                builder: (final context, final value, final child) {
+                  _squiggleAmplitude = value;
+
+                  return Material3Slider(
+                    isSquiglySliderEnabled: true,
+                    squiggleAmplitude: _squiggleAmplitude * 3,
+                    squiggleWavelength: 5,
+                    squiggleSpeed: 0.1,
+                    value: _currentValue,
+                    max: duration,
+                    onChangeStart: (final newValue) {
+                      _isSeeking = true;
+                    },
+                    onChanged: (final newValue) {
+                      setState(() {
+                        _currentValue = newValue;
+                      });
+                    },
+                    onChangeEnd: (final newValue) {
+                      bloc.add(PlayerEventSeekRequested(Duration(microseconds: newValue.toInt())));
+                      Future.delayed(Durations.short4, () {
+                        _isSeeking = false;
+                      });
+                    },
+                  );
+                },
+              );
             },
-            child: InteractiveSlider(
-              unfocusedOpacity: 1,
-              foregroundColor: colorScheme.primary,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              iconPosition: IconPosition.below,
-              iconColor: colorScheme.onPrimary,
-              iconGap: 24,
-              iconSize: 24,
-              iconCrossAxisAlignment: CrossAxisAlignment.start,
-              controller: _controller,
-              startIcon: DefaultTextStyle(
-                style: textStyle,
-                child: ValueListenableBuilder(
-                  valueListenable: _controller,
-                  builder: (final context, final value, final child) {
-                    return _Time(_duration * value);
-                  },
-                ),
-              ),
-              centerIcon: const _PlayButton(),
-              endIcon: DefaultTextStyle(
-                style: textStyle,
-                child: const _TotalTime(),
-              ),
-              onProgressUpdated: (final newValue) {
-                bloc.add(PlayerEventSeekRequested(_duration * newValue));
-                _canAnimate = false;
-              },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _Time(Duration(microseconds: _currentValue.toInt())),
+                const _PlayButton(),
+                const _TotalTime(),
+              ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }
