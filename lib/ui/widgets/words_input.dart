@@ -22,29 +22,32 @@ class _WordsInput extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return MouseNavigator(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Flexible(
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: CupertinoPopupSurface(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: TextField(
-                      autofocus: true,
-                      maxLines: null,
-                      keyboardType: TextInputType.text,
-                      onSubmitted: (final value) => onSubmitted(value, context),
+      child: Padding(
+        padding: MediaQuery.viewInsetsOf(context),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: CupertinoPopupSurface(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: TextField(
+                        autofocus: true,
+                        maxLines: null,
+                        keyboardType: TextInputType.text,
+                        onSubmitted: (final value) => onSubmitted(value, context),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
