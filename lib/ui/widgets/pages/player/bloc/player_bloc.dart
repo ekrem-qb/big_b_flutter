@@ -7,13 +7,11 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:media_kit/media_kit.dart' as media;
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../../../api/database.dart';
 import '../../../../../api/entity/recording/recording.dart';
 import '../../../../../api/entity/text_line/text_line.dart';
 import '../../../../entity/status.dart';
-import '../../../../theme.dart';
 
 part 'player_bloc.freezed.dart';
 part 'player_event.dart';
@@ -69,7 +67,6 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       logLevel: kDebugMode ? media.MPVLogLevel.debug : media.MPVLogLevel.error,
     ),
   );
-  final scrollController = ItemScrollController();
 
   StreamSubscription? _durationSubscription;
   StreamSubscription? _positionSubscription;
@@ -259,15 +256,6 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
     if (event.seekPlayer) {
       add(PlayerEventSeekRequested(textState.data.textLines[event.index].time));
-    }
-
-    if (scrollController.isAttached) {
-      await scrollController.scrollTo(
-        index: event.index,
-        alignment: 0.5,
-        duration: scrollDuration,
-        curve: scrollCurve,
-      );
     }
   }
 

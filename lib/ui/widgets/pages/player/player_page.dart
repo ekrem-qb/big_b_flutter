@@ -231,8 +231,15 @@ class _Text extends StatelessWidget {
   }
 }
 
-class _LoadedText extends StatelessWidget {
+class _LoadedText extends StatefulWidget {
   const _LoadedText();
+
+  @override
+  State<_LoadedText> createState() => _LoadedTextState();
+}
+
+class _LoadedTextState extends State<_LoadedText> {
+  final scrollController = ItemScrollController();
 
   @override
   Widget build(final BuildContext context) {
@@ -252,54 +259,92 @@ class _LoadedText extends StatelessWidget {
       };
     });
 
-    return switch (bloc.state.textState) {
-      StatusOfData<PlayerTextState>(
-        :final data,
-      ) =>
-        switch (data) {
-          PlayerTextStateData(
-            :final textSpans,
-            :final currentTextLine,
-          ) =>
-            ShaderMask(
-              shaderCallback: _gradient.createShader,
-              child: LayoutBuilder(
-                builder: (final context, final constraints) {
-                  return PositionedSmoothMouseScroll(
-                    builder: (final context, final child, final controller, final physics) {
-                      return ScrollablePositionedList.builder(
-                        itemScrollController: bloc.scrollController,
-                        scrollOffsetController: controller,
-                        initialScrollIndex: currentTextLine,
-                        physics: physics,
-                        itemCount: textSpans.length,
-                        padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.5),
-                        itemBuilder: _TextLine.new,
-                      );
-                    },
-                  );
-                },
+    return BlocListener<PlayerBloc, PlayerState>(
+      listenWhen: (final previous, final current) =>
+          switch (previous.textState) {
+            StatusOfData<PlayerTextStateData>(
+              data: PlayerTextStateData(
+                :final currentTextLine,
+              )
+            ) =>
+              currentTextLine,
+            _ => null,
+          } !=
+          switch (current.textState) {
+            StatusOfData<PlayerTextStateData>(
+              data: PlayerTextStateData(
+                :final currentTextLine,
               ),
-            ),
-          PlayerTextStateProcessing() => const Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.cloud_sync_rounded,
-                    size: 64,
-                  ),
-                  SizedBox(height: 36),
-                  Text(
-                    'AI is processing audio in cloud',
-                    style: TextStyle(fontSize: 24),
-                  ),
-                ],
+            ) =>
+              currentTextLine,
+            _ => null,
+          },
+      listener: (final context, final state) async {
+        if (state.textState
+            case StatusOfData<PlayerTextStateData>(
+              data: PlayerTextStateData(
+                :final currentTextLine,
               ),
-            ),
-        },
-      _ => const SizedBox.shrink(),
-    };
+            )) {
+          if (scrollController.isAttached) {
+            await scrollController.scrollTo(
+              index: currentTextLine,
+              alignment: 0.5,
+              duration: scrollDuration,
+              curve: scrollCurve,
+            );
+          }
+        }
+      },
+      child: switch (bloc.state.textState) {
+        StatusOfData<PlayerTextState>(
+          :final data,
+        ) =>
+          switch (data) {
+            PlayerTextStateData(
+              :final textSpans,
+              :final currentTextLine,
+            ) =>
+              ShaderMask(
+                shaderCallback: _gradient.createShader,
+                child: LayoutBuilder(
+                  builder: (final context, final constraints) {
+                    return PositionedSmoothMouseScroll(
+                      builder: (final context, final child, final controller, final physics) {
+                        return ScrollablePositionedList.builder(
+                          itemScrollController: scrollController,
+                          scrollOffsetController: controller,
+                          initialScrollIndex: currentTextLine,
+                          physics: physics,
+                          itemCount: textSpans.length,
+                          padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.5),
+                          itemBuilder: _TextLine.new,
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            PlayerTextStateProcessing() => const Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.cloud_sync_rounded,
+                      size: 64,
+                    ),
+                    SizedBox(height: 36),
+                    Text(
+                      'AI is processing audio in cloud',
+                      style: TextStyle(fontSize: 24),
+                    ),
+                  ],
+                ),
+              ),
+          },
+        _ => const SizedBox.shrink(),
+      },
+    );
   }
 }
 
