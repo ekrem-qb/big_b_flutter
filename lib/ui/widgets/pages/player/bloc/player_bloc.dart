@@ -11,6 +11,7 @@ import 'package:media_kit/media_kit.dart' as media;
 import '../../../../../api/database.dart';
 import '../../../../../api/entity/recording/recording.dart';
 import '../../../../../api/entity/text_line/text_line.dart';
+import '../../../../../api/entity/violation/violation.dart';
 import '../../../../entity/status.dart';
 
 part 'player_bloc.freezed.dart';
@@ -159,7 +160,17 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         return;
       }
 
-      final textSpans = _generateTextSpans(textLines);
+      StatusOf<List<Violation>> violationsStatus;
+
+      try {
+        final violations = await db.from(Violation.tableName).select(Violation.fieldNames).eq('record', state.id).withConverter(Violation.converter);
+
+        violationsStatus = violations == null || violations.isEmpty ? const StatusOfLoading() : StatusOfData(violations);
+      } on Exception catch (e) {
+        violationsStatus = StatusOfError(e.toString());
+      }
+
+      final textSpans = _generateTextSpans(textLines, violationsStatus);
 
       emit(
         state.copyWith(
@@ -167,6 +178,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
             PlayerTextStateData(
               textSpans: textSpans,
               textLines: textLines,
+              violations: violationsStatus,
             ),
           ),
         ),
@@ -176,33 +188,48 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     }
   }
 
-  List<TextSpan> _generateTextSpans(final List<TextLine> textLines) {
-    return List.generate(
-      textLines.length,
-      (final i) {
-        final parts = _generateTextSpanParts(textLines[i]).toList();
+  List<TextSpan> _generateTextSpans(final List<TextLine> textLines, final StatusOf<List<Violation>> violationsStatus) {
+    switch (violationsStatus) {
+      case StatusOfData(
+          :final data,
+        ):
+        final allHighlights = data.whereType<HighlightViolation>();
 
-        return TextSpan(children: parts);
-      },
-      growable: false,
-    );
+        if (allHighlights.isEmpty) {
+          continue noHighlights;
+        }
+
+        return List.generate(
+          textLines.length,
+          (final i) {
+            final highlights = allHighlights.where((final highlight) => highlight.line.id == textLines[i].id).toList();
+            final parts = _generateTextSpanParts(textLines[i], highlights).toList();
+
+            return TextSpan(children: parts);
+          },
+          growable: false,
+        );
+      noHighlights:
+      default:
+        return textLines.map((final e) => TextSpan(text: e.text)).toList();
+    }
   }
 
-  Iterable<InlineSpan> _generateTextSpanParts(final TextLine textLine) sync* {
+  Iterable<InlineSpan> _generateTextSpanParts(final TextLine textLine, final List<HighlightViolation> highlights) sync* {
     var charIndex = 0;
-    for (var j = 0; j < textLine.highlights.length; j += 2) {
-      if (charIndex < textLine.highlights[j].startIndex) {
-        final substring = textLine.text.substring(charIndex, textLine.highlights[j].startIndex);
+    for (var j = 0; j < highlights.length; j += 2) {
+      if (charIndex < highlights[j].startIndex) {
+        final substring = textLine.text.substring(charIndex, highlights[j].startIndex);
         yield TextSpan(text: substring);
       }
 
-      final substring2 = textLine.text.substring(textLine.highlights[j].startIndex, textLine.highlights[j].endIndex);
+      final substring2 = textLine.text.substring(highlights[j].startIndex, highlights[j].endIndex);
       yield TextSpan(
         text: substring2,
-        style: TextStyle(color: textLine.highlights[j].rule.color),
+        style: TextStyle(color: highlights[j].rule.color),
       );
 
-      charIndex = textLine.highlights[j].endIndex;
+      charIndex = highlights[j].endIndex;
     }
 
     if (charIndex < textLine.text.length) {

@@ -25,6 +25,7 @@ sealed class PlayerTextState with _$PlayerTextState {
     @Default(0) final int currentTextLine,
     @Default([]) final List<TextSpan> textSpans,
     @Default([]) final List<TextLine> textLines,
+    @Default(StatusOfLoading()) final StatusOf<List<Violation>> violations,
   }) = PlayerTextStateData;
 
   const factory PlayerTextState.processing() = PlayerTextStateProcessing;

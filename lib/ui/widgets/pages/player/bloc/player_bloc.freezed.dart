@@ -1302,7 +1302,10 @@ abstract class _$$PlayerTextStateDataImplCopyWith<$Res> {
   $Res call(
       {int currentTextLine,
       List<TextSpan> textSpans,
-      List<TextLine> textLines});
+      List<TextLine> textLines,
+      StatusOf<List<Violation>> violations});
+
+  $StatusOfCopyWith<List<Violation>, $Res> get violations;
 }
 
 /// @nodoc
@@ -1321,6 +1324,7 @@ class __$$PlayerTextStateDataImplCopyWithImpl<$Res>
     Object? currentTextLine = null,
     Object? textSpans = null,
     Object? textLines = null,
+    Object? violations = null,
   }) {
     return _then(_$PlayerTextStateDataImpl(
       currentTextLine: null == currentTextLine
@@ -1335,7 +1339,21 @@ class __$$PlayerTextStateDataImplCopyWithImpl<$Res>
           ? _value._textLines
           : textLines // ignore: cast_nullable_to_non_nullable
               as List<TextLine>,
+      violations: null == violations
+          ? _value.violations
+          : violations // ignore: cast_nullable_to_non_nullable
+              as StatusOf<List<Violation>>,
     ));
+  }
+
+  /// Create a copy of PlayerTextState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StatusOfCopyWith<List<Violation>, $Res> get violations {
+    return $StatusOfCopyWith<List<Violation>, $Res>(_value.violations, (value) {
+      return _then(_value.copyWith(violations: value));
+    });
   }
 }
 
@@ -1347,7 +1365,8 @@ class _$PlayerTextStateDataImpl
   const _$PlayerTextStateDataImpl(
       {this.currentTextLine = 0,
       final List<TextSpan> textSpans = const [],
-      final List<TextLine> textLines = const []})
+      final List<TextLine> textLines = const [],
+      this.violations = const StatusOfLoading()})
       : _textSpans = textSpans,
         _textLines = textLines;
 
@@ -1373,8 +1392,12 @@ class _$PlayerTextStateDataImpl
   }
 
   @override
+  @JsonKey()
+  final StatusOf<List<Violation>> violations;
+
+  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PlayerTextState.data(currentTextLine: $currentTextLine, textSpans: $textSpans, textLines: $textLines)';
+    return 'PlayerTextState.data(currentTextLine: $currentTextLine, textSpans: $textSpans, textLines: $textLines, violations: $violations)';
   }
 
   @override
@@ -1384,7 +1407,8 @@ class _$PlayerTextStateDataImpl
       ..add(DiagnosticsProperty('type', 'PlayerTextState.data'))
       ..add(DiagnosticsProperty('currentTextLine', currentTextLine))
       ..add(DiagnosticsProperty('textSpans', textSpans))
-      ..add(DiagnosticsProperty('textLines', textLines));
+      ..add(DiagnosticsProperty('textLines', textLines))
+      ..add(DiagnosticsProperty('violations', violations));
   }
 
   @override
@@ -1397,7 +1421,9 @@ class _$PlayerTextStateDataImpl
             const DeepCollectionEquality()
                 .equals(other._textSpans, _textSpans) &&
             const DeepCollectionEquality()
-                .equals(other._textLines, _textLines));
+                .equals(other._textLines, _textLines) &&
+            (identical(other.violations, violations) ||
+                other.violations == violations));
   }
 
   @override
@@ -1405,7 +1431,8 @@ class _$PlayerTextStateDataImpl
       runtimeType,
       currentTextLine,
       const DeepCollectionEquality().hash(_textSpans),
-      const DeepCollectionEquality().hash(_textLines));
+      const DeepCollectionEquality().hash(_textLines),
+      violations);
 
   /// Create a copy of PlayerTextState
   /// with the given fields replaced by the non-null parameter values.
@@ -1421,11 +1448,13 @@ abstract class PlayerTextStateData implements PlayerTextState {
   const factory PlayerTextStateData(
       {final int currentTextLine,
       final List<TextSpan> textSpans,
-      final List<TextLine> textLines}) = _$PlayerTextStateDataImpl;
+      final List<TextLine> textLines,
+      final StatusOf<List<Violation>> violations}) = _$PlayerTextStateDataImpl;
 
   int get currentTextLine;
   List<TextSpan> get textSpans;
   List<TextLine> get textLines;
+  StatusOf<List<Violation>> get violations;
 
   /// Create a copy of PlayerTextState
   /// with the given fields replaced by the non-null parameter values.

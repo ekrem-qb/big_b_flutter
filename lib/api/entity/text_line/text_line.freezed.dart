@@ -20,13 +20,14 @@ TextLine _$TextLineFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TextLine {
+  int get id => throw _privateConstructorUsedError;
+
   /// Duration at which the line should be displayed
   Duration get time => throw _privateConstructorUsedError;
 
   /// Content of the line
   String get text => throw _privateConstructorUsedError;
   bool get isEmployee => throw _privateConstructorUsedError;
-  List<Highlight> get highlights => throw _privateConstructorUsedError;
 
   /// Create a copy of TextLine
   /// with the given fields replaced by the non-null parameter values.
@@ -40,11 +41,7 @@ abstract class $TextLineCopyWith<$Res> {
   factory $TextLineCopyWith(TextLine value, $Res Function(TextLine) then) =
       _$TextLineCopyWithImpl<$Res, TextLine>;
   @useResult
-  $Res call(
-      {Duration time,
-      String text,
-      bool isEmployee,
-      List<Highlight> highlights});
+  $Res call({int id, Duration time, String text, bool isEmployee});
 }
 
 /// @nodoc
@@ -62,12 +59,16 @@ class _$TextLineCopyWithImpl<$Res, $Val extends TextLine>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? time = null,
     Object? text = null,
     Object? isEmployee = null,
-    Object? highlights = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       time: null == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
@@ -80,10 +81,6 @@ class _$TextLineCopyWithImpl<$Res, $Val extends TextLine>
           ? _value.isEmployee
           : isEmployee // ignore: cast_nullable_to_non_nullable
               as bool,
-      highlights: null == highlights
-          ? _value.highlights
-          : highlights // ignore: cast_nullable_to_non_nullable
-              as List<Highlight>,
     ) as $Val);
   }
 }
@@ -96,11 +93,7 @@ abstract class _$$TextLineImplCopyWith<$Res>
       __$$TextLineImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Duration time,
-      String text,
-      bool isEmployee,
-      List<Highlight> highlights});
+  $Res call({int id, Duration time, String text, bool isEmployee});
 }
 
 /// @nodoc
@@ -116,12 +109,16 @@ class __$$TextLineImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? time = null,
     Object? text = null,
     Object? isEmployee = null,
-    Object? highlights = null,
   }) {
     return _then(_$TextLineImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       time: null == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
@@ -134,10 +131,6 @@ class __$$TextLineImplCopyWithImpl<$Res>
           ? _value.isEmployee
           : isEmployee // ignore: cast_nullable_to_non_nullable
               as bool,
-      highlights: null == highlights
-          ? _value._highlights
-          : highlights // ignore: cast_nullable_to_non_nullable
-              as List<Highlight>,
     ));
   }
 }
@@ -146,14 +139,16 @@ class __$$TextLineImplCopyWithImpl<$Res>
 @JsonSerializable(createToJson: false)
 class _$TextLineImpl implements _TextLine {
   const _$TextLineImpl(
-      {required this.time,
+      {required this.id,
+      required this.time,
       required this.text,
-      required this.isEmployee,
-      required final List<Highlight> highlights})
-      : _highlights = highlights;
+      required this.isEmployee});
 
   factory _$TextLineImpl.fromJson(Map<String, dynamic> json) =>
       _$$TextLineImplFromJson(json);
+
+  @override
+  final int id;
 
   /// Duration at which the line should be displayed
   @override
@@ -164,17 +159,10 @@ class _$TextLineImpl implements _TextLine {
   final String text;
   @override
   final bool isEmployee;
-  final List<Highlight> _highlights;
-  @override
-  List<Highlight> get highlights {
-    if (_highlights is EqualUnmodifiableListView) return _highlights;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_highlights);
-  }
 
   @override
   String toString() {
-    return 'TextLine(time: $time, text: $text, isEmployee: $isEmployee, highlights: $highlights)';
+    return 'TextLine(id: $id, time: $time, text: $text, isEmployee: $isEmployee)';
   }
 
   @override
@@ -182,18 +170,16 @@ class _$TextLineImpl implements _TextLine {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TextLineImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.time, time) || other.time == time) &&
             (identical(other.text, text) || other.text == text) &&
             (identical(other.isEmployee, isEmployee) ||
-                other.isEmployee == isEmployee) &&
-            const DeepCollectionEquality()
-                .equals(other._highlights, _highlights));
+                other.isEmployee == isEmployee));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, time, text, isEmployee,
-      const DeepCollectionEquality().hash(_highlights));
+  int get hashCode => Object.hash(runtimeType, id, time, text, isEmployee);
 
   /// Create a copy of TextLine
   /// with the given fields replaced by the non-null parameter values.
@@ -206,13 +192,16 @@ class _$TextLineImpl implements _TextLine {
 
 abstract class _TextLine implements TextLine {
   const factory _TextLine(
-      {required final Duration time,
+      {required final int id,
+      required final Duration time,
       required final String text,
-      required final bool isEmployee,
-      required final List<Highlight> highlights}) = _$TextLineImpl;
+      required final bool isEmployee}) = _$TextLineImpl;
 
   factory _TextLine.fromJson(Map<String, dynamic> json) =
       _$TextLineImpl.fromJson;
+
+  @override
+  int get id;
 
   /// Duration at which the line should be displayed
   @override
@@ -223,8 +212,6 @@ abstract class _TextLine implements TextLine {
   String get text;
   @override
   bool get isEmployee;
-  @override
-  List<Highlight> get highlights;
 
   /// Create a copy of TextLine
   /// with the given fields replaced by the non-null parameter values.
