@@ -322,15 +322,15 @@ class _Type extends StatelessWidget {
       items: const [
         DropdownMenuItem(
           value: WordsRule,
-          child: RuleTile(icon: Icons.abc, text: 'Çalışan bu kelimeleri kullanıyor mu?'),
+          child: RuleTile(type: WordsRule),
         ),
         DropdownMenuItem(
           value: NameRule,
-          child: RuleTile(icon: Icons.person, text: 'Çalışan kendi adını söyledi mi?'),
+          child: RuleTile(type: NameRule),
         ),
         DropdownMenuItem(
           value: CustomRule,
-          child: RuleTile(icon: Icons.question_mark, text: 'Özel'),
+          child: RuleTile(type: CustomRule),
         ),
       ],
     );

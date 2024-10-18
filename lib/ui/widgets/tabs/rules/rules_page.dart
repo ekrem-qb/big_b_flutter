@@ -71,8 +71,8 @@ class _Item extends StatelessWidget {
         ),
       ),
       title: switch (rule) {
-        WordsRule() => const RuleTile(icon: Icons.abc, text: 'Çalışan bu kelimeleri kullanıyor mu?'),
-        NameRule() => const RuleTile(icon: Icons.person, text: 'Çalışan kendi adını söyledi mi?'),
+        WordsRule() => const RuleTile(type: WordsRule),
+        NameRule() => const RuleTile(type: NameRule),
         CustomRule(
           :final description,
         ) =>
