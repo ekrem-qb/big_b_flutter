@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../api/entity/entity.dart';
+import '../../entity/status.dart';
 import '../error_panel.dart';
 import '../extensions/fade_transition_builder.dart';
 import '../extensions/shimmer.dart';
@@ -127,14 +128,14 @@ class _ItemsList<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends 
       duration: Durations.medium1,
       transitionBuilder: fadeTransitionBuilder,
       child: switch (bloc.state) {
-        ListerStateLoading() => loadingShimmer,
-        ListerStateData() => _ItemsListContent<TBloc, TItem>(
+        StatusOfLoading<ListerState>() => loadingShimmer,
+        StatusOfData<ListerState>() => _ItemsListContent<TBloc, TItem>(
             listBuilder,
             itemBuilder,
             noItemsIcon,
             noItemsText,
           ),
-        ListerStateError(
+        StatusOfError<ListerState>(
           :final error
         ) =>
           ErrorPanel(
@@ -163,10 +164,10 @@ class _ItemsListContent<TBloc extends ListerBloc<TItem>, TItem extends Entity> e
   Widget build(final BuildContext context) {
     final count = context.select((final TBloc bloc) {
       return switch (bloc.state) {
-        ListerStateData(
-          :final totalCount
+        StatusOfData<ListerState>(
+          :final data,
         ) =>
-          totalCount,
+          data.totalCount,
         _ => 0,
       };
     });
@@ -204,19 +205,19 @@ class _Item<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends State
         isInitialized = true;
       }
       return switch (bloc.state) {
-        ListerStateData(
-          :final totalCount,
+        StatusOfData<ListerState>(
+          :final data,
         ) =>
-          totalCount > index,
+          data.totalCount > index,
         _ => false,
       };
     });
     final isLoaded = context.select((final TBloc bloc) {
       return switch (bloc.state) {
-        ListerStateData(
-          :final items,
+        StatusOfData<ListerState>(
+          :final data,
         ) =>
-          items.length > index,
+          data.items.length > index,
         _ => false,
       };
     });
@@ -253,10 +254,10 @@ class _ItemContent<TBloc extends ListerBloc<TItem>, TItem extends Entity> extend
         isInitialized = true;
       }
       return switch (bloc.state) {
-        ListerStateData(
-          :final items,
+        StatusOfData<ListerState>(
+          :final data,
         ) =>
-          items.elementAtOrNull(index),
+          data.items.elementAtOrNull(index),
         _ => null,
       };
     });

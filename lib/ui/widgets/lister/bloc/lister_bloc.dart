@@ -7,13 +7,14 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../../api/database.dart';
 import '../../../../api/entity/entity.dart';
+import '../../../entity/status.dart';
 
 part 'lister_bloc.freezed.dart';
 part 'lister_event.dart';
 part 'lister_state.dart';
 
-abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, ListerState<T>> {
-  ListerBloc() : super(ListerStateLoading<T>()) {
+abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<ListerState<T>>> {
+  ListerBloc() : super(StatusOfLoading<ListerState<T>>()) {
     on<ListerEvent>(
       (final event, final emit) {
         return switch (event) {
@@ -52,67 +53,71 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, ListerStat
 
   bool _isFullyLoaded() {
     final currentState = state;
-    if (currentState is! ListerStateData<T>) return false;
+    if (currentState is! StatusOfData<ListerState<T>>) return false;
 
-    return currentState.items.length == currentState.totalCount;
+    return currentState.data.items.length == currentState.data.totalCount;
   }
 
-  Future<void> _onLoadRequested(final Emitter<ListerState> emit, final ListerEventLoadRequested event) async {
+  Future<void> _onLoadRequested(final Emitter<StatusOf<ListerState<T>>> emit, final ListerEventLoadRequested event) async {
     try {
-      if (state is ListerStateError) {
-        emit(ListerStateLoading<T>());
+      if (state is StatusOfError<ListerState<T>>) {
+        emit(StatusOfLoading<ListerState<T>>());
       }
 
       final count = await db.from(tableName).count();
       final endIndex = max(
         itemsPerLoad,
         switch (state) {
-          ListerStateData(
-            :final items,
+          StatusOfData<ListerState<T>>(
+            :final data,
           ) =>
-            items.length,
+            data.items.length,
           _ => 0
         },
       );
       final items = await db.from(tableName).select(fieldNames).limit(endIndex).order(orderBy, ascending: ascending).withConverter(converter) ?? List.empty();
 
       emit(
-        ListerStateData<T>(
-          totalCount: count,
-          items: items,
+        StatusOfData<ListerState<T>>(
+          ListerState(
+            totalCount: count,
+            items: items,
+          ),
         ),
       );
     } on Exception catch (e) {
-      emit(ListerStateError<T>(error: e.toString()));
+      emit(StatusOfError<ListerState<T>>(e.toString()));
     }
   }
 
-  Future<void> _onLoadAfterRequested(final Emitter<ListerState> emit, final ListerEventLoadAfterRequested event) async {
+  Future<void> _onLoadAfterRequested(final Emitter<StatusOf<ListerState<T>>> emit, final ListerEventLoadAfterRequested event) async {
     try {
       final currentState = state;
-      if (currentState is! ListerStateData<T>) return;
-      if (event.index < currentState.items.length) return;
-      if (currentState.items.length >= currentState.totalCount) return;
+      if (currentState is! StatusOfData<ListerState<T>>) return;
+      if (event.index < currentState.data.items.length) return;
+      if (currentState.data.items.length >= currentState.data.totalCount) return;
 
-      final endIndex = min((currentState.items.length - 1) + itemsPerLoad, currentState.totalCount - 1);
-      final items = await db.from(tableName).select(fieldNames).range(currentState.items.length, endIndex).order(orderBy, ascending: ascending).withConverter(converter) ?? List.empty();
+      final endIndex = min((currentState.data.items.length - 1) + itemsPerLoad, currentState.data.totalCount - 1);
+      final items = await db.from(tableName).select(fieldNames).range(currentState.data.items.length, endIndex).order(orderBy, ascending: ascending).withConverter(converter) ?? List.empty();
 
       emit(
         currentState.copyWith(
-          items: [
-            ...currentState.items,
-            ...items,
-          ],
+          data: currentState.data.copyWith(
+            items: [
+              ...currentState.data.items,
+              ...items,
+            ],
+          ) as ListerState<T>,
         ),
       );
     } on Exception catch (e) {
-      emit(ListerStateError<T>(error: e.toString()));
+      emit(StatusOfError<ListerState<T>>(e.toString()));
     }
   }
 
-  Future<void> onDataUpdated(final Emitter<ListerState> emit, final ListerEventDataUpdated event) async {
+  Future<void> onDataUpdated(final Emitter<StatusOf<ListerState<T>>> emit, final ListerEventDataUpdated event) async {
     final currentState = state;
-    if (currentState is! ListerStateData<T>) return;
+    if (currentState is! StatusOfData<ListerState<T>>) return;
 
     final newState = switch (event.payload.eventType) {
       PostgresChangeEvent.insert => _insert(currentState, event.payload),
@@ -126,40 +131,46 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, ListerStat
     }
   }
 
-  ListerStateData<T> _insert(final ListerStateData<T> currentState, final PostgresChangePayload payload) {
-    final newItems = _insertIntoList(payload.newRecord, currentState.items);
+  StatusOfData<ListerState<T>> _insert(final StatusOfData<ListerState<T>> currentState, final PostgresChangePayload payload) {
+    final newItems = _insertIntoList(payload.newRecord, currentState.data.items as List<T>);
 
-    return newItems != null
-        ? currentState.copyWith(
-            totalCount: currentState.totalCount + 1,
-            items: newItems,
-          )
-        : currentState.copyWith(
-            totalCount: currentState.totalCount + 1,
-          );
+    return StatusOfData(
+      (newItems != null
+          ? currentState.data.copyWith(
+              totalCount: currentState.data.totalCount + 1,
+              items: newItems,
+            )
+          : currentState.data.copyWith(
+              totalCount: currentState.data.totalCount + 1,
+            )) as ListerState<T>,
+    );
   }
 
-  ListerStateData<T>? _update(final ListerStateData<T> currentState, final PostgresChangePayload payload) {
-    final newItems = _insertIntoList(payload.newRecord, _deleteFromList(payload.oldRecord, currentState.items));
+  StatusOfData<ListerState<T>>? _update(final StatusOfData<ListerState<T>> currentState, final PostgresChangePayload payload) {
+    final newItems = _insertIntoList(payload.newRecord, _deleteFromList(payload.oldRecord, currentState.data.items as List<T>));
 
     return newItems != null
-        ? currentState.copyWith(
-            items: newItems,
+        ? StatusOfData(
+            currentState.data.copyWith(
+              items: newItems,
+            ) as ListerState<T>,
           )
         : null;
   }
 
-  ListerStateData<T> _delete(final ListerStateData<T> currentState, final PostgresChangePayload payload) {
-    final newItems = _deleteFromList(payload.oldRecord, currentState.items);
+  StatusOfData<ListerState<T>> _delete(final StatusOfData<ListerState<T>> currentState, final PostgresChangePayload payload) {
+    final newItems = _deleteFromList(payload.oldRecord, currentState.data.items as List<T>);
 
-    return newItems != null
-        ? currentState.copyWith(
-            totalCount: currentState.totalCount - 1,
-            items: newItems,
-          )
-        : currentState.copyWith(
-            totalCount: currentState.totalCount - 1,
-          );
+    return StatusOfData(
+      (newItems != null
+          ? currentState.data.copyWith(
+              totalCount: currentState.data.totalCount - 1,
+              items: newItems,
+            )
+          : currentState.data.copyWith(
+              totalCount: currentState.data.totalCount - 1,
+            )) as ListerState<T>,
+    );
   }
 
   List<T>? _insertIntoList(final Map<String, dynamic> newRecord, final List<T>? items) {

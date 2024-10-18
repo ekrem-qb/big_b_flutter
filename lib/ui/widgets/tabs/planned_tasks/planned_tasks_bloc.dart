@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../api/database.dart';
 import '../../../../api/entity/planned_task/planned_task.dart';
+import '../../../entity/status.dart';
 import '../../lister/bloc/lister_bloc.dart';
 
 class PlannedTasksBloc extends ListerBloc<PlannedTask> {
@@ -44,7 +45,7 @@ class PlannedTasksBloc extends ListerBloc<PlannedTask> {
   bool Function(PlannedTask a, PlannedTask b) get isAfter => (final a, final b) => a.updatedAt.isAfter(b.updatedAt);
 
   @override
-  Future<void> onDataUpdated(final Emitter<ListerState> emit, final ListerEventDataUpdated event) async {
+  Future<void> onDataUpdated(final Emitter<StatusOf<ListerState>> emit, final ListerEventDataUpdated event) async {
     add(const ListerEventLoadRequested());
   }
 

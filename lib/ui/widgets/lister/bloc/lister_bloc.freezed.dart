@@ -253,13 +253,24 @@ abstract class ListerEventDataUpdated implements ListerEvent {
 }
 
 /// @nodoc
-mixin _$ListerState<T> {}
+mixin _$ListerState<T> {
+  int get totalCount => throw _privateConstructorUsedError;
+  List<T> get items => throw _privateConstructorUsedError;
+
+  /// Create a copy of ListerState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ListerStateCopyWith<T, ListerState<T>> get copyWith =>
+      throw _privateConstructorUsedError;
+}
 
 /// @nodoc
 abstract class $ListerStateCopyWith<T, $Res> {
   factory $ListerStateCopyWith(
           ListerState<T> value, $Res Function(ListerState<T>) then) =
       _$ListerStateCopyWithImpl<T, $Res, ListerState<T>>;
+  @useResult
+  $Res call({int totalCount, List<T> items});
 }
 
 /// @nodoc
@@ -274,23 +285,42 @@ class _$ListerStateCopyWithImpl<T, $Res, $Val extends ListerState<T>>
 
   /// Create a copy of ListerState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? totalCount = null,
+    Object? items = null,
+  }) {
+    return _then(_value.copyWith(
+      totalCount: null == totalCount
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      items: null == items
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<T>,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$ListerStateDataImplCopyWith<T, $Res> {
-  factory _$$ListerStateDataImplCopyWith(_$ListerStateDataImpl<T> value,
-          $Res Function(_$ListerStateDataImpl<T>) then) =
-      __$$ListerStateDataImplCopyWithImpl<T, $Res>;
+abstract class _$$ListerStateImplCopyWith<T, $Res>
+    implements $ListerStateCopyWith<T, $Res> {
+  factory _$$ListerStateImplCopyWith(_$ListerStateImpl<T> value,
+          $Res Function(_$ListerStateImpl<T>) then) =
+      __$$ListerStateImplCopyWithImpl<T, $Res>;
+  @override
   @useResult
   $Res call({int totalCount, List<T> items});
 }
 
 /// @nodoc
-class __$$ListerStateDataImplCopyWithImpl<T, $Res>
-    extends _$ListerStateCopyWithImpl<T, $Res, _$ListerStateDataImpl<T>>
-    implements _$$ListerStateDataImplCopyWith<T, $Res> {
-  __$$ListerStateDataImplCopyWithImpl(_$ListerStateDataImpl<T> _value,
-      $Res Function(_$ListerStateDataImpl<T>) _then)
+class __$$ListerStateImplCopyWithImpl<T, $Res>
+    extends _$ListerStateCopyWithImpl<T, $Res, _$ListerStateImpl<T>>
+    implements _$$ListerStateImplCopyWith<T, $Res> {
+  __$$ListerStateImplCopyWithImpl(
+      _$ListerStateImpl<T> _value, $Res Function(_$ListerStateImpl<T>) _then)
       : super(_value, _then);
 
   /// Create a copy of ListerState
@@ -301,7 +331,7 @@ class __$$ListerStateDataImplCopyWithImpl<T, $Res>
     Object? totalCount = null,
     Object? items = null,
   }) {
-    return _then(_$ListerStateDataImpl<T>(
+    return _then(_$ListerStateImpl<T>(
       totalCount: null == totalCount
           ? _value.totalCount
           : totalCount // ignore: cast_nullable_to_non_nullable
@@ -316,8 +346,8 @@ class __$$ListerStateDataImplCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$ListerStateDataImpl<T> implements ListerStateData<T> {
-  const _$ListerStateDataImpl(
+class _$ListerStateImpl<T> implements _ListerState<T> {
+  const _$ListerStateImpl(
       {required this.totalCount, required final List<T> items})
       : _items = items;
 
@@ -333,14 +363,14 @@ class _$ListerStateDataImpl<T> implements ListerStateData<T> {
 
   @override
   String toString() {
-    return 'ListerState<$T>.data(totalCount: $totalCount, items: $items)';
+    return 'ListerState<$T>(totalCount: $totalCount, items: $items)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ListerStateDataImpl<T> &&
+            other is _$ListerStateImpl<T> &&
             (identical(other.totalCount, totalCount) ||
                 other.totalCount == totalCount) &&
             const DeepCollectionEquality().equals(other._items, _items));
@@ -355,146 +385,25 @@ class _$ListerStateDataImpl<T> implements ListerStateData<T> {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ListerStateDataImplCopyWith<T, _$ListerStateDataImpl<T>> get copyWith =>
-      __$$ListerStateDataImplCopyWithImpl<T, _$ListerStateDataImpl<T>>(
+  _$$ListerStateImplCopyWith<T, _$ListerStateImpl<T>> get copyWith =>
+      __$$ListerStateImplCopyWithImpl<T, _$ListerStateImpl<T>>(
           this, _$identity);
 }
 
-abstract class ListerStateData<T> implements ListerState<T> {
-  const factory ListerStateData(
+abstract class _ListerState<T> implements ListerState<T> {
+  const factory _ListerState(
       {required final int totalCount,
-      required final List<T> items}) = _$ListerStateDataImpl<T>;
+      required final List<T> items}) = _$ListerStateImpl<T>;
 
+  @override
   int get totalCount;
+  @override
   List<T> get items;
 
   /// Create a copy of ListerState
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ListerStateDataImplCopyWith<T, _$ListerStateDataImpl<T>> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$ListerStateLoadingImplCopyWith<T, $Res> {
-  factory _$$ListerStateLoadingImplCopyWith(_$ListerStateLoadingImpl<T> value,
-          $Res Function(_$ListerStateLoadingImpl<T>) then) =
-      __$$ListerStateLoadingImplCopyWithImpl<T, $Res>;
-}
-
-/// @nodoc
-class __$$ListerStateLoadingImplCopyWithImpl<T, $Res>
-    extends _$ListerStateCopyWithImpl<T, $Res, _$ListerStateLoadingImpl<T>>
-    implements _$$ListerStateLoadingImplCopyWith<T, $Res> {
-  __$$ListerStateLoadingImplCopyWithImpl(_$ListerStateLoadingImpl<T> _value,
-      $Res Function(_$ListerStateLoadingImpl<T>) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ListerState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$ListerStateLoadingImpl<T> implements ListerStateLoading<T> {
-  const _$ListerStateLoadingImpl();
-
-  @override
-  String toString() {
-    return 'ListerState<$T>.loading()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ListerStateLoadingImpl<T>);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-}
-
-abstract class ListerStateLoading<T> implements ListerState<T> {
-  const factory ListerStateLoading() = _$ListerStateLoadingImpl<T>;
-}
-
-/// @nodoc
-abstract class _$$ListerStateErrorImplCopyWith<T, $Res> {
-  factory _$$ListerStateErrorImplCopyWith(_$ListerStateErrorImpl<T> value,
-          $Res Function(_$ListerStateErrorImpl<T>) then) =
-      __$$ListerStateErrorImplCopyWithImpl<T, $Res>;
-  @useResult
-  $Res call({String error});
-}
-
-/// @nodoc
-class __$$ListerStateErrorImplCopyWithImpl<T, $Res>
-    extends _$ListerStateCopyWithImpl<T, $Res, _$ListerStateErrorImpl<T>>
-    implements _$$ListerStateErrorImplCopyWith<T, $Res> {
-  __$$ListerStateErrorImplCopyWithImpl(_$ListerStateErrorImpl<T> _value,
-      $Res Function(_$ListerStateErrorImpl<T>) _then)
-      : super(_value, _then);
-
-  /// Create a copy of ListerState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? error = null,
-  }) {
-    return _then(_$ListerStateErrorImpl<T>(
-      error: null == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$ListerStateErrorImpl<T> implements ListerStateError<T> {
-  const _$ListerStateErrorImpl({required this.error});
-
-  @override
-  final String error;
-
-  @override
-  String toString() {
-    return 'ListerState<$T>.error(error: $error)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ListerStateErrorImpl<T> &&
-            (identical(other.error, error) || other.error == error));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, error);
-
-  /// Create a copy of ListerState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$ListerStateErrorImplCopyWith<T, _$ListerStateErrorImpl<T>> get copyWith =>
-      __$$ListerStateErrorImplCopyWithImpl<T, _$ListerStateErrorImpl<T>>(
-          this, _$identity);
-}
-
-abstract class ListerStateError<T> implements ListerState<T> {
-  const factory ListerStateError({required final String error}) =
-      _$ListerStateErrorImpl<T>;
-
-  String get error;
-
-  /// Create a copy of ListerState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ListerStateErrorImplCopyWith<T, _$ListerStateErrorImpl<T>> get copyWith =>
+  _$$ListerStateImplCopyWith<T, _$ListerStateImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
