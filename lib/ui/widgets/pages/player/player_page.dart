@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../../api/entity/recording/recording.dart';
+import '../../../../extensions/duration.dart';
+import '../../../app_router/app_router.dart';
 import '../../../entity/status.dart';
 import '../../../theme.dart';
 import '../../error_panel.dart';
@@ -77,10 +79,43 @@ class PlayerView extends StatelessWidget {
           backgroundColor: Colors.transparent,
           scrolledUnderElevation: 0,
           systemOverlayStyle: Theme.of(context).brightness == Brightness.light ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light,
+          actions: const [
+            _ViolationsButton(),
+            SizedBox(width: 8),
+          ],
         ),
         extendBodyBehindAppBar: true,
         body: const _Player(),
       ),
+    );
+  }
+}
+
+class _ViolationsButton extends StatelessWidget {
+  const _ViolationsButton();
+
+  @override
+  Widget build(final BuildContext context) {
+    return ElevatedButton.icon(
+      icon: const Icon(Icons.error_outline),
+      label: const Text('İhlaller'),
+      onPressed: () {
+        final id = context.read<PlayerBloc>().state.id;
+
+        final violations = switch (context.read<PlayerBloc>().state.textState) {
+          StatusOfData(
+            data: PlayerTextStateData(
+              violations: StatusOfData(
+                :final data,
+              ),
+            ),
+          ) =>
+            data,
+          _ => null,
+        };
+
+        context.pushRoute(ViolationsRoute(id: id, violations: violations));
+      },
     );
   }
 }
