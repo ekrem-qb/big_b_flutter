@@ -6,6 +6,7 @@ import '../../../../api/entity/planned_task/planned_task.dart';
 import '../../../../api/entity/task/task.dart';
 import '../../../../constants.dart';
 import '../../../../extensions/date_time.dart';
+import '../../../../extensions/duration.dart';
 import '../../../../extensions/weekdays.dart';
 import '../../../entity/status.dart';
 import '../../../theme.dart';
@@ -316,13 +317,6 @@ class _ImageToggle extends StatelessWidget {
   }
 }
 
-String _formatTime(final Duration duration) {
-  final minutes = duration.inHours.toString().padLeft(2, '0');
-  final seconds = (duration.inMinutes % 60).toString().padLeft(2, '0');
-  final time = '$minutes:$seconds';
-  return time;
-}
-
 class _Time extends StatelessWidget {
   const _Time();
 
@@ -340,7 +334,7 @@ class _Time extends StatelessWidget {
 
     return ActionChip(
       label: Text(
-        _formatTime(time),
+        time.toHoursAndMinutes(),
         style: largeTextStyle,
       ),
       onPressed: () async {

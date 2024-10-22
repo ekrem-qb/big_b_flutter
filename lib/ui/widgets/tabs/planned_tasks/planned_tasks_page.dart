@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../api/entity/planned_task/planned_task.dart';
 import '../../../../constants.dart';
 import '../../../../extensions/date_time.dart';
+import '../../../../extensions/duration.dart';
 import '../../../../extensions/weekdays.dart';
 import '../../../app_router/app_router.dart';
 import '../../extensions/mouse_navigator.dart';
@@ -45,13 +46,6 @@ class _NewPlannedTaskButton extends StatelessWidget {
   }
 }
 
-String _formatTime(final Duration duration) {
-  final minutes = duration.inHours.toString().padLeft(2, '0');
-  final seconds = (duration.inMinutes % 60).toString().padLeft(2, '0');
-  final time = '$minutes:$seconds';
-  return time;
-}
-
 class _Item extends StatelessWidget {
   const _Item(this.plannedTask);
 
@@ -78,7 +72,7 @@ class _Item extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 8),
             child: Text(
-              _formatTime(plannedTask.deadline.toTime()),
+              plannedTask.deadline.toTime().toMinutesAndSeconds(),
             ),
           ),
           if (isWeekdaySelected(0, plannedTask.weekdays)) _Day(day: 0, text: weekdayNames[0]),

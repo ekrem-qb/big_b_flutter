@@ -452,13 +452,6 @@ class _TextLineContent extends StatelessWidget {
   }
 }
 
-String _formatTime(final Duration duration) {
-  final minutes = (duration.inMinutes % 60).toString().padLeft(2, '0');
-  final seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
-  final time = '$minutes:$seconds';
-  return time;
-}
-
 class _Time extends StatelessWidget {
   const _Time();
 
@@ -476,7 +469,7 @@ class _Time extends StatelessWidget {
       };
     });
 
-    return Text(_formatTime(position ?? Duration.zero));
+    return Text((position ?? Duration.zero).toMinutesAndSeconds());
   }
 }
 
@@ -497,7 +490,7 @@ class _TotalTime extends StatelessWidget {
       };
     });
 
-    return Text(_formatTime(duration ?? Duration.zero));
+    return Text((duration ?? Duration.zero).toMinutesAndSeconds());
   }
 }
 
@@ -603,7 +596,7 @@ class _SliderState extends State<_Slider> {
                 squiggleSpeed: 0.1,
                 value: _currentValue,
                 max: duration,
-                label: _formatTime(Duration(microseconds: _currentValue.toInt())),
+                label: Duration(microseconds: _currentValue.toInt()).toMinutesAndSeconds(),
                 onChangeStart: (final newValue) {
                   _isSeeking = true;
                 },
