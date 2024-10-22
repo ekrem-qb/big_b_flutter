@@ -8,7 +8,7 @@ part 'violation.freezed.dart';
 part 'violation.g.dart';
 
 @Freezed(toJson: false)
-class Violation with _$Violation implements Entity {
+sealed class Violation with _$Violation implements Entity {
   factory Violation.normal({
     required final int id,
     required final Rule rule,
@@ -25,10 +25,11 @@ class Violation with _$Violation implements Entity {
   factory Violation.fromJson(final Map<String, dynamic> json) => _$ViolationFromJson(json);
 
   static const tableName = 'violations';
-  static final fieldNames = {
+  static final fieldNames = '${$NormalViolationImplJsonKeys.rule}:${Rule.tableName}(${Rule.fieldNames}),${{
+    $NormalViolationImplJsonKeys.rule,
     ..._$$NormalViolationImplFieldMap.values,
     ..._$$HighlightViolationImplFieldMap.values,
-  }.join(',');
+  }.join(',')}';
 
   static List<Violation>? converter(final List<Map<String, dynamic>> data) => data.map(Violation.fromJson).toList();
 }
