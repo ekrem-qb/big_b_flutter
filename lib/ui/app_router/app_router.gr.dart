@@ -645,3 +645,58 @@ class ThirdTabRoute extends PageRouteInfo<void> {
     },
   );
 }
+
+/// generated route for
+/// [ViolationsPage]
+class ViolationsRoute extends PageRouteInfo<ViolationsRouteArgs> {
+  ViolationsRoute({
+    required int id,
+    List<Violation>? violations,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ViolationsRoute.name,
+          args: ViolationsRouteArgs(
+            id: id,
+            violations: violations,
+            key: key,
+          ),
+          rawPathParams: {'id': id},
+          initialChildren: children,
+        );
+
+  static const String name = 'ViolationsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<ViolationsRouteArgs>(
+          orElse: () => ViolationsRouteArgs(id: pathParams.getInt('id')));
+      return ViolationsPage(
+        id: args.id,
+        violations: args.violations,
+        key: args.key,
+      );
+    },
+  );
+}
+
+class ViolationsRouteArgs {
+  const ViolationsRouteArgs({
+    required this.id,
+    this.violations,
+    this.key,
+  });
+
+  final int id;
+
+  final List<Violation>? violations;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ViolationsRouteArgs{id: $id, violations: $violations, key: $key}';
+  }
+}

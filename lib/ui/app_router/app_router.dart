@@ -6,6 +6,7 @@ import '../../api/entity/profile/profile.dart';
 import '../../api/entity/recording/recording.dart';
 import '../../api/entity/rule/rule.dart';
 import '../../api/entity/task/task.dart';
+import '../../api/entity/violation/violation.dart';
 import '../widgets/dialogs/task_viewer/task_viewer_dialog.dart';
 import '../widgets/extensions/dialog_router.dart';
 import '../widgets/pages/app/app_page.dart';
@@ -15,6 +16,7 @@ import '../widgets/pages/player/player_page.dart';
 import '../widgets/pages/profile_editor/profile_editor_page.dart';
 import '../widgets/pages/rule_editor/rule_editor_page.dart';
 import '../widgets/pages/task_editor/task_editor_page.dart';
+import '../widgets/pages/violations/violations_page.dart';
 import '../widgets/tabs/more/more_page.dart';
 import '../widgets/tabs/planned_tasks/planned_tasks_page.dart';
 import '../widgets/tabs/profiles/profiles_page.dart';
@@ -86,6 +88,10 @@ class AppRouter extends RootStackRouter {
                   CupertinoRoute(
                     path: ':id',
                     page: PlayerRoute.page,
+                  ),
+                  CupertinoRoute(
+                    path: ':id/violations',
+                    page: ViolationsRoute.page,
                   ),
                 ],
               ),
