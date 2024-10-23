@@ -537,6 +537,7 @@ class _Slider extends StatefulWidget {
 
 class _SliderState extends State<_Slider> {
   bool _isSeeking = false;
+  bool _didJump = false;
   double _currentValue = 0;
 
   @override
@@ -608,9 +609,15 @@ class _SliderState extends State<_Slider> {
         _ => true,
       },
       child: TweenAnimationBuilder(
-        tween: Tween<double>(begin: _currentValue, end: position),
-        curve: animationCurve,
+        tween: Tween<double>(begin: _currentValue, end: !_didJump ? position : _currentValue),
+        curve: isPlaying ? Curves.linear : animationCurve,
         duration: animationDuration,
+        onEnd: () {
+          if (_didJump) {
+            _isSeeking = false;
+            _didJump = false;
+          }
+        },
         builder: (final context, final value, final child) {
           if (!_isSeeking) {
             _currentValue = value;
@@ -629,10 +636,8 @@ class _SliderState extends State<_Slider> {
               });
             },
             onChangeEnd: (final newValue) {
+              _didJump = true;
               bloc.add(PlayerEventSeekRequested(Duration(microseconds: newValue.toInt())));
-              Future.delayed(animationDuration, () {
-                _isSeeking = false;
-              });
             },
           );
         },
