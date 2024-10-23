@@ -11,7 +11,6 @@ import '../../../entity/status.dart';
 import '../../../theme.dart';
 import '../../error_panel.dart';
 import '../../extensions/fade_transition_builder.dart';
-import '../../extensions/md3_slider/md3_slider.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/shimmer.dart';
 import '../../extensions/smooth_mouse_scroll/positioned_smooth_mouse_scroll.dart';
@@ -539,7 +538,6 @@ class _Slider extends StatefulWidget {
 class _SliderState extends State<_Slider> {
   bool _isSeeking = false;
   double _currentValue = 0;
-  double _squiggleAmplitude = 0;
 
   @override
   Widget build(final BuildContext context) {
@@ -618,35 +616,23 @@ class _SliderState extends State<_Slider> {
             _currentValue = value;
           }
 
-          return TweenAnimationBuilder(
-            tween: Tween<double>(begin: _squiggleAmplitude, end: isPlaying ? 1 : 0),
-            duration: Durations.short2,
-            builder: (final context, final value, final child) {
-              _squiggleAmplitude = value;
-
-              return Material3Slider(
-                isSquiglySliderEnabled: true,
-                squiggleAmplitude: _squiggleAmplitude * 3,
-                squiggleWavelength: 5,
-                squiggleSpeed: 0.1,
-                value: _currentValue,
-                max: duration,
-                label: Duration(microseconds: _currentValue.toInt()).toMinutesAndSeconds(),
-                onChangeStart: (final newValue) {
-                  _isSeeking = true;
-                },
-                onChanged: (final newValue) {
-                  setState(() {
-                    _currentValue = newValue;
-                  });
-                },
-                onChangeEnd: (final newValue) {
-                  bloc.add(PlayerEventSeekRequested(Duration(microseconds: newValue.toInt())));
-                  Future.delayed(Durations.short4, () {
-                    _isSeeking = false;
-                  });
-                },
-              );
+          return Slider(
+            value: _currentValue,
+            max: duration,
+            label: Duration(microseconds: _currentValue.toInt()).toMinutesAndSeconds(),
+            onChangeStart: (final newValue) {
+              _isSeeking = true;
+            },
+            onChanged: (final newValue) {
+              setState(() {
+                _currentValue = newValue;
+              });
+            },
+            onChangeEnd: (final newValue) {
+              bloc.add(PlayerEventSeekRequested(Duration(microseconds: newValue.toInt())));
+              Future.delayed(animationDuration, () {
+                _isSeeking = false;
+              });
             },
           );
         },
