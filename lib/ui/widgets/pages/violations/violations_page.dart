@@ -160,11 +160,13 @@ class _Item extends StatelessWidget {
           color: violation.rule.color,
         ),
       ),
-      leading: switch (violation.rule) {
-        WordsRule() => const RuleIcon(type: WordsRule),
-        NameRule() => const RuleIcon(type: NameRule),
-        CustomRule() => const RuleIcon(type: CustomRule),
-      },
+      leading: Icon(
+        switch (violation.rule) {
+          WordsRule() => RuleTileContent.iconOf<WordsRule>(),
+          NameRule() => RuleTileContent.iconOf<NameRule>(),
+          CustomRule() => RuleTileContent.iconOf<CustomRule>(),
+        },
+      ),
       title: switch (violation) {
         HighlightViolation(
           :final line,
@@ -190,18 +192,18 @@ class _Item extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-        NormalViolation() => switch (violation.rule) {
-            WordsRule() => const RuleText(type: WordsRule),
-            NameRule() => const RuleText(type: NameRule),
-            CustomRule(
-              :final description,
-            ) =>
-              Text(
+        NormalViolation() => Text(
+            switch (violation.rule) {
+              WordsRule() => RuleTileContent.textOf<WordsRule>(),
+              NameRule() => RuleTileContent.textOf<NameRule>(),
+              CustomRule(
+                :final description,
+              ) =>
                 description,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-          },
+            },
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
       },
       subtitle: subtitle.isNotEmpty
           ? Text(

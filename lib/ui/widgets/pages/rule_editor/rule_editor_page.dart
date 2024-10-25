@@ -322,15 +322,15 @@ class _Type extends StatelessWidget {
       items: const [
         DropdownMenuItem(
           value: WordsRule,
-          child: RuleTile(type: WordsRule),
+          child: RuleTileContent<WordsRule>(),
         ),
         DropdownMenuItem(
           value: NameRule,
-          child: RuleTile(type: NameRule),
+          child: RuleTileContent<NameRule>(),
         ),
         DropdownMenuItem(
           value: CustomRule,
-          child: RuleTile(type: CustomRule),
+          child: RuleTileContent<CustomRule>(),
         ),
       ],
     );

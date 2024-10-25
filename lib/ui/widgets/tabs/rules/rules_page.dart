@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../api/entity/rule/rule.dart';
 import '../../../app_router/app_router.dart';
-import '../../../theme.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../lister/lister_widget.dart';
 import '../../rule_tile.dart';
@@ -22,7 +21,7 @@ class RulesPage extends StatelessWidget {
         ),
         body: const Lister<RulesBloc, Rule>.cards(
           blocCreator: RulesBloc.new,
-          itemContentBuilder: _Item.new,
+          itemContentBuilder: RuleTile.new,
           noItemsIcon: Icons.rule,
           noItemsText: 'Kural bulunamadı',
         ),
@@ -40,56 +39,6 @@ class _NewRuleButton extends StatelessWidget {
     return FloatingActionButton(
       onPressed: () => context.pushRoute(const NewRuleEditorRoute()),
       child: const Icon(Icons.add),
-    );
-  }
-}
-
-class _Item extends StatelessWidget {
-  const _Item(this.rule);
-
-  final Rule rule;
-
-  @override
-  Widget build(final BuildContext context) {
-    final subtitle = switch (rule) {
-      WordsRule(
-        :final words
-      ) =>
-        words.join(', '),
-      NameRule() => '',
-      CustomRule(
-        :final details
-      ) =>
-        details,
-    };
-    return ListTile(
-      shape: RoundedRectangleBorder(
-        borderRadius: kDefaultRadius,
-        side: BorderSide(
-          width: 2,
-          color: rule.color,
-        ),
-      ),
-      title: switch (rule) {
-        WordsRule() => const RuleTile(type: WordsRule),
-        NameRule() => const RuleTile(type: NameRule),
-        CustomRule(
-          :final description,
-        ) =>
-          Text(
-            description,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-      },
-      subtitle: subtitle.isNotEmpty
-          ? Text(
-              subtitle,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            )
-          : null,
-      onTap: () => context.pushRoute(RuleEditorRoute(id: rule.id, rule: rule)),
     );
   }
 }
