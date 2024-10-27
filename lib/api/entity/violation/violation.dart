@@ -24,6 +24,8 @@ sealed class Violation with _$Violation implements Entity {
 
   factory Violation.fromJson(final Map<String, dynamic> json) => _$ViolationFromJson(json);
 
+  static Violation? maybeFromJson(final Map<String, dynamic>? json) => json != null ? _$ViolationFromJson(json) : null;
+
   static const tableName = 'violations';
   static final fieldNames = '${$NormalViolationImplJsonKeys.rule}:${Rule.tableName}(${Rule.fieldNames}),${{
     $NormalViolationImplJsonKeys.rule,
