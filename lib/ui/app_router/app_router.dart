@@ -8,6 +8,7 @@ import '../../api/entity/rule/rule.dart';
 import '../../api/entity/task/task.dart';
 import '../../api/entity/violation/violation.dart';
 import '../widgets/dialogs/task_viewer/task_viewer_dialog.dart';
+import '../widgets/dialogs/violation_viewer/violation_viewer_dialog.dart';
 import '../widgets/extensions/dialog_router.dart';
 import '../widgets/pages/app/app_page.dart';
 import '../widgets/pages/home/home_page.dart';
@@ -92,6 +93,12 @@ class AppRouter extends RootStackRouter {
                   CupertinoRoute(
                     path: ':id/violations',
                     page: ViolationsRoute.page,
+                    children: [
+                      DialogRoute(
+                        path: ':id',
+                        page: ViolationViewerRoute.page,
+                      ),
+                    ],
                   ),
                 ],
               ),

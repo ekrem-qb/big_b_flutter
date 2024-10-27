@@ -5,9 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../api/entity/rule/rule.dart';
 import '../../../../api/entity/violation/violation.dart';
 import '../../../../extensions/duration.dart';
+import '../../../app_router/app_router.dart';
 import '../../../entity/status.dart';
 import '../../../theme.dart';
 import '../../error_panel.dart';
+import '../../extensions/dialog_router.dart';
 import '../../extensions/fade_transition_builder.dart';
 import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
@@ -44,11 +46,16 @@ class ViolationsView extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('İhlaller'),
-      ),
-      body: const _List(),
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            title: const Text('İhlaller'),
+          ),
+          body: const _List(),
+        ),
+        const DialogRouter(),
+      ],
     );
   }
 }
@@ -222,6 +229,14 @@ class _Item extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
         NormalViolation() => null,
+      },
+      onTap: () {
+        context.pushRoute(
+          ViolationViewerRoute(
+            id: violation.id,
+            violation: violation,
+          ),
+        );
       },
     );
   }
