@@ -107,7 +107,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
               ...currentState.data.items,
               ...items,
             ],
-          ) as ListerState<T>,
+          ),
         ),
       );
     } on Exception catch (e) {
@@ -132,44 +132,44 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
   }
 
   StatusOfData<ListerState<T>> _insert(final StatusOfData<ListerState<T>> currentState, final PostgresChangePayload payload) {
-    final newItems = _insertIntoList(payload.newRecord, currentState.data.items as List<T>);
+    final newItems = _insertIntoList(payload.newRecord, currentState.data.items);
 
     return StatusOfData(
-      (newItems != null
+      newItems != null
           ? currentState.data.copyWith(
               totalCount: currentState.data.totalCount + 1,
               items: newItems,
             )
           : currentState.data.copyWith(
               totalCount: currentState.data.totalCount + 1,
-            )) as ListerState<T>,
+            ),
     );
   }
 
   StatusOfData<ListerState<T>>? _update(final StatusOfData<ListerState<T>> currentState, final PostgresChangePayload payload) {
-    final newItems = _insertIntoList(payload.newRecord, _deleteFromList(payload.oldRecord, currentState.data.items as List<T>));
+    final newItems = _insertIntoList(payload.newRecord, _deleteFromList(payload.oldRecord, currentState.data.items));
 
     return newItems != null
         ? StatusOfData(
             currentState.data.copyWith(
               items: newItems,
-            ) as ListerState<T>,
+            ),
           )
         : null;
   }
 
   StatusOfData<ListerState<T>> _delete(final StatusOfData<ListerState<T>> currentState, final PostgresChangePayload payload) {
-    final newItems = _deleteFromList(payload.oldRecord, currentState.data.items as List<T>);
+    final newItems = _deleteFromList(payload.oldRecord, currentState.data.items);
 
     return StatusOfData(
-      (newItems != null
+      newItems != null
           ? currentState.data.copyWith(
               totalCount: currentState.data.totalCount - 1,
               items: newItems,
             )
           : currentState.data.copyWith(
               totalCount: currentState.data.totalCount - 1,
-            )) as ListerState<T>,
+            ),
     );
   }
 
