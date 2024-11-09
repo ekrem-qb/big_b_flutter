@@ -243,6 +243,7 @@ class _Text extends StatelessWidget {
               highlightColor: theme.colorScheme.onSurface,
               child: ShaderMask(
                 shaderCallback: _gradient.createShader,
+                blendMode: BlendMode.dstIn,
                 child: LayoutBuilder(
                   builder: (final context, final constraints) {
                     return ScrollablePositionedList.builder(
@@ -353,6 +354,7 @@ class _LoadedTextState extends State<_LoadedText> {
             ) =>
               ShaderMask(
                 shaderCallback: _gradient.createShader,
+                blendMode: BlendMode.dstIn,
                 child: LayoutBuilder(
                   builder: (final context, final constraints) {
                     return PositionedSmoothMouseScroll(
