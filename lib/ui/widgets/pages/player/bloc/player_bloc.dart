@@ -46,10 +46,12 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       transformer: concurrent(),
     );
 
-    _durationSubscription = _player.stream.duration.listen(_onPlayerDurationChanged);
-    _positionSubscription = _player.stream.position.listen(_onPlayerPositionChanged);
-    _playingSubscription = _player.stream.playing.listen(_onPlayerPlayingChanged);
-    _errorSubscription = _player.stream.error.listen(_onPlayerError);
+    _playerSubscriptions = [
+      _player.stream.duration.listen(_onPlayerDurationChanged),
+      _player.stream.position.listen(_onPlayerPositionChanged),
+      _player.stream.playing.listen(_onPlayerPlayingChanged),
+      _player.stream.error.listen(_onPlayerError),
+    ];
 
     if (state.recordingState is StatusOfLoading) {
       add(const PlayerEventLoadRequested());
@@ -69,10 +71,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     ),
   );
 
-  StreamSubscription? _durationSubscription;
-  StreamSubscription? _positionSubscription;
-  StreamSubscription? _playingSubscription;
-  StreamSubscription? _errorSubscription;
+  late final List<StreamSubscription<Object>> _playerSubscriptions;
 
   void _onPlayerDurationChanged(final Duration? newDuration) {
     if (newDuration == null) return;
@@ -306,10 +305,9 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
   @override
   Future<void> close() {
-    _durationSubscription?.cancel();
-    _positionSubscription?.cancel();
-    _playingSubscription?.cancel();
-    _errorSubscription?.cancel();
+    for (var i = 0; i < _playerSubscriptions.length; i++) {
+      _playerSubscriptions[i].cancel();
+    }
     _player.dispose();
     return super.close();
   }
