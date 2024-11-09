@@ -50,7 +50,7 @@ class RuleTile extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             )
           : null,
-      onTap: () => context.pushRoute(
+      onTap: () => context.tabsRouter.navigate(
         RuleEditorRoute(
           id: rule.id,
           rule: rule,
