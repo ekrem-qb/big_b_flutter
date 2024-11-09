@@ -22,7 +22,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     _authSubscription = db.auth.onAuthStateChange.listen(_onAuthStateChange);
   }
 
-  StreamSubscription? _authSubscription;
+  StreamSubscription<AuthState>? _authSubscription;
 
   void _onAuthStateChange(final AuthState authState) {
     switch (authState.event) {

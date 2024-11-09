@@ -45,7 +45,7 @@ class PlannedTasksBloc extends ListerBloc<PlannedTask> {
   bool Function(PlannedTask a, PlannedTask b) get isAfter => (final a, final b) => a.updatedAt.isAfter(b.updatedAt);
 
   @override
-  Future<void> onDataUpdated(final Emitter<StatusOf<ListerState>> emit, final ListerEventDataUpdated event) async {
+  Future<void> onDataUpdated(final Emitter<StatusOf<ListerState<PlannedTask>>> emit, final ListerEventDataUpdated event) async {
     add(const ListerEventLoadRequested());
   }
 

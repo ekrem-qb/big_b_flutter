@@ -254,7 +254,7 @@ class _ItemContent<TBloc extends ListerBloc<TItem>, TItem extends Entity> extend
         isInitialized = true;
       }
       return switch (bloc.state) {
-        StatusOfData<ListerState>(
+        StatusOfData<ListerState<TItem>>(
           :final data,
         ) =>
           data.items.elementAtOrNull(index),

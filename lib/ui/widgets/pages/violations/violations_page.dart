@@ -104,7 +104,7 @@ class _ViolationsListContent extends StatelessWidget {
           :final data,
         ) =>
           data,
-        _ => List.empty(),
+        _ => List<Violation>.empty(),
       };
     });
 
