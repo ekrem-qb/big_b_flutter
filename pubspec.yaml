@@ -28,7 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  auto_route: ^9.2.1
+  auto_route: ^9.2.2
   bloc: ^8.1.4
   bloc_concurrency: ^0.2.5
   flex_color_picker: ^3.5.1
@@ -54,6 +54,11 @@ dev_dependencies:
   json_serializable: ^6.8.0
 
 dependency_overrides:
+  auto_route:
+    git:
+      url: https://github.com/ekrem-qb/auto_route_library
+      ref: sub-route
+      path: auto_route
   json_annotation:
     git:
       url: https://github.com/ekrem-qb/json_serializable.dart
