@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import 'home_state.dart';
 
-class HomeModel extends RestorableProperty {
+class HomeModel extends RestorableProperty<HomeState> {
   HomeState _state = const HomeState();
 
   TabsRouter? _tabsRouter;
@@ -40,17 +40,16 @@ class HomeModel extends RestorableProperty {
   }
 
   @override
-  HomeModel createDefaultValue() => this;
+  HomeState createDefaultValue() => const HomeState();
 
   @override
-  void initWithValue(final Object? value) {}
+  void initWithValue(final HomeState value) {
+    _state = value;
+  }
 
   @override
-  HomeModel fromPrimitives(final Object? data) {
-    if (data != null) {
-      _state = HomeState.fromJson((data as Map<Object?, Object?>).cast());
-    }
-    return this;
+  HomeState fromPrimitives(final Object? data) {
+    return data != null ? HomeState.fromJson((data as Map<Object?, Object?>).cast()) : const HomeState();
   }
 
   @override
