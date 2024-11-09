@@ -429,13 +429,11 @@ class _TextLine extends StatelessWidget {
           :final textLines,
         ),
       ) =>
-        Opacity(
-          opacity: currentTextLine != index ? 0.5 : 1,
-          child: _TextLineContent(
-            text: textSpans[index],
-            isEmployee: textLines[index].isEmployee,
-            onTap: () => bloc.add(PlayerEventJumpToLineRequested(index)),
-          ),
+        _TextLineContent(
+          text: textSpans[index],
+          isEmployee: textLines[index].isEmployee,
+          isCurrent: currentTextLine == index,
+          onTap: () => bloc.add(PlayerEventJumpToLineRequested(index)),
         ),
       _ => const SizedBox.shrink()
     };
@@ -446,11 +444,13 @@ class _TextLineContent extends StatelessWidget {
   const _TextLineContent({
     required this.text,
     required this.isEmployee,
+    required this.isCurrent,
     required this.onTap,
   });
 
   final TextSpan text;
   final bool isEmployee;
+  final bool isCurrent;
   final Function() onTap;
 
   @override
@@ -464,6 +464,15 @@ class _TextLineContent extends StatelessWidget {
         alignment: isEmployee ? Alignment.centerRight : Alignment.centerLeft,
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          shape: RoundedRectangleBorder(
+            borderRadius: kDefaultRadius,
+            side: isCurrent
+                ? BorderSide(
+                    color: theme.colorScheme.primary,
+                    width: 2,
+                  )
+                : BorderSide.none,
+          ),
           color: isEmployee
               ? Color.lerp(
                   theme.colorScheme.surfaceContainer,
