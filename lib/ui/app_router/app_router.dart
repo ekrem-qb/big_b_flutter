@@ -119,7 +119,7 @@ class AppRouter extends RootStackRouter {
               ),
               CupertinoRoute(
                 path: 'more',
-                page: ForthTabRoute.page,
+                page: FourthTabRoute.page,
                 children: [
                   CupertinoRoute(path: '', page: MoreRoute.page),
                   CupertinoRoute(
@@ -160,6 +160,6 @@ class ThirdTabPage extends AutoRouter {
 }
 
 @RoutePage()
-class ForthTabPage extends AutoRouter {
-  const ForthTabPage({super.key});
+class FourthTabPage extends AutoRouter {
+  const FourthTabPage({super.key});
 }

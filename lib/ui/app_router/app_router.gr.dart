@@ -48,20 +48,20 @@ class FirstTabRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [ForthTabPage]
-class ForthTabRoute extends PageRouteInfo<void> {
-  const ForthTabRoute({List<PageRouteInfo>? children})
+/// [FourthTabPage]
+class FourthTabRoute extends PageRouteInfo<void> {
+  const FourthTabRoute({List<PageRouteInfo>? children})
       : super(
-          ForthTabRoute.name,
+          FourthTabRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'ForthTabRoute';
+  static const String name = 'FourthTabRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const ForthTabPage();
+      return const FourthTabPage();
     },
   );
 }
