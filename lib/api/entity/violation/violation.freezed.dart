@@ -31,6 +31,7 @@ Violation _$ViolationFromJson(Map<String, dynamic> json) {
 mixin _$Violation {
   int get id => throw _privateConstructorUsedError;
   Rule get rule => throw _privateConstructorUsedError;
+  Recording get record => throw _privateConstructorUsedError;
 
   /// Create a copy of Violation
   /// with the given fields replaced by the non-null parameter values.
@@ -44,9 +45,10 @@ abstract class $ViolationCopyWith<$Res> {
   factory $ViolationCopyWith(Violation value, $Res Function(Violation) then) =
       _$ViolationCopyWithImpl<$Res, Violation>;
   @useResult
-  $Res call({int id, Rule rule});
+  $Res call({int id, Rule rule, Recording record});
 
   $RuleCopyWith<$Res> get rule;
+  $RecordingCopyWith<$Res> get record;
 }
 
 /// @nodoc
@@ -66,6 +68,7 @@ class _$ViolationCopyWithImpl<$Res, $Val extends Violation>
   $Res call({
     Object? id = null,
     Object? rule = null,
+    Object? record = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -76,6 +79,10 @@ class _$ViolationCopyWithImpl<$Res, $Val extends Violation>
           ? _value.rule
           : rule // ignore: cast_nullable_to_non_nullable
               as Rule,
+      record: null == record
+          ? _value.record
+          : record // ignore: cast_nullable_to_non_nullable
+              as Recording,
     ) as $Val);
   }
 
@@ -88,6 +95,16 @@ class _$ViolationCopyWithImpl<$Res, $Val extends Violation>
       return _then(_value.copyWith(rule: value) as $Val);
     });
   }
+
+  /// Create a copy of Violation
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $RecordingCopyWith<$Res> get record {
+    return $RecordingCopyWith<$Res>(_value.record, (value) {
+      return _then(_value.copyWith(record: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -98,10 +115,12 @@ abstract class _$$NormalViolationImplCopyWith<$Res>
       __$$NormalViolationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, Rule rule});
+  $Res call({int id, Rule rule, Recording record});
 
   @override
   $RuleCopyWith<$Res> get rule;
+  @override
+  $RecordingCopyWith<$Res> get record;
 }
 
 /// @nodoc
@@ -119,6 +138,7 @@ class __$$NormalViolationImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? rule = null,
+    Object? record = null,
   }) {
     return _then(_$NormalViolationImpl(
       id: null == id
@@ -129,6 +149,10 @@ class __$$NormalViolationImplCopyWithImpl<$Res>
           ? _value.rule
           : rule // ignore: cast_nullable_to_non_nullable
               as Rule,
+      record: null == record
+          ? _value.record
+          : record // ignore: cast_nullable_to_non_nullable
+              as Recording,
     ));
   }
 }
@@ -137,7 +161,10 @@ class __$$NormalViolationImplCopyWithImpl<$Res>
 @JsonSerializable(createToJson: false)
 class _$NormalViolationImpl implements NormalViolation {
   _$NormalViolationImpl(
-      {required this.id, required this.rule, final String? $type})
+      {required this.id,
+      required this.rule,
+      required this.record,
+      final String? $type})
       : $type = $type ?? 'normal';
 
   factory _$NormalViolationImpl.fromJson(Map<String, dynamic> json) =>
@@ -147,13 +174,15 @@ class _$NormalViolationImpl implements NormalViolation {
   final int id;
   @override
   final Rule rule;
+  @override
+  final Recording record;
 
   @JsonKey(name: 'type')
   final String $type;
 
   @override
   String toString() {
-    return 'Violation.normal(id: $id, rule: $rule)';
+    return 'Violation.normal(id: $id, rule: $rule, record: $record)';
   }
 
   @override
@@ -162,12 +191,13 @@ class _$NormalViolationImpl implements NormalViolation {
         (other.runtimeType == runtimeType &&
             other is _$NormalViolationImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.rule, rule) || other.rule == rule));
+            (identical(other.rule, rule) || other.rule == rule) &&
+            (identical(other.record, record) || other.record == record));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, rule);
+  int get hashCode => Object.hash(runtimeType, id, rule, record);
 
   /// Create a copy of Violation
   /// with the given fields replaced by the non-null parameter values.
@@ -180,8 +210,10 @@ class _$NormalViolationImpl implements NormalViolation {
 }
 
 abstract class NormalViolation implements Violation {
-  factory NormalViolation({required final int id, required final Rule rule}) =
-      _$NormalViolationImpl;
+  factory NormalViolation(
+      {required final int id,
+      required final Rule rule,
+      required final Recording record}) = _$NormalViolationImpl;
 
   factory NormalViolation.fromJson(Map<String, dynamic> json) =
       _$NormalViolationImpl.fromJson;
@@ -190,6 +222,8 @@ abstract class NormalViolation implements Violation {
   int get id;
   @override
   Rule get rule;
+  @override
+  Recording get record;
 
   /// Create a copy of Violation
   /// with the given fields replaced by the non-null parameter values.
@@ -207,10 +241,18 @@ abstract class _$$HighlightViolationImplCopyWith<$Res>
       __$$HighlightViolationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, Rule rule, TextLine line, int startIndex, int endIndex});
+  $Res call(
+      {int id,
+      Rule rule,
+      Recording record,
+      TextLine line,
+      int startIndex,
+      int endIndex});
 
   @override
   $RuleCopyWith<$Res> get rule;
+  @override
+  $RecordingCopyWith<$Res> get record;
   $TextLineCopyWith<$Res> get line;
 }
 
@@ -229,6 +271,7 @@ class __$$HighlightViolationImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? rule = null,
+    Object? record = null,
     Object? line = null,
     Object? startIndex = null,
     Object? endIndex = null,
@@ -242,6 +285,10 @@ class __$$HighlightViolationImplCopyWithImpl<$Res>
           ? _value.rule
           : rule // ignore: cast_nullable_to_non_nullable
               as Rule,
+      record: null == record
+          ? _value.record
+          : record // ignore: cast_nullable_to_non_nullable
+              as Recording,
       line: null == line
           ? _value.line
           : line // ignore: cast_nullable_to_non_nullable
@@ -274,6 +321,7 @@ class _$HighlightViolationImpl implements HighlightViolation {
   _$HighlightViolationImpl(
       {required this.id,
       required this.rule,
+      required this.record,
       required this.line,
       required this.startIndex,
       required this.endIndex,
@@ -288,6 +336,8 @@ class _$HighlightViolationImpl implements HighlightViolation {
   @override
   final Rule rule;
   @override
+  final Recording record;
+  @override
   final TextLine line;
   @override
   final int startIndex;
@@ -299,7 +349,7 @@ class _$HighlightViolationImpl implements HighlightViolation {
 
   @override
   String toString() {
-    return 'Violation.highlight(id: $id, rule: $rule, line: $line, startIndex: $startIndex, endIndex: $endIndex)';
+    return 'Violation.highlight(id: $id, rule: $rule, record: $record, line: $line, startIndex: $startIndex, endIndex: $endIndex)';
   }
 
   @override
@@ -309,6 +359,7 @@ class _$HighlightViolationImpl implements HighlightViolation {
             other is _$HighlightViolationImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.rule, rule) || other.rule == rule) &&
+            (identical(other.record, record) || other.record == record) &&
             (identical(other.line, line) || other.line == line) &&
             (identical(other.startIndex, startIndex) ||
                 other.startIndex == startIndex) &&
@@ -319,7 +370,7 @@ class _$HighlightViolationImpl implements HighlightViolation {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, rule, line, startIndex, endIndex);
+      Object.hash(runtimeType, id, rule, record, line, startIndex, endIndex);
 
   /// Create a copy of Violation
   /// with the given fields replaced by the non-null parameter values.
@@ -335,6 +386,7 @@ abstract class HighlightViolation implements Violation {
   factory HighlightViolation(
       {required final int id,
       required final Rule rule,
+      required final Recording record,
       required final TextLine line,
       required final int startIndex,
       required final int endIndex}) = _$HighlightViolationImpl;
@@ -346,6 +398,8 @@ abstract class HighlightViolation implements Violation {
   int get id;
   @override
   Rule get rule;
+  @override
+  Recording get record;
   TextLine get line;
   int get startIndex;
   int get endIndex;
