@@ -51,7 +51,7 @@ class _Item extends StatelessWidget {
       ),
       onTap: () => context.router.push(
         PlayerRoute(
-          id: recording.id,
+          recordingId: recording.id,
           recording: recording,
         ),
       ),

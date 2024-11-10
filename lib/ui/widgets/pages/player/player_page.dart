@@ -23,19 +23,25 @@ const animationCurve = Curves.easeOutExpo;
 @RoutePage()
 class PlayerPage extends StatelessWidget {
   const PlayerPage({
-    @pathParam required this.id,
+    @pathParam required this.recordingId,
+    @pathParam this.textLineId,
     this.recording,
     super.key,
   });
 
-  final int id;
+  final int recordingId;
+  final int? textLineId;
   final Recording? recording;
 
   @override
   Widget build(final BuildContext context) {
     return MouseNavigator(
       child: BlocProvider(
-        create: (final context) => PlayerBloc(id: id, recording: recording),
+        create: (final context) => PlayerBloc(
+          recordingId: recordingId,
+          textLineId: textLineId,
+          recording: recording,
+        ),
         child: const PlayerView(),
       ),
     );
@@ -99,7 +105,7 @@ class _ViolationsButton extends StatelessWidget {
       icon: const Icon(Icons.error_outline),
       label: const Text('İhlaller'),
       onPressed: () {
-        final id = context.read<PlayerBloc>().state.id;
+        final id = context.read<PlayerBloc>().state.recordingId;
 
         final violations = switch (context.read<PlayerBloc>().state.textState) {
           StatusOfData(
@@ -331,6 +337,7 @@ class _LoadedTextState extends State<_LoadedText> {
             case StatusOfData<PlayerTextStateData>(
               data: PlayerTextStateData(
                 :final currentTextLine,
+                :final textLines,
               ),
             )) {
           if (scrollController.isAttached) {
@@ -341,6 +348,13 @@ class _LoadedTextState extends State<_LoadedText> {
               curve: scrollCurve,
             );
           }
+
+          await context.tabsRouter.navigate(
+            PlayerRoute(
+              recordingId: state.recordingId,
+              textLineId: textLines[currentTextLine].id,
+            ),
+          );
         }
       },
       child: switch (bloc.state.textState) {
@@ -363,6 +377,7 @@ class _LoadedTextState extends State<_LoadedText> {
                           itemScrollController: scrollController,
                           scrollOffsetController: controller,
                           initialScrollIndex: currentTextLine,
+                          initialAlignment: currentTextLine != 0 ? 0.5 : 0,
                           physics: physics,
                           itemCount: textSpans.length,
                           padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.5),

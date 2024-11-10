@@ -87,7 +87,7 @@ class AppRouter extends RootStackRouter {
                 children: [
                   CupertinoRoute(path: '', page: RecordingsRoute.page),
                   CupertinoRoute(
-                    path: ':id',
+                    path: ':recordingId/:textLineId',
                     page: PlayerRoute.page,
                   ),
                   CupertinoRoute(

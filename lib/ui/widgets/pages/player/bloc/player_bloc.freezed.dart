@@ -833,7 +833,8 @@ abstract class PlayerEventPlayPauseButtonPressed implements PlayerEvent {
 
 /// @nodoc
 mixin _$PlayerState {
-  int get id => throw _privateConstructorUsedError;
+  int get recordingId => throw _privateConstructorUsedError;
+  int? get currentTextLineId => throw _privateConstructorUsedError;
   StatusOf<Recording> get recordingState => throw _privateConstructorUsedError;
   StatusOf<PlayerAudioState> get audioState =>
       throw _privateConstructorUsedError;
@@ -853,7 +854,8 @@ abstract class $PlayerStateCopyWith<$Res> {
       _$PlayerStateCopyWithImpl<$Res, PlayerState>;
   @useResult
   $Res call(
-      {int id,
+      {int recordingId,
+      int? currentTextLineId,
       StatusOf<Recording> recordingState,
       StatusOf<PlayerAudioState> audioState,
       StatusOf<PlayerTextState> textState});
@@ -878,16 +880,21 @@ class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? recordingId = null,
+    Object? currentTextLineId = freezed,
     Object? recordingState = null,
     Object? audioState = null,
     Object? textState = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      recordingId: null == recordingId
+          ? _value.recordingId
+          : recordingId // ignore: cast_nullable_to_non_nullable
               as int,
+      currentTextLineId: freezed == currentTextLineId
+          ? _value.currentTextLineId
+          : currentTextLineId // ignore: cast_nullable_to_non_nullable
+              as int?,
       recordingState: null == recordingState
           ? _value.recordingState
           : recordingState // ignore: cast_nullable_to_non_nullable
@@ -944,7 +951,8 @@ abstract class _$$PlayerStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
+      {int recordingId,
+      int? currentTextLineId,
       StatusOf<Recording> recordingState,
       StatusOf<PlayerAudioState> audioState,
       StatusOf<PlayerTextState> textState});
@@ -970,16 +978,21 @@ class __$$PlayerStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? recordingId = null,
+    Object? currentTextLineId = freezed,
     Object? recordingState = null,
     Object? audioState = null,
     Object? textState = null,
   }) {
     return _then(_$PlayerStateImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      recordingId: null == recordingId
+          ? _value.recordingId
+          : recordingId // ignore: cast_nullable_to_non_nullable
               as int,
+      currentTextLineId: freezed == currentTextLineId
+          ? _value.currentTextLineId
+          : currentTextLineId // ignore: cast_nullable_to_non_nullable
+              as int?,
       recordingState: null == recordingState
           ? _value.recordingState
           : recordingState // ignore: cast_nullable_to_non_nullable
@@ -1000,13 +1013,16 @@ class __$$PlayerStateImplCopyWithImpl<$Res>
 
 class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
   const _$PlayerStateImpl(
-      {required this.id,
+      {required this.recordingId,
+      this.currentTextLineId,
       this.recordingState = const StatusOfLoading(),
       this.audioState = const StatusOfLoading(),
       this.textState = const StatusOfLoading()});
 
   @override
-  final int id;
+  final int recordingId;
+  @override
+  final int? currentTextLineId;
   @override
   @JsonKey()
   final StatusOf<Recording> recordingState;
@@ -1019,7 +1035,7 @@ class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PlayerState(id: $id, recordingState: $recordingState, audioState: $audioState, textState: $textState)';
+    return 'PlayerState(recordingId: $recordingId, currentTextLineId: $currentTextLineId, recordingState: $recordingState, audioState: $audioState, textState: $textState)';
   }
 
   @override
@@ -1027,7 +1043,8 @@ class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'PlayerState'))
-      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('recordingId', recordingId))
+      ..add(DiagnosticsProperty('currentTextLineId', currentTextLineId))
       ..add(DiagnosticsProperty('recordingState', recordingState))
       ..add(DiagnosticsProperty('audioState', audioState))
       ..add(DiagnosticsProperty('textState', textState));
@@ -1038,7 +1055,10 @@ class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PlayerStateImpl &&
-            (identical(other.id, id) || other.id == id) &&
+            (identical(other.recordingId, recordingId) ||
+                other.recordingId == recordingId) &&
+            (identical(other.currentTextLineId, currentTextLineId) ||
+                other.currentTextLineId == currentTextLineId) &&
             (identical(other.recordingState, recordingState) ||
                 other.recordingState == recordingState) &&
             (identical(other.audioState, audioState) ||
@@ -1048,8 +1068,8 @@ class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, recordingState, audioState, textState);
+  int get hashCode => Object.hash(runtimeType, recordingId, currentTextLineId,
+      recordingState, audioState, textState);
 
   /// Create a copy of PlayerState
   /// with the given fields replaced by the non-null parameter values.
@@ -1062,13 +1082,16 @@ class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
 
 abstract class _PlayerState implements PlayerState {
   const factory _PlayerState(
-      {required final int id,
+      {required final int recordingId,
+      final int? currentTextLineId,
       final StatusOf<Recording> recordingState,
       final StatusOf<PlayerAudioState> audioState,
       final StatusOf<PlayerTextState> textState}) = _$PlayerStateImpl;
 
   @override
-  int get id;
+  int get recordingId;
+  @override
+  int? get currentTextLineId;
   @override
   StatusOf<Recording> get recordingState;
   @override

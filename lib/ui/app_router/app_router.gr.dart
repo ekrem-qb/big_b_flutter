@@ -259,18 +259,23 @@ class PlannedTasksRoute extends PageRouteInfo<void> {
 /// [PlayerPage]
 class PlayerRoute extends PageRouteInfo<PlayerRouteArgs> {
   PlayerRoute({
-    required int id,
+    required int recordingId,
+    int? textLineId,
     Recording? recording,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
           PlayerRoute.name,
           args: PlayerRouteArgs(
-            id: id,
+            recordingId: recordingId,
+            textLineId: textLineId,
             recording: recording,
             key: key,
           ),
-          rawPathParams: {'id': id},
+          rawPathParams: {
+            'recordingId': recordingId,
+            'textLineId': textLineId,
+          },
           initialChildren: children,
         );
 
@@ -281,9 +286,13 @@ class PlayerRoute extends PageRouteInfo<PlayerRouteArgs> {
     builder: (data) {
       final pathParams = data.inheritedPathParams;
       final args = data.argsAs<PlayerRouteArgs>(
-          orElse: () => PlayerRouteArgs(id: pathParams.getInt('id')));
+          orElse: () => PlayerRouteArgs(
+                recordingId: pathParams.getInt('recordingId'),
+                textLineId: pathParams.optInt('textLineId'),
+              ));
       return PlayerPage(
-        id: args.id,
+        recordingId: args.recordingId,
+        textLineId: args.textLineId,
         recording: args.recording,
         key: args.key,
       );
@@ -293,12 +302,15 @@ class PlayerRoute extends PageRouteInfo<PlayerRouteArgs> {
 
 class PlayerRouteArgs {
   const PlayerRouteArgs({
-    required this.id,
+    required this.recordingId,
+    this.textLineId,
     this.recording,
     this.key,
   });
 
-  final int id;
+  final int recordingId;
+
+  final int? textLineId;
 
   final Recording? recording;
 
@@ -306,7 +318,7 @@ class PlayerRouteArgs {
 
   @override
   String toString() {
-    return 'PlayerRouteArgs{id: $id, recording: $recording, key: $key}';
+    return 'PlayerRouteArgs{recordingId: $recordingId, textLineId: $textLineId, recording: $recording, key: $key}';
   }
 }
 

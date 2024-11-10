@@ -20,11 +20,13 @@ part 'player_state.dart';
 
 class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   PlayerBloc({
-    required final int id,
+    required final int recordingId,
+    final int? textLineId,
     final Recording? recording,
   }) : super(
           PlayerState(
-            id: id,
+            recordingId: recordingId,
+            currentTextLineId: textLineId,
             recordingState: recording == null ? const StatusOfLoading() : StatusOfData(recording),
           ),
         ) {
@@ -115,7 +117,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
   Future<void> _onRecordingLoadRequested(final PlayerEventLoadRequested event, final Emitter<PlayerState> emit) async {
     try {
-      final recording = await db.from(Recording.tableName).select(Recording.fieldNames).eq($RecordingImplJsonKeys.id, state.id).single().withConverter(Recording.fromJson);
+      final recording = await db.from(Recording.tableName).select(Recording.fieldNames).eq($RecordingImplJsonKeys.id, state.recordingId).single().withConverter(Recording.fromJson);
       emit(state.copyWith(recordingState: StatusOfData(recording)));
       add(const PlayerEventAudioLoadRequested());
       add(const PlayerEventTextLoadRequested());
@@ -134,6 +136,19 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
       await _player.open(media.Media(recordingState.data.audioUrl), play: false);
       emit(state.copyWith(audioState: const StatusOfData(PlayerAudioState())));
+
+      switch (state.textState) {
+        case StatusOfData<PlayerTextStateData>(
+              data: PlayerTextStateData(
+                :final currentTextLine,
+                :final textLines,
+              ),
+            )
+            when state.currentTextLineId != null:
+          final currentDuration = textLines[currentTextLine].time;
+          add(PlayerEventSeekRequested(currentDuration));
+        default:
+      }
     } on Exception catch (e) {
       emit(state.copyWith(audioState: StatusOfError(e.toString())));
     }
@@ -152,7 +167,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         return;
       }
 
-      final textLines = await db.from(TextLine.tableName).select(TextLine.fieldNames).eq('record', state.id).order($TextLineImplJsonKeys.time, ascending: true).withConverter(TextLine.converter);
+      final textLines = await db.from(TextLine.tableName).select(TextLine.fieldNames).eq('record', state.recordingId).order($TextLineImplJsonKeys.time, ascending: true).withConverter(TextLine.converter);
 
       if (textLines == null || textLines.isEmpty) {
         emit(state.copyWith(textState: const StatusOfData(PlayerTextStateProcessing())));
@@ -162,7 +177,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       StatusOf<List<Violation>> violationsStatus;
 
       try {
-        final violations = await db.from(Violation.tableName).select(Violation.fieldNames).eq('record', state.id).withConverter(Violation.converter);
+        final violations = await db.from(Violation.tableName).select(Violation.fieldNames).eq('record', state.recordingId).withConverter(Violation.converter);
 
         violationsStatus = violations == null || violations.isEmpty ? const StatusOfLoading() : StatusOfData(violations);
       } on Exception catch (e) {
@@ -171,10 +186,14 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
       final textSpans = _generateTextSpans(textLines, violationsStatus);
 
+      final selectedTextLineId = state.currentTextLineId;
+      final selectedTextLineIndex = textLines.indexWhere((final textLine) => textLine.id == selectedTextLineId);
+
       emit(
         state.copyWith(
           textState: StatusOfData<PlayerTextStateData>(
             PlayerTextStateData(
+              currentTextLine: selectedTextLineIndex != -1 ? selectedTextLineIndex : 0,
               textSpans: textSpans,
               textLines: textLines,
               violations: violationsStatus,
@@ -182,6 +201,10 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
           ),
         ),
       );
+
+      if (selectedTextLineIndex != -1) {
+        add(PlayerEventSeekRequested(textLines[selectedTextLineIndex].time));
+      }
     } on Exception catch (e) {
       emit(state.copyWith(textState: StatusOfError(e.toString())));
     }
@@ -272,6 +295,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
     emit(
       state.copyWith(
+        currentTextLineId: textState.data.textLines[event.index].id,
         textState: StatusOfData<PlayerTextStateData>(
           textState.data.copyWith(
             currentTextLine: event.index,

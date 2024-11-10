@@ -3,7 +3,8 @@ part of 'player_bloc.dart';
 @freezed
 sealed class PlayerState with _$PlayerState {
   const factory PlayerState({
-    required final int id,
+    required final int recordingId,
+    final int? currentTextLineId,
     @Default(StatusOfLoading()) final StatusOf<Recording> recordingState,
     @Default(StatusOfLoading()) final StatusOf<PlayerAudioState> audioState,
     @Default(StatusOfLoading()) final StatusOf<PlayerTextState> textState,
