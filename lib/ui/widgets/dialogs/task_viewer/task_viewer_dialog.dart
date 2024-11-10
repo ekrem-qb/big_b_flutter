@@ -7,7 +7,6 @@ import '../../../app_router/app_router.dart';
 import '../../../entity/status.dart';
 import '../../../theme.dart';
 import '../../error_panel.dart';
-import '../../extensions/mouse_navigator.dart';
 import '../../extensions/shimmer.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import '../../extensions/snackbar.dart';
@@ -39,60 +38,58 @@ class TaskViewerView extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return MouseNavigator(
-      child: BlocListener<TaskViewerBloc, TaskViewerState>(
-        listener: (final context, final state) async {
-          switch (state.deleteState) {
-            case OperationStatusCompleted():
-              Navigator.pop(context);
-            case OperationStatusError(
-                :final error
-              ):
-              showSnackbar(text: error, context: context);
-            default:
-          }
-        },
-        child: AlertDialog(
-          insetPadding: const EdgeInsets.all(16),
-          title: Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const _IsDoneIcon(),
-              const SizedBox(width: 8),
-              Flexible(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    maxHeight: 140,
-                  ),
-                  child: SmoothMouseScroll(
-                    builder: (final context, final child, final controller, final physics) {
-                      return SingleChildScrollView(
-                        controller: controller,
-                        physics: physics,
-                        child: const _Text(),
-                      );
-                    },
-                  ),
+    return BlocListener<TaskViewerBloc, TaskViewerState>(
+      listener: (final context, final state) async {
+        switch (state.deleteState) {
+          case OperationStatusCompleted():
+            Navigator.pop(context);
+          case OperationStatusError(
+              :final error
+            ):
+            showSnackbar(text: error, context: context);
+          default:
+        }
+      },
+      child: AlertDialog(
+        insetPadding: const EdgeInsets.all(16),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const _IsDoneIcon(),
+            const SizedBox(width: 8),
+            Flexible(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxHeight: 140,
+                ),
+                child: SmoothMouseScroll(
+                  builder: (final context, final child, final controller, final physics) {
+                    return SingleChildScrollView(
+                      controller: controller,
+                      physics: physics,
+                      child: const _Text(),
+                    );
+                  },
                 ),
               ),
-            ],
-          ),
-          content: SmoothMouseScroll(
-            builder: (final context, final child, final controller, final physics) {
-              return SingleChildScrollView(
-                controller: controller,
-                physics: physics,
-                child: const _Task(),
-              );
-            },
-          ),
-          actionsAlignment: MainAxisAlignment.spaceBetween,
-          actions: const [
-            _DeleteButton(),
-            _EditButton(),
+            ),
           ],
         ),
+        content: SmoothMouseScroll(
+          builder: (final context, final child, final controller, final physics) {
+            return SingleChildScrollView(
+              controller: controller,
+              physics: physics,
+              child: const _Task(),
+            );
+          },
+        ),
+        actionsAlignment: MainAxisAlignment.spaceBetween,
+        actions: const [
+          _DeleteButton(),
+          _EditButton(),
+        ],
       ),
     );
   }

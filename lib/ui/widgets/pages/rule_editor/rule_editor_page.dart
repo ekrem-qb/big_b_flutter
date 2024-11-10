@@ -8,7 +8,6 @@ import '../../../entity/status.dart';
 import '../../../theme.dart';
 import '../../dialogs/delete_dialog.dart';
 import '../../error_panel.dart';
-import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import '../../extensions/snackbar.dart';
 import '../../rule_tile.dart';
@@ -71,85 +70,83 @@ class RuleEditorView extends StatelessWidget {
       };
     });
 
-    return MouseNavigator(
-      child: BlocListener<RuleEditorBloc, RuleEditorState>(
-        listener: (final context, final state) async {
-          switch (state) {
-            case RuleEditorStateCreate(
-                    :final uploadState,
-                  ) ||
-                  RuleEditorStateEdit(
-                    editState: StatusOfData(
-                      data: RuleEditorStateEditState(
-                        :final uploadState,
-                      )
+    return BlocListener<RuleEditorBloc, RuleEditorState>(
+      listener: (final context, final state) async {
+        switch (state) {
+          case RuleEditorStateCreate(
+                  :final uploadState,
+                ) ||
+                RuleEditorStateEdit(
+                  editState: StatusOfData(
+                    data: RuleEditorStateEditState(
+                      :final uploadState,
                     )
-                  ):
-              switch (uploadState) {
-                case OperationStatusCompleted():
-                  Navigator.pop(context);
-                case OperationStatusError(
-                    :final error
-                  ):
-                  showSnackbar(text: error, context: context);
-                default:
-              }
-              switch (state) {
-                case RuleEditorStateEdit(
-                    editState: StatusOfData(
-                      data: RuleEditorStateEditState(
-                        :final deleteState,
-                      )
-                    )
-                  ):
-                  switch (deleteState) {
-                    case OperationStatusCompleted():
-                      Navigator.pop(context);
-                    case OperationStatusError(
-                        :final error
-                      ):
-                      showSnackbar(text: error, context: context);
-                    default:
-                  }
-                default:
-              }
-            default:
-          }
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            title: isNew ? const Text('Yeni kural') : null,
-            actions: [
-              if (!isNew) const _DeleteButton(),
-            ],
-          ),
-          body: switch (bloc.state) {
-            RuleEditorStateEdit(
-              :final editState,
-            ) =>
-              switch (editState) {
-                StatusOfLoading() => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                StatusOfError(
+                  )
+                ):
+            switch (uploadState) {
+              case OperationStatusCompleted():
+                Navigator.pop(context);
+              case OperationStatusError(
                   :final error
-                ) =>
-                  ErrorPanel(
-                    error: error,
-                    onRefresh: () => bloc.add(const RuleEditorEventLoadRequested()),
-                  ),
-                _ => _Body(isNew: isNew),
-              },
-            _ => _Body(isNew: isNew),
-          },
-          bottomNavigationBar: switch (bloc.state) {
-            RuleEditorStateEdit(
-              editState: StatusOfLoading() || StatusOfError(),
-            ) =>
-              null,
-            _ => const _SaveButton(),
-          },
+                ):
+                showSnackbar(text: error, context: context);
+              default:
+            }
+            switch (state) {
+              case RuleEditorStateEdit(
+                  editState: StatusOfData(
+                    data: RuleEditorStateEditState(
+                      :final deleteState,
+                    )
+                  )
+                ):
+                switch (deleteState) {
+                  case OperationStatusCompleted():
+                    Navigator.pop(context);
+                  case OperationStatusError(
+                      :final error
+                    ):
+                    showSnackbar(text: error, context: context);
+                  default:
+                }
+              default:
+            }
+          default:
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: isNew ? const Text('Yeni kural') : null,
+          actions: [
+            if (!isNew) const _DeleteButton(),
+          ],
         ),
+        body: switch (bloc.state) {
+          RuleEditorStateEdit(
+            :final editState,
+          ) =>
+            switch (editState) {
+              StatusOfLoading() => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              StatusOfError(
+                :final error
+              ) =>
+                ErrorPanel(
+                  error: error,
+                  onRefresh: () => bloc.add(const RuleEditorEventLoadRequested()),
+                ),
+              _ => _Body(isNew: isNew),
+            },
+          _ => _Body(isNew: isNew),
+        },
+        bottomNavigationBar: switch (bloc.state) {
+          RuleEditorStateEdit(
+            editState: StatusOfLoading() || StatusOfError(),
+          ) =>
+            null,
+          _ => const _SaveButton(),
+        },
       ),
     );
   }

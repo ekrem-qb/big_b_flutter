@@ -13,7 +13,6 @@ import '../../../theme.dart';
 import '../../dialogs/delete_dialog.dart';
 import '../../dialogs/profiles_picker/profiles_picker_dialog.dart';
 import '../../error_panel.dart';
-import '../../extensions/mouse_navigator.dart';
 import '../../extensions/pickers/date_picker.dart';
 import '../../extensions/pickers/time_picker.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
@@ -102,48 +101,46 @@ class TaskEditorView extends StatelessWidget {
       return bloc.state.loadingState.runtimeType;
     });
 
-    return MouseNavigator(
-      child: BlocListener<TaskEditorBloc, TaskEditorState>(
-        listener: (final context, final state) async {
-          switch (state.uploadState) {
-            case OperationStatusCompleted():
-              Navigator.pop(context);
-            case OperationStatusError(
-                :final error
-              ):
-              showSnackbar(text: error, context: context);
-            default:
-          }
-          switch (state.deleteState) {
-            case OperationStatusCompleted():
-              Navigator.pop(context);
-            case OperationStatusError(
-                :final error
-              ):
-              showSnackbar(text: error, context: context);
-            default:
-          }
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            title: isNew ? const Text('Yeni görev') : null,
-            actions: [
-              if (!isNew) const _DeleteButton(),
-            ],
-          ),
-          body: switch (bloc.state.loadingState) {
-            StatusLoading() => const Center(child: CircularProgressIndicator()),
-            StatusError(
+    return BlocListener<TaskEditorBloc, TaskEditorState>(
+      listener: (final context, final state) async {
+        switch (state.uploadState) {
+          case OperationStatusCompleted():
+            Navigator.pop(context);
+          case OperationStatusError(
               :final error
-            ) =>
-              ErrorPanel(
-                error: error,
-                onRefresh: () => bloc.add(const TaskEditorEventLoadRequested()),
-              ),
-            StatusCompleted() => const _Body(),
-          },
-          bottomNavigationBar: bloc.state.loadingState is StatusCompleted ? const _SaveButton() : null,
+            ):
+            showSnackbar(text: error, context: context);
+          default:
+        }
+        switch (state.deleteState) {
+          case OperationStatusCompleted():
+            Navigator.pop(context);
+          case OperationStatusError(
+              :final error
+            ):
+            showSnackbar(text: error, context: context);
+          default:
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: isNew ? const Text('Yeni görev') : null,
+          actions: [
+            if (!isNew) const _DeleteButton(),
+          ],
         ),
+        body: switch (bloc.state.loadingState) {
+          StatusLoading() => const Center(child: CircularProgressIndicator()),
+          StatusError(
+            :final error
+          ) =>
+            ErrorPanel(
+              error: error,
+              onRefresh: () => bloc.add(const TaskEditorEventLoadRequested()),
+            ),
+          StatusCompleted() => const _Body(),
+        },
+        bottomNavigationBar: bloc.state.loadingState is StatusCompleted ? const _SaveButton() : null,
       ),
     );
   }

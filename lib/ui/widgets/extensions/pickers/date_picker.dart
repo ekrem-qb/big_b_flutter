@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-import '../mouse_navigator.dart';
 import '../vibration.dart';
 
 Future<DateTime?> showCupertinoDatePicker({
@@ -50,11 +49,9 @@ class _Widget extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return MouseNavigator(
-      child: Provider(
-        create: (final context) => _Model(context, initialDate),
-        child: _Picker(initialDate: initialDate, minimumDate: minimumDate, showDayOfWeek: showDayOfWeek),
-      ),
+    return Provider(
+      create: (final context) => _Model(context, initialDate),
+      child: _Picker(initialDate: initialDate, minimumDate: minimumDate, showDayOfWeek: showDayOfWeek),
     );
   }
 }

@@ -7,7 +7,6 @@ import '../../../../extensions/date_time.dart';
 import '../../../../extensions/duration.dart';
 import '../../../../extensions/weekdays.dart';
 import '../../../app_router/app_router.dart';
-import '../../extensions/mouse_navigator.dart';
 import '../../lister/lister_widget.dart';
 import 'planned_tasks_bloc.dart';
 
@@ -17,19 +16,17 @@ class PlannedTasksPage extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return MouseNavigator(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Görev Planlama'),
-        ),
-        body: const Lister<PlannedTasksBloc, PlannedTask>.cards(
-          blocCreator: PlannedTasksBloc.new,
-          itemContentBuilder: _Item.new,
-          noItemsIcon: Icons.event_available,
-          noItemsText: 'Görev bulunamadı',
-        ),
-        floatingActionButton: const _NewPlannedTaskButton(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Görev Planlama'),
       ),
+      body: const Lister<PlannedTasksBloc, PlannedTask>.cards(
+        blocCreator: PlannedTasksBloc.new,
+        itemContentBuilder: _Item.new,
+        noItemsIcon: Icons.event_available,
+        noItemsText: 'Görev bulunamadı',
+      ),
+      floatingActionButton: const _NewPlannedTaskButton(),
     );
   }
 }

@@ -6,7 +6,6 @@ import '../../../../api/entity/violation/violation.dart';
 import '../../../../extensions/duration.dart';
 import '../../../entity/status.dart';
 import '../../error_panel.dart';
-import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import '../../rule_tile.dart';
 import 'bloc/violation_viewer_bloc.dart';
@@ -34,18 +33,16 @@ class ViolationViewerView extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return MouseNavigator(
-      child: AlertDialog(
-        insetPadding: const EdgeInsets.all(16),
-        content: SmoothMouseScroll(
-          builder: (final context, final child, final controller, final physics) {
-            return SingleChildScrollView(
-              controller: controller,
-              physics: physics,
-              child: const _Violation(),
-            );
-          },
-        ),
+    return AlertDialog(
+      insetPadding: const EdgeInsets.all(16),
+      content: SmoothMouseScroll(
+        builder: (final context, final child, final controller, final physics) {
+          return SingleChildScrollView(
+            controller: controller,
+            physics: physics,
+            child: const _Violation(),
+          );
+        },
       ),
     );
   }

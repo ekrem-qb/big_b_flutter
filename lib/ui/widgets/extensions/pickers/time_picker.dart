@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-import '../mouse_navigator.dart';
 import '../vibration.dart';
 
 Future<Duration?> showCupertinoTimePicker({
@@ -44,11 +43,9 @@ class _Widget extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return MouseNavigator(
-      child: Provider(
-        create: (final context) => _Model(context, initialTime),
-        child: _Picker(initialTime: initialTime),
-      ),
+    return Provider(
+      create: (final context) => _Model(context, initialTime),
+      child: _Picker(initialTime: initialTime),
     );
   }
 }

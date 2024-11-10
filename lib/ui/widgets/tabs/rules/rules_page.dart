@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../api/entity/rule/rule.dart';
 import '../../../app_router/app_router.dart';
-import '../../extensions/mouse_navigator.dart';
 import '../../lister/lister_widget.dart';
 import '../../rule_tile.dart';
 import 'rules_bloc.dart';
@@ -14,19 +13,17 @@ class RulesPage extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return MouseNavigator(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Kurallar'),
-        ),
-        body: const Lister<RulesBloc, Rule>.cards(
-          blocCreator: RulesBloc.new,
-          itemContentBuilder: RuleTile.new,
-          noItemsIcon: Icons.rule,
-          noItemsText: 'Kural bulunamadı',
-        ),
-        floatingActionButton: const _NewRuleButton(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Kurallar'),
       ),
+      body: const Lister<RulesBloc, Rule>.cards(
+        blocCreator: RulesBloc.new,
+        itemContentBuilder: RuleTile.new,
+        noItemsIcon: Icons.rule,
+        noItemsText: 'Kural bulunamadı',
+      ),
+      floatingActionButton: const _NewRuleButton(),
     );
   }
 }

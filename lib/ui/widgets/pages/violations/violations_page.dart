@@ -11,7 +11,6 @@ import '../../../theme.dart';
 import '../../error_panel.dart';
 import '../../extensions/dialog_router.dart';
 import '../../extensions/fade_transition_builder.dart';
-import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import '../../list_view_shimmer.dart';
 import '../../rule_tile.dart';
@@ -30,11 +29,9 @@ class ViolationsPage extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return MouseNavigator(
-      child: BlocProvider(
-        create: (final _) => ViolationsBloc(id: id, violations: violations),
-        child: const ViolationsView(),
-      ),
+    return BlocProvider(
+      create: (final _) => ViolationsBloc(id: id, violations: violations),
+      child: const ViolationsView(),
     );
   }
 }

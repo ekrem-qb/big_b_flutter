@@ -11,7 +11,6 @@ import '../../../entity/status.dart';
 import '../../../theme.dart';
 import '../../error_panel.dart';
 import '../../extensions/fade_transition_builder.dart';
-import '../../extensions/mouse_navigator.dart';
 import '../../extensions/shimmer.dart';
 import '../../extensions/smooth_mouse_scroll/positioned_smooth_mouse_scroll.dart';
 import '../../extensions/snackbar.dart';
@@ -35,15 +34,13 @@ class PlayerPage extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return MouseNavigator(
-      child: BlocProvider(
-        create: (final context) => PlayerBloc(
-          recordingId: recordingId,
-          textLineId: textLineId,
-          recording: recording,
-        ),
-        child: const PlayerView(),
+    return BlocProvider(
+      create: (final context) => PlayerBloc(
+        recordingId: recordingId,
+        textLineId: textLineId,
+        recording: recording,
       ),
+      child: const PlayerView(),
     );
   }
 }

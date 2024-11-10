@@ -7,7 +7,6 @@ import '../../../../api/enums/role.dart';
 import '../../../entity/status.dart';
 import '../../dialogs/delete_dialog.dart';
 import '../../error_panel.dart';
-import '../../extensions/mouse_navigator.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import '../../extensions/snackbar.dart';
 import '../../save_button.dart';
@@ -71,66 +70,64 @@ class TaskEditorView extends StatelessWidget {
       };
     });
 
-    return MouseNavigator(
-      child: BlocListener<ProfileEditorBloc, ProfileEditorState>(
-        listener: (final context, final state) async {
-          switch (state.uploadState) {
-            case OperationStatusCompleted():
-              Navigator.pop(context);
-            case OperationStatusError(
-                :final error
-              ):
-              showSnackbar(text: error, context: context);
-            default:
-          }
-          switch (state) {
-            case ProfileEditorStateEdit(
-                :final deleteState
-              ):
-              switch (deleteState) {
-                case OperationStatusCompleted():
-                  Navigator.pop(context);
-                case OperationStatusError(
-                    :final error
-                  ):
-                  showSnackbar(text: error, context: context);
-                default:
-              }
-            default:
-          }
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            title: isNew ? const Text('Yeni çalışan') : null,
-            actions: [
-              if (!isNew) const _DeleteButton(),
-            ],
-          ),
-          body: switch (bloc.state) {
-            ProfileEditorStateEdit(
-              :final loadingState,
-            ) =>
-              switch (loadingState) {
-                StatusLoading() => const Center(child: CircularProgressIndicator()),
-                StatusError(
+    return BlocListener<ProfileEditorBloc, ProfileEditorState>(
+      listener: (final context, final state) async {
+        switch (state.uploadState) {
+          case OperationStatusCompleted():
+            Navigator.pop(context);
+          case OperationStatusError(
+              :final error
+            ):
+            showSnackbar(text: error, context: context);
+          default:
+        }
+        switch (state) {
+          case ProfileEditorStateEdit(
+              :final deleteState
+            ):
+            switch (deleteState) {
+              case OperationStatusCompleted():
+                Navigator.pop(context);
+              case OperationStatusError(
                   :final error
-                ) =>
-                  ErrorPanel(
-                    error: error,
-                    onRefresh: () => bloc.add(const ProfileEditorEventLoadRequested()),
-                  ),
-                StatusCompleted() => _Body(isNew: isNew),
-              },
-            _ => _Body(isNew: isNew),
-          },
-          bottomNavigationBar: switch (bloc.state) {
-            ProfileEditorStateEdit(
-              loadingState: StatusCompleted(),
-            ) =>
-              const _SaveButton(),
-            _ => null,
-          },
+                ):
+                showSnackbar(text: error, context: context);
+              default:
+            }
+          default:
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: isNew ? const Text('Yeni çalışan') : null,
+          actions: [
+            if (!isNew) const _DeleteButton(),
+          ],
         ),
+        body: switch (bloc.state) {
+          ProfileEditorStateEdit(
+            :final loadingState,
+          ) =>
+            switch (loadingState) {
+              StatusLoading() => const Center(child: CircularProgressIndicator()),
+              StatusError(
+                :final error
+              ) =>
+                ErrorPanel(
+                  error: error,
+                  onRefresh: () => bloc.add(const ProfileEditorEventLoadRequested()),
+                ),
+              StatusCompleted() => _Body(isNew: isNew),
+            },
+          _ => _Body(isNew: isNew),
+        },
+        bottomNavigationBar: switch (bloc.state) {
+          ProfileEditorStateEdit(
+            loadingState: StatusCompleted(),
+          ) =>
+            const _SaveButton(),
+          _ => null,
+        },
       ),
     );
   }
