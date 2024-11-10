@@ -63,7 +63,7 @@ class ViolationsBloc extends Bloc<ViolationsEvent, ViolationsState> {
           ),
         ),
       );
-    } on Exception catch (e) {
+    } catch (e) {
       emit(state.copyWith(violations: StatusOfError(e.toString())));
     }
   }

@@ -74,7 +74,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
             ),
           ),
         );
-      } on Exception catch (e) {
+      } catch (e) {
         emit(
           currentState.copyWith(
             editState: StatusOfError(e.toString()),
@@ -460,7 +460,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
         default:
           return false;
       }
-    } on Exception catch (e) {
+    } catch (e) {
       switch (currentState) {
         case RuleEditorStateCreate():
           emit(currentState.copyWith(uploadState: OperationStatusError(e.toString())));
@@ -514,7 +514,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
             ),
           ),
         );
-      } on Exception catch (e) {
+      } catch (e) {
         emit(
           currentState.copyWith(
             editState: StatusOfData(

@@ -44,7 +44,7 @@ class ProfilePickerBloc extends Bloc<ProfilePickerEvent, ProfilePickerState> {
       }
 
       emit(state.copyWith(all: StatusOfData(all)));
-    } on Exception catch (e) {
+    } catch (e) {
       emit(state.copyWith(all: StatusOfError(e.toString())));
     }
   }

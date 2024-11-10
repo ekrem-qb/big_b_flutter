@@ -100,7 +100,7 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
           ),
         );
       }
-    } on Exception catch (e) {
+    } catch (e) {
       emit(
         state.copyWith(
           loadingState: StatusError(e.toString()),
@@ -271,7 +271,7 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
         }
       }
       return true;
-    } on Exception catch (e) {
+    } catch (e) {
       emit(
         currentState.copyWith(
           uploadState: OperationStatusError(
@@ -321,7 +321,7 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
           deleteState: const OperationStatusCompleted(),
         ),
       );
-    } on Exception catch (e) {
+    } catch (e) {
       emit(
         state.copyWith(
           deleteState: OperationStatusError(e.toString()),

@@ -85,7 +85,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
           ),
         ),
       );
-    } on Exception catch (e) {
+    } catch (e) {
       emit(StatusOfError<ListerState<T>>(e.toString()));
     }
   }
@@ -110,7 +110,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
           ),
         ),
       );
-    } on Exception catch (e) {
+    } catch (e) {
       emit(StatusOfError<ListerState<T>>(e.toString()));
     }
   }

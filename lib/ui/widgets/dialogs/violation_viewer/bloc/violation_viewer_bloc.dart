@@ -42,7 +42,7 @@ class ViolationViewerBloc extends Bloc<ViolationViewerEvent, ViolationViewerStat
       }
 
       emit(state.copyWith(violation: StatusOfData(violation)));
-    } on Exception catch (e) {
+    } catch (e) {
       emit(state.copyWith(violation: StatusOfError(e.toString())));
     }
   }

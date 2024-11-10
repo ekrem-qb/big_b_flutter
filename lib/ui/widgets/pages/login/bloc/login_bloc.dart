@@ -84,7 +84,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           loginStatus: const OperationStatusCompleted(),
         ),
       );
-    } on Exception catch (e) {
+    } catch (e) {
       emit(
         state.copyWith(
           loginStatus: OperationStatusError(e.toString()),

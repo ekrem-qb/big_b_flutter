@@ -66,7 +66,7 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
           role: profile.role,
         ),
       );
-    } on Exception catch (e) {
+    } catch (e) {
       emit(
         currentState.copyWith(
           loadingState: StatusError(e.toString()),
@@ -309,7 +309,7 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
         default:
           return false;
       }
-    } on Exception catch (e) {
+    } catch (e) {
       switch (currentState) {
         case ProfileEditorStateCreate():
           emit(currentState.copyWith(uploadState: OperationStatusError(e.toString())));
@@ -348,7 +348,7 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
           deleteState: const OperationStatusCompleted(),
         ),
       );
-    } on Exception catch (e) {
+    } catch (e) {
       emit(
         currentState.copyWith(
           deleteState: OperationStatusError(e.toString()),

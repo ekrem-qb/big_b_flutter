@@ -121,7 +121,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       emit(state.copyWith(recordingState: StatusOfData(recording)));
       add(const PlayerEventAudioLoadRequested());
       add(const PlayerEventTextLoadRequested());
-    } on Exception catch (e) {
+    } catch (e) {
       emit(state.copyWith(recordingState: StatusOfError(e.toString())));
     }
   }
@@ -149,7 +149,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
           add(PlayerEventSeekRequested(currentDuration));
         default:
       }
-    } on Exception catch (e) {
+    } catch (e) {
       emit(state.copyWith(audioState: StatusOfError(e.toString())));
     }
   }
@@ -179,8 +179,8 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       try {
         final violations = await db.from(Violation.tableName).select(Violation.fieldNames).eq('record', state.recordingId).withConverter(Violation.converter);
 
-        violationsStatus = violations == null || violations.isEmpty ? const StatusOfLoading() : StatusOfData(violations);
-      } on Exception catch (e) {
+        violationsStatus = StatusOfData(violations ?? List.empty());
+      } catch (e) {
         violationsStatus = StatusOfError(e.toString());
       }
 
@@ -205,7 +205,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       if (selectedTextLineIndex != -1) {
         add(PlayerEventSeekRequested(textLines[selectedTextLineIndex].time));
       }
-    } on Exception catch (e) {
+    } catch (e) {
       emit(state.copyWith(textState: StatusOfError(e.toString())));
     }
   }

@@ -67,7 +67,7 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
       }
 
       emit(state.copyWith(task: StatusOfData(task)));
-    } on Exception catch (e) {
+    } catch (e) {
       emit(state.copyWith(task: StatusOfError(e.toString())));
     }
   }
@@ -87,7 +87,7 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
           deleteState: const OperationStatusCompleted(),
         ),
       );
-    } on Exception catch (e) {
+    } catch (e) {
       emit(
         state.copyWith(
           deleteState: OperationStatusError(e.toString()),
