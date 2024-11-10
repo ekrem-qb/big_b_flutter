@@ -290,6 +290,45 @@ class _LoadedText extends StatefulWidget {
 
 class _LoadedTextState extends State<_LoadedText> {
   final scrollController = ItemScrollController();
+  late final StackRouter router;
+
+  @override
+  void initState() {
+    router = context.router;
+    router.addListener(_onRouteChanged);
+    super.initState();
+  }
+
+  void _onRouteChanged() {
+    final args = switch (router.current.args) {
+      final PlayerRouteArgs args => args,
+      _ => null,
+    };
+    if (args == null) return;
+
+    final bloc = context.read<PlayerBloc>();
+    if (args.textLineId == bloc.state.currentTextLineId) return;
+
+    final index = switch (bloc.state.textState) {
+      StatusOfData(
+        data: PlayerTextStateData(
+          :final textLines,
+        ),
+      ) =>
+        textLines.indexWhere((final textLine) => textLine.id == args.textLineId),
+      _ => -1,
+    };
+
+    if (index == -1) return;
+
+    bloc.add(PlayerEventJumpToLineRequested(index));
+  }
+
+  @override
+  void dispose() {
+    router.removeListener(_onRouteChanged);
+    super.dispose();
+  }
 
   @override
   Widget build(final BuildContext context) {
