@@ -42,6 +42,7 @@ import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../../api/database.dart';
 import '../../../../../api/entity/violation/violation.dart';
@@ -70,10 +71,21 @@ class ViolationsBloc extends Bloc<ViolationsEvent, ViolationsState> {
       transformer: concurrent(),
     );
 
+    _violationsSubscription = db
+        .channel(Violation.tableName)
+        .onPostgresChanges(
+          table: Violation.tableName,
+          event: PostgresChangeEvent.all,
+          callback: (final _) => add(const ViolationsEventLoadRequested()),
+        )
+        .subscribe();
+
     if (state.violations is StatusOfLoading) {
       add(const ViolationsEventLoadRequested());
     }
   }
+
+  RealtimeChannel? _violationsSubscription;
 
   Future<void> _onViolationsLoadRequested(final ViolationsEventLoadRequested event, final Emitter<ViolationsState> emit) async {
     try {
@@ -91,5 +103,11 @@ class ViolationsBloc extends Bloc<ViolationsEvent, ViolationsState> {
     } on Exception catch (e) {
       emit(state.copyWith(violations: StatusOfError(e.toString())));
     }
+  }
+
+  @override
+  Future<void> close() {
+    _violationsSubscription?.unsubscribe();
+    return super.close();
   }
 }
