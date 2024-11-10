@@ -76,8 +76,6 @@ class ViolationsBloc extends Bloc<ViolationsEvent, ViolationsState> {
   }
 
   Future<void> _onViolationsLoadRequested(final ViolationsEventLoadRequested event, final Emitter<ViolationsState> emit) async {
-    if (state.violations is! StatusOfData<Violation>) return;
-
     try {
       emit(state.copyWith(violations: const StatusOfLoading()));
 
