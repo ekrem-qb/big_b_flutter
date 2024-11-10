@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../api/entity/violation/violation.dart';
 import '../../../../extensions/duration.dart';
+import '../../../app_router/app_router.dart';
 import '../../../entity/status.dart';
+import '../../../theme.dart';
 import '../../error_panel.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import '../../rule_tile.dart';
@@ -168,35 +170,47 @@ class _Text extends StatelessWidget {
     return violation != null
         ? Card(
             margin: EdgeInsets.zero,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: violation.line.text.substring(0, violation.startIndex),
-                        ),
-                        TextSpan(
-                          text: violation.line.text.substring(violation.startIndex, violation.endIndex),
-                          style: TextStyle(color: violation.rule.color, fontWeight: FontWeight.bold),
-                        ),
-                        TextSpan(
-                          text: violation.line.text.substring(violation.endIndex),
-                        ),
-                      ],
+            child: InkWell(
+              borderRadius: kDefaultRadius,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: violation.line.text.substring(0, violation.startIndex),
+                          ),
+                          TextSpan(
+                            text: violation.line.text.substring(violation.startIndex, violation.endIndex),
+                            style: TextStyle(color: violation.rule.color, fontWeight: FontWeight.bold),
+                          ),
+                          TextSpan(
+                            text: violation.line.text.substring(violation.endIndex),
+                          ),
+                        ],
+                      ),
+                      style: textTheme.bodyLarge,
                     ),
-                    style: textTheme.bodyLarge,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    violation.line.time.toMinutesAndSeconds(),
-                    style: textTheme.labelSmall,
-                  ),
-                ],
+                    const SizedBox(width: 8),
+                    Text(
+                      violation.line.time.toMinutesAndSeconds(),
+                      style: textTheme.labelSmall,
+                    ),
+                  ],
+                ),
               ),
+              onTap: () {
+                context.tabsRouter.navigate(
+                  PlayerRoute(
+                    recordingId: violation.record.id,
+                    recording: violation.record,
+                    textLineId: violation.line.id,
+                  ),
+                );
+              },
             ),
           )
         : const SizedBox.shrink();
