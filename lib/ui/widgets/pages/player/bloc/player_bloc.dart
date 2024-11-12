@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:media_kit/media_kit.dart' as media;
@@ -96,8 +95,8 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
     if (textState is! StatusOfData<PlayerTextStateData>) return;
 
-    for (var i = textState.data.textLines.length - 1; i >= 0; i--) {
-      if (newPosition.inMilliseconds >= textState.data.textLines[i].time.inMilliseconds) {
+    for (var i = textState.data.textLinesWithHighlights.length - 1; i >= 0; i--) {
+      if (newPosition.inMilliseconds >= textState.data.textLinesWithHighlights[i].$1.time.inMilliseconds) {
         add(PlayerEventJumpToLineRequested(i, seekPlayer: false));
         return;
       }
@@ -141,11 +140,11 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         case StatusOfData<PlayerTextStateData>(
               data: PlayerTextStateData(
                 :final currentTextLine,
-                :final textLines,
+                :final textLinesWithHighlights,
               ),
             )
             when state.currentTextLineId != null:
-          final currentDuration = textLines[currentTextLine].time;
+          final currentDuration = textLinesWithHighlights[currentTextLine].$1.time;
           add(PlayerEventSeekRequested(currentDuration));
         default:
       }
@@ -184,7 +183,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         violationsStatus = StatusOfError(e.toString());
       }
 
-      final textSpans = _generateTextSpans(textLines, violationsStatus);
+      final textLinesWithHighlights = _combineTextLinesWithHighlights(textLines, violationsStatus);
 
       final selectedTextLineId = state.currentTextLineId;
       final selectedTextLineIndex = textLines.indexWhere((final textLine) => textLine.id == selectedTextLineId);
@@ -194,8 +193,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
           textState: StatusOfData<PlayerTextStateData>(
             PlayerTextStateData(
               currentTextLine: selectedTextLineIndex != -1 ? selectedTextLineIndex : 0,
-              textSpans: textSpans,
-              textLines: textLines,
+              textLinesWithHighlights: textLinesWithHighlights,
               violations: violationsStatus,
             ),
           ),
@@ -210,7 +208,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     }
   }
 
-  List<TextSpan> _generateTextSpans(final List<TextLine> textLines, final StatusOf<List<Violation>> violationsStatus) {
+  List<TextLineWithHighlights> _combineTextLinesWithHighlights(final List<TextLine> textLines, final StatusOf<List<Violation>> violationsStatus) {
     switch (violationsStatus) {
       case StatusOfData(
           :final data,
@@ -225,43 +223,24 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
           textLines.length,
           (final i) {
             final highlights = allHighlights.where((final highlight) => highlight.line.id == textLines[i].id).toList();
-            final parts = _generateTextSpanParts(textLines[i], highlights).toList();
 
-            return TextSpan(children: parts);
+            return (
+              textLines[i],
+              highlights,
+            );
           },
           growable: false,
         );
       noHighlights:
       default:
-        return textLines.map((final e) => TextSpan(text: e.text)).toList();
-    }
-  }
-
-  Iterable<InlineSpan> _generateTextSpanParts(final TextLine textLine, final List<HighlightViolation> highlights) sync* {
-    var charIndex = 0;
-    for (var j = 0; j < highlights.length; j += 2) {
-      if (charIndex < highlights[j].startIndex) {
-        final substring = textLine.text.substring(charIndex, highlights[j].startIndex);
-        yield TextSpan(text: substring);
-      }
-
-      final substring2 = textLine.text.substring(highlights[j].startIndex, highlights[j].endIndex);
-      final isLight = ThemeData.estimateBrightnessForColor(highlights[j].rule.color) == Brightness.light;
-
-      yield TextSpan(
-        text: substring2,
-        style: TextStyle(
-          color: isLight ? Colors.black : Colors.white,
-          backgroundColor: highlights[j].rule.color,
-        ),
-      );
-
-      charIndex = highlights[j].endIndex;
-    }
-
-    if (charIndex < textLine.text.length) {
-      final substring = textLine.text.substring(charIndex);
-      yield TextSpan(text: substring);
+        return textLines
+            .map(
+              (final e) => (
+                e,
+                List<HighlightViolation>.empty(),
+              ),
+            )
+            .toList();
     }
   }
 
@@ -296,11 +275,11 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
     if (textState.data.currentTextLine == event.index) return;
     if (event.index < 0) return;
-    if (event.index >= textState.data.textLines.length) return;
+    if (event.index >= textState.data.textLinesWithHighlights.length) return;
 
     emit(
       state.copyWith(
-        currentTextLineId: textState.data.textLines[event.index].id,
+        currentTextLineId: textState.data.textLinesWithHighlights[event.index].$1.id,
         textState: StatusOfData<PlayerTextStateData>(
           textState.data.copyWith(
             currentTextLine: event.index,
@@ -310,7 +289,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     );
 
     if (event.seekPlayer) {
-      add(PlayerEventSeekRequested(textState.data.textLines[event.index].time));
+      add(PlayerEventSeekRequested(textState.data.textLinesWithHighlights[event.index].$1.time));
     }
   }
 

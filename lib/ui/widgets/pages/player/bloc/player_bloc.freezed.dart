@@ -1324,8 +1324,7 @@ abstract class _$$PlayerTextStateDataImplCopyWith<$Res> {
   @useResult
   $Res call(
       {int currentTextLine,
-      List<TextSpan> textSpans,
-      List<TextLine> textLines,
+      List<TextLineWithHighlights> textLinesWithHighlights,
       StatusOf<List<Violation>> violations});
 
   $StatusOfCopyWith<List<Violation>, $Res> get violations;
@@ -1345,8 +1344,7 @@ class __$$PlayerTextStateDataImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? currentTextLine = null,
-    Object? textSpans = null,
-    Object? textLines = null,
+    Object? textLinesWithHighlights = null,
     Object? violations = null,
   }) {
     return _then(_$PlayerTextStateDataImpl(
@@ -1354,14 +1352,10 @@ class __$$PlayerTextStateDataImplCopyWithImpl<$Res>
           ? _value.currentTextLine
           : currentTextLine // ignore: cast_nullable_to_non_nullable
               as int,
-      textSpans: null == textSpans
-          ? _value._textSpans
-          : textSpans // ignore: cast_nullable_to_non_nullable
-              as List<TextSpan>,
-      textLines: null == textLines
-          ? _value._textLines
-          : textLines // ignore: cast_nullable_to_non_nullable
-              as List<TextLine>,
+      textLinesWithHighlights: null == textLinesWithHighlights
+          ? _value._textLinesWithHighlights
+          : textLinesWithHighlights // ignore: cast_nullable_to_non_nullable
+              as List<TextLineWithHighlights>,
       violations: null == violations
           ? _value.violations
           : violations // ignore: cast_nullable_to_non_nullable
@@ -1387,31 +1381,21 @@ class _$PlayerTextStateDataImpl
     implements PlayerTextStateData {
   const _$PlayerTextStateDataImpl(
       {this.currentTextLine = 0,
-      final List<TextSpan> textSpans = const [],
-      final List<TextLine> textLines = const [],
+      final List<TextLineWithHighlights> textLinesWithHighlights = const [],
       this.violations = const StatusOfLoading()})
-      : _textSpans = textSpans,
-        _textLines = textLines;
+      : _textLinesWithHighlights = textLinesWithHighlights;
 
   @override
   @JsonKey()
   final int currentTextLine;
-  final List<TextSpan> _textSpans;
+  final List<TextLineWithHighlights> _textLinesWithHighlights;
   @override
   @JsonKey()
-  List<TextSpan> get textSpans {
-    if (_textSpans is EqualUnmodifiableListView) return _textSpans;
+  List<TextLineWithHighlights> get textLinesWithHighlights {
+    if (_textLinesWithHighlights is EqualUnmodifiableListView)
+      return _textLinesWithHighlights;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_textSpans);
-  }
-
-  final List<TextLine> _textLines;
-  @override
-  @JsonKey()
-  List<TextLine> get textLines {
-    if (_textLines is EqualUnmodifiableListView) return _textLines;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_textLines);
+    return EqualUnmodifiableListView(_textLinesWithHighlights);
   }
 
   @override
@@ -1420,7 +1404,7 @@ class _$PlayerTextStateDataImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PlayerTextState.data(currentTextLine: $currentTextLine, textSpans: $textSpans, textLines: $textLines, violations: $violations)';
+    return 'PlayerTextState.data(currentTextLine: $currentTextLine, textLinesWithHighlights: $textLinesWithHighlights, violations: $violations)';
   }
 
   @override
@@ -1429,8 +1413,8 @@ class _$PlayerTextStateDataImpl
     properties
       ..add(DiagnosticsProperty('type', 'PlayerTextState.data'))
       ..add(DiagnosticsProperty('currentTextLine', currentTextLine))
-      ..add(DiagnosticsProperty('textSpans', textSpans))
-      ..add(DiagnosticsProperty('textLines', textLines))
+      ..add(DiagnosticsProperty(
+          'textLinesWithHighlights', textLinesWithHighlights))
       ..add(DiagnosticsProperty('violations', violations));
   }
 
@@ -1441,10 +1425,8 @@ class _$PlayerTextStateDataImpl
             other is _$PlayerTextStateDataImpl &&
             (identical(other.currentTextLine, currentTextLine) ||
                 other.currentTextLine == currentTextLine) &&
-            const DeepCollectionEquality()
-                .equals(other._textSpans, _textSpans) &&
-            const DeepCollectionEquality()
-                .equals(other._textLines, _textLines) &&
+            const DeepCollectionEquality().equals(
+                other._textLinesWithHighlights, _textLinesWithHighlights) &&
             (identical(other.violations, violations) ||
                 other.violations == violations));
   }
@@ -1453,8 +1435,7 @@ class _$PlayerTextStateDataImpl
   int get hashCode => Object.hash(
       runtimeType,
       currentTextLine,
-      const DeepCollectionEquality().hash(_textSpans),
-      const DeepCollectionEquality().hash(_textLines),
+      const DeepCollectionEquality().hash(_textLinesWithHighlights),
       violations);
 
   /// Create a copy of PlayerTextState
@@ -1470,13 +1451,11 @@ class _$PlayerTextStateDataImpl
 abstract class PlayerTextStateData implements PlayerTextState {
   const factory PlayerTextStateData(
       {final int currentTextLine,
-      final List<TextSpan> textSpans,
-      final List<TextLine> textLines,
+      final List<TextLineWithHighlights> textLinesWithHighlights,
       final StatusOf<List<Violation>> violations}) = _$PlayerTextStateDataImpl;
 
   int get currentTextLine;
-  List<TextSpan> get textSpans;
-  List<TextLine> get textLines;
+  List<TextLineWithHighlights> get textLinesWithHighlights;
   StatusOf<List<Violation>> get violations;
 
   /// Create a copy of PlayerTextState

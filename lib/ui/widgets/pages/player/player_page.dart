@@ -1,10 +1,12 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../../api/entity/recording/recording.dart';
+import '../../../../api/entity/violation/violation.dart';
 import '../../../../extensions/duration.dart';
 import '../../../app_router/app_router.dart';
 import '../../../entity/status.dart';
@@ -281,54 +283,8 @@ class _Text extends StatelessWidget {
   }
 }
 
-class _LoadedText extends StatefulWidget {
+class _LoadedText extends StatelessWidget {
   const _LoadedText();
-
-  @override
-  State<_LoadedText> createState() => _LoadedTextState();
-}
-
-class _LoadedTextState extends State<_LoadedText> {
-  final scrollController = ItemScrollController();
-  late final StackRouter router;
-
-  @override
-  void initState() {
-    router = context.router;
-    router.addListener(_onRouteChanged);
-    super.initState();
-  }
-
-  void _onRouteChanged() {
-    final args = switch (router.current.args) {
-      final PlayerRouteArgs args => args,
-      _ => null,
-    };
-    if (args == null) return;
-
-    final bloc = context.read<PlayerBloc>();
-    if (args.textLineId == bloc.state.currentTextLineId) return;
-
-    final index = switch (bloc.state.textState) {
-      StatusOfData(
-        data: PlayerTextStateData(
-          :final textLines,
-        ),
-      ) =>
-        textLines.indexWhere((final textLine) => textLine.id == args.textLineId),
-      _ => -1,
-    };
-
-    if (index == -1) return;
-
-    bloc.add(PlayerEventJumpToLineRequested(index));
-  }
-
-  @override
-  void dispose() {
-    router.removeListener(_onRouteChanged);
-    super.dispose();
-  }
 
   @override
   Widget build(final BuildContext context) {
@@ -347,6 +303,136 @@ class _LoadedTextState extends State<_LoadedText> {
         _ => null,
       };
     });
+
+    return switch (bloc.state.textState) {
+      StatusOfData<PlayerTextState>(
+        :final data,
+      ) =>
+        switch (data) {
+          PlayerTextStateData() => ShaderMask(
+              shaderCallback: _gradient.createShader,
+              blendMode: BlendMode.dstIn,
+              child: LayoutBuilder(
+                builder: (final context, final constraints) {
+                  return PositionedSmoothMouseScroll(
+                    builder: (final context, final child, final controller, final physics) {
+                      return _TextList(
+                        constraints: constraints,
+                        scrollOffsetController: controller,
+                        physics: physics,
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          PlayerTextStateProcessing() => const Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.cloud_sync_rounded,
+                    size: 64,
+                  ),
+                  SizedBox(height: 36),
+                  Text(
+                    'AI is processing audio in cloud',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                ],
+              ),
+            ),
+        },
+      _ => const SizedBox.shrink(),
+    };
+  }
+}
+
+class _TextList extends StatefulWidget {
+  const _TextList({
+    required this.constraints,
+    required this.scrollOffsetController,
+    this.physics,
+  });
+
+  final BoxConstraints constraints;
+  final ScrollOffsetController scrollOffsetController;
+  final ScrollPhysics? physics;
+
+  @override
+  State<_TextList> createState() => _TextListState();
+}
+
+class _TextListState extends State<_TextList> {
+  final _scrollController = ItemScrollController();
+  late final StackRouter _router;
+
+  @override
+  void initState() {
+    _router = context.router;
+    _router.addListener(_onRouteChanged);
+    super.initState();
+  }
+
+  void _onRouteChanged() {
+    final args = switch (_router.current.args) {
+      final PlayerRouteArgs args => args,
+      _ => null,
+    };
+    if (args == null) return;
+
+    final bloc = context.read<PlayerBloc>();
+    if (args.textLineId == bloc.state.currentTextLineId) return;
+
+    final index = switch (bloc.state.textState) {
+      StatusOfData(
+        data: PlayerTextStateData(
+          :final textLinesWithHighlights,
+        ),
+      ) =>
+        textLinesWithHighlights.indexWhere((final textLineWithHighlights) => textLineWithHighlights.$1.id == args.textLineId),
+      _ => -1,
+    };
+
+    if (index == -1) return;
+
+    bloc.add(PlayerEventJumpToLineRequested(index));
+  }
+
+  @override
+  void dispose() {
+    _router.removeListener(_onRouteChanged);
+    super.dispose();
+  }
+
+  @override
+  Widget build(final BuildContext context) {
+    late final PlayerBloc bloc;
+    var isInitialized = false;
+    final count = context.select((final PlayerBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return switch (bloc.state.textState) {
+        StatusOfData(
+          data: PlayerTextStateData(
+            :final textLinesWithHighlights,
+          )
+        ) =>
+          textLinesWithHighlights.length,
+        _ => 0,
+      };
+    });
+    final currentIndex = switch (bloc.state.textState) {
+      StatusOfData(
+        data: PlayerTextStateData(
+          :final currentTextLine,
+        )
+      ) =>
+        currentTextLine,
+      _ => 0,
+    };
 
     return BlocListener<PlayerBloc, PlayerState>(
       listenWhen: (final previous, final current) =>
@@ -373,11 +459,11 @@ class _LoadedTextState extends State<_LoadedText> {
             case StatusOfData<PlayerTextStateData>(
               data: PlayerTextStateData(
                 :final currentTextLine,
-                :final textLines,
+                :final textLinesWithHighlights,
               ),
             )) {
-          if (scrollController.isAttached) {
-            await scrollController.scrollTo(
+          if (_scrollController.isAttached) {
+            await _scrollController.scrollTo(
               index: currentTextLine,
               alignment: 0.5,
               duration: scrollDuration,
@@ -388,61 +474,21 @@ class _LoadedTextState extends State<_LoadedText> {
           await context.tabsRouter.navigate(
             PlayerRoute(
               recordingId: state.recordingId,
-              textLineId: textLines[currentTextLine].id,
+              textLineId: textLinesWithHighlights[currentTextLine].$1.id,
             ),
           );
         }
       },
-      child: switch (bloc.state.textState) {
-        StatusOfData<PlayerTextState>(
-          :final data,
-        ) =>
-          switch (data) {
-            PlayerTextStateData(
-              :final textSpans,
-              :final currentTextLine,
-            ) =>
-              ShaderMask(
-                shaderCallback: _gradient.createShader,
-                blendMode: BlendMode.dstIn,
-                child: LayoutBuilder(
-                  builder: (final context, final constraints) {
-                    return PositionedSmoothMouseScroll(
-                      builder: (final context, final child, final controller, final physics) {
-                        return ScrollablePositionedList.builder(
-                          itemScrollController: scrollController,
-                          scrollOffsetController: controller,
-                          initialScrollIndex: currentTextLine,
-                          initialAlignment: currentTextLine != 0 ? 0.5 : 0,
-                          physics: physics,
-                          itemCount: textSpans.length,
-                          padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.5),
-                          itemBuilder: _TextLine.new,
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
-            PlayerTextStateProcessing() => const Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.cloud_sync_rounded,
-                      size: 64,
-                    ),
-                    SizedBox(height: 36),
-                    Text(
-                      'AI is processing audio in cloud',
-                      style: TextStyle(fontSize: 24),
-                    ),
-                  ],
-                ),
-              ),
-          },
-        _ => const SizedBox.shrink(),
-      },
+      child: ScrollablePositionedList.builder(
+        itemScrollController: _scrollController,
+        scrollOffsetController: widget.scrollOffsetController,
+        initialScrollIndex: currentIndex,
+        initialAlignment: currentIndex != 0 ? 0.5 : 0,
+        physics: widget.physics,
+        itemCount: count,
+        padding: EdgeInsets.symmetric(vertical: widget.constraints.maxHeight * 0.5),
+        itemBuilder: _TextLine.new,
+      ),
     );
   }
 }
@@ -456,34 +502,41 @@ class _TextLine extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final PlayerBloc bloc;
     var isInitialized = false;
-    context.select((final PlayerBloc newBloc) {
+    final (
+      isCurrent,
+      isEmployee,
+    ) = context.select((final PlayerBloc newBloc) {
       if (!isInitialized) {
         bloc = newBloc;
         isInitialized = true;
       }
+
       return switch (bloc.state.textState) {
         StatusOfData(
           data: PlayerTextStateData(
             :final currentTextLine,
+            :final textLinesWithHighlights,
           )
         ) =>
-          currentTextLine,
-        _ => 0,
+          (
+            currentTextLine == index,
+            textLinesWithHighlights.elementAtOrNull(index)?.$1.isEmployee ?? false,
+          ),
+        _ => (
+            false,
+            false,
+          ),
       };
     });
 
     return switch (bloc.state.textState) {
       StatusOfData(
-        data: PlayerTextStateData(
-          :final currentTextLine,
-          :final textSpans,
-          :final textLines,
-        ),
+        data: PlayerTextStateData(),
       ) =>
         _TextLineContent(
-          text: textSpans[index],
-          isEmployee: textLines[index].isEmployee,
-          isCurrent: currentTextLine == index,
+          index: index,
+          isEmployee: isEmployee,
+          isCurrent: isCurrent,
           onTap: () => bloc.add(PlayerEventJumpToLineRequested(index)),
         ),
       _ => const SizedBox.shrink()
@@ -493,13 +546,13 @@ class _TextLine extends StatelessWidget {
 
 class _TextLineContent extends StatelessWidget {
   const _TextLineContent({
-    required this.text,
+    required this.index,
     required this.isEmployee,
     required this.isCurrent,
     required this.onTap,
   });
 
-  final TextSpan text;
+  final int index;
   final bool isEmployee;
   final bool isCurrent;
   final Function() onTap;
@@ -536,14 +589,135 @@ class _TextLineContent extends StatelessWidget {
             onTap: onTap,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Text.rich(
-                text,
-                style: theme.textTheme.bodyLarge,
+              child: _TextLineText(
+                index: index,
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _TextLineText extends StatefulWidget {
+  const _TextLineText({
+    required this.index,
+  });
+
+  final int index;
+
+  @override
+  State<_TextLineText> createState() => _TextLineTextState();
+}
+
+class _TextLineTextState extends State<_TextLineText> {
+  final List<GestureRecognizer> _gestureRecognizers = [];
+
+  TapGestureRecognizer _createRecognizer({required final Violation violation}) {
+    final tapGestureRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        final violations = switch (context.read<PlayerBloc>().state.textState) {
+          StatusOfData(
+            data: PlayerTextStateData(
+              violations: StatusOfData(
+                :final data,
+              ),
+            ),
+          ) =>
+            data,
+          _ => null,
+        };
+        context.router.push(
+          ViolationsRoute(
+            id: violation.record.id,
+            violations: violations,
+            children: [
+              ViolationViewerRoute(
+                id: violation.id,
+                violation: violation,
+              ),
+            ],
+          ),
+        );
+      };
+    _gestureRecognizers.add(tapGestureRecognizer);
+    return tapGestureRecognizer;
+  }
+
+  @override
+  void dispose() {
+    for (var i = 0; i < _gestureRecognizers.length; i++) {
+      _gestureRecognizers[i].dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(final BuildContext context) {
+    final theme = Theme.of(context);
+
+    late final PlayerBloc bloc;
+    var isInitialized = false;
+    final textLineWithHighlights = context.select((final PlayerBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return switch (bloc.state.textState) {
+        StatusOfData(
+          data: PlayerTextStateData(
+            :final textLinesWithHighlights,
+          )
+        ) =>
+          textLinesWithHighlights.elementAtOrNull(widget.index),
+        _ => (
+            null,
+            List<HighlightViolation>.empty(),
+          ),
+      };
+    });
+
+    Iterable<InlineSpan> generateTextSpans() sync* {
+      if (textLineWithHighlights == null) return;
+
+      final (
+        textLine,
+        highlights
+      ) = textLineWithHighlights;
+      if (textLine == null) return;
+
+      var charIndex = 0;
+      for (var j = 0; j < highlights.length; j += 2) {
+        if (charIndex < highlights[j].startIndex) {
+          final substring = textLine.text.substring(charIndex, highlights[j].startIndex);
+          yield TextSpan(text: substring);
+        }
+
+        final substring2 = textLine.text.substring(highlights[j].startIndex, highlights[j].endIndex);
+        final isLight = ThemeData.estimateBrightnessForColor(highlights[j].rule.color) == Brightness.light;
+
+        yield TextSpan(
+          style: TextStyle(
+            color: isLight ? Colors.black : Colors.white,
+            backgroundColor: highlights[j].rule.color,
+          ),
+          text: substring2,
+          recognizer: _createRecognizer(violation: highlights[j]),
+        );
+
+        charIndex = highlights[j].endIndex;
+      }
+
+      if (charIndex < textLine.text.length) {
+        final substring = textLine.text.substring(charIndex);
+        yield TextSpan(text: substring);
+      }
+    }
+
+    return Text.rich(
+      TextSpan(children: generateTextSpans().toList()),
+      style: theme.textTheme.bodyLarge,
     );
   }
 }

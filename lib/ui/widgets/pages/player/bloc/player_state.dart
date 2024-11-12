@@ -1,5 +1,10 @@
 part of 'player_bloc.dart';
 
+typedef TextLineWithHighlights = (
+  TextLine textLine,
+  List<HighlightViolation> highlights,
+);
+
 @freezed
 sealed class PlayerState with _$PlayerState {
   const factory PlayerState({
@@ -24,8 +29,7 @@ class PlayerAudioState with _$PlayerAudioState {
 sealed class PlayerTextState with _$PlayerTextState {
   const factory PlayerTextState.data({
     @Default(0) final int currentTextLine,
-    @Default([]) final List<TextSpan> textSpans,
-    @Default([]) final List<TextLine> textLines,
+    @Default([]) final List<TextLineWithHighlights> textLinesWithHighlights,
     @Default(StatusOfLoading()) final StatusOf<List<Violation>> violations,
   }) = PlayerTextStateData;
 
