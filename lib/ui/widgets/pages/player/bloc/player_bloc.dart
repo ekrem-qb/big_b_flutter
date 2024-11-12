@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/painting.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:media_kit/media_kit.dart' as media;
@@ -246,9 +246,14 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       }
 
       final substring2 = textLine.text.substring(highlights[j].startIndex, highlights[j].endIndex);
+      final isLight = ThemeData.estimateBrightnessForColor(highlights[j].rule.color) == Brightness.light;
+
       yield TextSpan(
         text: substring2,
-        style: TextStyle(color: highlights[j].rule.color),
+        style: TextStyle(
+          color: isLight ? Colors.black : Colors.white,
+          backgroundColor: highlights[j].rule.color,
+        ),
       );
 
       charIndex = highlights[j].endIndex;
