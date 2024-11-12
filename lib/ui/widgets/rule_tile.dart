@@ -23,6 +23,21 @@ class RuleTile extends StatelessWidget {
       ) =>
         details,
     };
+
+    Future<void> navigateToRuleEditor([final _]) async {
+      await context.tabsRouter.navigate(const RulesRoute());
+      await context.tabsRouter.navigate(RuleEditorRoute(id: rule.id, rule: rule));
+    }
+
+    Future<void> onTap() async {
+      if (context.tabsRouter.activeIndex == 3) {
+        await navigateToRuleEditor();
+      } else {
+        await context.tabsRouter.navigate(const FourthTabRoute());
+        WidgetsBinding.instance.addPostFrameCallback(navigateToRuleEditor);
+      }
+    }
+
     return ListTile(
       shape: RoundedRectangleBorder(
         borderRadius: kDefaultRadius,
@@ -50,12 +65,7 @@ class RuleTile extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             )
           : null,
-      onTap: () => context.tabsRouter.navigate(
-        RuleEditorRoute(
-          id: rule.id,
-          rule: rule,
-        ),
-      ),
+      onTap: onTap,
     );
   }
 }
