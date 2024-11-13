@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../../app_router/app_router.dart';
 import '../../../theme.dart';
+import '../../extensions/mouse_navigator.dart';
 import 'bloc/app_bloc.dart';
 
 const _dragDevices = {
@@ -23,22 +24,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return MultiProvider(
-      providers: [
-        BlocProvider(create: (final context) => AppBloc()),
-        ChangeNotifierProvider.value(value: appRouter),
-      ],
-      child: MaterialApp.router(
-        title: 'Flutter Demo',
-        theme: lightTheme,
-        darkTheme: darkTheme,
-        scrollBehavior: const CupertinoScrollBehavior().copyWith(
-          dragDevices: _dragDevices,
-        ),
-        debugShowCheckedModeBanner: false,
-        restorationScopeId: 'app',
-        routerConfig: appRouter.config(
-          navRestorationScopeId: 'navigation',
+    return MouseNavigator(
+      child: MultiProvider(
+        providers: [
+          BlocProvider(create: (final context) => AppBloc()),
+          ChangeNotifierProvider.value(value: appRouter),
+        ],
+        child: MaterialApp.router(
+          title: 'Flutter Demo',
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          scrollBehavior: const CupertinoScrollBehavior().copyWith(
+            dragDevices: _dragDevices,
+          ),
+          debugShowCheckedModeBanner: false,
+          restorationScopeId: 'app',
+          routerConfig: appRouter.config(
+            navRestorationScopeId: 'navigation',
+          ),
         ),
       ),
     );

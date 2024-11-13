@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app_router/app_router.dart';
-import '../../extensions/mouse_navigator.dart';
 import 'home_model.dart';
 
 @RoutePage()
@@ -57,33 +56,31 @@ class _HomeView extends StatelessWidget {
       onPopInvokedWithResult: (final didPop, final result) {
         if (!didPop) model.goBack();
       },
-      child: MouseNavigator(
-        child: AutoTabsScaffold(
-          routes: const [
-            TasksRoute(),
-            RecordingsRoute(),
-            ProfilesRoute(),
-            MoreRoute(),
-          ],
-          bottomNavigationBuilder: (final context, final tabsRouter) {
-            WidgetsBinding.instance.addPostFrameCallback((final _) {
-              model
-                ..tabsRouter = tabsRouter
-                ..setTab(tabsRouter.activeIndex);
-            });
+      child: AutoTabsScaffold(
+        routes: const [
+          TasksRoute(),
+          RecordingsRoute(),
+          ProfilesRoute(),
+          MoreRoute(),
+        ],
+        bottomNavigationBuilder: (final context, final tabsRouter) {
+          WidgetsBinding.instance.addPostFrameCallback((final _) {
+            model
+              ..tabsRouter = tabsRouter
+              ..setTab(tabsRouter.activeIndex);
+          });
 
-            return NavigationBar(
-              selectedIndex: tabsRouter.activeIndex,
-              onDestinationSelected: tabsRouter.setActiveIndex,
-              destinations: const [
-                NavigationDestination(icon: Icon(Icons.task_alt), label: 'Görevler', tooltip: ''),
-                NavigationDestination(icon: Icon(Icons.mic), label: 'Kayıtlar', tooltip: ''),
-                NavigationDestination(icon: Icon(Icons.manage_accounts), label: 'Çalışanlar', tooltip: ''),
-                NavigationDestination(icon: Icon(Icons.menu), label: 'Gene', tooltip: ''),
-              ],
-            );
-          },
-        ),
+          return NavigationBar(
+            selectedIndex: tabsRouter.activeIndex,
+            onDestinationSelected: tabsRouter.setActiveIndex,
+            destinations: const [
+              NavigationDestination(icon: Icon(Icons.task_alt), label: 'Görevler', tooltip: ''),
+              NavigationDestination(icon: Icon(Icons.mic), label: 'Kayıtlar', tooltip: ''),
+              NavigationDestination(icon: Icon(Icons.manage_accounts), label: 'Çalışanlar', tooltip: ''),
+              NavigationDestination(icon: Icon(Icons.menu), label: 'Gene', tooltip: ''),
+            ],
+          );
+        },
       ),
     );
   }
