@@ -25,6 +25,7 @@ class TaskViewerDialog extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return BlocProvider(
+      key: ValueKey(id),
       create: (final context) => TaskViewerBloc(id, task),
       child: const TaskViewerView(),
     );

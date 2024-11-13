@@ -30,6 +30,7 @@ class ViolationsPage extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return BlocProvider(
+      key: ValueKey(id),
       create: (final _) => ViolationsBloc(id: id, violations: violations),
       child: const ViolationsView(),
     );

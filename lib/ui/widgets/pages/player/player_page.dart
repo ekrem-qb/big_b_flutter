@@ -37,6 +37,7 @@ class PlayerPage extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return BlocProvider(
+      key: ValueKey(recordingId),
       create: (final context) => PlayerBloc(
         recordingId: recordingId,
         textLineId: textLineId,

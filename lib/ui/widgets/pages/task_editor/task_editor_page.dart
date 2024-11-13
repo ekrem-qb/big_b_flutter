@@ -49,6 +49,7 @@ class TaskEditorPage extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return BlocProvider(
+      key: ValueKey(taskId),
       create: (final context) => TaskEditorBloc(
         taskId: taskId,
         originalTask: task,
@@ -72,6 +73,7 @@ class PlannedTaskEditorPage extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return BlocProvider(
+      key: ValueKey(plannedTaskId),
       create: (final context) => TaskEditorBloc(
         plannedTaskId: plannedTaskId,
         originalPlannedTask: plannedTask,

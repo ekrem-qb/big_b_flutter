@@ -38,6 +38,7 @@ class RuleEditorPage extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return BlocProvider(
+      key: ValueKey(id),
       create: (final context) => RuleEditorBloc(id: id, originalRule: rule),
       child: const RuleEditorView(isNew: false),
     );

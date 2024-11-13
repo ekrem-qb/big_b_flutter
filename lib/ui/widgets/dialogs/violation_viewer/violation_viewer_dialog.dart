@@ -22,6 +22,7 @@ class ViolationViewerDialog extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return BlocProvider(
+      key: ValueKey(id),
       create: (final context) => ViolationViewerBloc(id, violation),
       child: const ViolationViewerView(),
     );

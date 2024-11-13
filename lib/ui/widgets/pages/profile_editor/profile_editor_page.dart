@@ -35,6 +35,7 @@ class ProfileEditorPage extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return BlocProvider(
+      key: ValueKey(uid),
       create: (final context) => ProfileEditorBloc(
         uid: uid,
         originalProfile: profile,
