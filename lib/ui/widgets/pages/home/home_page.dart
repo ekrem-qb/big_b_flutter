@@ -1,26 +1,101 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../app_router/app_router.dart';
 import 'home_model.dart';
 
 @RoutePage()
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  Widget build(final BuildContext context) {
+    return AutoTabsRouter(
+      routes: const [
+        TasksRoute(),
+        RecordingsRoute(),
+        ProfilesRoute(),
+        MoreRoute(),
+      ],
+      transitionBuilder: (final context, final child, final animation) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+      builder: (final context, final child) {
+        final tabsRouter = context.tabsRouter;
+
+        return Scaffold(
+          body: _Body(child: child),
+          bottomNavigationBar: AnimatedBuilder(
+            animation: tabsRouter,
+            builder: (final _, final __) {
+              return NavigationBar(
+                selectedIndex: tabsRouter.activeIndex,
+                onDestinationSelected: tabsRouter.setActiveIndex,
+                destinations: const [
+                  NavigationDestination(icon: Icon(Icons.task_alt), label: 'Görevler', tooltip: ''),
+                  NavigationDestination(icon: Icon(Icons.mic), label: 'Kayıtlar', tooltip: ''),
+                  NavigationDestination(icon: Icon(Icons.manage_accounts), label: 'Çalışanlar', tooltip: ''),
+                  NavigationDestination(icon: Icon(Icons.menu), label: 'Gene', tooltip: ''),
+                ],
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
 }
 
-class _HomePageState extends State<HomePage> with RestorationMixin {
-  final _model = HomeModel();
+class _Body extends StatefulWidget {
+  const _Body({
+    required this.child,
+  });
+
+  final Widget child;
+
+  @override
+  State<_Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<_Body> with RestorationMixin {
+  late final HomeModel _model;
+
+  @override
+  void initState() {
+    _model = HomeModel(context.tabsRouter);
+    super.initState();
+  }
 
   @override
   Widget build(final BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: _model,
-      child: const _HomeView(),
+    return Stack(
+      children: [
+        Builder(
+          builder: (final context) {
+            context.watchRouter;
+            WidgetsBinding.instance.addPostFrameCallback((final timeStamp) {
+              _model.onRouteChanged();
+            });
+
+            return const SizedBox.shrink();
+          },
+        ),
+        ListenableBuilder(
+          listenable: _model,
+          builder: (final context, final child) {
+            return PopScope(
+              canPop: !_model.canGoBack,
+              onPopInvokedWithResult: (final didPop, final result) {
+                if (!didPop) _model.goBack();
+              },
+              child: widget.child,
+            );
+          },
+        ),
+      ],
     );
   }
 
@@ -36,52 +111,5 @@ class _HomePageState extends State<HomePage> with RestorationMixin {
   void dispose() {
     _model.dispose();
     super.dispose();
-  }
-}
-
-class _HomeView extends StatelessWidget {
-  const _HomeView();
-
-  @override
-  Widget build(final BuildContext context) {
-    late HomeModel model;
-    final canGoBack = context.select((final HomeModel newModel) {
-      model = newModel;
-      return newModel.canGoBack;
-    });
-    final router = context.watchRouter;
-
-    return PopScope(
-      canPop: router.canPop() || !canGoBack,
-      onPopInvokedWithResult: (final didPop, final result) {
-        if (!didPop) model.goBack();
-      },
-      child: AutoTabsScaffold(
-        routes: const [
-          TasksRoute(),
-          RecordingsRoute(),
-          ProfilesRoute(),
-          MoreRoute(),
-        ],
-        bottomNavigationBuilder: (final context, final tabsRouter) {
-          WidgetsBinding.instance.addPostFrameCallback((final _) {
-            model
-              ..tabsRouter = tabsRouter
-              ..setTab(tabsRouter.activeIndex);
-          });
-
-          return NavigationBar(
-            selectedIndex: tabsRouter.activeIndex,
-            onDestinationSelected: tabsRouter.setActiveIndex,
-            destinations: const [
-              NavigationDestination(icon: Icon(Icons.task_alt), label: 'Görevler', tooltip: ''),
-              NavigationDestination(icon: Icon(Icons.mic), label: 'Kayıtlar', tooltip: ''),
-              NavigationDestination(icon: Icon(Icons.manage_accounts), label: 'Çalışanlar', tooltip: ''),
-              NavigationDestination(icon: Icon(Icons.menu), label: 'Gene', tooltip: ''),
-            ],
-          );
-        },
-      ),
-    );
   }
 }

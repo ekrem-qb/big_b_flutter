@@ -4,19 +4,26 @@ import 'package:flutter/widgets.dart';
 import 'home_state.dart';
 
 class HomeModel extends RestorableProperty<HomeState> {
+  HomeModel(this._tabsRouter) {
+    _tabsRouter.addListener(_onTabChanged);
+  }
   HomeState _state = const HomeState();
 
-  TabsRouter? _tabsRouter;
-  // ignore: avoid_setters_without_getters
-  set tabsRouter(final TabsRouter? value) {
-    if (value == _tabsRouter) return;
+  final TabsRouter _tabsRouter;
 
-    _tabsRouter = value;
+  bool _canPop = false;
+  bool get canGoBack => !_canPop && _state.history.length > 1;
+
+  void onRouteChanged() {
+    final value = _tabsRouter.canPop();
+    if (value == _canPop) return;
+
+    _canPop = value;
+    notifyListeners();
   }
 
-  bool get canGoBack => _state.history.length > 1;
-
-  void setTab(final int newIndex) {
+  void _onTabChanged() {
+    final newIndex = _tabsRouter.activeIndex;
     if (_state.history.lastOrNull == newIndex) return;
 
     final newHistory = [
@@ -36,11 +43,15 @@ class HomeModel extends RestorableProperty<HomeState> {
 
     _state = _state.copyWith(history: _state.history.sublist(0, _state.history.length - 1));
     notifyListeners();
-    _tabsRouter?.setActiveIndex(_state.history.lastOrNull ?? 0);
+    _tabsRouter.setActiveIndex(_state.history.lastOrNull ?? 0);
   }
 
   @override
-  HomeState createDefaultValue() => const HomeState();
+  HomeState createDefaultValue() => HomeState(
+        history: [
+          _tabsRouter.activeIndex,
+        ],
+      );
 
   @override
   void initWithValue(final HomeState value) {
@@ -55,5 +66,11 @@ class HomeModel extends RestorableProperty<HomeState> {
   @override
   Object? toPrimitives() {
     return _state.toJson();
+  }
+
+  @override
+  void dispose() {
+    _tabsRouter.removeListener(_onTabChanged);
+    super.dispose();
   }
 }
