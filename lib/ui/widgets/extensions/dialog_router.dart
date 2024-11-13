@@ -7,6 +7,10 @@ import 'package:provider/provider.dart';
 // transitions.
 final Animatable<double> _dialogScaleTween = Tween<double>(begin: 1.3, end: 1).chain(CurveTween(curve: Curves.linearToEaseOut));
 const _transitionDuration = Duration(milliseconds: 250);
+const Color kCupertinoModalBarrierColor = CupertinoDynamicColor.withBrightness(
+  color: Color(0x33000000),
+  darkColor: Color(0x7A000000),
+);
 
 Widget _buildCupertinoDialogTransitions(
   final BuildContext context,
@@ -121,43 +125,93 @@ class DialogRoute<T> extends CustomRoute<T> {
             final Widget child,
             final AutoRoutePage<T> page,
           ) =>
-              dialogRouteBuilder<T>(
-            context: context,
-            child: child,
+              DialogRouteBuilder<T>(
             page: page,
-            barrierDismissible: barrierDismissible,
-            barrierLabel: barrierLabel,
-            barrierColor: barrierColor,
+            routeType: CustomRouteType(
+              barrierDismissible: barrierDismissible,
+              barrierLabel: barrierLabel,
+              barrierColor: barrierColor ?? CupertinoDynamicColor.resolve(kCupertinoModalBarrierColor, context),
+            ),
           ),
         );
+}
 
-  static Route<T> dialogRouteBuilder<T>({
-    required final BuildContext context,
-    required final Widget child,
+class DialogRouteBuilder<T> extends PageRoute<T> with DialogRouteTransitionMixin<T> {
+  DialogRouteBuilder({
     required final AutoRoutePage<T> page,
-    required final bool barrierDismissible,
-    final String? barrierLabel,
-    final Color? barrierColor,
-  }) {
-    return CupertinoDialogRoute<T>(
-      context: context,
-      settings: page,
-      barrierDismissible: barrierDismissible,
-      barrierLabel: barrierLabel,
-      barrierColor: barrierColor,
-      builder: (final BuildContext context) {
-        final animationController = context.read<AnimationController?>();
+    required this.routeType,
+  }) : super(settings: page);
 
-        return PopScope(
-          canPop: false,
-          onPopInvokedWithResult: (final didPop, final result) => animationController?.reverse().then((final _) {
-            if (context.mounted) {
-              context.router.removeLast();
-            }
-          }),
-          child: child,
-        );
-      },
+  @override
+  final CustomRouteType routeType;
+
+  @override
+  Widget buildContent(final BuildContext context) => _page.buildPage(context);
+
+  @override
+  bool get maintainState => _page.maintainState;
+
+  @override
+  bool get fullscreenDialog => _page.fullscreenDialog;
+
+  @override
+  bool get allowSnapshotting => _page.allowSnapshotting;
+
+  @override
+  String get debugLabel => '${super.debugLabel}(${_page.name})';
+}
+
+mixin DialogRouteTransitionMixin<T> on PageRoute<T> {
+  /// Builds the primary contents of the route.
+  AutoRoutePage<T> get _page => settings as AutoRoutePage<T>;
+
+  CustomRouteType get routeType;
+
+  @protected
+  Widget buildContent(final BuildContext context);
+
+  @override
+  Duration get transitionDuration => Duration(
+        milliseconds: routeType.durationInMilliseconds ?? 300,
+      );
+
+  @override
+  Duration get reverseTransitionDuration => Duration(
+        milliseconds: routeType.reverseDurationInMilliseconds ?? 300,
+      );
+
+  @override
+  bool get barrierDismissible => routeType.barrierDismissible;
+
+  @override
+  Color? get barrierColor => routeType.barrierColor;
+
+  @override
+  String? get barrierLabel => routeType.barrierLabel;
+
+  @override
+  bool get opaque => routeType.opaque;
+
+  @override
+  Widget buildPage(
+    final BuildContext context,
+    final Animation<double> animation,
+    final Animation<double> secondaryAnimation,
+  ) {
+    final animationController = context.read<AnimationController?>();
+
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (final didPop, final result) => animationController?.reverse().then((final _) {
+        if (context.mounted) {
+          context.router.removeLast();
+        }
+      }),
+      child: Semantics(
+        scopesRoute: true,
+        explicitChildNodes: true,
+        child: buildContent(context),
+      ),
     );
   }
 }
