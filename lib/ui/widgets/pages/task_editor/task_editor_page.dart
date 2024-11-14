@@ -463,7 +463,7 @@ class _Executives extends StatelessWidget {
 
     return Wrap(
       spacing: 8,
-      runSpacing: 8,
+      runSpacing: Theme.of(context).materialTapTargetSize == MaterialTapTargetSize.shrinkWrap ? 8 : 0,
       children: [
         for (var i = 0; i < bloc.state.executives.length; i++)
           InputChip(

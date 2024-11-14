@@ -369,7 +369,7 @@ class _Words extends StatelessWidget {
 
     return Wrap(
       spacing: 8,
-      runSpacing: 8,
+      runSpacing: Theme.of(context).materialTapTargetSize == MaterialTapTargetSize.shrinkWrap ? 8 : 0,
       children: [
         for (final word in words)
           Chip(
