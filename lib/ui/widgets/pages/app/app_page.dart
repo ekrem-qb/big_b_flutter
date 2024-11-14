@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
 import '../../../app_router/app_router.dart';
 import '../../../theme.dart';
@@ -25,11 +24,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return MouseNavigator(
-      child: MultiProvider(
-        providers: [
-          BlocProvider(create: (final context) => AppBloc()),
-          ChangeNotifierProvider.value(value: appRouter),
-        ],
+      child: BlocProvider(
+        create: (final context) => AppBloc(),
         child: MaterialApp.router(
           title: 'Flutter Demo',
           theme: lightTheme,
