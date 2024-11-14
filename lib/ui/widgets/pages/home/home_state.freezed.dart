@@ -20,7 +20,8 @@ HomeState _$HomeStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$HomeState {
-  List<int> get history => throw _privateConstructorUsedError;
+  @Uint8ListConverter()
+  Uint8List get history => throw _privateConstructorUsedError;
 
   /// Serializes this HomeState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +38,7 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call({List<int> history});
+  $Res call({@Uint8ListConverter() Uint8List history});
 }
 
 /// @nodoc
@@ -61,7 +62,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
       history: null == history
           ? _value.history
           : history // ignore: cast_nullable_to_non_nullable
-              as List<int>,
+              as Uint8List,
     ) as $Val);
   }
 }
@@ -74,7 +75,7 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<int> history});
+  $Res call({@Uint8ListConverter() Uint8List history});
 }
 
 /// @nodoc
@@ -94,9 +95,9 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   }) {
     return _then(_$HomeStateImpl(
       history: null == history
-          ? _value._history
+          ? _value.history
           : history // ignore: cast_nullable_to_non_nullable
-              as List<int>,
+              as Uint8List,
     ));
   }
 }
@@ -104,20 +105,14 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$HomeStateImpl implements _HomeState {
-  const _$HomeStateImpl({final List<int> history = const []})
-      : _history = history;
+  const _$HomeStateImpl({@Uint8ListConverter() required this.history});
 
   factory _$HomeStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$HomeStateImplFromJson(json);
 
-  final List<int> _history;
   @override
-  @JsonKey()
-  List<int> get history {
-    if (_history is EqualUnmodifiableListView) return _history;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_history);
-  }
+  @Uint8ListConverter()
+  final Uint8List history;
 
   @override
   String toString() {
@@ -129,13 +124,13 @@ class _$HomeStateImpl implements _HomeState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomeStateImpl &&
-            const DeepCollectionEquality().equals(other._history, _history));
+            const DeepCollectionEquality().equals(other.history, history));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_history));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(history));
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -154,13 +149,16 @@ class _$HomeStateImpl implements _HomeState {
 }
 
 abstract class _HomeState implements HomeState {
-  const factory _HomeState({final List<int> history}) = _$HomeStateImpl;
+  const factory _HomeState(
+          {@Uint8ListConverter() required final Uint8List history}) =
+      _$HomeStateImpl;
 
   factory _HomeState.fromJson(Map<String, dynamic> json) =
       _$HomeStateImpl.fromJson;
 
   @override
-  List<int> get history;
+  @Uint8ListConverter()
+  Uint8List get history;
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.

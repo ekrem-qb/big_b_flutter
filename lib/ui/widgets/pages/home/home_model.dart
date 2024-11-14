@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
 
@@ -7,7 +9,7 @@ class HomeModel extends RestorableProperty<HomeState> {
   HomeModel(this._tabsRouter) {
     _tabsRouter.addListener(_onTabChanged);
   }
-  HomeState _state = const HomeState();
+  HomeState _state = HomeState(history: Uint8List(0));
 
   final TabsRouter _tabsRouter;
 
@@ -26,13 +28,13 @@ class HomeModel extends RestorableProperty<HomeState> {
     final newIndex = _tabsRouter.activeIndex;
     if (_state.history.lastOrNull == newIndex) return;
 
-    final newHistory = [
-      if (_state.history.isNotEmpty) ...[
-        _state.history.first,
-        ..._state.history.sublist(1).where((final index) => index != newIndex),
+    final newHistory = Uint8List.fromList([
+      if (_state.history.lengthInBytes > 0) ...[
+        _state.history[0],
+        ...Uint8List.sublistView(_state.history, 1).where((final index) => index != newIndex),
       ],
       newIndex,
-    ];
+    ]);
 
     _state = _state.copyWith(history: newHistory);
     notifyListeners();
@@ -48,9 +50,9 @@ class HomeModel extends RestorableProperty<HomeState> {
 
   @override
   HomeState createDefaultValue() => HomeState(
-        history: [
+        history: Uint8List.fromList([
           _tabsRouter.activeIndex,
-        ],
+        ]),
       );
 
   @override
@@ -60,7 +62,7 @@ class HomeModel extends RestorableProperty<HomeState> {
 
   @override
   HomeState fromPrimitives(final Object? data) {
-    return data != null ? HomeState.fromJson((data as Map<Object?, Object?>).cast()) : const HomeState();
+    return data != null ? HomeState.fromJson((data as Map<Object?, Object?>).cast()) : HomeState(history: Uint8List(0));
   }
 
   @override
