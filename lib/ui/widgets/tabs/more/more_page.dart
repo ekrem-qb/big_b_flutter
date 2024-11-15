@@ -68,12 +68,12 @@ class _LogoutButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final model = context.read<AppBloc>();
+    final bloc = context.read<AppBloc>();
     late final AppBarController appBar;
     var isInitialized = false;
-    context.select((final AppBarController newBloc) {
+    context.select((final AppBarController newModel) {
       if (!isInitialized) {
-        appBar = newBloc;
+        appBar = newModel;
         isInitialized = true;
       }
       return appBar.isScrolled;
@@ -84,7 +84,7 @@ class _LogoutButton extends StatelessWidget {
         visualDensity: VisualDensity.standard,
         elevation: appBar.isScrolled ? const WidgetStatePropertyAll(0) : null,
       ),
-      onPressed: () => model.add(const AppEventSignOutRequested()),
+      onPressed: () => bloc.add(const AppEventSignOutRequested()),
       icon: const Icon(Icons.logout),
       label: const Text('Çıkış'),
     );
