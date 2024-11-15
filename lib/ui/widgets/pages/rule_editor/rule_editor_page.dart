@@ -400,44 +400,41 @@ class _Description extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final RuleEditorBloc bloc;
     var isInitialized = false;
-    final error = context.select((final RuleEditorBloc newBloc) {
+    final (
+      error,
+      description,
+    ) = context.select((final RuleEditorBloc newBloc) {
       if (!isInitialized) {
         bloc = newBloc;
         isInitialized = true;
       }
       return switch (newBloc.state) {
         RuleEditorStateCreate(
-          :final descriptionError
+          :final descriptionError,
+          rule: CustomRule(
+            :final description,
+          )
         ) ||
         RuleEditorStateEdit(
           editState: StatusOfData(
             data: RuleEditorStateEditState(
               :final descriptionError,
+              rule: CustomRule(
+                :final description,
+              )
             ),
           ),
         ) =>
-          descriptionError,
-        _ => '',
+          (
+            descriptionError,
+            description,
+          ),
+        _ => (
+            '',
+            '',
+          ),
       };
     });
-    final description = switch (bloc.state) {
-      RuleEditorStateCreate(
-        rule: CustomRule(
-          :final description,
-        ),
-      ) ||
-      RuleEditorStateEdit(
-        editState: StatusOfData(
-          data: RuleEditorStateEditState(
-            rule: CustomRule(
-              :final description,
-            ),
-          ),
-        ),
-      ) =>
-        description,
-      _ => '',
-    };
 
     return TextFormField(
       decoration: InputDecoration(
