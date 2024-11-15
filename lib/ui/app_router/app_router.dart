@@ -47,11 +47,48 @@ class AppRouter extends RootStackRouter {
             children: [
               RedirectRoute(
                 path: '',
-                redirectTo: 'tasks',
+                redirectTo: 'home',
+              ),
+              CupertinoRoute(
+                path: 'home',
+                page: FirstTabRoute.page,
+                children: [
+                  CupertinoRoute(
+                    path: '',
+                    page: ViolationsRoute.page,
+                    children: [
+                      DialogRoute(
+                        path: ':id',
+                        page: ViolationViewerRoute.page,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              CupertinoRoute(
+                path: 'recordings',
+                page: SecondTabRoute.page,
+                children: [
+                  CupertinoRoute(path: '', page: RecordingsRoute.page),
+                  CupertinoRoute(
+                    path: ':recordingId/line/:textLineId',
+                    page: PlayerRoute.page,
+                  ),
+                  CupertinoRoute(
+                    path: ':id/violations',
+                    page: ViolationsRoute.page,
+                    children: [
+                      DialogRoute(
+                        path: ':id',
+                        page: ViolationViewerRoute.page,
+                      ),
+                    ],
+                  ),
+                ],
               ),
               CupertinoRoute(
                 path: 'tasks',
-                page: FirstTabRoute.page,
+                page: ThirdTabRoute.page,
                 children: [
                   CupertinoRoute(
                     path: '',
@@ -82,31 +119,14 @@ class AppRouter extends RootStackRouter {
                 ],
               ),
               CupertinoRoute(
-                path: 'recordings',
-                page: SecondTabRoute.page,
+                path: 'more',
+                page: FourthTabRoute.page,
                 children: [
-                  CupertinoRoute(path: '', page: RecordingsRoute.page),
+                  CupertinoRoute(path: '', page: MoreRoute.page),
                   CupertinoRoute(
-                    path: ':recordingId/line/:textLineId',
-                    page: PlayerRoute.page,
+                    path: 'profiles',
+                    page: ProfilesRoute.page,
                   ),
-                  CupertinoRoute(
-                    path: ':id/violations',
-                    page: ViolationsRoute.page,
-                    children: [
-                      DialogRoute(
-                        path: ':id',
-                        page: ViolationViewerRoute.page,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              CupertinoRoute(
-                path: 'profiles',
-                page: ThirdTabRoute.page,
-                children: [
-                  CupertinoRoute(path: '', page: ProfilesRoute.page),
                   CupertinoRoute(
                     path: ':uid',
                     page: ProfileEditorRoute.page,
@@ -115,13 +135,6 @@ class AppRouter extends RootStackRouter {
                     path: 'new',
                     page: NewProfileEditorRoute.page,
                   ),
-                ],
-              ),
-              CupertinoRoute(
-                path: 'more',
-                page: FourthTabRoute.page,
-                children: [
-                  CupertinoRoute(path: '', page: MoreRoute.page),
                   CupertinoRoute(
                     path: 'rules',
                     page: RulesRoute.page,

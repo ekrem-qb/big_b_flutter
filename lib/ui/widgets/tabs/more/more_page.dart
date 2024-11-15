@@ -46,6 +46,11 @@ class MoreView extends StatelessWidget {
             runSpacing: 8,
             children: [
               _Button(
+                icon: Icons.manage_accounts,
+                label: 'Çalışanlar',
+                route: ProfilesRoute(),
+              ),
+              _Button(
                 icon: Icons.rule_rounded,
                 label: 'Kurallar',
                 route: RulesRoute(),

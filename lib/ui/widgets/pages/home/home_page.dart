@@ -11,11 +11,11 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return AutoTabsRouter(
-      routes: const [
-        TasksRoute(),
-        RecordingsRoute(),
-        ProfilesRoute(),
-        MoreRoute(),
+      routes: [
+        ViolationsRoute(),
+        const RecordingsRoute(),
+        const TasksRoute(),
+        const MoreRoute(),
       ],
       transitionBuilder: (final context, final child, final animation) {
         return FadeTransition(
@@ -35,9 +35,9 @@ class HomePage extends StatelessWidget {
                 selectedIndex: tabsRouter.activeIndex,
                 onDestinationSelected: tabsRouter.setActiveIndex,
                 destinations: const [
-                  NavigationDestination(icon: Icon(Icons.task_alt), label: 'Görevler', tooltip: ''),
+                  NavigationDestination(icon: Icon(Icons.home), label: 'Ana Sayfa', tooltip: ''),
                   NavigationDestination(icon: Icon(Icons.mic), label: 'Kayıtlar', tooltip: ''),
-                  NavigationDestination(icon: Icon(Icons.manage_accounts), label: 'Çalışanlar', tooltip: ''),
+                  NavigationDestination(icon: Icon(Icons.task_alt), label: 'Görevler', tooltip: ''),
                   NavigationDestination(icon: Icon(Icons.menu), label: 'Gene', tooltip: ''),
                 ],
               );
