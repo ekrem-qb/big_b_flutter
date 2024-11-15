@@ -199,7 +199,10 @@ class _Item<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends State
   Widget build(final BuildContext context) {
     late final TBloc bloc;
     var isInitialized = false;
-    final exists = context.select((final TBloc newBloc) {
+    final (
+      exists,
+      isLoaded,
+    ) = context.select((final TBloc newBloc) {
       if (!isInitialized) {
         bloc = newBloc;
         isInitialized = true;
@@ -208,17 +211,14 @@ class _Item<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends State
         StatusOfData<ListerState>(
           :final data,
         ) =>
-          data.totalCount > index,
-        _ => false,
-      };
-    });
-    final isLoaded = context.select((final TBloc bloc) {
-      return switch (bloc.state) {
-        StatusOfData<ListerState>(
-          :final data,
-        ) =>
-          data.items.length > index,
-        _ => false,
+          (
+            data.totalCount > index,
+            data.items.length > index,
+          ),
+        _ => (
+            false,
+            false,
+          ),
       };
     });
     final colorScheme = Theme.of(context).colorScheme;
