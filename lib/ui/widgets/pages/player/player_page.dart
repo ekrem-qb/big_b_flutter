@@ -837,48 +837,41 @@ class _SliderState extends State<_Slider> {
       };
     });
 
-    return IgnorePointer(
-      ignoring: switch (bloc.state.audioState) {
-        StatusOfData<PlayerAudioState>(
-          data: PlayerAudioState(),
-        ) =>
-          false,
-        _ => true,
+    return TweenAnimationBuilder(
+      tween: Tween<double>(begin: _currentValue, end: !_didJump ? position : _currentValue),
+      curve: isPlaying ? Curves.linear : animationCurve,
+      duration: animationDuration,
+      onEnd: () {
+        if (_didJump) {
+          _isSeeking = false;
+          _didJump = false;
+        }
       },
-      child: TweenAnimationBuilder(
-        tween: Tween<double>(begin: _currentValue, end: !_didJump ? position : _currentValue),
-        curve: isPlaying ? Curves.linear : animationCurve,
-        duration: animationDuration,
-        onEnd: () {
-          if (_didJump) {
-            _isSeeking = false;
-            _didJump = false;
-          }
-        },
-        builder: (final context, final value, final child) {
-          if (!_isSeeking) {
-            _currentValue = value;
-          }
+      builder: (final context, final value, final child) {
+        if (!_isSeeking) {
+          _currentValue = value;
+        }
 
-          return Slider(
-            value: _currentValue,
-            max: duration,
-            label: Duration(microseconds: _currentValue.toInt()).toMinutesAndSeconds(),
-            onChangeStart: (final newValue) {
-              _isSeeking = true;
-            },
-            onChanged: (final newValue) {
-              setState(() {
-                _currentValue = newValue;
-              });
-            },
-            onChangeEnd: (final newValue) {
-              _didJump = true;
-              bloc.add(PlayerEventSeekRequested(Duration(microseconds: newValue.toInt())));
-            },
-          );
-        },
-      ),
+        return Slider(
+          value: _currentValue,
+          max: duration,
+          label: Duration(microseconds: _currentValue.toInt()).toMinutesAndSeconds(),
+          onChangeStart: (final newValue) {
+            _isSeeking = true;
+          },
+          onChanged: bloc.state.audioState is StatusOfData<PlayerAudioState>
+              ? (final newValue) {
+                  setState(() {
+                    _currentValue = newValue;
+                  });
+                }
+              : null,
+          onChangeEnd: (final newValue) {
+            _didJump = true;
+            bloc.add(PlayerEventSeekRequested(Duration(microseconds: newValue.toInt())));
+          },
+        );
+      },
     );
   }
 }
