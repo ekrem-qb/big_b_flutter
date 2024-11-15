@@ -26,6 +26,14 @@ class HomePage extends StatelessWidget {
       builder: (final context, final child) {
         final tabsRouter = context.tabsRouter;
 
+        void onDestinationSelected(final int newIndex) {
+          if (newIndex == tabsRouter.activeIndex) {
+            tabsRouter.navigate(tabsRouter.current.route.toPageRouteInfo());
+          } else {
+            tabsRouter.setActiveIndex(newIndex);
+          }
+        }
+
         return Scaffold(
           body: _Body(child: child),
           bottomNavigationBar: AnimatedBuilder(
@@ -33,7 +41,7 @@ class HomePage extends StatelessWidget {
             builder: (final _, final __) {
               return NavigationBar(
                 selectedIndex: tabsRouter.activeIndex,
-                onDestinationSelected: tabsRouter.setActiveIndex,
+                onDestinationSelected: onDestinationSelected,
                 destinations: const [
                   NavigationDestination(icon: Icon(Icons.home), label: 'Ana Sayfa', tooltip: ''),
                   NavigationDestination(icon: Icon(Icons.mic), label: 'Kayıtlar', tooltip: ''),
