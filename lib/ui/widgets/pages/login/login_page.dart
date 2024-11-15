@@ -100,19 +100,18 @@ class _PasswordField extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final LoginBloc bloc;
     var isInitialized = false;
-    final isPasswordVisible = context.select((final LoginBloc newBloc) {
+    final (
+      isPasswordVisible,
+      passwordError,
+    ) = context.select((final LoginBloc newBloc) {
       if (!isInitialized) {
         bloc = newBloc;
         isInitialized = true;
       }
-      return bloc.state.isPasswordVisible;
-    });
-    final passwordError = context.select((final LoginBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return bloc.state.passwordError;
+      return (
+        bloc.state.isPasswordVisible,
+        bloc.state.passwordError,
+      );
     });
 
     return TextField(
@@ -168,14 +167,8 @@ class _LoginIcon extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final LoginBloc bloc;
-    var isInitialized = false;
     final loginStatus = context.select((final LoginBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return bloc.state.loginStatus;
+      return newBloc.state.loginStatus;
     });
 
     return loginStatus is OperationStatusInProgress
