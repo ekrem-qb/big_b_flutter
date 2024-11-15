@@ -408,32 +408,27 @@ class _TextListState extends State<_TextList> {
 
   @override
   Widget build(final BuildContext context) {
-    late final PlayerBloc bloc;
-    var isInitialized = false;
-    final count = context.select((final PlayerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return switch (bloc.state.textState) {
+    final (
+      count,
+      currentIndex
+    ) = context.select((final PlayerBloc newBloc) {
+      return switch (newBloc.state.textState) {
         StatusOfData(
           data: PlayerTextStateData(
             :final textLinesWithHighlights,
+            :final currentTextLine,
           )
         ) =>
-          textLinesWithHighlights.length,
-        _ => 0,
+          (
+            textLinesWithHighlights.length,
+            currentTextLine,
+          ),
+        _ => (
+            0,
+            0,
+          ),
       };
     });
-    final currentIndex = switch (bloc.state.textState) {
-      StatusOfData(
-        data: PlayerTextStateData(
-          :final currentTextLine,
-        )
-      ) =>
-        currentTextLine,
-      _ => 0,
-    };
 
     return BlocListener<PlayerBloc, PlayerState>(
       listenWhen: (final previous, final current) =>
@@ -530,18 +525,12 @@ class _TextLine extends StatelessWidget {
       };
     });
 
-    return switch (bloc.state.textState) {
-      StatusOfData(
-        data: PlayerTextStateData(),
-      ) =>
-        _TextLineContent(
-          index: index,
-          isEmployee: isEmployee,
-          isCurrent: isCurrent,
-          onTap: () => bloc.add(PlayerEventJumpToLineRequested(index)),
-        ),
-      _ => const SizedBox.shrink()
-    };
+    return _TextLineContent(
+      index: index,
+      isEmployee: isEmployee,
+      isCurrent: isCurrent,
+      onTap: () => bloc.add(PlayerEventJumpToLineRequested(index)),
+    );
   }
 }
 
@@ -658,14 +647,8 @@ class _TextLineTextState extends State<_TextLineText> {
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
 
-    late final PlayerBloc bloc;
-    var isInitialized = false;
     final textLineWithHighlights = context.select((final PlayerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return switch (bloc.state.textState) {
+      return switch (newBloc.state.textState) {
         StatusOfData(
           data: PlayerTextStateData(
             :final textLinesWithHighlights,
@@ -781,15 +764,13 @@ class _SliderState extends State<_Slider> {
   Widget build(final BuildContext context) {
     late final PlayerBloc bloc;
     var isInitialized = false;
-    context.select((final PlayerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return bloc.state.audioState.runtimeType;
-    });
 
-    final position = context.select((final PlayerBloc newBloc) {
+    final (
+      canPlay,
+      position,
+      duration,
+      isPlaying,
+    ) = context.select((final PlayerBloc newBloc) {
       if (!isInitialized) {
         bloc = newBloc;
         isInitialized = true;
@@ -798,42 +779,22 @@ class _SliderState extends State<_Slider> {
         StatusOfData<PlayerAudioState>(
           data: PlayerAudioState(
             :final position,
-          )
-        ) =>
-          position.inMicroseconds.toDouble(),
-        _ => 0.0,
-      };
-    });
-
-    final duration = context.select((final PlayerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return switch (bloc.state.audioState) {
-        StatusOfData<PlayerAudioState>(
-          data: PlayerAudioState(
             :final duration,
-          )
-        ) =>
-          duration.inMicroseconds.toDouble(),
-        _ => 0.0,
-      };
-    });
-
-    final isPlaying = context.select((final PlayerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return switch (bloc.state.audioState) {
-        StatusOfData<PlayerAudioState>(
-          data: PlayerAudioState(
             :final isPlaying,
           )
         ) =>
-          isPlaying,
-        _ => false,
+          (
+            true,
+            position.inMicroseconds.toDouble(),
+            duration.inMicroseconds.toDouble(),
+            isPlaying,
+          ),
+        _ => (
+            false,
+            0.0,
+            0.0,
+            false,
+          ),
       };
     });
 
@@ -859,7 +820,7 @@ class _SliderState extends State<_Slider> {
           onChangeStart: (final newValue) {
             _isSeeking = true;
           },
-          onChanged: bloc.state.audioState is StatusOfData<PlayerAudioState>
+          onChanged: canPlay
               ? (final newValue) {
                   setState(() {
                     _currentValue = newValue;
@@ -919,14 +880,8 @@ class _PlayButtonIcon extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final PlayerBloc bloc;
-    var isInitialized = false;
     final isPlaying = context.select((final PlayerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return switch (bloc.state.audioState) {
+      return switch (newBloc.state.audioState) {
         StatusOfData<PlayerAudioState>(
           data: PlayerAudioState(
             :final isPlaying,
