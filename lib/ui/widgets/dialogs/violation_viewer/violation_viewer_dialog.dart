@@ -8,6 +8,7 @@ import '../../../app_router/app_router.dart';
 import '../../../entity/status.dart';
 import '../../../theme.dart';
 import '../../error_panel.dart';
+import '../../extensions/auto_route_extension.dart';
 import '../../extensions/smooth_mouse_scroll/smooth_mouse_scroll.dart';
 import '../../rule_tile.dart';
 import 'bloc/violation_viewer_bloc.dart';
@@ -204,13 +205,14 @@ class _Text extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                context.tabsRouter.navigate(
+                context.tabsRouter.navigateAll([
+                  const RecordingsRoute(),
                   PlayerRoute(
                     recordingId: violation.record.id,
                     recording: violation.record,
                     textLineId: violation.line.id,
                   ),
-                );
+                ]);
               },
             ),
           )

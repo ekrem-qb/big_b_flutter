@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../api/entity/rule/rule.dart';
 import '../app_router/app_router.dart';
 import '../theme.dart';
+import 'extensions/auto_route_extension.dart';
 
 class RuleTile extends StatelessWidget {
   const RuleTile(this.rule, {super.key});
@@ -24,18 +25,15 @@ class RuleTile extends StatelessWidget {
         details,
     };
 
-    Future<void> navigateToRuleEditor([final _]) async {
-      await context.tabsRouter.navigate(const RulesRoute());
-      await context.tabsRouter.navigate(RuleEditorRoute(id: rule.id, rule: rule));
-    }
-
     Future<void> onTap() async {
-      if (context.tabsRouter.activeIndex == 3) {
-        await navigateToRuleEditor();
-      } else {
-        await context.tabsRouter.navigate(const FourthTabRoute());
-        WidgetsBinding.instance.addPostFrameCallback(navigateToRuleEditor);
-      }
+      await context.tabsRouter.navigateAll([
+        const MoreRoute(),
+        const RulesRoute(),
+        RuleEditorRoute(
+          id: rule.id,
+          rule: rule,
+        ),
+      ]);
     }
 
     return ListTile(
