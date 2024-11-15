@@ -134,7 +134,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       emit(state.copyWith(audioState: const StatusOfLoading()));
 
       await _player.open(media.Media(recordingState.data.audioUrl), play: false);
-      emit(state.copyWith(audioState: const StatusOfData(PlayerAudioState())));
+      await _player.stream.buffer.first;
 
       switch (state.textState) {
         case StatusOfData<PlayerTextStateData>(
@@ -148,6 +148,15 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
           add(PlayerEventSeekRequested(currentDuration));
         default:
       }
+      emit(
+        state.copyWith(
+          audioState: StatusOfData(
+            PlayerAudioState(
+              duration: _player.state.duration,
+            ),
+          ),
+        ),
+      );
     } catch (e) {
       emit(state.copyWith(audioState: StatusOfError(e.toString())));
     }
