@@ -19,12 +19,12 @@ import 'bloc/violations_bloc.dart';
 @RoutePage()
 class ViolationsPage extends StatelessWidget {
   const ViolationsPage({
-    @pathParam required this.id,
+    @pathParam this.id,
     this.violations,
     super.key,
   });
 
-  final int id;
+  final int? id;
   final List<Violation>? violations;
 
   @override

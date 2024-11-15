@@ -97,7 +97,7 @@ abstract class ViolationsEventLoadRequested implements ViolationsEvent {
 
 /// @nodoc
 mixin _$ViolationsState {
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   StatusOf<List<Violation>> get violations =>
       throw _privateConstructorUsedError;
 
@@ -114,7 +114,7 @@ abstract class $ViolationsStateCopyWith<$Res> {
           ViolationsState value, $Res Function(ViolationsState) then) =
       _$ViolationsStateCopyWithImpl<$Res, ViolationsState>;
   @useResult
-  $Res call({int id, StatusOf<List<Violation>> violations});
+  $Res call({int? id, StatusOf<List<Violation>> violations});
 
   $StatusOfCopyWith<List<Violation>, $Res> get violations;
 }
@@ -134,14 +134,14 @@ class _$ViolationsStateCopyWithImpl<$Res, $Val extends ViolationsState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? violations = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       violations: null == violations
           ? _value.violations
           : violations // ignore: cast_nullable_to_non_nullable
@@ -168,7 +168,7 @@ abstract class _$$ViolationsStateImplCopyWith<$Res>
       __$$ViolationsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, StatusOf<List<Violation>> violations});
+  $Res call({int? id, StatusOf<List<Violation>> violations});
 
   @override
   $StatusOfCopyWith<List<Violation>, $Res> get violations;
@@ -187,14 +187,14 @@ class __$$ViolationsStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? violations = null,
   }) {
     return _then(_$ViolationsStateImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       violations: null == violations
           ? _value.violations
           : violations // ignore: cast_nullable_to_non_nullable
@@ -211,7 +211,7 @@ class _$ViolationsStateImpl
   const _$ViolationsStateImpl({required this.id, required this.violations});
 
   @override
-  final int id;
+  final int? id;
   @override
   final StatusOf<List<Violation>> violations;
 
@@ -254,12 +254,12 @@ class _$ViolationsStateImpl
 
 abstract class _ViolationsState implements ViolationsState {
   const factory _ViolationsState(
-          {required final int id,
+          {required final int? id,
           required final StatusOf<List<Violation>> violations}) =
       _$ViolationsStateImpl;
 
   @override
-  int get id;
+  int? get id;
   @override
   StatusOf<List<Violation>> get violations;
 

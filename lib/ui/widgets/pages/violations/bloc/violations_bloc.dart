@@ -17,7 +17,7 @@ part 'violations_state.dart';
 
 class ViolationsBloc extends Bloc<ViolationsEvent, ViolationsState> {
   ViolationsBloc({
-    required final int id,
+    final int? id,
     final List<Violation>? violations,
   }) : super(
           ViolationsState(
@@ -54,7 +54,11 @@ class ViolationsBloc extends Bloc<ViolationsEvent, ViolationsState> {
     try {
       emit(state.copyWith(violations: const StatusOfLoading()));
 
-      final violations = await db.from(Violation.tableName).select(Violation.fieldNames).eq('record', state.id).withConverter(Violation.converter) ?? List.empty();
+      var query = db.from(Violation.tableName).select(Violation.fieldNames);
+      if (state.id != null) {
+        query = query.eq('record', state.id!);
+      }
+      final violations = await query.withConverter(Violation.converter) ?? List.empty();
 
       emit(
         state.copyWith(

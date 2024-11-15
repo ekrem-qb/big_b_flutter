@@ -717,7 +717,7 @@ class ViolationViewerRouteArgs {
 /// [ViolationsPage]
 class ViolationsRoute extends PageRouteInfo<ViolationsRouteArgs> {
   ViolationsRoute({
-    required int id,
+    int? id,
     List<Violation>? violations,
     Key? key,
     List<PageRouteInfo>? children,
@@ -739,7 +739,7 @@ class ViolationsRoute extends PageRouteInfo<ViolationsRouteArgs> {
     builder: (data) {
       final pathParams = data.inheritedPathParams;
       final args = data.argsAs<ViolationsRouteArgs>(
-          orElse: () => ViolationsRouteArgs(id: pathParams.getInt('id')));
+          orElse: () => ViolationsRouteArgs(id: pathParams.optInt('id')));
       return ViolationsPage(
         id: args.id,
         violations: args.violations,
@@ -751,12 +751,12 @@ class ViolationsRoute extends PageRouteInfo<ViolationsRouteArgs> {
 
 class ViolationsRouteArgs {
   const ViolationsRouteArgs({
-    required this.id,
+    this.id,
     this.violations,
     this.key,
   });
 
-  final int id;
+  final int? id;
 
   final List<Violation>? violations;
 
