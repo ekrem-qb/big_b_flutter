@@ -312,26 +312,27 @@ class _Password extends StatelessWidget {
   Widget build(final BuildContext context) {
     late final ProfileEditorBloc bloc;
     var isInitialized = false;
-    final isPasswordVisible = context.select((final ProfileEditorBloc newBloc) {
+    final (
+      isPasswordVisible,
+      error,
+    ) = context.select((final ProfileEditorBloc newBloc) {
       if (!isInitialized) {
         bloc = newBloc;
         isInitialized = true;
       }
       return switch (bloc.state) {
         ProfileEditorStateCreate(
-          :final isPasswordVisible
+          :final isPasswordVisible,
+          :final passwordError,
         ) =>
-          isPasswordVisible,
-        _ => false,
-      };
-    });
-    final error = context.select((final ProfileEditorBloc newBloc) {
-      return switch (newBloc.state) {
-        ProfileEditorStateCreate(
-          :final passwordError
-        ) =>
-          passwordError,
-        _ => '',
+          (
+            isPasswordVisible,
+            passwordError,
+          ),
+        _ => (
+            false,
+            '',
+          ),
       };
     });
     final password = switch (bloc.state) {
