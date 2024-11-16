@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../api/entity/recording/recording.dart';
+import '../../../../api/enums/processing.dart';
 import '../../../app_router/app_router.dart';
 import '../../lister/lister_widget.dart';
 import 'recordings_bloc.dart';
@@ -42,12 +43,17 @@ class _Item extends StatelessWidget {
       ),
       trailing: SizedBox.square(
         dimension: 24,
-        child: !recording.hasLines
-            ? const Icon(
-                Icons.font_download_off_outlined,
-                size: 24,
-              )
-            : null,
+        child: switch (recording.processed) {
+          Processing.none => const Icon(
+              Icons.font_download_off_outlined,
+              size: 24,
+            ),
+          Processing.onlyText => const Icon(
+              Icons.report_off_outlined,
+              size: 24,
+            ),
+          Processing.textAndViolations => null,
+        },
       ),
       onTap: () => context.router.push(
         PlayerRoute(

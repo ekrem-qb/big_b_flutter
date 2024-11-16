@@ -1317,25 +1317,74 @@ class _$PlayerTextStateCopyWithImpl<$Res, $Val extends PlayerTextState>
 }
 
 /// @nodoc
-abstract class _$$PlayerTextStateDataImplCopyWith<$Res> {
-  factory _$$PlayerTextStateDataImplCopyWith(_$PlayerTextStateDataImpl value,
-          $Res Function(_$PlayerTextStateDataImpl) then) =
-      __$$PlayerTextStateDataImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call(
-      {int currentTextLine,
-      List<TextLineWithHighlights> textLinesWithHighlights,
-      StatusOf<List<Violation>> violations});
-
-  $StatusOfCopyWith<List<Violation>, $Res> get violations;
+abstract class _$$PlayerTextStateNoneImplCopyWith<$Res> {
+  factory _$$PlayerTextStateNoneImplCopyWith(_$PlayerTextStateNoneImpl value,
+          $Res Function(_$PlayerTextStateNoneImpl) then) =
+      __$$PlayerTextStateNoneImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$PlayerTextStateDataImplCopyWithImpl<$Res>
-    extends _$PlayerTextStateCopyWithImpl<$Res, _$PlayerTextStateDataImpl>
-    implements _$$PlayerTextStateDataImplCopyWith<$Res> {
-  __$$PlayerTextStateDataImplCopyWithImpl(_$PlayerTextStateDataImpl _value,
-      $Res Function(_$PlayerTextStateDataImpl) _then)
+class __$$PlayerTextStateNoneImplCopyWithImpl<$Res>
+    extends _$PlayerTextStateCopyWithImpl<$Res, _$PlayerTextStateNoneImpl>
+    implements _$$PlayerTextStateNoneImplCopyWith<$Res> {
+  __$$PlayerTextStateNoneImplCopyWithImpl(_$PlayerTextStateNoneImpl _value,
+      $Res Function(_$PlayerTextStateNoneImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of PlayerTextState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$PlayerTextStateNoneImpl
+    with DiagnosticableTreeMixin
+    implements PlayerTextStateNone {
+  const _$PlayerTextStateNoneImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PlayerTextState.none()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'PlayerTextState.none'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PlayerTextStateNoneImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+}
+
+abstract class PlayerTextStateNone implements PlayerTextState {
+  const factory PlayerTextStateNone() = _$PlayerTextStateNoneImpl;
+}
+
+/// @nodoc
+abstract class _$$PlayerTextStateOnlyTextImplCopyWith<$Res> {
+  factory _$$PlayerTextStateOnlyTextImplCopyWith(
+          _$PlayerTextStateOnlyTextImpl value,
+          $Res Function(_$PlayerTextStateOnlyTextImpl) then) =
+      __$$PlayerTextStateOnlyTextImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int currentTextLine, List<TextLine> textLines});
+}
+
+/// @nodoc
+class __$$PlayerTextStateOnlyTextImplCopyWithImpl<$Res>
+    extends _$PlayerTextStateCopyWithImpl<$Res, _$PlayerTextStateOnlyTextImpl>
+    implements _$$PlayerTextStateOnlyTextImplCopyWith<$Res> {
+  __$$PlayerTextStateOnlyTextImplCopyWithImpl(
+      _$PlayerTextStateOnlyTextImpl _value,
+      $Res Function(_$PlayerTextStateOnlyTextImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of PlayerTextState
@@ -1344,18 +1393,145 @@ class __$$PlayerTextStateDataImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? currentTextLine = null,
-    Object? textLinesWithHighlights = null,
-    Object? violations = null,
+    Object? textLines = null,
   }) {
-    return _then(_$PlayerTextStateDataImpl(
+    return _then(_$PlayerTextStateOnlyTextImpl(
       currentTextLine: null == currentTextLine
           ? _value.currentTextLine
           : currentTextLine // ignore: cast_nullable_to_non_nullable
               as int,
-      textLinesWithHighlights: null == textLinesWithHighlights
-          ? _value._textLinesWithHighlights
-          : textLinesWithHighlights // ignore: cast_nullable_to_non_nullable
-              as List<TextLineWithHighlights>,
+      textLines: null == textLines
+          ? _value._textLines
+          : textLines // ignore: cast_nullable_to_non_nullable
+              as List<TextLine>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$PlayerTextStateOnlyTextImpl
+    with DiagnosticableTreeMixin
+    implements PlayerTextStateOnlyText {
+  const _$PlayerTextStateOnlyTextImpl(
+      {this.currentTextLine = 0, final List<TextLine> textLines = const []})
+      : _textLines = textLines;
+
+  @override
+  @JsonKey()
+  final int currentTextLine;
+  final List<TextLine> _textLines;
+  @override
+  @JsonKey()
+  List<TextLine> get textLines {
+    if (_textLines is EqualUnmodifiableListView) return _textLines;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_textLines);
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PlayerTextState.onlyText(currentTextLine: $currentTextLine, textLines: $textLines)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PlayerTextState.onlyText'))
+      ..add(DiagnosticsProperty('currentTextLine', currentTextLine))
+      ..add(DiagnosticsProperty('textLines', textLines));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PlayerTextStateOnlyTextImpl &&
+            (identical(other.currentTextLine, currentTextLine) ||
+                other.currentTextLine == currentTextLine) &&
+            const DeepCollectionEquality()
+                .equals(other._textLines, _textLines));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, currentTextLine,
+      const DeepCollectionEquality().hash(_textLines));
+
+  /// Create a copy of PlayerTextState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PlayerTextStateOnlyTextImplCopyWith<_$PlayerTextStateOnlyTextImpl>
+      get copyWith => __$$PlayerTextStateOnlyTextImplCopyWithImpl<
+          _$PlayerTextStateOnlyTextImpl>(this, _$identity);
+}
+
+abstract class PlayerTextStateOnlyText implements PlayerTextState {
+  const factory PlayerTextStateOnlyText(
+      {final int currentTextLine,
+      final List<TextLine> textLines}) = _$PlayerTextStateOnlyTextImpl;
+
+  int get currentTextLine;
+  List<TextLine> get textLines;
+
+  /// Create a copy of PlayerTextState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PlayerTextStateOnlyTextImplCopyWith<_$PlayerTextStateOnlyTextImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$PlayerTextStateTextAndViolationsImplCopyWith<$Res> {
+  factory _$$PlayerTextStateTextAndViolationsImplCopyWith(
+          _$PlayerTextStateTextAndViolationsImpl value,
+          $Res Function(_$PlayerTextStateTextAndViolationsImpl) then) =
+      __$$PlayerTextStateTextAndViolationsImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call(
+      {int currentTextLine,
+      List<TextLine> textLines,
+      List<List<HighlightViolation>> highlights,
+      StatusOf<List<Violation>> violations});
+
+  $StatusOfCopyWith<List<Violation>, $Res> get violations;
+}
+
+/// @nodoc
+class __$$PlayerTextStateTextAndViolationsImplCopyWithImpl<$Res>
+    extends _$PlayerTextStateCopyWithImpl<$Res,
+        _$PlayerTextStateTextAndViolationsImpl>
+    implements _$$PlayerTextStateTextAndViolationsImplCopyWith<$Res> {
+  __$$PlayerTextStateTextAndViolationsImplCopyWithImpl(
+      _$PlayerTextStateTextAndViolationsImpl _value,
+      $Res Function(_$PlayerTextStateTextAndViolationsImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of PlayerTextState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? currentTextLine = null,
+    Object? textLines = null,
+    Object? highlights = null,
+    Object? violations = null,
+  }) {
+    return _then(_$PlayerTextStateTextAndViolationsImpl(
+      currentTextLine: null == currentTextLine
+          ? _value.currentTextLine
+          : currentTextLine // ignore: cast_nullable_to_non_nullable
+              as int,
+      textLines: null == textLines
+          ? _value._textLines
+          : textLines // ignore: cast_nullable_to_non_nullable
+              as List<TextLine>,
+      highlights: null == highlights
+          ? _value._highlights
+          : highlights // ignore: cast_nullable_to_non_nullable
+              as List<List<HighlightViolation>>,
       violations: null == violations
           ? _value.violations
           : violations // ignore: cast_nullable_to_non_nullable
@@ -1376,26 +1552,36 @@ class __$$PlayerTextStateDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PlayerTextStateDataImpl
+class _$PlayerTextStateTextAndViolationsImpl
     with DiagnosticableTreeMixin
-    implements PlayerTextStateData {
-  const _$PlayerTextStateDataImpl(
+    implements PlayerTextStateTextAndViolations {
+  const _$PlayerTextStateTextAndViolationsImpl(
       {this.currentTextLine = 0,
-      final List<TextLineWithHighlights> textLinesWithHighlights = const [],
+      final List<TextLine> textLines = const [],
+      final List<List<HighlightViolation>> highlights = const [],
       this.violations = const StatusOfLoading()})
-      : _textLinesWithHighlights = textLinesWithHighlights;
+      : _textLines = textLines,
+        _highlights = highlights;
 
   @override
   @JsonKey()
   final int currentTextLine;
-  final List<TextLineWithHighlights> _textLinesWithHighlights;
+  final List<TextLine> _textLines;
   @override
   @JsonKey()
-  List<TextLineWithHighlights> get textLinesWithHighlights {
-    if (_textLinesWithHighlights is EqualUnmodifiableListView)
-      return _textLinesWithHighlights;
+  List<TextLine> get textLines {
+    if (_textLines is EqualUnmodifiableListView) return _textLines;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_textLinesWithHighlights);
+    return EqualUnmodifiableListView(_textLines);
+  }
+
+  final List<List<HighlightViolation>> _highlights;
+  @override
+  @JsonKey()
+  List<List<HighlightViolation>> get highlights {
+    if (_highlights is EqualUnmodifiableListView) return _highlights;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_highlights);
   }
 
   @override
@@ -1404,17 +1590,17 @@ class _$PlayerTextStateDataImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PlayerTextState.data(currentTextLine: $currentTextLine, textLinesWithHighlights: $textLinesWithHighlights, violations: $violations)';
+    return 'PlayerTextState.textAndViolations(currentTextLine: $currentTextLine, textLines: $textLines, highlights: $highlights, violations: $violations)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'PlayerTextState.data'))
+      ..add(DiagnosticsProperty('type', 'PlayerTextState.textAndViolations'))
       ..add(DiagnosticsProperty('currentTextLine', currentTextLine))
-      ..add(DiagnosticsProperty(
-          'textLinesWithHighlights', textLinesWithHighlights))
+      ..add(DiagnosticsProperty('textLines', textLines))
+      ..add(DiagnosticsProperty('highlights', highlights))
       ..add(DiagnosticsProperty('violations', violations));
   }
 
@@ -1422,11 +1608,13 @@ class _$PlayerTextStateDataImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PlayerTextStateDataImpl &&
+            other is _$PlayerTextStateTextAndViolationsImpl &&
             (identical(other.currentTextLine, currentTextLine) ||
                 other.currentTextLine == currentTextLine) &&
-            const DeepCollectionEquality().equals(
-                other._textLinesWithHighlights, _textLinesWithHighlights) &&
+            const DeepCollectionEquality()
+                .equals(other._textLines, _textLines) &&
+            const DeepCollectionEquality()
+                .equals(other._highlights, _highlights) &&
             (identical(other.violations, violations) ||
                 other.violations == violations));
   }
@@ -1435,7 +1623,8 @@ class _$PlayerTextStateDataImpl
   int get hashCode => Object.hash(
       runtimeType,
       currentTextLine,
-      const DeepCollectionEquality().hash(_textLinesWithHighlights),
+      const DeepCollectionEquality().hash(_textLines),
+      const DeepCollectionEquality().hash(_highlights),
       violations);
 
   /// Create a copy of PlayerTextState
@@ -1443,78 +1632,29 @@ class _$PlayerTextStateDataImpl
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$PlayerTextStateDataImplCopyWith<_$PlayerTextStateDataImpl> get copyWith =>
-      __$$PlayerTextStateDataImplCopyWithImpl<_$PlayerTextStateDataImpl>(
-          this, _$identity);
+  _$$PlayerTextStateTextAndViolationsImplCopyWith<
+          _$PlayerTextStateTextAndViolationsImpl>
+      get copyWith => __$$PlayerTextStateTextAndViolationsImplCopyWithImpl<
+          _$PlayerTextStateTextAndViolationsImpl>(this, _$identity);
 }
 
-abstract class PlayerTextStateData implements PlayerTextState {
-  const factory PlayerTextStateData(
-      {final int currentTextLine,
-      final List<TextLineWithHighlights> textLinesWithHighlights,
-      final StatusOf<List<Violation>> violations}) = _$PlayerTextStateDataImpl;
+abstract class PlayerTextStateTextAndViolations implements PlayerTextState {
+  const factory PlayerTextStateTextAndViolations(
+          {final int currentTextLine,
+          final List<TextLine> textLines,
+          final List<List<HighlightViolation>> highlights,
+          final StatusOf<List<Violation>> violations}) =
+      _$PlayerTextStateTextAndViolationsImpl;
 
   int get currentTextLine;
-  List<TextLineWithHighlights> get textLinesWithHighlights;
+  List<TextLine> get textLines;
+  List<List<HighlightViolation>> get highlights;
   StatusOf<List<Violation>> get violations;
 
   /// Create a copy of PlayerTextState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PlayerTextStateDataImplCopyWith<_$PlayerTextStateDataImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$PlayerTextStateProcessingImplCopyWith<$Res> {
-  factory _$$PlayerTextStateProcessingImplCopyWith(
-          _$PlayerTextStateProcessingImpl value,
-          $Res Function(_$PlayerTextStateProcessingImpl) then) =
-      __$$PlayerTextStateProcessingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$PlayerTextStateProcessingImplCopyWithImpl<$Res>
-    extends _$PlayerTextStateCopyWithImpl<$Res, _$PlayerTextStateProcessingImpl>
-    implements _$$PlayerTextStateProcessingImplCopyWith<$Res> {
-  __$$PlayerTextStateProcessingImplCopyWithImpl(
-      _$PlayerTextStateProcessingImpl _value,
-      $Res Function(_$PlayerTextStateProcessingImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of PlayerTextState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$PlayerTextStateProcessingImpl
-    with DiagnosticableTreeMixin
-    implements PlayerTextStateProcessing {
-  const _$PlayerTextStateProcessingImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PlayerTextState.processing()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'PlayerTextState.processing'));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PlayerTextStateProcessingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-}
-
-abstract class PlayerTextStateProcessing implements PlayerTextState {
-  const factory PlayerTextStateProcessing() = _$PlayerTextStateProcessingImpl;
+  _$$PlayerTextStateTextAndViolationsImplCopyWith<
+          _$PlayerTextStateTextAndViolationsImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

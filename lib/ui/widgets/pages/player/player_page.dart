@@ -101,26 +101,36 @@ class _ViolationsButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
+    late final PlayerBloc bloc;
+    var isInitialized = false;
+    final isViolationsProcessed = context.select((final PlayerBloc newBloc) {
+      if (!isInitialized) {
+        bloc = newBloc;
+        isInitialized = true;
+      }
+      return bloc.state.textState is StatusOfData<PlayerTextStateTextAndViolations>;
+    });
+
     return ElevatedButton.icon(
-      icon: const Icon(Icons.error_outline),
-      label: const Text('İhlaller'),
-      onPressed: () {
-        final id = context.read<PlayerBloc>().state.recordingId;
+      icon: isViolationsProcessed ? const Icon(Icons.report_outlined) : const Icon(Icons.cloud_sync),
+      label: isViolationsProcessed ? const Text('İhlaller') : const Text('İhlaller aranıyor...'),
+      onPressed: isViolationsProcessed
+          ? () {
+              final violations = switch (bloc.state.textState) {
+                StatusOfData(
+                  data: PlayerTextStateTextAndViolations(
+                    violations: StatusOfData(
+                      :final data,
+                    ),
+                  ),
+                ) =>
+                  data,
+                _ => null,
+              };
 
-        final violations = switch (context.read<PlayerBloc>().state.textState) {
-          StatusOfData(
-            data: PlayerTextStateData(
-              violations: StatusOfData(
-                :final data,
-              ),
-            ),
-          ) =>
-            data,
-          _ => null,
-        };
-
-        context.pushRoute(ViolationsRoute(id: id, violations: violations));
-      },
+              context.pushRoute(ViolationsRoute(id: bloc.state.recordingId, violations: violations));
+            }
+          : null,
     );
   }
 }
@@ -155,18 +165,24 @@ class _Player extends StatelessWidget {
           bindings: {
             const SingleActivator(LogicalKeyboardKey.arrowUp): () => switch (bloc.state.textState) {
                   StatusOfData(
-                    data: PlayerTextStateData(
-                      :final currentTextLine
-                    )
+                    data: PlayerTextStateOnlyText(
+                          :final currentTextLine,
+                        ) ||
+                        PlayerTextStateTextAndViolations(
+                          :final currentTextLine,
+                        ),
                   ) =>
                     bloc.add(PlayerEventJumpToLineRequested(currentTextLine - 1)),
                   _ => null,
                 },
             const SingleActivator(LogicalKeyboardKey.arrowDown): () => switch (bloc.state.textState) {
                   StatusOfData(
-                    data: PlayerTextStateData(
-                      :final currentTextLine
-                    )
+                    data: PlayerTextStateOnlyText(
+                          :final currentTextLine,
+                        ) ||
+                        PlayerTextStateTextAndViolations(
+                          :final currentTextLine,
+                        ),
                   ) =>
                     bloc.add(PlayerEventJumpToLineRequested(currentTextLine + 1)),
                   _ => null,
@@ -310,7 +326,7 @@ class _LoadedText extends StatelessWidget {
         :final data,
       ) =>
         switch (data) {
-          PlayerTextStateData() => ShaderMask(
+          PlayerTextStateOnlyText() || PlayerTextStateTextAndViolations() => ShaderMask(
               shaderCallback: _gradient.createShader,
               blendMode: BlendMode.dstIn,
               child: LayoutBuilder(
@@ -327,7 +343,7 @@ class _LoadedText extends StatelessWidget {
                 },
               ),
             ),
-          PlayerTextStateProcessing() => const Center(
+          PlayerTextStateNone() => const Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -387,11 +403,14 @@ class _TextListState extends State<_TextList> {
 
     final index = switch (bloc.state.textState) {
       StatusOfData(
-        data: PlayerTextStateData(
-          :final textLinesWithHighlights,
-        ),
+        data: PlayerTextStateOnlyText(
+              :final textLines,
+            ) ||
+            PlayerTextStateTextAndViolations(
+              :final textLines,
+            ),
       ) =>
-        textLinesWithHighlights.indexWhere((final textLineWithHighlights) => textLineWithHighlights.$1.id == args.textLineId),
+        textLines.indexWhere((final textLineWithHighlights) => textLineWithHighlights.id == args.textLineId),
       _ => -1,
     };
 
@@ -414,13 +433,17 @@ class _TextListState extends State<_TextList> {
     ) = context.select((final PlayerBloc newBloc) {
       return switch (newBloc.state.textState) {
         StatusOfData(
-          data: PlayerTextStateData(
-            :final textLinesWithHighlights,
-            :final currentTextLine,
-          )
+          data: PlayerTextStateOnlyText(
+                :final currentTextLine,
+                :final textLines,
+              ) ||
+              PlayerTextStateTextAndViolations(
+                :final currentTextLine,
+                :final textLines,
+              ),
         ) =>
           (
-            textLinesWithHighlights.length,
+            textLines.length,
             currentTextLine,
           ),
         _ => (
@@ -433,30 +456,40 @@ class _TextListState extends State<_TextList> {
     return BlocListener<PlayerBloc, PlayerState>(
       listenWhen: (final previous, final current) =>
           switch (previous.textState) {
-            StatusOfData<PlayerTextStateData>(
-              data: PlayerTextStateData(
-                :final currentTextLine,
-              )
+            StatusOfData(
+              data: PlayerTextStateOnlyText(
+                    :final currentTextLine,
+                  ) ||
+                  PlayerTextStateTextAndViolations(
+                    :final currentTextLine,
+                  ),
             ) =>
               currentTextLine,
             _ => null,
           } !=
           switch (current.textState) {
-            StatusOfData<PlayerTextStateData>(
-              data: PlayerTextStateData(
-                :final currentTextLine,
-              ),
+            StatusOfData(
+              data: PlayerTextStateOnlyText(
+                    :final currentTextLine,
+                  ) ||
+                  PlayerTextStateTextAndViolations(
+                    :final currentTextLine,
+                  ),
             ) =>
               currentTextLine,
             _ => null,
           },
       listener: (final context, final state) async {
         if (state.textState
-            case StatusOfData<PlayerTextStateData>(
-              data: PlayerTextStateData(
-                :final currentTextLine,
-                :final textLinesWithHighlights,
-              ),
+            case StatusOfData(
+              data: PlayerTextStateOnlyText(
+                    :final currentTextLine,
+                    :final textLines,
+                  ) ||
+                  PlayerTextStateTextAndViolations(
+                    :final currentTextLine,
+                    :final textLines,
+                  ),
             )) {
           if (_scrollController.isAttached) {
             await _scrollController.scrollTo(
@@ -470,7 +503,7 @@ class _TextListState extends State<_TextList> {
           await context.tabsRouter.navigate(
             PlayerRoute(
               recordingId: state.recordingId,
-              textLineId: textLinesWithHighlights[currentTextLine].$1.id,
+              textLineId: textLines[currentTextLine].id,
             ),
           );
         }
@@ -509,14 +542,18 @@ class _TextLine extends StatelessWidget {
 
       return switch (bloc.state.textState) {
         StatusOfData(
-          data: PlayerTextStateData(
-            :final currentTextLine,
-            :final textLinesWithHighlights,
-          )
+          data: PlayerTextStateOnlyText(
+                :final currentTextLine,
+                :final textLines,
+              ) ||
+              PlayerTextStateTextAndViolations(
+                :final currentTextLine,
+                :final textLines,
+              ),
         ) =>
           (
             currentTextLine == index,
-            textLinesWithHighlights.elementAtOrNull(index)?.$1.isEmployee ?? false,
+            textLines.elementAtOrNull(index)?.isEmployee ?? false,
           ),
         _ => (
             false,
@@ -609,7 +646,7 @@ class _TextLineTextState extends State<_TextLineText> {
       ..onTap = () {
         final violations = switch (context.read<PlayerBloc>().state.textState) {
           StatusOfData(
-            data: PlayerTextStateData(
+            data: PlayerTextStateTextAndViolations(
               violations: StatusOfData(
                 :final data,
               ),
@@ -647,29 +684,44 @@ class _TextLineTextState extends State<_TextLineText> {
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
 
-    final textLineWithHighlights = context.select((final PlayerBloc newBloc) {
+    final (
+      textLine,
+      highlights
+    ) = context.select((final PlayerBloc newBloc) {
       return switch (newBloc.state.textState) {
         StatusOfData(
-          data: PlayerTextStateData(
-            :final textLinesWithHighlights,
+          data: PlayerTextStateOnlyText(
+            :final textLines,
           )
         ) =>
-          textLinesWithHighlights.elementAtOrNull(widget.index),
+          (
+            textLines.elementAtOrNull(widget.index),
+            null,
+          ),
+        StatusOfData(
+          data: PlayerTextStateTextAndViolations(
+            :final textLines,
+            :final highlights,
+          )
+        ) =>
+          (
+            textLines.elementAtOrNull(widget.index),
+            highlights.elementAtOrNull(widget.index),
+          ),
         _ => (
             null,
-            List<HighlightViolation>.empty(),
+            null,
           ),
       };
     });
 
     Iterable<InlineSpan> generateTextSpans() sync* {
-      if (textLineWithHighlights == null) return;
-
-      final (
-        textLine,
-        highlights
-      ) = textLineWithHighlights;
       if (textLine == null) return;
+
+      if (highlights == null) {
+        yield TextSpan(text: textLine.text);
+        return;
+      }
 
       var charIndex = 0;
       for (var j = 0; j < highlights.length; j += 2) {

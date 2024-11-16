@@ -11,6 +11,7 @@ import '../../../../../api/database.dart';
 import '../../../../../api/entity/recording/recording.dart';
 import '../../../../../api/entity/text_line/text_line.dart';
 import '../../../../../api/entity/violation/violation.dart';
+import '../../../../../api/enums/processing.dart';
 import '../../../../entity/status.dart';
 
 part 'player_bloc.freezed.dart';
@@ -91,17 +92,23 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
     add(_PlayerEventPositionChanged(position: newPosition));
 
-    final textState = state.textState;
-
-    if (textState is! StatusOfData<PlayerTextStateData>) return;
-
-    for (var i = textState.data.textLinesWithHighlights.length - 1; i >= 0; i--) {
-      if (newPosition.inMilliseconds >= textState.data.textLinesWithHighlights[i].$1.time.inMilliseconds) {
-        add(PlayerEventJumpToLineRequested(i, seekPlayer: false));
-        return;
+    if (state.textState
+        case StatusOfData(
+          data: PlayerTextStateOnlyText(
+                :final textLines,
+              ) ||
+              PlayerTextStateTextAndViolations(
+                :final textLines,
+              ),
+        )) {
+      for (var i = textLines.length - 1; i >= 0; i--) {
+        if (newPosition.inMilliseconds >= textLines[i].time.inMilliseconds) {
+          add(PlayerEventJumpToLineRequested(i, seekPlayer: false));
+          return;
+        }
       }
+      add(const PlayerEventJumpToLineRequested(0, seekPlayer: false));
     }
-    add(const PlayerEventJumpToLineRequested(0, seekPlayer: false));
   }
 
   void _onPlayerPlayingChanged(final bool? newState) {
@@ -137,14 +144,18 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       await _player.stream.buffer.first;
 
       switch (state.textState) {
-        case StatusOfData<PlayerTextStateData>(
-              data: PlayerTextStateData(
-                :final currentTextLine,
-                :final textLinesWithHighlights,
-              ),
+        case StatusOfData(
+              data: PlayerTextStateOnlyText(
+                    :final currentTextLine,
+                    :final textLines,
+                  ) ||
+                  PlayerTextStateTextAndViolations(
+                    :final currentTextLine,
+                    :final textLines,
+                  ),
             )
             when state.currentTextLineId != null:
-          final currentDuration = textLinesWithHighlights[currentTextLine].$1.time;
+          final currentDuration = textLines[currentTextLine].time;
           add(PlayerEventSeekRequested(currentDuration));
         default:
       }
@@ -170,54 +181,86 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     try {
       emit(state.copyWith(textState: const StatusOfLoading()));
 
-      if (!recordingState.data.hasLines) {
-        emit(state.copyWith(textState: const StatusOfData(PlayerTextStateProcessing())));
-        return;
-      }
+      switch (recordingState.data.processed) {
+        case Processing.none:
+          emit(state.copyWith(textState: const StatusOfData<PlayerTextStateNone>(PlayerTextStateNone())));
+          return;
+        case Processing.onlyText:
+          final textLines = await _loadTextLines();
 
-      final textLines = await db.from(TextLine.tableName).select(TextLine.fieldNames).eq('record', state.recordingId).order($TextLineImplJsonKeys.time, ascending: true).withConverter(TextLine.converter);
+          if (textLines == null || textLines.isEmpty) {
+            emit(state.copyWith(textState: const StatusOfData<PlayerTextStateNone>(PlayerTextStateNone())));
+            return;
+          }
 
-      if (textLines == null || textLines.isEmpty) {
-        emit(state.copyWith(textState: const StatusOfData(PlayerTextStateProcessing())));
-        return;
-      }
+          final selectedTextLineIndex = _findCurrentTextLineIndex(textLines);
 
-      StatusOf<List<Violation>> violationsStatus;
-
-      try {
-        final violations = await db.from(Violation.tableName).select(Violation.fieldNames).eq('record', state.recordingId).withConverter(Violation.converter);
-
-        violationsStatus = StatusOfData(violations ?? List.empty());
-      } catch (e) {
-        violationsStatus = StatusOfError(e.toString());
-      }
-
-      final textLinesWithHighlights = _combineTextLinesWithHighlights(textLines, violationsStatus);
-
-      final selectedTextLineId = state.currentTextLineId;
-      final selectedTextLineIndex = textLines.indexWhere((final textLine) => textLine.id == selectedTextLineId);
-
-      emit(
-        state.copyWith(
-          textState: StatusOfData<PlayerTextStateData>(
-            PlayerTextStateData(
-              currentTextLine: selectedTextLineIndex != -1 ? selectedTextLineIndex : 0,
-              textLinesWithHighlights: textLinesWithHighlights,
-              violations: violationsStatus,
+          emit(
+            state.copyWith(
+              textState: StatusOfData<PlayerTextStateOnlyText>(
+                PlayerTextStateOnlyText(
+                  currentTextLine: selectedTextLineIndex != -1 ? selectedTextLineIndex : 0,
+                  textLines: textLines,
+                ),
+              ),
             ),
-          ),
-        ),
-      );
+          );
+        case Processing.textAndViolations:
+          final textLines = await _loadTextLines();
 
-      if (selectedTextLineIndex != -1) {
-        add(PlayerEventSeekRequested(textLines[selectedTextLineIndex].time));
+          if (textLines == null || textLines.isEmpty) {
+            emit(state.copyWith(textState: const StatusOfData<PlayerTextStateNone>(PlayerTextStateNone())));
+            return;
+          }
+
+          final selectedTextLineIndex = _findCurrentTextLineIndex(textLines);
+
+          StatusOf<List<Violation>> violationsStatus;
+
+          try {
+            final violations = await db.from(Violation.tableName).select(Violation.fieldNames).eq('record', state.recordingId).withConverter(Violation.converter);
+
+            violationsStatus = StatusOfData(violations ?? List.empty());
+          } catch (e) {
+            violationsStatus = StatusOfError(e.toString());
+          }
+
+          final highlights = _arrangeHighlights(textLines, violationsStatus);
+
+          emit(
+            state.copyWith(
+              textState: StatusOfData<PlayerTextStateTextAndViolations>(
+                PlayerTextStateTextAndViolations(
+                  currentTextLine: selectedTextLineIndex != -1 ? selectedTextLineIndex : 0,
+                  textLines: textLines,
+                  highlights: highlights,
+                  violations: violationsStatus,
+                ),
+              ),
+            ),
+          );
       }
     } catch (e) {
       emit(state.copyWith(textState: StatusOfError(e.toString())));
     }
   }
 
-  List<TextLineWithHighlights> _combineTextLinesWithHighlights(final List<TextLine> textLines, final StatusOf<List<Violation>> violationsStatus) {
+  Future<List<TextLine>?> _loadTextLines() async {
+    final textLines = await db.from(TextLine.tableName).select(TextLine.fieldNames).eq('record', state.recordingId).order($TextLineImplJsonKeys.time, ascending: true).withConverter(TextLine.converter);
+    return textLines;
+  }
+
+  int _findCurrentTextLineIndex(final List<TextLine> textLines) {
+    final selectedTextLineId = state.currentTextLineId;
+    final selectedTextLineIndex = textLines.indexWhere((final textLine) => textLine.id == selectedTextLineId);
+
+    if (selectedTextLineIndex != -1) {
+      add(PlayerEventSeekRequested(textLines[selectedTextLineIndex].time));
+    }
+    return selectedTextLineIndex;
+  }
+
+  List<List<HighlightViolation>> _arrangeHighlights(final List<TextLine> textLines, final StatusOf<List<Violation>> violationsStatus) {
     switch (violationsStatus) {
       case StatusOfData(
           :final data,
@@ -233,23 +276,13 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
           (final i) {
             final highlights = allHighlights.where((final highlight) => highlight.line.id == textLines[i].id).toList();
 
-            return (
-              textLines[i],
-              highlights,
-            );
+            return highlights;
           },
           growable: false,
         );
       noHighlights:
       default:
-        return textLines
-            .map(
-              (final e) => (
-                e,
-                List<HighlightViolation>.empty(),
-              ),
-            )
-            .toList();
+        return List<List<HighlightViolation>>.empty();
     }
   }
 
@@ -280,25 +313,45 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
   Future<void> _onJumpedToLine(final PlayerEventJumpToLineRequested event, final Emitter<PlayerState> emit) async {
     final textState = state.textState;
-    if (textState is! StatusOfData<PlayerTextStateData>) return;
+    if (textState
+        case StatusOfData(
+          data: PlayerTextStateOnlyText(
+                :final currentTextLine,
+                :final textLines,
+              ) ||
+              PlayerTextStateTextAndViolations(
+                :final currentTextLine,
+                :final textLines,
+              ),
+        )) {
+      if (currentTextLine == event.index) return;
+      if (event.index < 0) return;
+      if (event.index >= textLines.length) return;
 
-    if (textState.data.currentTextLine == event.index) return;
-    if (event.index < 0) return;
-    if (event.index >= textState.data.textLinesWithHighlights.length) return;
-
-    emit(
-      state.copyWith(
-        currentTextLineId: textState.data.textLinesWithHighlights[event.index].$1.id,
-        textState: StatusOfData<PlayerTextStateData>(
-          textState.data.copyWith(
-            currentTextLine: event.index,
-          ),
+      emit(
+        state.copyWith(
+          currentTextLineId: textLines[event.index].id,
+          textState: switch (textState.data) {
+            final PlayerTextStateNone data => StatusOfData<PlayerTextStateNone>(
+                data,
+              ),
+            final PlayerTextStateOnlyText data => StatusOfData<PlayerTextStateOnlyText>(
+                data.copyWith(
+                  currentTextLine: event.index,
+                ),
+              ),
+            final PlayerTextStateTextAndViolations data => StatusOfData<PlayerTextStateTextAndViolations>(
+                data.copyWith(
+                  currentTextLine: event.index,
+                ),
+              ),
+          },
         ),
-      ),
-    );
+      );
 
-    if (event.seekPlayer) {
-      add(PlayerEventSeekRequested(textState.data.textLinesWithHighlights[event.index].$1.time));
+      if (event.seekPlayer) {
+        add(PlayerEventSeekRequested(textLines[event.index].time));
+      }
     }
   }
 

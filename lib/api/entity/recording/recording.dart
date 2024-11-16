@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../enums/processing.dart';
 import '../entity.dart';
 import '../profile/profile.dart';
 
@@ -11,7 +12,7 @@ class Recording with _$Recording implements Entity {
   const factory Recording({
     required final int id,
     @JsonKey(name: 'url') required final String audioUrl,
-    required final bool hasLines,
+    required final Processing processed,
     required final DateTime createdAt,
     required final Profile employee,
   }) = _Recording;
