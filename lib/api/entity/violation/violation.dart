@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../entity.dart';
+import '../join_table.dart';
 import '../recording/recording.dart';
 import '../rule/rule.dart';
 import '../text_line/text_line.dart';
@@ -30,7 +31,24 @@ sealed class Violation with _$Violation implements Entity {
   static Violation? maybeFromJson(final Map<String, dynamic>? json) => json != null ? _$ViolationFromJson(json) : null;
 
   static const tableName = 'violations';
-  static final fieldNames = '${$NormalViolationImplJsonKeys.record}:${Recording.tableName}(${Recording.fieldNames}),${$NormalViolationImplJsonKeys.rule}:${Rule.tableName}(${Rule.fieldNames}),${$HighlightViolationImplJsonKeys.line}:${TextLine.tableName}(${TextLine.fieldNames}),${{
+  static final joinTables = [
+    JoinTable(
+      joinFieldName: $NormalViolationImplJsonKeys.record,
+      tableName: Recording.tableName,
+      fieldNames: Recording.fieldNames,
+    ),
+    JoinTable(
+      joinFieldName: $NormalViolationImplJsonKeys.rule,
+      tableName: Rule.tableName,
+      fieldNames: Rule.fieldNames,
+    ),
+    JoinTable(
+      joinFieldName: $HighlightViolationImplJsonKeys.line,
+      tableName: TextLine.tableName,
+      fieldNames: TextLine.fieldNames,
+    ),
+  ];
+  static final fieldNames = '${joinTables.join(',')},${{
     ..._$$NormalViolationImplFieldMap.values,
     ..._$$HighlightViolationImplFieldMap.values,
   }.join(',')}';

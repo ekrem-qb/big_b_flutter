@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../entity.dart';
+import '../join_table.dart';
 import '../profile/profile.dart';
 
 part 'task.freezed.dart';
@@ -27,7 +28,14 @@ class Task with _$Task implements Entity {
 
   static const tableName = 'tasks';
   static const executivesTableName = '${tableName}_${$TaskImplJsonKeys.executives}';
-  static final fieldNames = '${_$$TaskImplFieldMap.values.join(',')}:${Profile.tableName}!$executivesTableName(${Profile.fieldNames})';
+  static final joinTables = [
+    JoinTable(
+      joinFieldName: $TaskImplJsonKeys.executives,
+      tableName: '${Profile.tableName}!$executivesTableName',
+      fieldNames: Profile.fieldNames,
+    ),
+  ];
+  static final fieldNames = '${joinTables.join(',')},${_$$TaskImplFieldMap.values.toSet().difference(joinTables.map((final e) => e.joinFieldName).toSet()).join(',')}';
 
   static List<Task>? converter(final List<Map<String, dynamic>> data) => data.map(Task.fromJson).toList();
 }
