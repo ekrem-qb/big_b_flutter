@@ -114,7 +114,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
         },
       );
       final query = db.from(tableName).select(fieldNames);
-      final items = await (filters != null ? filters!.$1(query) : query).limit(endIndex).order(orderBy, ascending: ascending).withConverter(converter) ?? List.empty();
+      final items = await (filters != null ? filters!.$1(query) : query).limit(endIndex).order(orderBy, ascending: ascending).withConverter(converter) ?? const [];
 
       emit(
         StatusOfData<ListerState<T>>(
@@ -138,7 +138,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
 
       final endIndex = min((currentState.data.items.length - 1) + itemsPerLoad, currentState.data.totalCount - 1);
       final query = db.from(tableName).select(fieldNames);
-      final items = await (filters != null ? filters!.$1(query) : query).range(currentState.data.items.length, endIndex).order(orderBy, ascending: ascending).withConverter(converter) ?? List.empty();
+      final items = await (filters != null ? filters!.$1(query) : query).range(currentState.data.items.length, endIndex).order(orderBy, ascending: ascending).withConverter(converter) ?? const [];
 
       emit(
         currentState.copyWith(

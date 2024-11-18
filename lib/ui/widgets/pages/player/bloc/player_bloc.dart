@@ -220,7 +220,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
           try {
             final violations = await db.from(Violation.tableName).select(Violation.fieldNames).eq($NormalViolationImplJsonKeys.record, state.recordingId).withConverter(Violation.converter);
 
-            violationsStatus = StatusOfData(violations ?? List.empty());
+            violationsStatus = StatusOfData(violations ?? const []);
           } catch (e) {
             violationsStatus = StatusOfError(e.toString());
           }

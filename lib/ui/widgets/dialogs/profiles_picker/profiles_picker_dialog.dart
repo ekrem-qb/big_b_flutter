@@ -17,7 +17,7 @@ Future<List<Profile>> showProfilesPicker(final BuildContext context, {required f
     },
   );
 
-  return profiles ?? List.empty();
+  return profiles ?? const [];
 }
 
 class _ProfilePickerDialog extends StatelessWidget {

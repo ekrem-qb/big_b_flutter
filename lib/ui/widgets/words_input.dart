@@ -11,7 +11,7 @@ Future<Iterable<String>> showWordsInput(final BuildContext context) async {
     },
   );
 
-  return words ?? List.empty();
+  return words ?? const [];
 }
 
 class _WordsInput extends StatelessWidget {

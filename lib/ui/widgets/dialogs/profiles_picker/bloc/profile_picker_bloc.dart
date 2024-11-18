@@ -29,7 +29,7 @@ class ProfilePickerBloc extends Bloc<ProfilePickerEvent, ProfilePickerState> {
       final List<Profile> all;
 
       if (state.excluded.isEmpty) {
-        all = await db.from(Profile.tableName).select(Profile.fieldNames).withConverter(Profile.converter) ?? List.empty();
+        all = await db.from(Profile.tableName).select(Profile.fieldNames).withConverter(Profile.converter) ?? const [];
       } else {
         all = await db
                 .from(Profile.tableName)
@@ -40,7 +40,7 @@ class ProfilePickerBloc extends Bloc<ProfilePickerEvent, ProfilePickerState> {
                   '(${state.excluded.map((final profile) => profile.uid).join(',')})',
                 )
                 .withConverter(Profile.converter) ??
-            List.empty();
+            const [];
       }
 
       emit(state.copyWith(all: StatusOfData(all)));
