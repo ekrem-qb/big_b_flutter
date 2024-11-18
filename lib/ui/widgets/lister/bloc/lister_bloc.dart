@@ -15,7 +15,18 @@ part 'lister_event.dart';
 part 'lister_state.dart';
 
 abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<ListerState<T>>> {
-  ListerBloc() : super(StatusOfLoading<ListerState<T>>()) {
+  ListerBloc({
+    final List<T>? cachedItems,
+  }) : super(
+          cachedItems != null
+              ? StatusOfData<ListerState<T>>(
+                  ListerState<T>(
+                    totalCount: cachedItems.length,
+                    items: cachedItems,
+                  ),
+                )
+              : StatusOfLoading<ListerState<T>>(),
+        ) {
     on<ListerEvent>(
       (final event, final emit) {
         return switch (event) {
@@ -52,7 +63,9 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
       ),
     ];
 
-    add(const ListerEventLoadRequested());
+    if (state is StatusOfLoading<ListerState<T>>) {
+      add(const ListerEventLoadRequested());
+    }
   }
 
   static const itemsPerLoad = 15;
