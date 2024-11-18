@@ -128,7 +128,13 @@ class _ViolationsButton extends StatelessWidget {
                 _ => null,
               };
 
-              context.pushRoute(ViolationsRoute(id: bloc.state.recordingId, violations: violations));
+              context.pushRoute(
+                ViolationsRoute(
+                  id: bloc.state.recordingId,
+                  violations: violations,
+                  sortNewFirst: true,
+                ),
+              );
             }
           : null,
     );

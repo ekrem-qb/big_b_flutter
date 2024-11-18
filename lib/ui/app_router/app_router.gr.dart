@@ -719,6 +719,7 @@ class ViolationsRoute extends PageRouteInfo<ViolationsRouteArgs> {
   ViolationsRoute({
     int? id,
     List<Violation>? violations,
+    bool sortNewFirst = false,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
@@ -726,6 +727,7 @@ class ViolationsRoute extends PageRouteInfo<ViolationsRouteArgs> {
           args: ViolationsRouteArgs(
             id: id,
             violations: violations,
+            sortNewFirst: sortNewFirst,
             key: key,
           ),
           rawPathParams: {'id': id},
@@ -743,6 +745,7 @@ class ViolationsRoute extends PageRouteInfo<ViolationsRouteArgs> {
       return ViolationsPage(
         id: args.id,
         violations: args.violations,
+        sortNewFirst: args.sortNewFirst,
         key: args.key,
       );
     },
@@ -753,6 +756,7 @@ class ViolationsRouteArgs {
   const ViolationsRouteArgs({
     this.id,
     this.violations,
+    this.sortNewFirst = false,
     this.key,
   });
 
@@ -760,10 +764,12 @@ class ViolationsRouteArgs {
 
   final List<Violation>? violations;
 
+  final bool sortNewFirst;
+
   final Key? key;
 
   @override
   String toString() {
-    return 'ViolationsRouteArgs{id: $id, violations: $violations, key: $key}';
+    return 'ViolationsRouteArgs{id: $id, violations: $violations, sortNewFirst: $sortNewFirst, key: $key}';
   }
 }
