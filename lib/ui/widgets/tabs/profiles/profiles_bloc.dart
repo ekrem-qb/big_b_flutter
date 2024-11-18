@@ -1,9 +1,13 @@
+import '../../../../api/entity/join_table.dart';
 import '../../../../api/entity/profile/profile.dart';
 import '../../lister/bloc/lister_bloc.dart';
 
 class ProfilesBloc extends ListerBloc<Profile> {
   @override
   String get tableName => Profile.tableName;
+
+  @override
+  List<JoinTable> get joinTables => Profile.joinTables;
 
   @override
   String get fieldNames => Profile.fieldNames;

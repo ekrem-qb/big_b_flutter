@@ -1,9 +1,13 @@
+import '../../../../api/entity/join_table.dart';
 import '../../../../api/entity/rule/rule.dart';
 import '../../lister/bloc/lister_bloc.dart';
 
 class RulesBloc extends ListerBloc<Rule> {
   @override
   String get tableName => Rule.tableName;
+
+  @override
+  List<JoinTable> get joinTables => Rule.joinTables;
 
   @override
   String get fieldNames => Rule.fieldNames;

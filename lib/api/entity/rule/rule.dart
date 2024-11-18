@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../entity.dart';
+import '../join_table.dart';
 
 part 'rule.freezed.dart';
 part 'rule.g.dart';
@@ -42,6 +43,7 @@ sealed class Rule with _$Rule implements Entity {
   factory Rule.fromJson(final Map<String, dynamic> json) => _$RuleFromJson(json);
 
   static const tableName = 'rules';
+  static const joinTables = <JoinTable>[];
   static final fieldNames = {
     ..._$$NameRuleImplFieldMap.values,
     ..._$$WordsRuleImplFieldMap.values,

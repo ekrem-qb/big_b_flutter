@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../enums/role.dart';
 import '../entity.dart';
+import '../join_table.dart';
 
 part 'profile.freezed.dart';
 part 'profile.g.dart';
@@ -25,6 +26,7 @@ class Profile with _$Profile implements Entity {
   Object get id => uid;
 
   static const tableName = 'profiles';
+  static const joinTables = <JoinTable>[];
   static final fieldNames = _$$ProfileImplFieldMap.values.join(',');
 
   static List<Profile>? converter(final List<Map<String, dynamic>> data) => data.map(Profile.fromJson).toList();

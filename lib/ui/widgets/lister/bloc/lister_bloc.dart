@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../../api/database.dart';
 import '../../../../api/entity/entity.dart';
+import '../../../../api/entity/join_table.dart';
 import '../../../entity/status.dart';
 
 part 'lister_bloc.freezed.dart';
@@ -20,20 +21,36 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
         return switch (event) {
           ListerEventLoadRequested() => _onLoadRequested(emit, event),
           ListerEventLoadAfterRequested() => _onLoadAfterRequested(emit, event),
-          ListerEventDataUpdated() => onDataUpdated(emit, event),
+          _ListerEventDataUpdated() => _onDataUpdated(emit, event),
         };
       },
       transformer: sequential(),
     );
 
-    _itemsSubscription = db
-        .channel(tableName)
-        .onPostgresChanges(
-          table: tableName,
-          event: PostgresChangeEvent.all,
-          callback: (final payload) => add(ListerEventDataUpdated(payload: payload)),
-        )
-        .subscribe();
+    _dbSubscriptions = [
+      db
+          .channel(tableName)
+          .onPostgresChanges(
+            table: tableName,
+            event: PostgresChangeEvent.all,
+            callback: (final payload) => add(
+              joinTables.isEmpty ? _ListerEventDataUpdated(payload: payload) : const ListerEventLoadRequested(),
+            ),
+          )
+          .subscribe(),
+      ...joinTables.map(
+        (final joinTable) {
+          return db
+              .channel('${tableName}_${joinTable.tableName}')
+              .onPostgresChanges(
+                table: joinTable.tableName,
+                event: PostgresChangeEvent.update,
+                callback: (final payload) => add(const ListerEventLoadRequested()),
+              )
+              .subscribe();
+        },
+      ),
+    ];
 
     add(const ListerEventLoadRequested());
   }
@@ -41,6 +58,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
   static const itemsPerLoad = 15;
 
   String get tableName;
+  List<JoinTable> get joinTables;
   String get fieldNames;
   String get orderBy;
   bool get ascending;
@@ -49,7 +67,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
   T Function(Map<String, dynamic> json) get fromJson;
   bool Function(T a, T b) get isAfter;
 
-  RealtimeChannel? _itemsSubscription;
+  List<RealtimeChannel>? _dbSubscriptions;
 
   bool _isFullyLoaded() {
     final currentState = state;
@@ -115,7 +133,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
     }
   }
 
-  Future<void> onDataUpdated(final Emitter<StatusOf<ListerState<T>>> emit, final ListerEventDataUpdated event) async {
+  Future<void> _onDataUpdated(final Emitter<StatusOf<ListerState<T>>> emit, final _ListerEventDataUpdated event) async {
     final currentState = state;
     if (currentState is! StatusOfData<ListerState<T>>) return;
 
@@ -213,7 +231,12 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
 
   @override
   Future<void> close() {
-    _itemsSubscription?.unsubscribe();
+    final dbSubscriptions = _dbSubscriptions;
+    if (dbSubscriptions != null) {
+      for (var i = 0; i < dbSubscriptions.length; i++) {
+        dbSubscriptions[i].unsubscribe();
+      }
+    }
     return super.close();
   }
 }

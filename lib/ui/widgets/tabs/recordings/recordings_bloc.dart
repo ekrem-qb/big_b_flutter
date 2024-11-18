@@ -1,9 +1,13 @@
+import '../../../../api/entity/join_table.dart';
 import '../../../../api/entity/recording/recording.dart';
 import '../../lister/bloc/lister_bloc.dart';
 
 class RecordingsBloc extends ListerBloc<Recording> {
   @override
   String get tableName => Recording.tableName;
+
+  @override
+  List<JoinTable> get joinTables => Recording.joinTables;
 
   @override
   String get fieldNames => Recording.fieldNames;

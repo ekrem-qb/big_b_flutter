@@ -1,27 +1,13 @@
-import 'package:bloc/bloc.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../../../api/database.dart';
+import '../../../../api/entity/join_table.dart';
 import '../../../../api/entity/task/task.dart';
-import '../../../entity/status.dart';
 import '../../lister/bloc/lister_bloc.dart';
 
 class TasksBloc extends ListerBloc<Task> {
-  TasksBloc() : super() {
-    _executivesSubscription = db
-        .channel(Task.executivesTableName)
-        .onPostgresChanges(
-          table: Task.executivesTableName,
-          event: PostgresChangeEvent.all,
-          callback: (final _) => add(const ListerEventLoadRequested()),
-        )
-        .subscribe();
-  }
-
-  RealtimeChannel? _executivesSubscription;
-
   @override
   String get tableName => Task.tableName;
+
+  @override
+  List<JoinTable> get joinTables => Task.joinTables;
 
   @override
   String get fieldNames => Task.fieldNames;
@@ -43,15 +29,4 @@ class TasksBloc extends ListerBloc<Task> {
 
   @override
   bool Function(Task a, Task b) get isAfter => (final a, final b) => a.updatedAt.isAfter(b.updatedAt);
-
-  @override
-  Future<void> onDataUpdated(final Emitter<StatusOf<ListerState<Task>>> emit, final ListerEventDataUpdated event) async {
-    add(const ListerEventLoadRequested());
-  }
-
-  @override
-  Future<void> close() {
-    _executivesSubscription?.unsubscribe();
-    return super.close();
-  }
 }
