@@ -29,4 +29,7 @@ class ProfilesBloc extends ListerBloc<Profile> {
 
   @override
   bool Function(Profile a, Profile b) get isAfter => (final a, final b) => a.createdAt.isAfter(b.createdAt);
+
+  @override
+  ListerFilters<Profile>? get filters => null;
 }

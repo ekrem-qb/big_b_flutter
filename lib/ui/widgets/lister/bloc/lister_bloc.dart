@@ -14,6 +14,11 @@ part 'lister_bloc.freezed.dart';
 part 'lister_event.dart';
 part 'lister_state.dart';
 
+typedef ListerFilters<E> = (
+  PostgrestFilterBuilder<T> Function<T>(PostgrestFilterBuilder<T> query),
+  bool Function(E item),
+);
+
 abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<ListerState<T>>> {
   ListerBloc({
     final List<T>? cachedItems,
@@ -79,6 +84,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
   List<T>? Function(List<Map<String, dynamic>> data) get converter;
   T Function(Map<String, dynamic> json) get fromJson;
   bool Function(T a, T b) get isAfter;
+  ListerFilters<T>? get filters;
 
   List<RealtimeChannel>? _dbSubscriptions;
 
@@ -95,7 +101,8 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
         emit(StatusOfLoading<ListerState<T>>());
       }
 
-      final count = await db.from(tableName).count();
+      final countQuery = db.from(tableName).count();
+      final count = await (filters != null ? filters!.$1(countQuery) : countQuery);
       final endIndex = max(
         itemsPerLoad,
         switch (state) {
@@ -106,7 +113,8 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
           _ => 0
         },
       );
-      final items = await db.from(tableName).select(fieldNames).limit(endIndex).order(orderBy, ascending: ascending).withConverter(converter) ?? List.empty();
+      final query = db.from(tableName).select(fieldNames);
+      final items = await (filters != null ? filters!.$1(query) : query).limit(endIndex).order(orderBy, ascending: ascending).withConverter(converter) ?? List.empty();
 
       emit(
         StatusOfData<ListerState<T>>(
@@ -129,7 +137,8 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
       if (currentState.data.items.length >= currentState.data.totalCount) return;
 
       final endIndex = min((currentState.data.items.length - 1) + itemsPerLoad, currentState.data.totalCount - 1);
-      final items = await db.from(tableName).select(fieldNames).range(currentState.data.items.length, endIndex).order(orderBy, ascending: ascending).withConverter(converter) ?? List.empty();
+      final query = db.from(tableName).select(fieldNames);
+      final items = await (filters != null ? filters!.$1(query) : query).range(currentState.data.items.length, endIndex).order(orderBy, ascending: ascending).withConverter(converter) ?? List.empty();
 
       emit(
         currentState.copyWith(
@@ -162,8 +171,9 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
     }
   }
 
-  StatusOfData<ListerState<T>> _insert(final StatusOfData<ListerState<T>> currentState, final PostgresChangePayload payload) {
-    final newItems = _insertIntoList(payload.newRecord, currentState.data.items);
+  StatusOfData<ListerState<T>>? _insert(final StatusOfData<ListerState<T>> currentState, final PostgresChangePayload payload) {
+    final newItem = fromJson(payload.newRecord);
+    final newItems = filters != null && !filters!.$2(newItem) ? null : _insertIntoList(newItem, currentState.data.items);
 
     return StatusOfData(
       newItems != null
@@ -178,13 +188,44 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
   }
 
   StatusOfData<ListerState<T>>? _update(final StatusOfData<ListerState<T>> currentState, final PostgresChangePayload payload) {
-    final newItems = _insertIntoList(payload.newRecord, _deleteFromList(payload.oldRecord, currentState.data.items));
+    final newItem = fromJson(payload.newRecord);
+    final List<T>? newItems;
+    final int? newCount;
+
+    if (filters != null) {
+      final currentCount = currentState.data.totalCount;
+      if (filters!.$2(newItem)) {
+        final itemsWithoutOldRecord = _deleteFromList(payload.oldRecord, currentState.data.items);
+        newItems = _insertIntoList(newItem, itemsWithoutOldRecord ?? currentState.data.items);
+        if (newItems != null && currentCount < newItems.length) {
+          newCount = currentCount + 1;
+        } else {
+          newCount = null;
+        }
+      } else {
+        newItems = _deleteFromList(payload.oldRecord, currentState.data.items);
+        if (newItems != null) {
+          newCount = currentCount - 1;
+        } else {
+          newCount = null;
+        }
+      }
+    } else {
+      final itemsWithoutOldRecord = _deleteFromList(payload.oldRecord, currentState.data.items);
+      newItems = _insertIntoList(newItem, itemsWithoutOldRecord);
+      newCount = null;
+    }
 
     return newItems != null
         ? StatusOfData(
-            currentState.data.copyWith(
-              items: newItems,
-            ),
+            newCount != null
+                ? currentState.data.copyWith(
+                    items: newItems,
+                    totalCount: newCount,
+                  )
+                : currentState.data.copyWith(
+                    items: newItems,
+                  ),
           )
         : null;
   }
@@ -204,10 +245,8 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
     );
   }
 
-  List<T>? _insertIntoList(final Map<String, dynamic> newRecord, final List<T>? items) {
+  List<T>? _insertIntoList(final T newItem, final List<T>? items) {
     if (items == null) return null;
-
-    final newItem = fromJson(newRecord);
 
     for (var i = 0; i < items.length; i++) {
       if (isAfter(newItem, items[i])) {

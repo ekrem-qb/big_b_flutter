@@ -29,4 +29,7 @@ class TasksBloc extends ListerBloc<Task> {
 
   @override
   bool Function(Task a, Task b) get isAfter => (final a, final b) => a.updatedAt.isAfter(b.updatedAt);
+
+  @override
+  ListerFilters<Task>? get filters => null;
 }

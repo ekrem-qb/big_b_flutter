@@ -29,4 +29,7 @@ class RecordingsBloc extends ListerBloc<Recording> {
 
   @override
   bool Function(Recording a, Recording b) get isAfter => (final a, final b) => a.createdAt.isAfter(b.createdAt);
+
+  @override
+  ListerFilters<Recording>? get filters => null;
 }

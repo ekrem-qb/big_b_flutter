@@ -29,4 +29,7 @@ class RulesBloc extends ListerBloc<Rule> {
 
   @override
   bool Function(Rule a, Rule b) get isAfter => (final a, final b) => a.id > b.id;
+
+  @override
+  ListerFilters<Rule>? get filters => null;
 }
