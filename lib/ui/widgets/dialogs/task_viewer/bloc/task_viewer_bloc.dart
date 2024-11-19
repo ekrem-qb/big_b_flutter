@@ -25,7 +25,7 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
       };
     });
 
-    _tasksSubscriptions = [
+    _dbSubscriptions = [
       db
           .channel('${Task.tableName}/$id')
           .onPostgresChanges(
@@ -51,7 +51,7 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
     }
   }
 
-  late final List<RealtimeChannel> _tasksSubscriptions;
+  List<RealtimeChannel>? _dbSubscriptions;
 
   Future<void> _onLoadRequested(final TaskViewerEvent event, final Emitter<TaskViewerState> emit) async {
     try {
@@ -98,8 +98,11 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
 
   @override
   Future<void> close() {
-    for (var i = 0; i < _tasksSubscriptions.length; i++) {
-      _tasksSubscriptions[i].unsubscribe();
+    final dbSubscriptions = _dbSubscriptions;
+    if (dbSubscriptions != null) {
+      for (var i = 0; i < dbSubscriptions.length; i++) {
+        dbSubscriptions[i].unsubscribe();
+      }
     }
     return super.close();
   }
