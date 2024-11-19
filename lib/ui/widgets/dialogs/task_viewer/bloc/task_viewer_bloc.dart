@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../../api/database.dart';
+import '../../../../../api/entity/profile/profile.dart';
 import '../../../../../api/entity/task/task.dart';
 import '../../../../entity/status.dart';
 
@@ -41,6 +42,14 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
             table: Task.executivesTableName,
             event: PostgresChangeEvent.all,
             filter: PostgresChangeFilter(type: PostgresChangeFilterType.eq, column: $TaskImplJsonKeys.id, value: id),
+            callback: (final _) => add(const TaskViewerEventLoadRequested()),
+          )
+          .subscribe(),
+      db
+          .channel('${Task.tableName}_${Profile.tableName}')
+          .onPostgresChanges(
+            table: Profile.tableName,
+            event: PostgresChangeEvent.update,
             callback: (final _) => add(const TaskViewerEventLoadRequested()),
           )
           .subscribe(),
