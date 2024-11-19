@@ -138,13 +138,7 @@ class _IsDoneIcon extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskViewerBloc bloc;
-    var isInitialized = false;
-    final isDone = context.select((final TaskViewerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
+    final isDone = context.select((final TaskViewerBloc bloc) {
       return switch (bloc.state.task) {
         StatusOfData(
           :final data
