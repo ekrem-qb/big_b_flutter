@@ -7,6 +7,17 @@ const textStyle = TextStyle(fontSize: 22, fontWeight: FontWeight.w400, letterSpa
 const smallTextStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w500, letterSpacing: 0.15, height: 1.50);
 const kDefaultRadius = BorderRadius.all(Radius.circular(12));
 
+TextStyle highlightedTextStyle(final Color color) {
+  return TextStyle(
+    fontWeight: FontWeight.bold,
+    color: color,
+    decoration: TextDecoration.underline,
+    decorationColor: color,
+    decorationStyle: TextDecorationStyle.wavy,
+    decorationThickness: 2,
+  );
+}
+
 const kDefaultShape = RoundedRectangleBorder(
   borderRadius: kDefaultRadius,
 );

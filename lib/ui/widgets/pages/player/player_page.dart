@@ -737,13 +737,9 @@ class _TextLineTextState extends State<_TextLineText> {
         }
 
         final substring2 = textLine.text.substring(highlights[j].startIndex, highlights[j].endIndex);
-        final isLight = ThemeData.estimateBrightnessForColor(highlights[j].rule.color) == Brightness.light;
 
         yield TextSpan(
-          style: TextStyle(
-            color: isLight ? Colors.black : Colors.white,
-            backgroundColor: highlights[j].rule.color,
-          ),
+          style: highlightedTextStyle(highlights[j].rule.color),
           text: substring2,
           recognizer: _createRecognizer(violation: highlights[j]),
         );

@@ -103,7 +103,7 @@ class _Item extends StatelessWidget {
                 ),
                 TextSpan(
                   text: line.text.substring(startIndex, endIndex),
-                  style: TextStyle(color: rule.color, fontWeight: FontWeight.bold),
+                  style: highlightedTextStyle(rule.color),
                 ),
                 TextSpan(
                   text: line.text.substring(endIndex),

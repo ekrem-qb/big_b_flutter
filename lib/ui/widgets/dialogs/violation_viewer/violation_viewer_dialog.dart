@@ -187,7 +187,7 @@ class _Text extends StatelessWidget {
                           ),
                           TextSpan(
                             text: violation.line.text.substring(violation.startIndex, violation.endIndex),
-                            style: TextStyle(color: violation.rule.color, fontWeight: FontWeight.bold),
+                            style: highlightedTextStyle(violation.rule.color),
                           ),
                           TextSpan(
                             text: violation.line.text.substring(violation.endIndex),
