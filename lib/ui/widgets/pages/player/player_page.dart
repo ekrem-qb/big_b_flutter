@@ -611,12 +611,12 @@ class _TextLineContent extends StatelessWidget {
                 : BorderSide.none,
           ),
           color: isEmployee
-              ? Color.lerp(
+              ? null
+              : Color.lerp(
                   theme.colorScheme.surfaceContainer,
                   theme.colorScheme.primaryContainer,
                   0.5,
-                )
-              : null,
+                ),
           child: InkWell(
             borderRadius: kDefaultRadius,
             onTap: onTap,
