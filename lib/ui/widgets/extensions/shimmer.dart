@@ -4,7 +4,7 @@
 
 // ignore_for_file: avoid_setters_without_getters
 
-library shimmer;
+library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
