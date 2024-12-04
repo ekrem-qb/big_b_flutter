@@ -27,7 +27,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   void _onAuthStateChange(final AuthState authState) {
     switch (authState.event) {
       case AuthChangeEvent.signedOut:
-      case AuthChangeEvent.userDeleted:
         add(const _AppEventSessionExpired());
       default:
     }
