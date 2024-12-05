@@ -37,7 +37,7 @@ class ViolationViewerBloc extends Bloc<ViolationViewerEvent, ViolationViewerStat
       final violation = await db.from(Violation.tableName).select(Violation.fieldNames).eq($NormalViolationImplJsonKeys.id, state.id).maybeSingle().withConverter(Violation.maybeFromJson);
 
       if (violation == null) {
-        emit(state.copyWith(violation: const StatusOfError('Görev bulunamadı')));
+        emit(state.copyWith(violation: const StatusOfError('İhlal bulunamadı')));
         return;
       }
 
