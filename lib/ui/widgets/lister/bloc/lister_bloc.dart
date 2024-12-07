@@ -8,6 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../../api/database.dart';
 import '../../../../api/entity/entity.dart';
 import '../../../../api/entity/join_table.dart';
+import '../../../../extensions/hash_generator.dart';
 import '../../../entity/status.dart';
 
 part 'lister_bloc.freezed.dart';
@@ -45,7 +46,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
 
     _dbSubscriptions = [
       db
-          .channel(tableName)
+          .channel(generateHash())
           .onPostgresChanges(
             table: tableName,
             event: PostgresChangeEvent.all,
@@ -57,7 +58,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
       ...joinTables.map(
         (final joinTable) {
           return db
-              .channel('${tableName}_${joinTable.tableName}')
+              .channel(generateHash())
               .onPostgresChanges(
                 table: joinTable.tableName,
                 event: PostgresChangeEvent.update,

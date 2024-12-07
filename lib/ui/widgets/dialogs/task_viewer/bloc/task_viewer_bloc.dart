@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../../api/database.dart';
 import '../../../../../api/entity/profile/profile.dart';
 import '../../../../../api/entity/task/task.dart';
+import '../../../../../extensions/hash_generator.dart';
 import '../../../../entity/status.dart';
 
 part 'task_viewer_bloc.freezed.dart';
@@ -28,7 +29,7 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
 
     _dbSubscriptions = [
       db
-          .channel('${Task.tableName}/$id')
+          .channel(generateHash())
           .onPostgresChanges(
             table: Task.tableName,
             event: PostgresChangeEvent.all,
@@ -37,7 +38,7 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
           )
           .subscribe(),
       db
-          .channel('${Task.executivesTableName}/$id')
+          .channel(generateHash())
           .onPostgresChanges(
             table: Task.executivesTableName,
             event: PostgresChangeEvent.all,
@@ -46,7 +47,7 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
           )
           .subscribe(),
       db
-          .channel('${Task.tableName}_${Profile.tableName}')
+          .channel(generateHash())
           .onPostgresChanges(
             table: Profile.tableName,
             event: PostgresChangeEvent.update,
