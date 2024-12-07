@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../../api/database.dart';
 import '../../../../../api/entity/violation/violation.dart';
+import '../../../../../extensions/hash_generator.dart';
 import '../../../../entity/status.dart';
 
 part 'violation_viewer_bloc.freezed.dart';
@@ -23,9 +25,39 @@ class ViolationViewerBloc extends Bloc<ViolationViewerEvent, ViolationViewerStat
       };
     });
 
+    _dbSubscriptions = [
+      db
+          .channel(generateHash())
+          .onPostgresChanges(
+            table: Violation.tableName,
+            event: PostgresChangeEvent.all,
+            filter: PostgresChangeFilter(type: PostgresChangeFilterType.eq, column: $NormalViolationImplJsonKeys.id, value: id),
+            callback: _reload,
+          )
+          .subscribe(),
+      ...Violation.joinTables.map(
+        (final joinTable) {
+          return db
+              .channel(generateHash())
+              .onPostgresChanges(
+                table: joinTable.tableName,
+                event: PostgresChangeEvent.update,
+                callback: _reload,
+              )
+              .subscribe();
+        },
+      ),
+    ];
+
     if (state.violation is StatusOfLoading) {
-      add(const ViolationViewerEventLoadRequested());
+      _reload();
     }
+  }
+
+  List<RealtimeChannel>? _dbSubscriptions;
+
+  void _reload([final PostgresChangePayload? payload]) {
+    add(const ViolationViewerEventLoadRequested());
   }
 
   Future<void> _onLoadRequested(final ViolationViewerEvent event, final Emitter<ViolationViewerState> emit) async {
@@ -45,5 +77,16 @@ class ViolationViewerBloc extends Bloc<ViolationViewerEvent, ViolationViewerStat
     } catch (e) {
       emit(state.copyWith(violation: StatusOfError(e.toString())));
     }
+  }
+
+  @override
+  Future<void> close() {
+    final dbSubscriptions = _dbSubscriptions;
+    if (dbSubscriptions != null) {
+      for (var i = 0; i < dbSubscriptions.length; i++) {
+        dbSubscriptions[i].unsubscribe();
+      }
+    }
+    return super.close();
   }
 }
