@@ -11,15 +11,44 @@ part 'app_event.dart';
 part 'app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
-  AppBloc() : super(db.auth.currentSession?.isExpired ?? true ? const AppState.signedOut() : const AppState.signedIn()) {
+  AppBloc()
+      : super(
+          db.auth.currentSession?.isExpired ?? true
+              ? const AppState(
+                  isSignedIn: false,
+                )
+              : const AppState(
+                  isSignedIn: true,
+                ),
+        ) {
     on<AppEvent>((final event, final emit) async {
       return switch (event) {
-        AppEventSignedIn() => emit(const AppStateSignedIn()),
-        AppEventSignOutRequested() => await db.auth.signOut(),
-        _AppEventSessionExpired() => emit(const AppStateSignedOut()),
+        AppEventSignedIn() => emit(
+            state.copyWith(
+              isSignedIn: true,
+            ),
+          ),
+        AppEventSignOutRequested() => _onSignOutRequested(event, emit),
+        _AppEventSessionExpired() => emit(
+            state.copyWith(
+              isSignedIn: false,
+            ),
+          ),
       };
     });
     _authSubscription = db.auth.onAuthStateChange.listen(_onAuthStateChange);
+  }
+
+  Future<void> _onSignOutRequested(final AppEventSignOutRequested event, final Emitter<AppState> emit) async {
+    try {
+      await db.auth.signOut();
+    } catch (e) {
+      emit(
+        state.copyWith(
+          error: e.toString(),
+        ),
+      );
+    }
   }
 
   StreamSubscription<AuthState>? _authSubscription;

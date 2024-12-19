@@ -173,12 +173,23 @@ abstract class _AppEventSessionExpired implements AppEvent {
 }
 
 /// @nodoc
-mixin _$AppState {}
+mixin _$AppState {
+  bool get isSignedIn => throw _privateConstructorUsedError;
+  String? get error => throw _privateConstructorUsedError;
+
+  /// Create a copy of AppState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $AppStateCopyWith<AppState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
 
 /// @nodoc
 abstract class $AppStateCopyWith<$Res> {
   factory $AppStateCopyWith(AppState value, $Res Function(AppState) then) =
       _$AppStateCopyWithImpl<$Res, AppState>;
+  @useResult
+  $Res call({bool isSignedIn, String? error});
 }
 
 /// @nodoc
@@ -193,90 +204,115 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isSignedIn = null,
+    Object? error = freezed,
+  }) {
+    return _then(_value.copyWith(
+      isSignedIn: null == isSignedIn
+          ? _value.isSignedIn
+          : isSignedIn // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$AppStateSignedInImplCopyWith<$Res> {
-  factory _$$AppStateSignedInImplCopyWith(_$AppStateSignedInImpl value,
-          $Res Function(_$AppStateSignedInImpl) then) =
-      __$$AppStateSignedInImplCopyWithImpl<$Res>;
+abstract class _$$AppStateImplCopyWith<$Res>
+    implements $AppStateCopyWith<$Res> {
+  factory _$$AppStateImplCopyWith(
+          _$AppStateImpl value, $Res Function(_$AppStateImpl) then) =
+      __$$AppStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool isSignedIn, String? error});
 }
 
 /// @nodoc
-class __$$AppStateSignedInImplCopyWithImpl<$Res>
-    extends _$AppStateCopyWithImpl<$Res, _$AppStateSignedInImpl>
-    implements _$$AppStateSignedInImplCopyWith<$Res> {
-  __$$AppStateSignedInImplCopyWithImpl(_$AppStateSignedInImpl _value,
-      $Res Function(_$AppStateSignedInImpl) _then)
+class __$$AppStateImplCopyWithImpl<$Res>
+    extends _$AppStateCopyWithImpl<$Res, _$AppStateImpl>
+    implements _$$AppStateImplCopyWith<$Res> {
+  __$$AppStateImplCopyWithImpl(
+      _$AppStateImpl _value, $Res Function(_$AppStateImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isSignedIn = null,
+    Object? error = freezed,
+  }) {
+    return _then(_$AppStateImpl(
+      isSignedIn: null == isSignedIn
+          ? _value.isSignedIn
+          : isSignedIn // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$AppStateSignedInImpl implements AppStateSignedIn {
-  const _$AppStateSignedInImpl();
+class _$AppStateImpl implements _AppState {
+  const _$AppStateImpl({required this.isSignedIn, this.error});
+
+  @override
+  final bool isSignedIn;
+  @override
+  final String? error;
 
   @override
   String toString() {
-    return 'AppState.signedIn()';
+    return 'AppState(isSignedIn: $isSignedIn, error: $error)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$AppStateSignedInImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$AppStateImpl &&
+            (identical(other.isSignedIn, isSignedIn) ||
+                other.isSignedIn == isSignedIn) &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
-}
-
-abstract class AppStateSignedIn implements AppState {
-  const factory AppStateSignedIn() = _$AppStateSignedInImpl;
-}
-
-/// @nodoc
-abstract class _$$AppStateSignedOutImplCopyWith<$Res> {
-  factory _$$AppStateSignedOutImplCopyWith(_$AppStateSignedOutImpl value,
-          $Res Function(_$AppStateSignedOutImpl) then) =
-      __$$AppStateSignedOutImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$AppStateSignedOutImplCopyWithImpl<$Res>
-    extends _$AppStateCopyWithImpl<$Res, _$AppStateSignedOutImpl>
-    implements _$$AppStateSignedOutImplCopyWith<$Res> {
-  __$$AppStateSignedOutImplCopyWithImpl(_$AppStateSignedOutImpl _value,
-      $Res Function(_$AppStateSignedOutImpl) _then)
-      : super(_value, _then);
+  int get hashCode => Object.hash(runtimeType, isSignedIn, error);
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AppStateImplCopyWith<_$AppStateImpl> get copyWith =>
+      __$$AppStateImplCopyWithImpl<_$AppStateImpl>(this, _$identity);
 }
 
-/// @nodoc
-
-class _$AppStateSignedOutImpl implements AppStateSignedOut {
-  const _$AppStateSignedOutImpl();
-
-  @override
-  String toString() {
-    return 'AppState.signedOut()';
-  }
+abstract class _AppState implements AppState {
+  const factory _AppState(
+      {required final bool isSignedIn, final String? error}) = _$AppStateImpl;
 
   @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$AppStateSignedOutImpl);
-  }
-
+  bool get isSignedIn;
   @override
-  int get hashCode => runtimeType.hashCode;
-}
+  String? get error;
 
-abstract class AppStateSignedOut implements AppState {
-  const factory AppStateSignedOut() = _$AppStateSignedOutImpl;
+  /// Create a copy of AppState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$AppStateImplCopyWith<_$AppStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
