@@ -394,6 +394,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
               ),
             ),
           );
+          return;
         }
 
         emit(
