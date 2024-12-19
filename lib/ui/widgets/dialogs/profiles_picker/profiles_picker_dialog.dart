@@ -151,11 +151,11 @@ class _Profile extends StatelessWidget {
             trailing: AnimatedOpacity(
               opacity: isSelected ? 1 : 0,
               curve: Curves.easeInOutExpo,
-              duration: const Duration(milliseconds: 250),
+              duration: Durations.medium1,
               child: AnimatedScale(
                 scale: isSelected ? 1 : 0,
                 curve: Curves.easeInOutExpo,
-                duration: const Duration(milliseconds: 250),
+                duration: Durations.medium1,
                 child: const Icon(Icons.check_circle),
               ),
             ),

@@ -1,12 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // The curve and initial scale values were mostly eyeballed from iOS, however
 // they reuse the same animation curve that was modeled after native page
 // transitions.
 final Animatable<double> _dialogScaleTween = Tween<double>(begin: 1.3, end: 1).chain(CurveTween(curve: Curves.linearToEaseOut));
-const _transitionDuration = Duration(milliseconds: 250);
+const _transitionDuration = Durations.medium1;
 const Color kCupertinoModalBarrierColor = CupertinoDynamicColor.withBrightness(
   color: Color(0x33000000),
   darkColor: Color(0x7A000000),

@@ -17,7 +17,7 @@ class SaveButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 500),
+        duration: Durations.long2,
         transitionBuilder: fadeTransitionBuilder,
         child: isLoading
             ? const LinearProgressIndicator(

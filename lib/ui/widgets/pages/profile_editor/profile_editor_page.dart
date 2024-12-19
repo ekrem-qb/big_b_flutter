@@ -409,7 +409,7 @@ class _Role extends StatelessWidget {
     return Expanded(
       child: AnimatedCrossFade(
         crossFadeState: currentRole == role ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-        duration: const Duration(milliseconds: 250),
+        duration: Durations.medium1,
         firstCurve: Curves.easeIn,
         secondCurve: Curves.easeOut,
         firstChild: _RoleChip(
