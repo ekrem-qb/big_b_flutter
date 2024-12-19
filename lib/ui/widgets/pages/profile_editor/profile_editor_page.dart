@@ -123,6 +123,7 @@ class TaskEditorView extends StatelessWidget {
           _ => _Body(isNew: isNew),
         },
         bottomNavigationBar: switch (bloc.state) {
+          ProfileEditorStateCreate() ||
           ProfileEditorStateEdit(
             loadingState: StatusCompleted(),
           ) =>
