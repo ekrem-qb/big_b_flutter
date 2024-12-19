@@ -151,7 +151,7 @@ const darkColorScheme = ColorScheme(
   surface: Colors.black, // Color(0xff17130b)
   surfaceBright: Color(0xff3e382f), // Color(0xff3e382f)
   surfaceContainer: Color.fromRGBO(18, 18, 18, 1), // Color(0xff231f17)
-  surfaceContainerHigh: Color(0xff2e2921), // Color(0xff2e2921)
+  surfaceContainerHigh: Color.fromRGBO(38, 38, 38, 1), // Color(0xff2e2921)
   surfaceContainerHighest: Color(0xff39342b), // Color(0xff39342b)
   surfaceContainerLow: Color.fromRGBO(16, 16, 16, 1), // Color(0xff1f1b13)
   surfaceContainerLowest: Color(0xff110e07), // Color(0xff110e07)
