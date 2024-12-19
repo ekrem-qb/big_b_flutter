@@ -76,26 +76,22 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
   }
 
   Future<void> _onNameChanged(final ProfileEditorEventNameChanged event, final Emitter<ProfileEditorState> emit) async {
-    final currentState = state;
-
-    switch (currentState) {
+    switch (state) {
       case ProfileEditorStateEdit():
         emit(
-          currentState.copyWith(
+          state.copyWith(
             name: event.value,
             nameError: null,
           ),
         );
       case ProfileEditorStateCreate():
         emit(
-          currentState.copyWith(
+          state.copyWith(
             name: event.value,
             login: removeDiacritics(event.value).toSnakeCase(),
             nameError: null,
           ),
         );
-      default:
-        return;
     }
   }
 
@@ -138,54 +134,43 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
   }
 
   Future<void> _onRoleChanged(final ProfileEditorEventRoleChanged event, final Emitter<ProfileEditorState> emit) async {
-    final currentState = state;
-
-    switch (currentState) {
-      case ProfileEditorStateCreate():
-        emit(
-          currentState.copyWith(
-            role: event.value,
-          ),
-        );
-      case ProfileEditorStateEdit():
-        emit(
-          currentState.copyWith(
-            role: event.value,
-          ),
-        );
-      default:
-    }
+    emit(
+      state.copyWith(
+        role: event.value,
+      ),
+    );
   }
 
   Future<void> _onSaveRequested(final ProfileEditorEventSaveRequested event, final Emitter<ProfileEditorState> emit) async {
-    final currentState = state;
+    emit(
+      state.copyWith(
+        name: state.name.trim(),
+      ),
+    );
 
-    switch (currentState) {
-      case ProfileEditorStateCreate():
+    if (state.name.isEmpty) {
+      emit(
+        state.copyWith(
+          nameError: 'Ad Soyad giriniz',
+        ),
+      );
+      return;
+    }
+
+    switch (state) {
+      case ProfileEditorStateCreate(
+          :final password,
+          :final copyWith,
+        ):
         emit(
-          currentState.copyWith(
-            name: currentState.name.trim(),
+          copyWith(
+            login: state.login.trim(),
           ),
         );
 
-        if (currentState.name.isEmpty) {
+        if (state.login.isEmpty) {
           emit(
-            currentState.copyWith(
-              nameError: 'Ad Soyad giriniz',
-            ),
-          );
-          return;
-        }
-
-        emit(
-          currentState.copyWith(
-            login: currentState.login.trim(),
-          ),
-        );
-
-        if (currentState.login.isEmpty) {
-          emit(
-            currentState.copyWith(
+            copyWith(
               loginError: 'Kullanıcı adını giriniz',
             ),
           );
@@ -193,130 +178,73 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
         }
 
         emit(
-          currentState.copyWith(
-            password: currentState.password.trim(),
+          copyWith(
+            password: password.trim(),
           ),
         );
 
-        if (currentState.password.isEmpty) {
+        if (password.isEmpty) {
           emit(
-            currentState.copyWith(
+            copyWith(
               passwordError: 'Şifre giriniz',
             ),
           );
           return;
         }
-
-        emit(
-          currentState.copyWith(
-            uploadState: const OperationStatusInProgress(),
-          ),
-        );
-
-        if (await _upload(emit: emit)) {
-          emit(
-            currentState.copyWith(
-              uploadState: const OperationStatusCompleted(),
-            ),
-          );
-        } else {
-          emit(
-            currentState.copyWith(
-              uploadState: const OperationStatusInitial(),
-            ),
-          );
-        }
       case ProfileEditorStateEdit():
-        emit(
-          currentState.copyWith(
-            name: currentState.name.trim(),
-          ),
-        );
+    }
 
-        if (currentState.name.isEmpty) {
-          emit(
-            currentState.copyWith(
-              nameError: 'Ad Soyad giriniz',
-            ),
-          );
-        }
+    emit(
+      state.copyWith(
+        uploadState: const OperationStatusInProgress(),
+      ),
+    );
 
-        emit(
-          currentState.copyWith(
-            uploadState: const OperationStatusInProgress(),
-          ),
-        );
-
-        if (await _upload(emit: emit)) {
-          emit(
-            currentState.copyWith(
-              uploadState: const OperationStatusCompleted(),
-            ),
-          );
-          return;
-        } else {
-          emit(
-            currentState.copyWith(
-              uploadState: const OperationStatusInitial(),
-            ),
-          );
-        }
-      default:
+    if (await _upload(emit: emit)) {
+      emit(
+        state.copyWith(
+          uploadState: const OperationStatusCompleted(),
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          uploadState: const OperationStatusInitial(),
+        ),
+      );
     }
   }
 
   Future<bool> _upload({required final Emitter<ProfileEditorState> emit}) async {
-    final currentState = state;
     try {
-      switch (currentState) {
+      final profile = Profile(
+        uid: '',
+        name: state.name,
+        createdAt: DateTime.now(),
+        login: state.login,
+        role: state.role,
+      );
+
+      switch (state) {
         case ProfileEditorStateCreate(
-                :final name,
-                :final login,
-                :final role,
-              ) ||
-              ProfileEditorStateEdit(
-                :final name,
-                :final login,
-                :final role,
-              ):
-          final profile = Profile(
-            uid: '',
-            name: name,
-            createdAt: DateTime.now(),
-            login: login,
-            role: role,
+            :final login,
+            :final password,
+          ):
+          final json = profile.toJson();
+          await db.auth.signUp(
+            email: _addMail(login),
+            password: password,
+            data: json,
           );
-
-          switch (currentState) {
-            case ProfileEditorStateCreate(
-                :final login,
-                :final password,
-              ):
-              final json = profile.toJson();
-              await db.auth.signUp(
-                email: _addMail(login),
-                password: password,
-                data: json,
-              );
-            case ProfileEditorStateEdit(
-                :final uid,
-              ):
-              await db.from(Profile.tableName).update(profile.toJson()).eq($ProfileImplJsonKeys.uid, uid);
-            default:
-          }
-
-          return true;
-        default:
-          return false;
+        case ProfileEditorStateEdit(
+            :final uid,
+          ):
+          await db.from(Profile.tableName).update(profile.toJson()).eq($ProfileImplJsonKeys.uid, uid);
       }
+
+      return true;
     } catch (e) {
-      switch (currentState) {
-        case ProfileEditorStateCreate():
-          emit(currentState.copyWith(uploadState: OperationStatusError(e.toString())));
-        case ProfileEditorStateEdit():
-          emit(currentState.copyWith(uploadState: OperationStatusError(e.toString())));
-        default:
-      }
+      emit(state.copyWith(uploadState: OperationStatusError(e.toString())));
       return false;
     }
   }
