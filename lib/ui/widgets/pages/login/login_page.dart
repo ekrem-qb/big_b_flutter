@@ -70,15 +70,15 @@ class _EmailField extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final LoginBloc bloc;
-    var isInitialized = false;
-    final emailError = context.select((final LoginBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return bloc.state.emailError;
-    });
+    final (
+      bloc,
+      emailError,
+    ) = context.select(
+      (final LoginBloc bloc) => (
+        bloc,
+        bloc.state.emailError,
+      ),
+    );
 
     return TextField(
       autofocus: true,
@@ -98,21 +98,17 @@ class _PasswordField extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final LoginBloc bloc;
-    var isInitialized = false;
     final (
+      bloc,
       isPasswordVisible,
       passwordError,
-    ) = context.select((final LoginBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return (
+    ) = context.select(
+      (final LoginBloc bloc) => (
+        bloc,
         bloc.state.isPasswordVisible,
         bloc.state.passwordError,
-      );
-    });
+      ),
+    );
 
     return TextField(
       decoration: InputDecoration(
@@ -141,15 +137,15 @@ class _LoginButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final LoginBloc bloc;
-    var isInitialized = false;
-    final loginStatus = context.select((final LoginBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return bloc.state.loginStatus;
-    });
+    final (
+      bloc,
+      loginStatus,
+    ) = context.select(
+      (final LoginBloc bloc) => (
+        bloc,
+        bloc.state.loginStatus,
+      ),
+    );
 
     return FilledButton.icon(
       onPressed: loginStatus is OperationStatusInProgress ? null : () => bloc.add(const LoginEventLoginRequested()),
@@ -167,8 +163,8 @@ class _LoginIcon extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final loginStatus = context.select((final LoginBloc newBloc) {
-      return newBloc.state.loginStatus;
+    final loginStatus = context.select((final LoginBloc bloc) {
+      return bloc.state.loginStatus;
     });
 
     return loginStatus is OperationStatusInProgress

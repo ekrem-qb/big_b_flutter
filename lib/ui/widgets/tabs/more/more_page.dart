@@ -69,15 +69,16 @@ class _LogoutButton extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final bloc = context.read<AppBloc>();
-    late final AppBarController appBar;
-    var isInitialized = false;
-    context.select((final AppBarController newModel) {
-      if (!isInitialized) {
-        appBar = newModel;
-        isInitialized = true;
-      }
-      return appBar.isScrolled;
-    });
+
+    final (
+      appBar,
+      isScrolled,
+    ) = context.select(
+      (final AppBarController appBar) => (
+        appBar,
+        appBar.isScrolled,
+      ),
+    );
 
     return ElevatedButton.icon(
       style: ButtonStyle(

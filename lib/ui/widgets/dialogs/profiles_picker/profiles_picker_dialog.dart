@@ -63,15 +63,15 @@ class _Profiles extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final ProfilePickerBloc bloc;
-    var isInitialized = false;
-    context.select((final ProfilePickerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return bloc.state.all.runtimeType;
-    });
+    final (
+      bloc,
+      _,
+    ) = context.select(
+      (final ProfilePickerBloc bloc) => (
+        bloc,
+        bloc.state.all.runtimeType,
+      ),
+    );
 
     return switch (bloc.state.all) {
       StatusOfData<List<Profile>>(
@@ -114,21 +114,21 @@ class _Profile extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final ProfilePickerBloc bloc;
-    var isInitialized = false;
-    final isSelected = context.select((final ProfilePickerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return switch (bloc.state.all) {
-        StatusOfData<List<Profile>>(
-          :final data,
-        ) =>
-          bloc.state.selected.contains(data[index]),
-        _ => false,
-      };
-    });
+    final (
+      bloc,
+      isSelected,
+    ) = context.select(
+      (final ProfilePickerBloc bloc) => (
+        bloc,
+        switch (bloc.state.all) {
+          StatusOfData<List<Profile>>(
+            :final data,
+          ) =>
+            bloc.state.selected.contains(data[index]),
+          _ => false,
+        },
+      ),
+    );
 
     return Card(
       shape: RoundedRectangleBorder(

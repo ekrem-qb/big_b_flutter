@@ -93,15 +93,15 @@ class TaskEditorView extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskEditorBloc bloc;
-    var isInitialized = false;
-    context.select((final TaskEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return bloc.state.loadingState.runtimeType;
-    });
+    final (
+      bloc,
+      _,
+    ) = context.select(
+      (final TaskEditorBloc bloc) => (
+        bloc,
+        bloc.state.loadingState.runtimeType,
+      ),
+    );
 
     return BlocListener<TaskEditorBloc, TaskEditorState>(
       listener: (final context, final state) async {
@@ -253,15 +253,16 @@ class _Text extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskEditorBloc bloc;
-    var isInitialized = false;
-    final error = context.select((final TaskEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return newBloc.state.textError;
-    });
+    final (
+      bloc,
+      error,
+    ) = context.select(
+      (final TaskEditorBloc bloc) => (
+        bloc,
+        bloc.state.textError,
+      ),
+    );
+
     final text = bloc.state.text;
 
     return TextFormField(
@@ -283,15 +284,15 @@ class _ImageToggle extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskEditorBloc bloc;
-    var isInitialized = false;
-    final isImageRequired = context.select((final TaskEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return bloc.state.isImageRequired;
-    });
+    final (
+      bloc,
+      isImageRequired,
+    ) = context.select(
+      (final TaskEditorBloc bloc) => (
+        bloc,
+        bloc.state.isImageRequired,
+      ),
+    );
 
     return Material(
       shape: RoundedRectangleBorder(
@@ -321,15 +322,15 @@ class _Time extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskEditorBloc bloc;
-    var isInitialized = false;
-    final time = context.select((final TaskEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return bloc.state.time;
-    });
+    final (
+      bloc,
+      time,
+    ) = context.select(
+      (final TaskEditorBloc bloc) => (
+        bloc,
+        bloc.state.time,
+      ),
+    );
 
     return ActionChip(
       label: Text(
@@ -363,38 +364,32 @@ class _Date extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskEditorBloc bloc;
-    var isInitialized = false;
-    context
-      ..select((final TaskEditorBloc newBloc) {
-        if (!isInitialized) {
-          bloc = newBloc;
-          isInitialized = true;
-        }
-        return bloc.state.date;
-      })
-      ..select((final TaskEditorBloc newBloc) {
-        if (!isInitialized) {
-          bloc = newBloc;
-          isInitialized = true;
-        }
-        return bloc.state.isRepeated;
-      });
+    final (
+      bloc,
+      date,
+      isRepeated,
+    ) = context.select(
+      (final TaskEditorBloc bloc) => (
+        bloc,
+        bloc.state.date,
+        bloc.state.isRepeated,
+      ),
+    );
 
     return ActionChip(
       label: Text(
-        _formatDate(bloc.state.date),
+        _formatDate(date),
         style: largeTextStyle,
       ),
-      onPressed: bloc.state.isRepeated || bloc.state.isPlanned
+      onPressed: isRepeated || bloc.state.isPlanned
           ? null
           : () async {
               final now = DateTime.now();
 
               final newDate = await showCupertinoDatePicker(
                 context: context,
-                initialDate: bloc.state.date,
-                minimumDate: bloc.state.date.isBefore(now) ? bloc.state.date : now.copyWithTime(Duration.zero),
+                initialDate: date,
+                minimumDate: date.isBefore(now) ? date : now.copyWithTime(Duration.zero),
                 showDayOfWeek: true,
               );
 
@@ -417,21 +412,21 @@ class _Day extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskEditorBloc bloc;
-    var isInitialized = false;
-    context.select((final TaskEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return isWeekdaySelected(day, bloc.state.weekdays);
-    });
+    final (
+      bloc,
+      isSelected,
+    ) = context.select(
+      (final TaskEditorBloc bloc) => (
+        bloc,
+        isWeekdaySelected(day, bloc.state.weekdays),
+      ),
+    );
 
     return Flexible(
       child: InputChip(
         isEnabled: bloc.state.isNew || bloc.state.isPlanned,
         showCheckmark: MediaQuery.of(context).size.width > 600,
-        selected: isWeekdaySelected(day, bloc.state.weekdays),
+        selected: isSelected,
         onSelected: (final value) => bloc.add(TaskEditorEventWeekdayToggled(day: day, value: value)),
         labelPadding: EdgeInsets.zero,
         label: FittedBox(
@@ -451,21 +446,21 @@ class _Executives extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskEditorBloc bloc;
-    var isInitialized = false;
-    context.select((final TaskEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return bloc.state.executives.length;
-    });
+    final (
+      bloc,
+      count,
+    ) = context.select(
+      (final TaskEditorBloc bloc) => (
+        bloc,
+        bloc.state.executives.length,
+      ),
+    );
 
     return Wrap(
       spacing: 8,
       runSpacing: Theme.of(context).materialTapTargetSize == MaterialTapTargetSize.shrinkWrap ? 8 : 0,
       children: [
-        for (var i = 0; i < bloc.state.executives.length; i++)
+        for (var i = 0; i < count; i++)
           InputChip(
             label: Text(bloc.state.executives[i].name),
             deleteIcon: const Icon(Icons.cancel, size: 18),
@@ -492,18 +487,18 @@ class _SaveButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskEditorBloc bloc;
-    var isInitialized = false;
-    context.select((final TaskEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return bloc.state.uploadState;
-    });
+    final (
+      bloc,
+      uploadState,
+    ) = context.select(
+      (final TaskEditorBloc bloc) => (
+        bloc,
+        bloc.state.uploadState,
+      ),
+    );
 
     return SaveButton(
-      isLoading: bloc.state.uploadState is OperationStatusInProgress,
+      isLoading: uploadState is OperationStatusInProgress,
       onPressed: () => bloc.add(const TaskEditorEventSaveRequested()),
     );
   }

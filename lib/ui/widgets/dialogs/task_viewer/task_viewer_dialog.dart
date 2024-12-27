@@ -101,15 +101,15 @@ class _Task extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskViewerBloc bloc;
-    var isInitialized = false;
-    context.select((final TaskViewerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return bloc.state.task.runtimeType;
-    });
+    final (
+      bloc,
+      _,
+    ) = context.select(
+      (final TaskViewerBloc bloc) => (
+        bloc,
+        bloc.state.task.runtimeType,
+      ),
+    );
 
     return switch (bloc.state.task) {
       StatusOfData() => const Column(
@@ -160,13 +160,7 @@ class _Text extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskViewerBloc bloc;
-    var isInitialized = false;
-    final text = context.select((final TaskViewerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
+    final text = context.select((final TaskViewerBloc bloc) {
       return switch (bloc.state.task) {
         StatusOfData(
           :final data
@@ -188,13 +182,7 @@ class _Image extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskViewerBloc bloc;
-    var isInitialized = false;
-    final imageUrl = context.select((final TaskViewerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
+    final imageUrl = context.select((final TaskViewerBloc bloc) {
       return switch (bloc.state.task) {
         StatusOfData(
           :final data
@@ -261,13 +249,7 @@ class _Time extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskViewerBloc bloc;
-    var isInitialized = false;
-    final isDone = context.select((final TaskViewerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
+    final isDone = context.select((final TaskViewerBloc bloc) {
       return switch (bloc.state.task) {
         StatusOfData(
           :final data
@@ -293,13 +275,7 @@ class _Deadline extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskViewerBloc bloc;
-    var isInitialized = false;
-    final deadline = context.select((final TaskViewerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
+    final deadline = context.select((final TaskViewerBloc bloc) {
       return switch (bloc.state.task) {
         StatusOfData(
           :final data
@@ -330,13 +306,7 @@ class _Delay extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final TaskViewerBloc bloc;
-    var isInitialized = false;
-    final delay = context.select((final TaskViewerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
+    final delay = context.select((final TaskViewerBloc bloc) {
       return switch (bloc.state.task) {
         StatusOfData(
           :final data

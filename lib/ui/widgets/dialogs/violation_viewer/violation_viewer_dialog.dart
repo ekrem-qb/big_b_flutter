@@ -57,15 +57,15 @@ class _Violation extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final ViolationViewerBloc bloc;
-    var isInitialized = false;
-    context.select((final ViolationViewerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return bloc.state.violation.runtimeType;
-    });
+    final (
+      bloc,
+      _,
+    ) = context.select(
+      (final ViolationViewerBloc bloc) => (
+        bloc,
+        bloc.state.violation.runtimeType,
+      ),
+    );
 
     return switch (bloc.state.violation) {
       StatusOfData() => const _ViolationContent(),
@@ -86,21 +86,21 @@ class _ViolationContent extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final ViolationViewerBloc bloc;
-    var isInitialized = false;
-    context.select((final ViolationViewerBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return switch (bloc.state.violation) {
-        StatusOfData(
-          :final data,
-        ) =>
-          data.runtimeType,
-        _ => null,
-      };
-    });
+    final (
+      bloc,
+      _,
+    ) = context.select(
+      (final ViolationViewerBloc bloc) => (
+        bloc,
+        switch (bloc.state.violation) {
+          StatusOfData(
+            :final data,
+          ) =>
+            data.runtimeType,
+          _ => null,
+        },
+      ),
+    );
     final textTheme = Theme.of(context).textTheme;
 
     return Column(

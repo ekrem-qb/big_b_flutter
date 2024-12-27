@@ -55,21 +55,21 @@ class TaskEditorView extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final ProfileEditorBloc bloc;
-    var isInitialized = false;
-    context.select((final ProfileEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return switch (bloc.state) {
-        ProfileEditorStateEdit(
-          :final loadingState
-        ) =>
-          loadingState.runtimeType,
-        _ => null,
-      };
-    });
+    final (
+      bloc,
+      _,
+    ) = context.select(
+      (final ProfileEditorBloc bloc) => (
+        bloc,
+        switch (bloc.state) {
+          ProfileEditorStateEdit(
+            :final loadingState
+          ) =>
+            loadingState.runtimeType,
+          _ => null,
+        },
+      ),
+    );
 
     return BlocListener<ProfileEditorBloc, ProfileEditorState>(
       listener: (final context, final state) async {
@@ -211,15 +211,16 @@ class _Name extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final ProfileEditorBloc bloc;
-    var isInitialized = false;
-    final error = context.select((final ProfileEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return newBloc.state.nameError;
-    });
+    final (
+      bloc,
+      error,
+    ) = context.select(
+      (final ProfileEditorBloc bloc) => (
+        bloc,
+        bloc.state.nameError,
+      ),
+    );
+
     final name = bloc.state.name;
 
     return TextFormField(
@@ -252,21 +253,21 @@ class _LoginState extends State<_Login> {
 
   @override
   Widget build(final BuildContext context) {
-    late final ProfileEditorBloc bloc;
-    var isInitialized = false;
-    final error = context.select((final ProfileEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return switch (newBloc.state) {
-        ProfileEditorStateCreate(
-          :final loginError
-        ) =>
-          loginError,
-        _ => null,
-      };
-    });
+    final (
+      bloc,
+      error,
+    ) = context.select(
+      (final ProfileEditorBloc bloc) => (
+        bloc,
+        switch (bloc.state) {
+          ProfileEditorStateCreate(
+            :final loginError
+          ) =>
+            loginError,
+          _ => null,
+        },
+      ),
+    );
 
     return BlocListener<ProfileEditorBloc, ProfileEditorState>(
       listenWhen: (final previous, final current) => switch (previous) {
@@ -311,31 +312,29 @@ class _Password extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final ProfileEditorBloc bloc;
-    var isInitialized = false;
     final (
+      bloc,
       isPasswordVisible,
       error,
-    ) = context.select((final ProfileEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
+    ) = context.select((final ProfileEditorBloc bloc) {
       return switch (bloc.state) {
         ProfileEditorStateCreate(
           :final isPasswordVisible,
           :final passwordError,
         ) =>
           (
+            bloc,
             isPasswordVisible,
             passwordError,
           ),
         _ => (
+            bloc,
             false,
             '',
           ),
       };
     });
+
     final password = switch (bloc.state) {
       ProfileEditorStateCreate(
         :final password
@@ -396,15 +395,15 @@ class _Role extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final ProfileEditorBloc bloc;
-    var isInitialized = false;
-    final currentRole = context.select((final ProfileEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return bloc.state.role;
-    });
+    final (
+      bloc,
+      currentRole,
+    ) = context.select(
+      (final ProfileEditorBloc bloc) => (
+        bloc,
+        bloc.state.role,
+      ),
+    );
 
     return Expanded(
       child: AnimatedCrossFade(
@@ -492,15 +491,15 @@ class _SaveButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final ProfileEditorBloc bloc;
-    var isInitialized = false;
-    final uploadState = context.select((final ProfileEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return bloc.state.uploadState;
-    });
+    final (
+      bloc,
+      uploadState,
+    ) = context.select(
+      (final ProfileEditorBloc bloc) => (
+        bloc,
+        bloc.state.uploadState,
+      ),
+    );
 
     return SaveButton(
       isLoading: uploadState is OperationStatusInProgress,

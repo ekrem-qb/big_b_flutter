@@ -114,15 +114,15 @@ class _ItemsList<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends 
 
   @override
   Widget build(final BuildContext context) {
-    late final TBloc bloc;
-    var isInitialized = false;
-    context.select((final TBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return bloc.state.runtimeType;
-    });
+    final (
+      bloc,
+      _,
+    ) = context.select(
+      (final TBloc bloc) => (
+        bloc,
+        bloc.state.runtimeType,
+      ),
+    );
 
     return AnimatedSwitcher(
       duration: Durations.medium1,
@@ -197,25 +197,22 @@ class _Item<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends State
 
   @override
   Widget build(final BuildContext context) {
-    late final TBloc bloc;
-    var isInitialized = false;
     final (
+      bloc,
       exists,
       isLoaded,
-    ) = context.select((final TBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
+    ) = context.select((final TBloc bloc) {
       return switch (bloc.state) {
         StatusOfData<ListerState>(
           :final data,
         ) =>
           (
+            bloc,
             data.totalCount > index,
             data.items.length > index,
           ),
         _ => (
+            bloc,
             false,
             false,
           ),
@@ -246,13 +243,7 @@ class _ItemContent<TBloc extends ListerBloc<TItem>, TItem extends Entity> extend
 
   @override
   Widget build(final BuildContext context) {
-    late final TBloc bloc;
-    var isInitialized = false;
-    final item = context.select((final TBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
+    final item = context.select((final TBloc bloc) {
       return switch (bloc.state) {
         StatusOfData<ListerState<TItem>>(
           :final data,

@@ -55,21 +55,21 @@ class RuleEditorView extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final RuleEditorBloc bloc;
-    var isInitialized = false;
-    context.select((final RuleEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return switch (bloc.state) {
-        RuleEditorStateEdit(
-          :final editState,
-        ) =>
-          editState.runtimeType,
-        RuleEditorStateCreate() => null,
-      };
-    });
+    final (
+      bloc,
+      _,
+    ) = context.select(
+      (final RuleEditorBloc bloc) => (
+        bloc,
+        switch (bloc.state) {
+          RuleEditorStateEdit(
+            :final editState,
+          ) =>
+            editState.runtimeType,
+          RuleEditorStateCreate() => null,
+        },
+      ),
+    );
 
     return BlocListener<RuleEditorBloc, RuleEditorState>(
       listener: (final context, final state) async {
@@ -162,32 +162,33 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final RuleEditorBloc bloc;
-    var isInitialized = false;
-    context.select((final RuleEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return switch (newBloc.state) {
-        RuleEditorStateCreate(
-          rule: Rule(
-            :final runtimeType,
-          ),
-        ) ||
-        RuleEditorStateEdit(
-          editState: StatusOfData(
-            data: RuleEditorStateEditState(
-              rule: Rule(
-                :final runtimeType,
+    final (
+      bloc,
+      _,
+    ) = context.select(
+      (final RuleEditorBloc bloc) => (
+        bloc,
+        switch (bloc.state) {
+          RuleEditorStateCreate(
+            rule: Rule(
+              :final runtimeType,
+            ),
+          ) ||
+          RuleEditorStateEdit(
+            editState: StatusOfData(
+              data: RuleEditorStateEditState(
+                rule: Rule(
+                  :final runtimeType,
+                ),
               ),
             ),
-          ),
-        ) =>
-          runtimeType,
-        _ => null,
-      };
-    });
+          ) =>
+            runtimeType,
+          _ => null,
+        },
+      ),
+    );
+
     final rule = switch (bloc.state) {
       RuleEditorStateCreate(
         :final rule,
@@ -278,32 +279,32 @@ class _Type extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final RuleEditorBloc bloc;
-    var isInitialized = false;
-    final type = context.select((final RuleEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return switch (newBloc.state) {
-        RuleEditorStateCreate(
-          :final rule,
-        ) ||
-        RuleEditorStateEdit(
-          editState: StatusOfData(
-            data: RuleEditorStateEditState(
-              :final rule,
+    final (
+      bloc,
+      type,
+    ) = context.select(
+      (final RuleEditorBloc bloc) => (
+        bloc,
+        switch (bloc.state) {
+          RuleEditorStateCreate(
+            :final rule,
+          ) ||
+          RuleEditorStateEdit(
+            editState: StatusOfData(
+              data: RuleEditorStateEditState(
+                :final rule,
+              ),
             ),
-          ),
-        ) =>
-          switch (rule) {
-            WordsRule() => WordsRule,
-            NameRule() => NameRule,
-            CustomRule() => CustomRule,
-          },
-        _ => CustomRule,
-      };
-    });
+          ) =>
+            switch (rule) {
+              WordsRule() => WordsRule,
+              NameRule() => NameRule,
+              CustomRule() => CustomRule,
+            },
+          _ => CustomRule,
+        },
+      ),
+    );
 
     return DropdownButtonFormField(
       isExpanded: true,
@@ -340,32 +341,32 @@ class _Words extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final RuleEditorBloc bloc;
-    var isInitialized = false;
-    final words = context.select((final RuleEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return switch (newBloc.state) {
-        RuleEditorStateCreate(
-          rule: WordsRule(
-            :final words,
-          ),
-        ) ||
-        RuleEditorStateEdit(
-          editState: StatusOfData(
-            data: RuleEditorStateEditState(
-              rule: WordsRule(
-                :final words,
+    final (
+      bloc,
+      words,
+    ) = context.select(
+      (final RuleEditorBloc bloc) => (
+        bloc,
+        switch (bloc.state) {
+          RuleEditorStateCreate(
+            rule: WordsRule(
+              :final words,
+            ),
+          ) ||
+          RuleEditorStateEdit(
+            editState: StatusOfData(
+              data: RuleEditorStateEditState(
+                rule: WordsRule(
+                  :final words,
+                ),
               ),
             ),
-          ),
-        ) =>
-          words,
-        _ => Set<String>.unmodifiable({}),
-      };
-    });
+          ) =>
+            words,
+          _ => Set<String>.unmodifiable({}),
+        },
+      ),
+    );
 
     return Wrap(
       spacing: 8,
@@ -398,17 +399,12 @@ class _Description extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final RuleEditorBloc bloc;
-    var isInitialized = false;
     final (
+      bloc,
       error,
       description,
-    ) = context.select((final RuleEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return switch (newBloc.state) {
+    ) = context.select((final RuleEditorBloc bloc) {
+      return switch (bloc.state) {
         RuleEditorStateCreate(
           :final descriptionError,
           rule: CustomRule(
@@ -426,10 +422,12 @@ class _Description extends StatelessWidget {
           ),
         ) =>
           (
+            bloc,
             descriptionError,
             description,
           ),
         _ => (
+            bloc,
             '',
             '',
           ),
@@ -487,32 +485,32 @@ class _Color extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final RuleEditorBloc bloc;
-    var isInitialized = false;
-    final color = context.select((final RuleEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return switch (newBloc.state) {
-        RuleEditorStateCreate(
-          rule: Rule(
-            :final color,
-          ),
-        ) ||
-        RuleEditorStateEdit(
-          editState: StatusOfData(
-            data: RuleEditorStateEditState(
-              rule: Rule(
-                :final color,
+    final (
+      bloc,
+      color,
+    ) = context.select(
+      (final RuleEditorBloc bloc) => (
+        bloc,
+        switch (bloc.state) {
+          RuleEditorStateCreate(
+            rule: Rule(
+              :final color,
+            ),
+          ) ||
+          RuleEditorStateEdit(
+            editState: StatusOfData(
+              data: RuleEditorStateEditState(
+                rule: Rule(
+                  :final color,
+                ),
               ),
             ),
-          ),
-        ) =>
-          color,
-        _ => Colors.red,
-      };
-    });
+          ) =>
+            color,
+          _ => Colors.red,
+        },
+      ),
+    );
 
     return ColorPicker(
       hasBorder: Theme.of(context).brightness == Brightness.light,
@@ -532,28 +530,28 @@ class _SaveButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    late final RuleEditorBloc bloc;
-    var isInitialized = false;
-    final uploadState = context.select((final RuleEditorBloc newBloc) {
-      if (!isInitialized) {
-        bloc = newBloc;
-        isInitialized = true;
-      }
-      return switch (bloc.state) {
-        RuleEditorStateCreate(
-          :final uploadState
-        ) ||
-        RuleEditorStateEdit(
-          editState: StatusOfData(
-            data: RuleEditorStateEditState(
-              :final uploadState,
+    final (
+      bloc,
+      uploadState,
+    ) = context.select(
+      (final RuleEditorBloc bloc) => (
+        bloc,
+        switch (bloc.state) {
+          RuleEditorStateCreate(
+            :final uploadState
+          ) ||
+          RuleEditorStateEdit(
+            editState: StatusOfData(
+              data: RuleEditorStateEditState(
+                :final uploadState,
+              ),
             ),
-          ),
-        ) =>
-          uploadState,
-        _ => const OperationStatusInitial(),
-      };
-    });
+          ) =>
+            uploadState,
+          _ => const OperationStatusInitial(),
+        },
+      ),
+    );
 
     return SaveButton(
       isLoading: uploadState is OperationStatusInProgress,
