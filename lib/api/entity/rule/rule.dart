@@ -53,4 +53,6 @@ sealed class Rule with _$Rule implements Entity {
   static List<Rule>? converter(final List<Map<String, dynamic>> data) => data.map(Rule.fromJson).toList();
 }
 
-int colorToJson(final Color object) => object.value;
+int _floatToInt8(final double x) => (x * 255.0).round() & 0xff;
+
+int colorToJson(final Color object) => _floatToInt8(object.a) << 24 | _floatToInt8(object.r) << 16 | _floatToInt8(object.g) << 8 | _floatToInt8(object.b) << 0;
