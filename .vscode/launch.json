@@ -10,7 +10,8 @@
             "type": "dart",
             "toolArgs": [
                 "-v",
-                "--dart-define-from-file=env.json"
+                "--dart-define-from-file=env.json",
+                "--no-enable-impeller"
             ]
         },
         {
@@ -20,7 +21,8 @@
             "flutterMode": "profile",
             "toolArgs": [
                 "-v",
-                "--dart-define-from-file=env.json"
+                "--dart-define-from-file=env.json",
+                "--no-enable-impeller"
             ]
         },
         {
@@ -30,7 +32,8 @@
             "flutterMode": "release",
             "toolArgs": [
                 "-v",
-                "--dart-define-from-file=env.json"
+                "--dart-define-from-file=env.json",
+                "--no-enable-impeller"
             ]
         }
     ]
