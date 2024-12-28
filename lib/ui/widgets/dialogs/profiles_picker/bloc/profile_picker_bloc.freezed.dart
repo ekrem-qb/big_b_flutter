@@ -259,7 +259,7 @@ abstract class ProfilePickerEventDeselected implements ProfilePickerEvent {
 /// @nodoc
 mixin _$ProfilePickerState {
   List<Profile> get excluded => throw _privateConstructorUsedError;
-  StatusOf<List<Profile>> get all => throw _privateConstructorUsedError;
+  StatusOf<List<Profile>, String> get all => throw _privateConstructorUsedError;
   List<Profile> get selected => throw _privateConstructorUsedError;
 
   /// Create a copy of ProfilePickerState
@@ -277,10 +277,10 @@ abstract class $ProfilePickerStateCopyWith<$Res> {
   @useResult
   $Res call(
       {List<Profile> excluded,
-      StatusOf<List<Profile>> all,
+      StatusOf<List<Profile>, String> all,
       List<Profile> selected});
 
-  $StatusOfCopyWith<List<Profile>, $Res> get all;
+  $StatusOfCopyWith<List<Profile>, String, $Res> get all;
 }
 
 /// @nodoc
@@ -310,7 +310,7 @@ class _$ProfilePickerStateCopyWithImpl<$Res, $Val extends ProfilePickerState>
       all: null == all
           ? _value.all
           : all // ignore: cast_nullable_to_non_nullable
-              as StatusOf<List<Profile>>,
+              as StatusOf<List<Profile>, String>,
       selected: null == selected
           ? _value.selected
           : selected // ignore: cast_nullable_to_non_nullable
@@ -322,8 +322,8 @@ class _$ProfilePickerStateCopyWithImpl<$Res, $Val extends ProfilePickerState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StatusOfCopyWith<List<Profile>, $Res> get all {
-    return $StatusOfCopyWith<List<Profile>, $Res>(_value.all, (value) {
+  $StatusOfCopyWith<List<Profile>, String, $Res> get all {
+    return $StatusOfCopyWith<List<Profile>, String, $Res>(_value.all, (value) {
       return _then(_value.copyWith(all: value) as $Val);
     });
   }
@@ -339,11 +339,11 @@ abstract class _$$ProfilePickerStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {List<Profile> excluded,
-      StatusOf<List<Profile>> all,
+      StatusOf<List<Profile>, String> all,
       List<Profile> selected});
 
   @override
-  $StatusOfCopyWith<List<Profile>, $Res> get all;
+  $StatusOfCopyWith<List<Profile>, String, $Res> get all;
 }
 
 /// @nodoc
@@ -371,7 +371,7 @@ class __$$ProfilePickerStateImplCopyWithImpl<$Res>
       all: null == all
           ? _value.all
           : all // ignore: cast_nullable_to_non_nullable
-              as StatusOf<List<Profile>>,
+              as StatusOf<List<Profile>, String>,
       selected: null == selected
           ? _value._selected
           : selected // ignore: cast_nullable_to_non_nullable
@@ -400,7 +400,7 @@ class _$ProfilePickerStateImpl implements _ProfilePickerState {
 
   @override
   @JsonKey()
-  final StatusOf<List<Profile>> all;
+  final StatusOf<List<Profile>, String> all;
   final List<Profile> _selected;
   @override
   @JsonKey()
@@ -445,13 +445,13 @@ class _$ProfilePickerStateImpl implements _ProfilePickerState {
 abstract class _ProfilePickerState implements ProfilePickerState {
   const factory _ProfilePickerState(
       {required final List<Profile> excluded,
-      final StatusOf<List<Profile>> all,
+      final StatusOf<List<Profile>, String> all,
       final List<Profile> selected}) = _$ProfilePickerStateImpl;
 
   @override
   List<Profile> get excluded;
   @override
-  StatusOf<List<Profile>> get all;
+  StatusOf<List<Profile>, String> get all;
   @override
   List<Profile> get selected;
 

@@ -128,14 +128,14 @@ class _ItemsList<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends 
       duration: Durations.medium1,
       transitionBuilder: fadeTransitionBuilder,
       child: switch (bloc.state) {
-        StatusOfLoading<ListerState>() => loadingShimmer,
-        StatusOfData<ListerState>() => _ItemsListContent<TBloc, TItem>(
+        StatusOfLoading() => loadingShimmer,
+        StatusOfData() => _ItemsListContent<TBloc, TItem>(
             listBuilder,
             itemBuilder,
             noItemsIcon,
             noItemsText,
           ),
-        StatusOfError<ListerState>(
+        StatusOfError(
           :final error
         ) =>
           ErrorPanel(
@@ -164,7 +164,7 @@ class _ItemsListContent<TBloc extends ListerBloc<TItem>, TItem extends Entity> e
   Widget build(final BuildContext context) {
     final count = context.select((final TBloc bloc) {
       return switch (bloc.state) {
-        StatusOfData<ListerState>(
+        StatusOfData(
           :final data,
         ) =>
           data.totalCount,
@@ -203,7 +203,7 @@ class _Item<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends State
       isLoaded,
     ) = context.select((final TBloc bloc) {
       return switch (bloc.state) {
-        StatusOfData<ListerState>(
+        StatusOfData(
           :final data,
         ) =>
           (
@@ -245,7 +245,7 @@ class _ItemContent<TBloc extends ListerBloc<TItem>, TItem extends Entity> extend
   Widget build(final BuildContext context) {
     final item = context.select((final TBloc bloc) {
       return switch (bloc.state) {
-        StatusOfData<ListerState<TItem>>(
+        StatusOfData(
           :final data,
         ) =>
           data.items.elementAtOrNull(index),

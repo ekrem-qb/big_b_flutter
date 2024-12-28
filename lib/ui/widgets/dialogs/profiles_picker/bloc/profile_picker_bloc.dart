@@ -50,27 +50,35 @@ class ProfilePickerBloc extends Bloc<ProfilePickerEvent, ProfilePickerState> {
   }
 
   Future<void> onSelected(final ProfilePickerEventSelected event, final Emitter<ProfilePickerState> emit) async {
-    if (state.all case final StatusOfData<List<Profile>> all) {
-      emit(
-        state.copyWith(
-          selected: [
-            ...state.selected,
-            all.data[event.index],
-          ],
-        ),
-      );
+    switch (state.all) {
+      case StatusOfData(
+          :final data,
+        ):
+        emit(
+          state.copyWith(
+            selected: [
+              ...state.selected,
+              data[event.index],
+            ],
+          ),
+        );
+      default:
     }
   }
 
   Future<void> onDeselected(final ProfilePickerEventDeselected event, final Emitter<ProfilePickerState> emit) async {
-    if (state.all case final StatusOfData<List<Profile>> all) {
-      emit(
-        state.copyWith(
-          selected: [
-            ...state.selected.where((final profile) => profile.uid != all.data[event.index].uid),
-          ],
-        ),
-      );
+    switch (state.all) {
+      case StatusOfData(
+          :final data,
+        ):
+        emit(
+          state.copyWith(
+            selected: [
+              ...state.selected.where((final profile) => profile.uid != data[event.index].uid),
+            ],
+          ),
+        );
+      default:
     }
   }
 }

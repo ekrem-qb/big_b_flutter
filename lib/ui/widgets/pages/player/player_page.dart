@@ -107,7 +107,7 @@ class _ViolationsButton extends StatelessWidget {
     ) = context.select(
       (final PlayerBloc bloc) => (
         bloc,
-        bloc.state.textState is StatusOfData<PlayerTextStateTextAndViolations>,
+        bloc.state.textState is StatusOfData,
       ),
     );
 
@@ -319,7 +319,7 @@ class _LoadedText extends StatelessWidget {
       (final PlayerBloc bloc) => (
         bloc,
         switch (bloc.state.textState) {
-          StatusOfData<PlayerTextState>(
+          StatusOfData(
             :final data,
           ) =>
             data.runtimeType,
@@ -329,7 +329,7 @@ class _LoadedText extends StatelessWidget {
     );
 
     return switch (bloc.state.textState) {
-      StatusOfData<PlayerTextState>(
+      StatusOfData(
         :final data,
       ) =>
         switch (data) {
@@ -764,7 +764,7 @@ class _Time extends StatelessWidget {
   Widget build(final BuildContext context) {
     final position = context.select((final PlayerBloc bloc) {
       return switch (bloc.state.audioState) {
-        StatusOfData<PlayerAudioState>(
+        StatusOfData(
           data: PlayerAudioState(
             :final position,
           ),
@@ -785,7 +785,7 @@ class _TotalTime extends StatelessWidget {
   Widget build(final BuildContext context) {
     final duration = context.select((final PlayerBloc bloc) {
       return switch (bloc.state.audioState) {
-        StatusOfData<PlayerAudioState>(
+        StatusOfData(
           data: PlayerAudioState(
             :final duration,
           ),
@@ -821,7 +821,7 @@ class _SliderState extends State<_Slider> {
       isPlaying,
     ) = context.select((final PlayerBloc bloc) {
       return switch (bloc.state.audioState) {
-        StatusOfData<PlayerAudioState>(
+        StatusOfData(
           data: PlayerAudioState(
             :final position,
             :final duration,
@@ -905,7 +905,7 @@ class _PlayButton extends StatelessWidget {
               horizontal: 2,
               vertical: 2,
             ),
-            onPressed: bloc.state.audioState is StatusOfData<PlayerAudioState> ? () => bloc.add(const PlayerEventPlayPauseButtonPressed()) : null,
+            onPressed: bloc.state.audioState is StatusOfData ? () => bloc.add(const PlayerEventPlayPauseButtonPressed()) : null,
             icon: const _PlayButtonIcon(),
           )
         : const IconButton.filled(
@@ -929,7 +929,7 @@ class _PlayButtonIcon extends StatelessWidget {
   Widget build(final BuildContext context) {
     final isPlaying = context.select((final PlayerBloc bloc) {
       return switch (bloc.state.audioState) {
-        StatusOfData<PlayerAudioState>(
+        StatusOfData(
           data: PlayerAudioState(
             :final isPlaying,
           ),

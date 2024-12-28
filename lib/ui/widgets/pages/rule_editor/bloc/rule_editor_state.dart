@@ -12,12 +12,12 @@ sealed class RuleEditorState with _$RuleEditorState {
     )
     final Rule rule,
     final String? descriptionError,
-    @Default(OperationStatusInitial()) final OperationStatus uploadState,
+    @Default(OperationStatusInitial()) final OperationStatus<String> uploadState,
   }) = RuleEditorStateCreate;
 
   const factory RuleEditorState.edit({
     required final int id,
-    @Default(StatusOfLoading()) final StatusOf<RuleEditorStateEditState> editState,
+    @Default(StatusOfLoading()) final StatusOf<RuleEditorStateEditState, String> editState,
   }) = RuleEditorStateEdit;
 }
 
@@ -26,7 +26,7 @@ class RuleEditorStateEditState with _$RuleEditorStateEditState {
   const factory RuleEditorStateEditState({
     required final Rule rule,
     final String? descriptionError,
-    @Default(OperationStatusInitial()) final OperationStatus uploadState,
-    @Default(OperationStatusInitial()) final OperationStatus deleteState,
+    @Default(OperationStatusInitial()) final OperationStatus<String> uploadState,
+    @Default(OperationStatusInitial()) final OperationStatus<String> deleteState,
   }) = _RuleEditorStateEditState;
 }

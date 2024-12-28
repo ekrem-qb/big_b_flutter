@@ -20,18 +20,18 @@ typedef ListerFilters<E> = (
   bool Function(E item),
 );
 
-abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<ListerState<T>>> {
+abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<ListerState<T>, String>> {
   ListerBloc({
     final List<T>? cachedItems,
   }) : super(
           cachedItems != null
-              ? StatusOfData<ListerState<T>>(
+              ? StatusOfData(
                   ListerState<T>(
                     totalCount: cachedItems.length,
                     items: cachedItems,
                   ),
                 )
-              : StatusOfLoading<ListerState<T>>(),
+              : const StatusOfLoading(),
         ) {
     on<ListerEvent>(
       (final event, final emit) {
@@ -69,7 +69,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
       ),
     ];
 
-    if (state is StatusOfLoading<ListerState<T>>) {
+    if (state is StatusOfLoading) {
       add(const ListerEventLoadRequested());
     }
   }
@@ -90,16 +90,20 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
   List<RealtimeChannel>? _dbSubscriptions;
 
   bool _isFullyLoaded() {
-    final currentState = state;
-    if (currentState is! StatusOfData<ListerState<T>>) return false;
-
-    return currentState.data.items.length == currentState.data.totalCount;
+    switch (state) {
+      case StatusOfData(
+          :final data,
+        ):
+        return data.items.length == data.totalCount;
+      default:
+        return false;
+    }
   }
 
-  Future<void> _onLoadRequested(final Emitter<StatusOf<ListerState<T>>> emit, final ListerEventLoadRequested event) async {
+  Future<void> _onLoadRequested(final Emitter<StatusOf<ListerState<T>, String>> emit, final ListerEventLoadRequested event) async {
     try {
-      if (state is StatusOfError<ListerState<T>>) {
-        emit(StatusOfLoading<ListerState<T>>());
+      if (state is StatusOfError) {
+        emit(const StatusOfLoading());
       }
 
       final countQuery = db.from(tableName).count();
@@ -107,7 +111,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
       final endIndex = max(
         itemsPerLoad,
         switch (state) {
-          StatusOfData<ListerState<T>>(
+          StatusOfData(
             :final data,
           ) =>
             data.items.length,
@@ -118,7 +122,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
       final items = await (filters != null ? filters!.$1(query) : query).limit(endIndex).order(orderBy, ascending: ascending).withConverter(converter) ?? const [];
 
       emit(
-        StatusOfData<ListerState<T>>(
+        StatusOfData(
           ListerState(
             totalCount: count,
             items: items,
@@ -126,53 +130,62 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
         ),
       );
     } catch (e) {
-      emit(StatusOfError<ListerState<T>>(e.toString()));
+      emit(StatusOfError(e.toString()));
     }
   }
 
-  Future<void> _onLoadAfterRequested(final Emitter<StatusOf<ListerState<T>>> emit, final ListerEventLoadAfterRequested event) async {
+  Future<void> _onLoadAfterRequested(final Emitter<StatusOf<ListerState<T>, String>> emit, final ListerEventLoadAfterRequested event) async {
     try {
-      final currentState = state;
-      if (currentState is! StatusOfData<ListerState<T>>) return;
-      if (event.index < currentState.data.items.length) return;
-      if (currentState.data.items.length >= currentState.data.totalCount) return;
+      switch (state) {
+        case StatusOfData(
+            :final data,
+            :final copyWith,
+          ):
+          if (event.index < data.items.length) return;
+          if (data.items.length >= data.totalCount) return;
 
-      final endIndex = min((currentState.data.items.length - 1) + itemsPerLoad, currentState.data.totalCount - 1);
-      final query = db.from(tableName).select(fieldNames);
-      final items = await (filters != null ? filters!.$1(query) : query).range(currentState.data.items.length, endIndex).order(orderBy, ascending: ascending).withConverter(converter) ?? const [];
+          final endIndex = min((data.items.length - 1) + itemsPerLoad, data.totalCount - 1);
+          final query = db.from(tableName).select(fieldNames);
+          final items = await (filters != null ? filters!.$1(query) : query).range(data.items.length, endIndex).order(orderBy, ascending: ascending).withConverter(converter) ?? const [];
 
-      emit(
-        currentState.copyWith(
-          data: currentState.data.copyWith(
-            items: [
-              ...currentState.data.items,
-              ...items,
-            ],
-          ),
-        ),
-      );
+          emit(
+            copyWith(
+              data: data.copyWith(
+                items: [
+                  ...data.items,
+                  ...items,
+                ],
+              ),
+            ),
+          );
+        default:
+          return;
+      }
     } catch (e) {
-      emit(StatusOfError<ListerState<T>>(e.toString()));
+      emit(StatusOfError(e.toString()));
     }
   }
 
-  Future<void> _onDataUpdated(final Emitter<StatusOf<ListerState<T>>> emit, final _ListerEventDataUpdated event) async {
+  Future<void> _onDataUpdated(final Emitter<StatusOf<ListerState<T>, String>> emit, final _ListerEventDataUpdated event) async {
     final currentState = state;
-    if (currentState is! StatusOfData<ListerState<T>>) return;
+    switch (currentState) {
+      case StatusOfData():
+        final newState = switch (event.payload.eventType) {
+          PostgresChangeEvent.insert => _insert(currentState, event.payload),
+          PostgresChangeEvent.update => _update(currentState, event.payload),
+          PostgresChangeEvent.delete => _delete(currentState, event.payload),
+          _ => null,
+        };
 
-    final newState = switch (event.payload.eventType) {
-      PostgresChangeEvent.insert => _insert(currentState, event.payload),
-      PostgresChangeEvent.update => _update(currentState, event.payload),
-      PostgresChangeEvent.delete => _delete(currentState, event.payload),
-      _ => null,
-    };
-
-    if (newState != null) {
-      emit(newState);
+        if (newState != null) {
+          emit(newState);
+        }
+      default:
+        return;
     }
   }
 
-  StatusOfData<ListerState<T>>? _insert(final StatusOfData<ListerState<T>> currentState, final PostgresChangePayload payload) {
+  StatusOfData<ListerState<T>, String>? _insert(final StatusOfData<ListerState<T>, String> currentState, final PostgresChangePayload payload) {
     final newItem = fromJson(payload.newRecord);
     final newItems = filters != null && !filters!.$2(newItem) ? null : _insertIntoList(newItem, currentState.data.items);
 
@@ -188,7 +201,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
     );
   }
 
-  StatusOfData<ListerState<T>>? _update(final StatusOfData<ListerState<T>> currentState, final PostgresChangePayload payload) {
+  StatusOfData<ListerState<T>, String>? _update(final StatusOfData<ListerState<T>, String> currentState, final PostgresChangePayload payload) {
     final newItem = fromJson(payload.newRecord);
     final List<T>? newItems;
     final int? newCount;
@@ -231,7 +244,7 @@ abstract class ListerBloc<T extends Entity> extends Bloc<ListerEvent, StatusOf<L
         : null;
   }
 
-  StatusOfData<ListerState<T>> _delete(final StatusOfData<ListerState<T>> currentState, final PostgresChangePayload payload) {
+  StatusOfData<ListerState<T>, String> _delete(final StatusOfData<ListerState<T>, String> currentState, final PostgresChangePayload payload) {
     final newItems = _deleteFromList(payload.oldRecord, currentState.data.items);
 
     return StatusOfData(

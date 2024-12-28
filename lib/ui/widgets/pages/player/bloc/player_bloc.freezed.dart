@@ -835,10 +835,12 @@ abstract class PlayerEventPlayPauseButtonPressed implements PlayerEvent {
 mixin _$PlayerState {
   int get recordingId => throw _privateConstructorUsedError;
   int? get currentTextLineId => throw _privateConstructorUsedError;
-  StatusOf<Recording> get recordingState => throw _privateConstructorUsedError;
-  StatusOf<PlayerAudioState> get audioState =>
+  StatusOf<Recording, String> get recordingState =>
       throw _privateConstructorUsedError;
-  StatusOf<PlayerTextState> get textState => throw _privateConstructorUsedError;
+  StatusOf<PlayerAudioState, String> get audioState =>
+      throw _privateConstructorUsedError;
+  StatusOf<PlayerTextState, String> get textState =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of PlayerState
   /// with the given fields replaced by the non-null parameter values.
@@ -856,13 +858,13 @@ abstract class $PlayerStateCopyWith<$Res> {
   $Res call(
       {int recordingId,
       int? currentTextLineId,
-      StatusOf<Recording> recordingState,
-      StatusOf<PlayerAudioState> audioState,
-      StatusOf<PlayerTextState> textState});
+      StatusOf<Recording, String> recordingState,
+      StatusOf<PlayerAudioState, String> audioState,
+      StatusOf<PlayerTextState, String> textState});
 
-  $StatusOfCopyWith<Recording, $Res> get recordingState;
-  $StatusOfCopyWith<PlayerAudioState, $Res> get audioState;
-  $StatusOfCopyWith<PlayerTextState, $Res> get textState;
+  $StatusOfCopyWith<Recording, String, $Res> get recordingState;
+  $StatusOfCopyWith<PlayerAudioState, String, $Res> get audioState;
+  $StatusOfCopyWith<PlayerTextState, String, $Res> get textState;
 }
 
 /// @nodoc
@@ -898,15 +900,15 @@ class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
       recordingState: null == recordingState
           ? _value.recordingState
           : recordingState // ignore: cast_nullable_to_non_nullable
-              as StatusOf<Recording>,
+              as StatusOf<Recording, String>,
       audioState: null == audioState
           ? _value.audioState
           : audioState // ignore: cast_nullable_to_non_nullable
-              as StatusOf<PlayerAudioState>,
+              as StatusOf<PlayerAudioState, String>,
       textState: null == textState
           ? _value.textState
           : textState // ignore: cast_nullable_to_non_nullable
-              as StatusOf<PlayerTextState>,
+              as StatusOf<PlayerTextState, String>,
     ) as $Val);
   }
 
@@ -914,8 +916,9 @@ class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StatusOfCopyWith<Recording, $Res> get recordingState {
-    return $StatusOfCopyWith<Recording, $Res>(_value.recordingState, (value) {
+  $StatusOfCopyWith<Recording, String, $Res> get recordingState {
+    return $StatusOfCopyWith<Recording, String, $Res>(_value.recordingState,
+        (value) {
       return _then(_value.copyWith(recordingState: value) as $Val);
     });
   }
@@ -924,8 +927,8 @@ class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StatusOfCopyWith<PlayerAudioState, $Res> get audioState {
-    return $StatusOfCopyWith<PlayerAudioState, $Res>(_value.audioState,
+  $StatusOfCopyWith<PlayerAudioState, String, $Res> get audioState {
+    return $StatusOfCopyWith<PlayerAudioState, String, $Res>(_value.audioState,
         (value) {
       return _then(_value.copyWith(audioState: value) as $Val);
     });
@@ -935,8 +938,9 @@ class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StatusOfCopyWith<PlayerTextState, $Res> get textState {
-    return $StatusOfCopyWith<PlayerTextState, $Res>(_value.textState, (value) {
+  $StatusOfCopyWith<PlayerTextState, String, $Res> get textState {
+    return $StatusOfCopyWith<PlayerTextState, String, $Res>(_value.textState,
+        (value) {
       return _then(_value.copyWith(textState: value) as $Val);
     });
   }
@@ -953,16 +957,16 @@ abstract class _$$PlayerStateImplCopyWith<$Res>
   $Res call(
       {int recordingId,
       int? currentTextLineId,
-      StatusOf<Recording> recordingState,
-      StatusOf<PlayerAudioState> audioState,
-      StatusOf<PlayerTextState> textState});
+      StatusOf<Recording, String> recordingState,
+      StatusOf<PlayerAudioState, String> audioState,
+      StatusOf<PlayerTextState, String> textState});
 
   @override
-  $StatusOfCopyWith<Recording, $Res> get recordingState;
+  $StatusOfCopyWith<Recording, String, $Res> get recordingState;
   @override
-  $StatusOfCopyWith<PlayerAudioState, $Res> get audioState;
+  $StatusOfCopyWith<PlayerAudioState, String, $Res> get audioState;
   @override
-  $StatusOfCopyWith<PlayerTextState, $Res> get textState;
+  $StatusOfCopyWith<PlayerTextState, String, $Res> get textState;
 }
 
 /// @nodoc
@@ -996,15 +1000,15 @@ class __$$PlayerStateImplCopyWithImpl<$Res>
       recordingState: null == recordingState
           ? _value.recordingState
           : recordingState // ignore: cast_nullable_to_non_nullable
-              as StatusOf<Recording>,
+              as StatusOf<Recording, String>,
       audioState: null == audioState
           ? _value.audioState
           : audioState // ignore: cast_nullable_to_non_nullable
-              as StatusOf<PlayerAudioState>,
+              as StatusOf<PlayerAudioState, String>,
       textState: null == textState
           ? _value.textState
           : textState // ignore: cast_nullable_to_non_nullable
-              as StatusOf<PlayerTextState>,
+              as StatusOf<PlayerTextState, String>,
     ));
   }
 }
@@ -1025,13 +1029,13 @@ class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
   final int? currentTextLineId;
   @override
   @JsonKey()
-  final StatusOf<Recording> recordingState;
+  final StatusOf<Recording, String> recordingState;
   @override
   @JsonKey()
-  final StatusOf<PlayerAudioState> audioState;
+  final StatusOf<PlayerAudioState, String> audioState;
   @override
   @JsonKey()
-  final StatusOf<PlayerTextState> textState;
+  final StatusOf<PlayerTextState, String> textState;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -1084,20 +1088,20 @@ abstract class _PlayerState implements PlayerState {
   const factory _PlayerState(
       {required final int recordingId,
       final int? currentTextLineId,
-      final StatusOf<Recording> recordingState,
-      final StatusOf<PlayerAudioState> audioState,
-      final StatusOf<PlayerTextState> textState}) = _$PlayerStateImpl;
+      final StatusOf<Recording, String> recordingState,
+      final StatusOf<PlayerAudioState, String> audioState,
+      final StatusOf<PlayerTextState, String> textState}) = _$PlayerStateImpl;
 
   @override
   int get recordingId;
   @override
   int? get currentTextLineId;
   @override
-  StatusOf<Recording> get recordingState;
+  StatusOf<Recording, String> get recordingState;
   @override
-  StatusOf<PlayerAudioState> get audioState;
+  StatusOf<PlayerAudioState, String> get audioState;
   @override
-  StatusOf<PlayerTextState> get textState;
+  StatusOf<PlayerTextState, String> get textState;
 
   /// Create a copy of PlayerState
   /// with the given fields replaced by the non-null parameter values.
@@ -1494,9 +1498,9 @@ abstract class _$$PlayerTextStateTextAndViolationsImplCopyWith<$Res> {
       {int currentTextLine,
       List<TextLine> textLines,
       List<List<HighlightViolation>> highlights,
-      StatusOf<List<Violation>> violations});
+      StatusOf<List<Violation>, String> violations});
 
-  $StatusOfCopyWith<List<Violation>, $Res> get violations;
+  $StatusOfCopyWith<List<Violation>, String, $Res> get violations;
 }
 
 /// @nodoc
@@ -1535,7 +1539,7 @@ class __$$PlayerTextStateTextAndViolationsImplCopyWithImpl<$Res>
       violations: null == violations
           ? _value.violations
           : violations // ignore: cast_nullable_to_non_nullable
-              as StatusOf<List<Violation>>,
+              as StatusOf<List<Violation>, String>,
     ));
   }
 
@@ -1543,8 +1547,9 @@ class __$$PlayerTextStateTextAndViolationsImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StatusOfCopyWith<List<Violation>, $Res> get violations {
-    return $StatusOfCopyWith<List<Violation>, $Res>(_value.violations, (value) {
+  $StatusOfCopyWith<List<Violation>, String, $Res> get violations {
+    return $StatusOfCopyWith<List<Violation>, String, $Res>(_value.violations,
+        (value) {
       return _then(_value.copyWith(violations: value));
     });
   }
@@ -1586,7 +1591,7 @@ class _$PlayerTextStateTextAndViolationsImpl
 
   @override
   @JsonKey()
-  final StatusOf<List<Violation>> violations;
+  final StatusOf<List<Violation>, String> violations;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -1643,13 +1648,13 @@ abstract class PlayerTextStateTextAndViolations implements PlayerTextState {
           {final int currentTextLine,
           final List<TextLine> textLines,
           final List<List<HighlightViolation>> highlights,
-          final StatusOf<List<Violation>> violations}) =
+          final StatusOf<List<Violation>, String> violations}) =
       _$PlayerTextStateTextAndViolationsImpl;
 
   int get currentTextLine;
   List<TextLine> get textLines;
   List<List<HighlightViolation>> get highlights;
-  StatusOf<List<Violation>> get violations;
+  StatusOf<List<Violation>, String> get violations;
 
   /// Create a copy of PlayerTextState
   /// with the given fields replaced by the non-null parameter values.

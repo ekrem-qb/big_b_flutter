@@ -15,18 +15,18 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$OperationStatus {}
+mixin _$OperationStatus<E> {}
 
 /// @nodoc
-abstract class $OperationStatusCopyWith<$Res> {
+abstract class $OperationStatusCopyWith<E, $Res> {
   factory $OperationStatusCopyWith(
-          OperationStatus value, $Res Function(OperationStatus) then) =
-      _$OperationStatusCopyWithImpl<$Res, OperationStatus>;
+          OperationStatus<E> value, $Res Function(OperationStatus<E>) then) =
+      _$OperationStatusCopyWithImpl<E, $Res, OperationStatus<E>>;
 }
 
 /// @nodoc
-class _$OperationStatusCopyWithImpl<$Res, $Val extends OperationStatus>
-    implements $OperationStatusCopyWith<$Res> {
+class _$OperationStatusCopyWithImpl<E, $Res, $Val extends OperationStatus<E>>
+    implements $OperationStatusCopyWith<E, $Res> {
   _$OperationStatusCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -39,20 +39,21 @@ class _$OperationStatusCopyWithImpl<$Res, $Val extends OperationStatus>
 }
 
 /// @nodoc
-abstract class _$$OperationStatusInitialImplCopyWith<$Res> {
+abstract class _$$OperationStatusInitialImplCopyWith<E, $Res> {
   factory _$$OperationStatusInitialImplCopyWith(
-          _$OperationStatusInitialImpl value,
-          $Res Function(_$OperationStatusInitialImpl) then) =
-      __$$OperationStatusInitialImplCopyWithImpl<$Res>;
+          _$OperationStatusInitialImpl<E> value,
+          $Res Function(_$OperationStatusInitialImpl<E>) then) =
+      __$$OperationStatusInitialImplCopyWithImpl<E, $Res>;
 }
 
 /// @nodoc
-class __$$OperationStatusInitialImplCopyWithImpl<$Res>
-    extends _$OperationStatusCopyWithImpl<$Res, _$OperationStatusInitialImpl>
-    implements _$$OperationStatusInitialImplCopyWith<$Res> {
+class __$$OperationStatusInitialImplCopyWithImpl<E, $Res>
+    extends _$OperationStatusCopyWithImpl<E, $Res,
+        _$OperationStatusInitialImpl<E>>
+    implements _$$OperationStatusInitialImplCopyWith<E, $Res> {
   __$$OperationStatusInitialImplCopyWithImpl(
-      _$OperationStatusInitialImpl _value,
-      $Res Function(_$OperationStatusInitialImpl) _then)
+      _$OperationStatusInitialImpl<E> _value,
+      $Res Function(_$OperationStatusInitialImpl<E>) _then)
       : super(_value, _then);
 
   /// Create a copy of OperationStatus
@@ -61,44 +62,45 @@ class __$$OperationStatusInitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OperationStatusInitialImpl implements OperationStatusInitial {
+class _$OperationStatusInitialImpl<E> implements OperationStatusInitial<E> {
   const _$OperationStatusInitialImpl();
 
   @override
   String toString() {
-    return 'OperationStatus.initial()';
+    return 'OperationStatus<$E>.initial()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OperationStatusInitialImpl);
+            other is _$OperationStatusInitialImpl<E>);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 }
 
-abstract class OperationStatusInitial implements OperationStatus {
-  const factory OperationStatusInitial() = _$OperationStatusInitialImpl;
+abstract class OperationStatusInitial<E> implements OperationStatus<E> {
+  const factory OperationStatusInitial() = _$OperationStatusInitialImpl<E>;
 }
 
 /// @nodoc
-abstract class _$$OperationStatusInProgressImplCopyWith<$Res> {
+abstract class _$$OperationStatusInProgressImplCopyWith<E, $Res> {
   factory _$$OperationStatusInProgressImplCopyWith(
-          _$OperationStatusInProgressImpl value,
-          $Res Function(_$OperationStatusInProgressImpl) then) =
-      __$$OperationStatusInProgressImplCopyWithImpl<$Res>;
+          _$OperationStatusInProgressImpl<E> value,
+          $Res Function(_$OperationStatusInProgressImpl<E>) then) =
+      __$$OperationStatusInProgressImplCopyWithImpl<E, $Res>;
 }
 
 /// @nodoc
-class __$$OperationStatusInProgressImplCopyWithImpl<$Res>
-    extends _$OperationStatusCopyWithImpl<$Res, _$OperationStatusInProgressImpl>
-    implements _$$OperationStatusInProgressImplCopyWith<$Res> {
+class __$$OperationStatusInProgressImplCopyWithImpl<E, $Res>
+    extends _$OperationStatusCopyWithImpl<E, $Res,
+        _$OperationStatusInProgressImpl<E>>
+    implements _$$OperationStatusInProgressImplCopyWith<E, $Res> {
   __$$OperationStatusInProgressImplCopyWithImpl(
-      _$OperationStatusInProgressImpl _value,
-      $Res Function(_$OperationStatusInProgressImpl) _then)
+      _$OperationStatusInProgressImpl<E> _value,
+      $Res Function(_$OperationStatusInProgressImpl<E>) _then)
       : super(_value, _then);
 
   /// Create a copy of OperationStatus
@@ -107,44 +109,48 @@ class __$$OperationStatusInProgressImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OperationStatusInProgressImpl implements OperationStatusInProgress {
+class _$OperationStatusInProgressImpl<E>
+    implements OperationStatusInProgress<E> {
   const _$OperationStatusInProgressImpl();
 
   @override
   String toString() {
-    return 'OperationStatus.inProgress()';
+    return 'OperationStatus<$E>.inProgress()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OperationStatusInProgressImpl);
+            other is _$OperationStatusInProgressImpl<E>);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 }
 
-abstract class OperationStatusInProgress implements OperationStatus {
-  const factory OperationStatusInProgress() = _$OperationStatusInProgressImpl;
+abstract class OperationStatusInProgress<E> implements OperationStatus<E> {
+  const factory OperationStatusInProgress() =
+      _$OperationStatusInProgressImpl<E>;
 }
 
 /// @nodoc
-abstract class _$$OperationStatusErrorImplCopyWith<$Res> {
-  factory _$$OperationStatusErrorImplCopyWith(_$OperationStatusErrorImpl value,
-          $Res Function(_$OperationStatusErrorImpl) then) =
-      __$$OperationStatusErrorImplCopyWithImpl<$Res>;
+abstract class _$$OperationStatusErrorImplCopyWith<E, $Res> {
+  factory _$$OperationStatusErrorImplCopyWith(
+          _$OperationStatusErrorImpl<E> value,
+          $Res Function(_$OperationStatusErrorImpl<E>) then) =
+      __$$OperationStatusErrorImplCopyWithImpl<E, $Res>;
   @useResult
-  $Res call({String error});
+  $Res call({E error});
 }
 
 /// @nodoc
-class __$$OperationStatusErrorImplCopyWithImpl<$Res>
-    extends _$OperationStatusCopyWithImpl<$Res, _$OperationStatusErrorImpl>
-    implements _$$OperationStatusErrorImplCopyWith<$Res> {
-  __$$OperationStatusErrorImplCopyWithImpl(_$OperationStatusErrorImpl _value,
-      $Res Function(_$OperationStatusErrorImpl) _then)
+class __$$OperationStatusErrorImplCopyWithImpl<E, $Res>
+    extends _$OperationStatusCopyWithImpl<E, $Res,
+        _$OperationStatusErrorImpl<E>>
+    implements _$$OperationStatusErrorImplCopyWith<E, $Res> {
+  __$$OperationStatusErrorImplCopyWithImpl(_$OperationStatusErrorImpl<E> _value,
+      $Res Function(_$OperationStatusErrorImpl<E>) _then)
       : super(_value, _then);
 
   /// Create a copy of OperationStatus
@@ -152,80 +158,81 @@ class __$$OperationStatusErrorImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? error = null,
+    Object? error = freezed,
   }) {
-    return _then(_$OperationStatusErrorImpl(
-      null == error
+    return _then(_$OperationStatusErrorImpl<E>(
+      freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
-              as String,
+              as E,
     ));
   }
 }
 
 /// @nodoc
 
-class _$OperationStatusErrorImpl implements OperationStatusError {
+class _$OperationStatusErrorImpl<E> implements OperationStatusError<E> {
   const _$OperationStatusErrorImpl(this.error);
 
   @override
-  final String error;
+  final E error;
 
   @override
   String toString() {
-    return 'OperationStatus.error(error: $error)';
+    return 'OperationStatus<$E>.error(error: $error)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OperationStatusErrorImpl &&
-            (identical(other.error, error) || other.error == error));
+            other is _$OperationStatusErrorImpl<E> &&
+            const DeepCollectionEquality().equals(other.error, error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, error);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(error));
 
   /// Create a copy of OperationStatus
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$OperationStatusErrorImplCopyWith<_$OperationStatusErrorImpl>
-      get copyWith =>
-          __$$OperationStatusErrorImplCopyWithImpl<_$OperationStatusErrorImpl>(
-              this, _$identity);
+  _$$OperationStatusErrorImplCopyWith<E, _$OperationStatusErrorImpl<E>>
+      get copyWith => __$$OperationStatusErrorImplCopyWithImpl<E,
+          _$OperationStatusErrorImpl<E>>(this, _$identity);
 }
 
-abstract class OperationStatusError implements OperationStatus {
-  const factory OperationStatusError(final String error) =
-      _$OperationStatusErrorImpl;
+abstract class OperationStatusError<E> implements OperationStatus<E> {
+  const factory OperationStatusError(final E error) =
+      _$OperationStatusErrorImpl<E>;
 
-  String get error;
+  E get error;
 
   /// Create a copy of OperationStatus
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$OperationStatusErrorImplCopyWith<_$OperationStatusErrorImpl>
+  _$$OperationStatusErrorImplCopyWith<E, _$OperationStatusErrorImpl<E>>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$OperationStatusCompletedImplCopyWith<$Res> {
+abstract class _$$OperationStatusCompletedImplCopyWith<E, $Res> {
   factory _$$OperationStatusCompletedImplCopyWith(
-          _$OperationStatusCompletedImpl value,
-          $Res Function(_$OperationStatusCompletedImpl) then) =
-      __$$OperationStatusCompletedImplCopyWithImpl<$Res>;
+          _$OperationStatusCompletedImpl<E> value,
+          $Res Function(_$OperationStatusCompletedImpl<E>) then) =
+      __$$OperationStatusCompletedImplCopyWithImpl<E, $Res>;
 }
 
 /// @nodoc
-class __$$OperationStatusCompletedImplCopyWithImpl<$Res>
-    extends _$OperationStatusCopyWithImpl<$Res, _$OperationStatusCompletedImpl>
-    implements _$$OperationStatusCompletedImplCopyWith<$Res> {
+class __$$OperationStatusCompletedImplCopyWithImpl<E, $Res>
+    extends _$OperationStatusCopyWithImpl<E, $Res,
+        _$OperationStatusCompletedImpl<E>>
+    implements _$$OperationStatusCompletedImplCopyWith<E, $Res> {
   __$$OperationStatusCompletedImplCopyWithImpl(
-      _$OperationStatusCompletedImpl _value,
-      $Res Function(_$OperationStatusCompletedImpl) _then)
+      _$OperationStatusCompletedImpl<E> _value,
+      $Res Function(_$OperationStatusCompletedImpl<E>) _then)
       : super(_value, _then);
 
   /// Create a copy of OperationStatus
@@ -234,41 +241,41 @@ class __$$OperationStatusCompletedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OperationStatusCompletedImpl implements OperationStatusCompleted {
+class _$OperationStatusCompletedImpl<E> implements OperationStatusCompleted<E> {
   const _$OperationStatusCompletedImpl();
 
   @override
   String toString() {
-    return 'OperationStatus.completed()';
+    return 'OperationStatus<$E>.completed()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OperationStatusCompletedImpl);
+            other is _$OperationStatusCompletedImpl<E>);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 }
 
-abstract class OperationStatusCompleted implements OperationStatus {
-  const factory OperationStatusCompleted() = _$OperationStatusCompletedImpl;
+abstract class OperationStatusCompleted<E> implements OperationStatus<E> {
+  const factory OperationStatusCompleted() = _$OperationStatusCompletedImpl<E>;
 }
 
 /// @nodoc
-mixin _$Status {}
+mixin _$Status<E> {}
 
 /// @nodoc
-abstract class $StatusCopyWith<$Res> {
-  factory $StatusCopyWith(Status value, $Res Function(Status) then) =
-      _$StatusCopyWithImpl<$Res, Status>;
+abstract class $StatusCopyWith<E, $Res> {
+  factory $StatusCopyWith(Status<E> value, $Res Function(Status<E>) then) =
+      _$StatusCopyWithImpl<E, $Res, Status<E>>;
 }
 
 /// @nodoc
-class _$StatusCopyWithImpl<$Res, $Val extends Status>
-    implements $StatusCopyWith<$Res> {
+class _$StatusCopyWithImpl<E, $Res, $Val extends Status<E>>
+    implements $StatusCopyWith<E, $Res> {
   _$StatusCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -281,18 +288,18 @@ class _$StatusCopyWithImpl<$Res, $Val extends Status>
 }
 
 /// @nodoc
-abstract class _$$StatusLoadingImplCopyWith<$Res> {
-  factory _$$StatusLoadingImplCopyWith(
-          _$StatusLoadingImpl value, $Res Function(_$StatusLoadingImpl) then) =
-      __$$StatusLoadingImplCopyWithImpl<$Res>;
+abstract class _$$StatusLoadingImplCopyWith<E, $Res> {
+  factory _$$StatusLoadingImplCopyWith(_$StatusLoadingImpl<E> value,
+          $Res Function(_$StatusLoadingImpl<E>) then) =
+      __$$StatusLoadingImplCopyWithImpl<E, $Res>;
 }
 
 /// @nodoc
-class __$$StatusLoadingImplCopyWithImpl<$Res>
-    extends _$StatusCopyWithImpl<$Res, _$StatusLoadingImpl>
-    implements _$$StatusLoadingImplCopyWith<$Res> {
-  __$$StatusLoadingImplCopyWithImpl(
-      _$StatusLoadingImpl _value, $Res Function(_$StatusLoadingImpl) _then)
+class __$$StatusLoadingImplCopyWithImpl<E, $Res>
+    extends _$StatusCopyWithImpl<E, $Res, _$StatusLoadingImpl<E>>
+    implements _$$StatusLoadingImplCopyWith<E, $Res> {
+  __$$StatusLoadingImplCopyWithImpl(_$StatusLoadingImpl<E> _value,
+      $Res Function(_$StatusLoadingImpl<E>) _then)
       : super(_value, _then);
 
   /// Create a copy of Status
@@ -301,43 +308,43 @@ class __$$StatusLoadingImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$StatusLoadingImpl implements StatusLoading {
+class _$StatusLoadingImpl<E> implements StatusLoading<E> {
   const _$StatusLoadingImpl();
 
   @override
   String toString() {
-    return 'Status.loading()';
+    return 'Status<$E>.loading()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$StatusLoadingImpl);
+        (other.runtimeType == runtimeType && other is _$StatusLoadingImpl<E>);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 }
 
-abstract class StatusLoading implements Status {
-  const factory StatusLoading() = _$StatusLoadingImpl;
+abstract class StatusLoading<E> implements Status<E> {
+  const factory StatusLoading() = _$StatusLoadingImpl<E>;
 }
 
 /// @nodoc
-abstract class _$$StatusErrorImplCopyWith<$Res> {
-  factory _$$StatusErrorImplCopyWith(
-          _$StatusErrorImpl value, $Res Function(_$StatusErrorImpl) then) =
-      __$$StatusErrorImplCopyWithImpl<$Res>;
+abstract class _$$StatusErrorImplCopyWith<E, $Res> {
+  factory _$$StatusErrorImplCopyWith(_$StatusErrorImpl<E> value,
+          $Res Function(_$StatusErrorImpl<E>) then) =
+      __$$StatusErrorImplCopyWithImpl<E, $Res>;
   @useResult
-  $Res call({String error});
+  $Res call({E error});
 }
 
 /// @nodoc
-class __$$StatusErrorImplCopyWithImpl<$Res>
-    extends _$StatusCopyWithImpl<$Res, _$StatusErrorImpl>
-    implements _$$StatusErrorImplCopyWith<$Res> {
+class __$$StatusErrorImplCopyWithImpl<E, $Res>
+    extends _$StatusCopyWithImpl<E, $Res, _$StatusErrorImpl<E>>
+    implements _$$StatusErrorImplCopyWith<E, $Res> {
   __$$StatusErrorImplCopyWithImpl(
-      _$StatusErrorImpl _value, $Res Function(_$StatusErrorImpl) _then)
+      _$StatusErrorImpl<E> _value, $Res Function(_$StatusErrorImpl<E>) _then)
       : super(_value, _then);
 
   /// Create a copy of Status
@@ -345,75 +352,77 @@ class __$$StatusErrorImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? error = null,
+    Object? error = freezed,
   }) {
-    return _then(_$StatusErrorImpl(
-      null == error
+    return _then(_$StatusErrorImpl<E>(
+      freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
-              as String,
+              as E,
     ));
   }
 }
 
 /// @nodoc
 
-class _$StatusErrorImpl implements StatusError {
+class _$StatusErrorImpl<E> implements StatusError<E> {
   const _$StatusErrorImpl(this.error);
 
   @override
-  final String error;
+  final E error;
 
   @override
   String toString() {
-    return 'Status.error(error: $error)';
+    return 'Status<$E>.error(error: $error)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$StatusErrorImpl &&
-            (identical(other.error, error) || other.error == error));
+            other is _$StatusErrorImpl<E> &&
+            const DeepCollectionEquality().equals(other.error, error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, error);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(error));
 
   /// Create a copy of Status
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$StatusErrorImplCopyWith<_$StatusErrorImpl> get copyWith =>
-      __$$StatusErrorImplCopyWithImpl<_$StatusErrorImpl>(this, _$identity);
+  _$$StatusErrorImplCopyWith<E, _$StatusErrorImpl<E>> get copyWith =>
+      __$$StatusErrorImplCopyWithImpl<E, _$StatusErrorImpl<E>>(
+          this, _$identity);
 }
 
-abstract class StatusError implements Status {
-  const factory StatusError(final String error) = _$StatusErrorImpl;
+abstract class StatusError<E> implements Status<E> {
+  const factory StatusError(final E error) = _$StatusErrorImpl<E>;
 
-  String get error;
+  E get error;
 
   /// Create a copy of Status
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$StatusErrorImplCopyWith<_$StatusErrorImpl> get copyWith =>
+  _$$StatusErrorImplCopyWith<E, _$StatusErrorImpl<E>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$StatusCompletedImplCopyWith<$Res> {
-  factory _$$StatusCompletedImplCopyWith(_$StatusCompletedImpl value,
-          $Res Function(_$StatusCompletedImpl) then) =
-      __$$StatusCompletedImplCopyWithImpl<$Res>;
+abstract class _$$StatusCompletedImplCopyWith<E, $Res> {
+  factory _$$StatusCompletedImplCopyWith(_$StatusCompletedImpl<E> value,
+          $Res Function(_$StatusCompletedImpl<E>) then) =
+      __$$StatusCompletedImplCopyWithImpl<E, $Res>;
 }
 
 /// @nodoc
-class __$$StatusCompletedImplCopyWithImpl<$Res>
-    extends _$StatusCopyWithImpl<$Res, _$StatusCompletedImpl>
-    implements _$$StatusCompletedImplCopyWith<$Res> {
-  __$$StatusCompletedImplCopyWithImpl(
-      _$StatusCompletedImpl _value, $Res Function(_$StatusCompletedImpl) _then)
+class __$$StatusCompletedImplCopyWithImpl<E, $Res>
+    extends _$StatusCopyWithImpl<E, $Res, _$StatusCompletedImpl<E>>
+    implements _$$StatusCompletedImplCopyWith<E, $Res> {
+  __$$StatusCompletedImplCopyWithImpl(_$StatusCompletedImpl<E> _value,
+      $Res Function(_$StatusCompletedImpl<E>) _then)
       : super(_value, _then);
 
   /// Create a copy of Status
@@ -422,41 +431,41 @@ class __$$StatusCompletedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$StatusCompletedImpl implements StatusCompleted {
+class _$StatusCompletedImpl<E> implements StatusCompleted<E> {
   const _$StatusCompletedImpl();
 
   @override
   String toString() {
-    return 'Status.completed()';
+    return 'Status<$E>.completed()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$StatusCompletedImpl);
+        (other.runtimeType == runtimeType && other is _$StatusCompletedImpl<E>);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 }
 
-abstract class StatusCompleted implements Status {
-  const factory StatusCompleted() = _$StatusCompletedImpl;
+abstract class StatusCompleted<E> implements Status<E> {
+  const factory StatusCompleted() = _$StatusCompletedImpl<E>;
 }
 
 /// @nodoc
-mixin _$StatusOf<T> {}
+mixin _$StatusOf<D, E> {}
 
 /// @nodoc
-abstract class $StatusOfCopyWith<T, $Res> {
+abstract class $StatusOfCopyWith<D, E, $Res> {
   factory $StatusOfCopyWith(
-          StatusOf<T> value, $Res Function(StatusOf<T>) then) =
-      _$StatusOfCopyWithImpl<T, $Res, StatusOf<T>>;
+          StatusOf<D, E> value, $Res Function(StatusOf<D, E>) then) =
+      _$StatusOfCopyWithImpl<D, E, $Res, StatusOf<D, E>>;
 }
 
 /// @nodoc
-class _$StatusOfCopyWithImpl<T, $Res, $Val extends StatusOf<T>>
-    implements $StatusOfCopyWith<T, $Res> {
+class _$StatusOfCopyWithImpl<D, E, $Res, $Val extends StatusOf<D, E>>
+    implements $StatusOfCopyWith<D, E, $Res> {
   _$StatusOfCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -469,20 +478,20 @@ class _$StatusOfCopyWithImpl<T, $Res, $Val extends StatusOf<T>>
 }
 
 /// @nodoc
-abstract class _$$StatusOfDataImplCopyWith<T, $Res> {
-  factory _$$StatusOfDataImplCopyWith(_$StatusOfDataImpl<T> value,
-          $Res Function(_$StatusOfDataImpl<T>) then) =
-      __$$StatusOfDataImplCopyWithImpl<T, $Res>;
+abstract class _$$StatusOfDataImplCopyWith<D, E, $Res> {
+  factory _$$StatusOfDataImplCopyWith(_$StatusOfDataImpl<D, E> value,
+          $Res Function(_$StatusOfDataImpl<D, E>) then) =
+      __$$StatusOfDataImplCopyWithImpl<D, E, $Res>;
   @useResult
-  $Res call({T data});
+  $Res call({D data});
 }
 
 /// @nodoc
-class __$$StatusOfDataImplCopyWithImpl<T, $Res>
-    extends _$StatusOfCopyWithImpl<T, $Res, _$StatusOfDataImpl<T>>
-    implements _$$StatusOfDataImplCopyWith<T, $Res> {
-  __$$StatusOfDataImplCopyWithImpl(
-      _$StatusOfDataImpl<T> _value, $Res Function(_$StatusOfDataImpl<T>) _then)
+class __$$StatusOfDataImplCopyWithImpl<D, E, $Res>
+    extends _$StatusOfCopyWithImpl<D, E, $Res, _$StatusOfDataImpl<D, E>>
+    implements _$$StatusOfDataImplCopyWith<D, E, $Res> {
+  __$$StatusOfDataImplCopyWithImpl(_$StatusOfDataImpl<D, E> _value,
+      $Res Function(_$StatusOfDataImpl<D, E>) _then)
       : super(_value, _then);
 
   /// Create a copy of StatusOf
@@ -492,33 +501,33 @@ class __$$StatusOfDataImplCopyWithImpl<T, $Res>
   $Res call({
     Object? data = freezed,
   }) {
-    return _then(_$StatusOfDataImpl<T>(
+    return _then(_$StatusOfDataImpl<D, E>(
       freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as T,
+              as D,
     ));
   }
 }
 
 /// @nodoc
 
-class _$StatusOfDataImpl<T> implements StatusOfData<T> {
+class _$StatusOfDataImpl<D, E> implements StatusOfData<D, E> {
   const _$StatusOfDataImpl(this.data);
 
   @override
-  final T data;
+  final D data;
 
   @override
   String toString() {
-    return 'StatusOf<$T>.data(data: $data)';
+    return 'StatusOf<$D, $E>.data(data: $data)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$StatusOfDataImpl<T> &&
+            other is _$StatusOfDataImpl<D, E> &&
             const DeepCollectionEquality().equals(other.data, data));
   }
 
@@ -531,36 +540,36 @@ class _$StatusOfDataImpl<T> implements StatusOfData<T> {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$StatusOfDataImplCopyWith<T, _$StatusOfDataImpl<T>> get copyWith =>
-      __$$StatusOfDataImplCopyWithImpl<T, _$StatusOfDataImpl<T>>(
+  _$$StatusOfDataImplCopyWith<D, E, _$StatusOfDataImpl<D, E>> get copyWith =>
+      __$$StatusOfDataImplCopyWithImpl<D, E, _$StatusOfDataImpl<D, E>>(
           this, _$identity);
 }
 
-abstract class StatusOfData<T> implements StatusOf<T> {
-  const factory StatusOfData(final T data) = _$StatusOfDataImpl<T>;
+abstract class StatusOfData<D, E> implements StatusOf<D, E> {
+  const factory StatusOfData(final D data) = _$StatusOfDataImpl<D, E>;
 
-  T get data;
+  D get data;
 
   /// Create a copy of StatusOf
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$StatusOfDataImplCopyWith<T, _$StatusOfDataImpl<T>> get copyWith =>
+  _$$StatusOfDataImplCopyWith<D, E, _$StatusOfDataImpl<D, E>> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$StatusOfLoadingImplCopyWith<T, $Res> {
-  factory _$$StatusOfLoadingImplCopyWith(_$StatusOfLoadingImpl<T> value,
-          $Res Function(_$StatusOfLoadingImpl<T>) then) =
-      __$$StatusOfLoadingImplCopyWithImpl<T, $Res>;
+abstract class _$$StatusOfLoadingImplCopyWith<D, E, $Res> {
+  factory _$$StatusOfLoadingImplCopyWith(_$StatusOfLoadingImpl<D, E> value,
+          $Res Function(_$StatusOfLoadingImpl<D, E>) then) =
+      __$$StatusOfLoadingImplCopyWithImpl<D, E, $Res>;
 }
 
 /// @nodoc
-class __$$StatusOfLoadingImplCopyWithImpl<T, $Res>
-    extends _$StatusOfCopyWithImpl<T, $Res, _$StatusOfLoadingImpl<T>>
-    implements _$$StatusOfLoadingImplCopyWith<T, $Res> {
-  __$$StatusOfLoadingImplCopyWithImpl(_$StatusOfLoadingImpl<T> _value,
-      $Res Function(_$StatusOfLoadingImpl<T>) _then)
+class __$$StatusOfLoadingImplCopyWithImpl<D, E, $Res>
+    extends _$StatusOfCopyWithImpl<D, E, $Res, _$StatusOfLoadingImpl<D, E>>
+    implements _$$StatusOfLoadingImplCopyWith<D, E, $Res> {
+  __$$StatusOfLoadingImplCopyWithImpl(_$StatusOfLoadingImpl<D, E> _value,
+      $Res Function(_$StatusOfLoadingImpl<D, E>) _then)
       : super(_value, _then);
 
   /// Create a copy of StatusOf
@@ -569,43 +578,44 @@ class __$$StatusOfLoadingImplCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$StatusOfLoadingImpl<T> implements StatusOfLoading<T> {
+class _$StatusOfLoadingImpl<D, E> implements StatusOfLoading<D, E> {
   const _$StatusOfLoadingImpl();
 
   @override
   String toString() {
-    return 'StatusOf<$T>.loading()';
+    return 'StatusOf<$D, $E>.loading()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$StatusOfLoadingImpl<T>);
+        (other.runtimeType == runtimeType &&
+            other is _$StatusOfLoadingImpl<D, E>);
   }
 
   @override
   int get hashCode => runtimeType.hashCode;
 }
 
-abstract class StatusOfLoading<T> implements StatusOf<T> {
-  const factory StatusOfLoading() = _$StatusOfLoadingImpl<T>;
+abstract class StatusOfLoading<D, E> implements StatusOf<D, E> {
+  const factory StatusOfLoading() = _$StatusOfLoadingImpl<D, E>;
 }
 
 /// @nodoc
-abstract class _$$StatusOfErrorImplCopyWith<T, $Res> {
-  factory _$$StatusOfErrorImplCopyWith(_$StatusOfErrorImpl<T> value,
-          $Res Function(_$StatusOfErrorImpl<T>) then) =
-      __$$StatusOfErrorImplCopyWithImpl<T, $Res>;
+abstract class _$$StatusOfErrorImplCopyWith<D, E, $Res> {
+  factory _$$StatusOfErrorImplCopyWith(_$StatusOfErrorImpl<D, E> value,
+          $Res Function(_$StatusOfErrorImpl<D, E>) then) =
+      __$$StatusOfErrorImplCopyWithImpl<D, E, $Res>;
   @useResult
-  $Res call({String error});
+  $Res call({E error});
 }
 
 /// @nodoc
-class __$$StatusOfErrorImplCopyWithImpl<T, $Res>
-    extends _$StatusOfCopyWithImpl<T, $Res, _$StatusOfErrorImpl<T>>
-    implements _$$StatusOfErrorImplCopyWith<T, $Res> {
-  __$$StatusOfErrorImplCopyWithImpl(_$StatusOfErrorImpl<T> _value,
-      $Res Function(_$StatusOfErrorImpl<T>) _then)
+class __$$StatusOfErrorImplCopyWithImpl<D, E, $Res>
+    extends _$StatusOfCopyWithImpl<D, E, $Res, _$StatusOfErrorImpl<D, E>>
+    implements _$$StatusOfErrorImplCopyWith<D, E, $Res> {
+  __$$StatusOfErrorImplCopyWithImpl(_$StatusOfErrorImpl<D, E> _value,
+      $Res Function(_$StatusOfErrorImpl<D, E>) _then)
       : super(_value, _then);
 
   /// Create a copy of StatusOf
@@ -613,59 +623,60 @@ class __$$StatusOfErrorImplCopyWithImpl<T, $Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? error = null,
+    Object? error = freezed,
   }) {
-    return _then(_$StatusOfErrorImpl<T>(
-      null == error
+    return _then(_$StatusOfErrorImpl<D, E>(
+      freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
-              as String,
+              as E,
     ));
   }
 }
 
 /// @nodoc
 
-class _$StatusOfErrorImpl<T> implements StatusOfError<T> {
+class _$StatusOfErrorImpl<D, E> implements StatusOfError<D, E> {
   const _$StatusOfErrorImpl(this.error);
 
   @override
-  final String error;
+  final E error;
 
   @override
   String toString() {
-    return 'StatusOf<$T>.error(error: $error)';
+    return 'StatusOf<$D, $E>.error(error: $error)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$StatusOfErrorImpl<T> &&
-            (identical(other.error, error) || other.error == error));
+            other is _$StatusOfErrorImpl<D, E> &&
+            const DeepCollectionEquality().equals(other.error, error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, error);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(error));
 
   /// Create a copy of StatusOf
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$StatusOfErrorImplCopyWith<T, _$StatusOfErrorImpl<T>> get copyWith =>
-      __$$StatusOfErrorImplCopyWithImpl<T, _$StatusOfErrorImpl<T>>(
+  _$$StatusOfErrorImplCopyWith<D, E, _$StatusOfErrorImpl<D, E>> get copyWith =>
+      __$$StatusOfErrorImplCopyWithImpl<D, E, _$StatusOfErrorImpl<D, E>>(
           this, _$identity);
 }
 
-abstract class StatusOfError<T> implements StatusOf<T> {
-  const factory StatusOfError(final String error) = _$StatusOfErrorImpl<T>;
+abstract class StatusOfError<D, E> implements StatusOf<D, E> {
+  const factory StatusOfError(final E error) = _$StatusOfErrorImpl<D, E>;
 
-  String get error;
+  E get error;
 
   /// Create a copy of StatusOf
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$StatusOfErrorImplCopyWith<T, _$StatusOfErrorImpl<T>> get copyWith =>
+  _$$StatusOfErrorImplCopyWith<D, E, _$StatusOfErrorImpl<D, E>> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -8,6 +8,6 @@ class LoginState with _$LoginState {
     @Default('') final String password,
     final String? passwordError,
     @Default(false) final bool isPasswordVisible,
-    @Default(OperationStatusInitial()) final OperationStatus loginStatus,
+    @Default(OperationStatusInitial()) final OperationStatus<String> loginStatus,
   }) = _LoginStateSignedIn;
 }

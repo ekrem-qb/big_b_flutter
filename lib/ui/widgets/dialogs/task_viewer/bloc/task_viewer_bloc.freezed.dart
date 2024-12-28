@@ -139,8 +139,8 @@ abstract class TaskViewerEventDeleteRequested implements TaskViewerEvent {
 /// @nodoc
 mixin _$TaskViewerState {
   int get id => throw _privateConstructorUsedError;
-  StatusOf<Task> get task => throw _privateConstructorUsedError;
-  OperationStatus get deleteState => throw _privateConstructorUsedError;
+  StatusOf<Task, String> get task => throw _privateConstructorUsedError;
+  OperationStatus<String> get deleteState => throw _privateConstructorUsedError;
 
   /// Create a copy of TaskViewerState
   /// with the given fields replaced by the non-null parameter values.
@@ -155,10 +155,13 @@ abstract class $TaskViewerStateCopyWith<$Res> {
           TaskViewerState value, $Res Function(TaskViewerState) then) =
       _$TaskViewerStateCopyWithImpl<$Res, TaskViewerState>;
   @useResult
-  $Res call({int id, StatusOf<Task> task, OperationStatus deleteState});
+  $Res call(
+      {int id,
+      StatusOf<Task, String> task,
+      OperationStatus<String> deleteState});
 
-  $StatusOfCopyWith<Task, $Res> get task;
-  $OperationStatusCopyWith<$Res> get deleteState;
+  $StatusOfCopyWith<Task, String, $Res> get task;
+  $OperationStatusCopyWith<String, $Res> get deleteState;
 }
 
 /// @nodoc
@@ -188,11 +191,11 @@ class _$TaskViewerStateCopyWithImpl<$Res, $Val extends TaskViewerState>
       task: null == task
           ? _value.task
           : task // ignore: cast_nullable_to_non_nullable
-              as StatusOf<Task>,
+              as StatusOf<Task, String>,
       deleteState: null == deleteState
           ? _value.deleteState
           : deleteState // ignore: cast_nullable_to_non_nullable
-              as OperationStatus,
+              as OperationStatus<String>,
     ) as $Val);
   }
 
@@ -200,8 +203,8 @@ class _$TaskViewerStateCopyWithImpl<$Res, $Val extends TaskViewerState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StatusOfCopyWith<Task, $Res> get task {
-    return $StatusOfCopyWith<Task, $Res>(_value.task, (value) {
+  $StatusOfCopyWith<Task, String, $Res> get task {
+    return $StatusOfCopyWith<Task, String, $Res>(_value.task, (value) {
       return _then(_value.copyWith(task: value) as $Val);
     });
   }
@@ -210,8 +213,8 @@ class _$TaskViewerStateCopyWithImpl<$Res, $Val extends TaskViewerState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $OperationStatusCopyWith<$Res> get deleteState {
-    return $OperationStatusCopyWith<$Res>(_value.deleteState, (value) {
+  $OperationStatusCopyWith<String, $Res> get deleteState {
+    return $OperationStatusCopyWith<String, $Res>(_value.deleteState, (value) {
       return _then(_value.copyWith(deleteState: value) as $Val);
     });
   }
@@ -225,12 +228,15 @@ abstract class _$$TaskViewerStateImplCopyWith<$Res>
       __$$TaskViewerStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, StatusOf<Task> task, OperationStatus deleteState});
+  $Res call(
+      {int id,
+      StatusOf<Task, String> task,
+      OperationStatus<String> deleteState});
 
   @override
-  $StatusOfCopyWith<Task, $Res> get task;
+  $StatusOfCopyWith<Task, String, $Res> get task;
   @override
-  $OperationStatusCopyWith<$Res> get deleteState;
+  $OperationStatusCopyWith<String, $Res> get deleteState;
 }
 
 /// @nodoc
@@ -258,11 +264,11 @@ class __$$TaskViewerStateImplCopyWithImpl<$Res>
       task: null == task
           ? _value.task
           : task // ignore: cast_nullable_to_non_nullable
-              as StatusOf<Task>,
+              as StatusOf<Task, String>,
       deleteState: null == deleteState
           ? _value.deleteState
           : deleteState // ignore: cast_nullable_to_non_nullable
-              as OperationStatus,
+              as OperationStatus<String>,
     ));
   }
 }
@@ -278,10 +284,10 @@ class _$TaskViewerStateImpl implements _TaskViewerState {
   @override
   final int id;
   @override
-  final StatusOf<Task> task;
+  final StatusOf<Task, String> task;
   @override
   @JsonKey()
-  final OperationStatus deleteState;
+  final OperationStatus<String> deleteState;
 
   @override
   String toString() {
@@ -315,15 +321,15 @@ class _$TaskViewerStateImpl implements _TaskViewerState {
 abstract class _TaskViewerState implements TaskViewerState {
   const factory _TaskViewerState(
       {required final int id,
-      required final StatusOf<Task> task,
-      final OperationStatus deleteState}) = _$TaskViewerStateImpl;
+      required final StatusOf<Task, String> task,
+      final OperationStatus<String> deleteState}) = _$TaskViewerStateImpl;
 
   @override
   int get id;
   @override
-  StatusOf<Task> get task;
+  StatusOf<Task, String> get task;
   @override
-  OperationStatus get deleteState;
+  OperationStatus<String> get deleteState;
 
   /// Create a copy of TaskViewerState
   /// with the given fields replaced by the non-null parameter values.

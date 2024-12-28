@@ -74,7 +74,7 @@ class _Profiles extends StatelessWidget {
     );
 
     return switch (bloc.state.all) {
-      StatusOfData<List<Profile>>(
+      StatusOfData(
         :final data,
       ) =>
         data.isEmpty
@@ -95,8 +95,8 @@ class _Profiles extends StatelessWidget {
                 itemCount: data.length,
                 itemBuilder: (final BuildContext context, final int index) => _Profile(index),
               ),
-      StatusOfLoading<List<Profile>>() => const Center(child: CircularProgressIndicator()),
-      StatusOfError<List<Profile>>(
+      StatusOfLoading() => const Center(child: CircularProgressIndicator()),
+      StatusOfError(
         :final error,
       ) =>
         ErrorPanel(
@@ -121,7 +121,7 @@ class _Profile extends StatelessWidget {
       (final ProfilePickerBloc bloc) => (
         bloc,
         switch (bloc.state.all) {
-          StatusOfData<List<Profile>>(
+          StatusOfData(
             :final data,
           ) =>
             bloc.state.selected.contains(data[index]),
@@ -141,7 +141,7 @@ class _Profile extends StatelessWidget {
             : BorderSide.none,
       ),
       child: switch (bloc.state.all) {
-        StatusOfData<List<Profile>>(
+        StatusOfData(
           :final data,
         ) =>
           ListTile(

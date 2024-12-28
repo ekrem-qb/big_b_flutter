@@ -803,7 +803,7 @@ abstract class TaskEditorEventDeleteRequested implements TaskEditorEvent {
 mixin _$TaskEditorState {
   bool get isNew => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
-  Status get loadingState => throw _privateConstructorUsedError;
+  Status<String> get loadingState => throw _privateConstructorUsedError;
   bool get isPlanned => throw _privateConstructorUsedError;
   bool get isRepeated => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
@@ -813,8 +813,8 @@ mixin _$TaskEditorState {
   DateTime get date => throw _privateConstructorUsedError;
   int get weekdays => throw _privateConstructorUsedError;
   List<Profile> get executives => throw _privateConstructorUsedError;
-  OperationStatus get uploadState => throw _privateConstructorUsedError;
-  OperationStatus get deleteState => throw _privateConstructorUsedError;
+  OperationStatus<String> get uploadState => throw _privateConstructorUsedError;
+  OperationStatus<String> get deleteState => throw _privateConstructorUsedError;
 
   /// Create a copy of TaskEditorState
   /// with the given fields replaced by the non-null parameter values.
@@ -832,7 +832,7 @@ abstract class $TaskEditorStateCopyWith<$Res> {
   $Res call(
       {bool isNew,
       int id,
-      Status loadingState,
+      Status<String> loadingState,
       bool isPlanned,
       bool isRepeated,
       String text,
@@ -842,12 +842,12 @@ abstract class $TaskEditorStateCopyWith<$Res> {
       DateTime date,
       int weekdays,
       List<Profile> executives,
-      OperationStatus uploadState,
-      OperationStatus deleteState});
+      OperationStatus<String> uploadState,
+      OperationStatus<String> deleteState});
 
-  $StatusCopyWith<$Res> get loadingState;
-  $OperationStatusCopyWith<$Res> get uploadState;
-  $OperationStatusCopyWith<$Res> get deleteState;
+  $StatusCopyWith<String, $Res> get loadingState;
+  $OperationStatusCopyWith<String, $Res> get uploadState;
+  $OperationStatusCopyWith<String, $Res> get deleteState;
 }
 
 /// @nodoc
@@ -892,7 +892,7 @@ class _$TaskEditorStateCopyWithImpl<$Res, $Val extends TaskEditorState>
       loadingState: null == loadingState
           ? _value.loadingState
           : loadingState // ignore: cast_nullable_to_non_nullable
-              as Status,
+              as Status<String>,
       isPlanned: null == isPlanned
           ? _value.isPlanned
           : isPlanned // ignore: cast_nullable_to_non_nullable
@@ -932,11 +932,11 @@ class _$TaskEditorStateCopyWithImpl<$Res, $Val extends TaskEditorState>
       uploadState: null == uploadState
           ? _value.uploadState
           : uploadState // ignore: cast_nullable_to_non_nullable
-              as OperationStatus,
+              as OperationStatus<String>,
       deleteState: null == deleteState
           ? _value.deleteState
           : deleteState // ignore: cast_nullable_to_non_nullable
-              as OperationStatus,
+              as OperationStatus<String>,
     ) as $Val);
   }
 
@@ -944,8 +944,8 @@ class _$TaskEditorStateCopyWithImpl<$Res, $Val extends TaskEditorState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StatusCopyWith<$Res> get loadingState {
-    return $StatusCopyWith<$Res>(_value.loadingState, (value) {
+  $StatusCopyWith<String, $Res> get loadingState {
+    return $StatusCopyWith<String, $Res>(_value.loadingState, (value) {
       return _then(_value.copyWith(loadingState: value) as $Val);
     });
   }
@@ -954,8 +954,8 @@ class _$TaskEditorStateCopyWithImpl<$Res, $Val extends TaskEditorState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $OperationStatusCopyWith<$Res> get uploadState {
-    return $OperationStatusCopyWith<$Res>(_value.uploadState, (value) {
+  $OperationStatusCopyWith<String, $Res> get uploadState {
+    return $OperationStatusCopyWith<String, $Res>(_value.uploadState, (value) {
       return _then(_value.copyWith(uploadState: value) as $Val);
     });
   }
@@ -964,8 +964,8 @@ class _$TaskEditorStateCopyWithImpl<$Res, $Val extends TaskEditorState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $OperationStatusCopyWith<$Res> get deleteState {
-    return $OperationStatusCopyWith<$Res>(_value.deleteState, (value) {
+  $OperationStatusCopyWith<String, $Res> get deleteState {
+    return $OperationStatusCopyWith<String, $Res>(_value.deleteState, (value) {
       return _then(_value.copyWith(deleteState: value) as $Val);
     });
   }
@@ -982,7 +982,7 @@ abstract class _$$TaskEditorStateImplCopyWith<$Res>
   $Res call(
       {bool isNew,
       int id,
-      Status loadingState,
+      Status<String> loadingState,
       bool isPlanned,
       bool isRepeated,
       String text,
@@ -992,15 +992,15 @@ abstract class _$$TaskEditorStateImplCopyWith<$Res>
       DateTime date,
       int weekdays,
       List<Profile> executives,
-      OperationStatus uploadState,
-      OperationStatus deleteState});
+      OperationStatus<String> uploadState,
+      OperationStatus<String> deleteState});
 
   @override
-  $StatusCopyWith<$Res> get loadingState;
+  $StatusCopyWith<String, $Res> get loadingState;
   @override
-  $OperationStatusCopyWith<$Res> get uploadState;
+  $OperationStatusCopyWith<String, $Res> get uploadState;
   @override
-  $OperationStatusCopyWith<$Res> get deleteState;
+  $OperationStatusCopyWith<String, $Res> get deleteState;
 }
 
 /// @nodoc
@@ -1043,7 +1043,7 @@ class __$$TaskEditorStateImplCopyWithImpl<$Res>
       loadingState: null == loadingState
           ? _value.loadingState
           : loadingState // ignore: cast_nullable_to_non_nullable
-              as Status,
+              as Status<String>,
       isPlanned: null == isPlanned
           ? _value.isPlanned
           : isPlanned // ignore: cast_nullable_to_non_nullable
@@ -1083,11 +1083,11 @@ class __$$TaskEditorStateImplCopyWithImpl<$Res>
       uploadState: null == uploadState
           ? _value.uploadState
           : uploadState // ignore: cast_nullable_to_non_nullable
-              as OperationStatus,
+              as OperationStatus<String>,
       deleteState: null == deleteState
           ? _value.deleteState
           : deleteState // ignore: cast_nullable_to_non_nullable
-              as OperationStatus,
+              as OperationStatus<String>,
     ));
   }
 }
@@ -1117,7 +1117,7 @@ class _$TaskEditorStateImpl implements _TaskEditorState {
   @override
   final int id;
   @override
-  final Status loadingState;
+  final Status<String> loadingState;
   @override
   final bool isPlanned;
   @override
@@ -1143,9 +1143,9 @@ class _$TaskEditorStateImpl implements _TaskEditorState {
   }
 
   @override
-  final OperationStatus uploadState;
+  final OperationStatus<String> uploadState;
   @override
-  final OperationStatus deleteState;
+  final OperationStatus<String> deleteState;
 
   @override
   String toString() {
@@ -1212,27 +1212,28 @@ class _$TaskEditorStateImpl implements _TaskEditorState {
 
 abstract class _TaskEditorState implements TaskEditorState {
   const factory _TaskEditorState(
-      {required final bool isNew,
-      required final int id,
-      required final Status loadingState,
-      required final bool isPlanned,
-      required final bool isRepeated,
-      required final String text,
-      required final String? textError,
-      required final bool isImageRequired,
-      required final Duration time,
-      required final DateTime date,
-      required final int weekdays,
-      required final List<Profile> executives,
-      required final OperationStatus uploadState,
-      required final OperationStatus deleteState}) = _$TaskEditorStateImpl;
+          {required final bool isNew,
+          required final int id,
+          required final Status<String> loadingState,
+          required final bool isPlanned,
+          required final bool isRepeated,
+          required final String text,
+          required final String? textError,
+          required final bool isImageRequired,
+          required final Duration time,
+          required final DateTime date,
+          required final int weekdays,
+          required final List<Profile> executives,
+          required final OperationStatus<String> uploadState,
+          required final OperationStatus<String> deleteState}) =
+      _$TaskEditorStateImpl;
 
   @override
   bool get isNew;
   @override
   int get id;
   @override
-  Status get loadingState;
+  Status<String> get loadingState;
   @override
   bool get isPlanned;
   @override
@@ -1252,9 +1253,9 @@ abstract class _TaskEditorState implements TaskEditorState {
   @override
   List<Profile> get executives;
   @override
-  OperationStatus get uploadState;
+  OperationStatus<String> get uploadState;
   @override
-  OperationStatus get deleteState;
+  OperationStatus<String> get deleteState;
 
   /// Create a copy of TaskEditorState
   /// with the given fields replaced by the non-null parameter values.

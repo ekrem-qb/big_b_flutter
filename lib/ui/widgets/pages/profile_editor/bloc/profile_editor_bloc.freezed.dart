@@ -588,7 +588,7 @@ mixin _$ProfileEditorState {
   String get login => throw _privateConstructorUsedError;
   Role get role => throw _privateConstructorUsedError;
   String? get nameError => throw _privateConstructorUsedError;
-  OperationStatus get uploadState => throw _privateConstructorUsedError;
+  OperationStatus<String> get uploadState => throw _privateConstructorUsedError;
 
   /// Create a copy of ProfileEditorState
   /// with the given fields replaced by the non-null parameter values.
@@ -608,9 +608,9 @@ abstract class $ProfileEditorStateCopyWith<$Res> {
       String login,
       Role role,
       String? nameError,
-      OperationStatus uploadState});
+      OperationStatus<String> uploadState});
 
-  $OperationStatusCopyWith<$Res> get uploadState;
+  $OperationStatusCopyWith<String, $Res> get uploadState;
 }
 
 /// @nodoc
@@ -654,7 +654,7 @@ class _$ProfileEditorStateCopyWithImpl<$Res, $Val extends ProfileEditorState>
       uploadState: null == uploadState
           ? _value.uploadState
           : uploadState // ignore: cast_nullable_to_non_nullable
-              as OperationStatus,
+              as OperationStatus<String>,
     ) as $Val);
   }
 
@@ -662,8 +662,8 @@ class _$ProfileEditorStateCopyWithImpl<$Res, $Val extends ProfileEditorState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $OperationStatusCopyWith<$Res> get uploadState {
-    return $OperationStatusCopyWith<$Res>(_value.uploadState, (value) {
+  $OperationStatusCopyWith<String, $Res> get uploadState {
+    return $OperationStatusCopyWith<String, $Res>(_value.uploadState, (value) {
       return _then(_value.copyWith(uploadState: value) as $Val);
     });
   }
@@ -680,18 +680,18 @@ abstract class _$$ProfileEditorStateEditImplCopyWith<$Res>
   @useResult
   $Res call(
       {String uid,
-      Status loadingState,
+      Status<String> loadingState,
       String name,
       String login,
       Role role,
       String? nameError,
-      OperationStatus uploadState,
-      OperationStatus deleteState});
+      OperationStatus<String> uploadState,
+      OperationStatus<String> deleteState});
 
-  $StatusCopyWith<$Res> get loadingState;
+  $StatusCopyWith<String, $Res> get loadingState;
   @override
-  $OperationStatusCopyWith<$Res> get uploadState;
-  $OperationStatusCopyWith<$Res> get deleteState;
+  $OperationStatusCopyWith<String, $Res> get uploadState;
+  $OperationStatusCopyWith<String, $Res> get deleteState;
 }
 
 /// @nodoc
@@ -725,7 +725,7 @@ class __$$ProfileEditorStateEditImplCopyWithImpl<$Res>
       loadingState: null == loadingState
           ? _value.loadingState
           : loadingState // ignore: cast_nullable_to_non_nullable
-              as Status,
+              as Status<String>,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -745,11 +745,11 @@ class __$$ProfileEditorStateEditImplCopyWithImpl<$Res>
       uploadState: null == uploadState
           ? _value.uploadState
           : uploadState // ignore: cast_nullable_to_non_nullable
-              as OperationStatus,
+              as OperationStatus<String>,
       deleteState: null == deleteState
           ? _value.deleteState
           : deleteState // ignore: cast_nullable_to_non_nullable
-              as OperationStatus,
+              as OperationStatus<String>,
     ));
   }
 
@@ -757,8 +757,8 @@ class __$$ProfileEditorStateEditImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StatusCopyWith<$Res> get loadingState {
-    return $StatusCopyWith<$Res>(_value.loadingState, (value) {
+  $StatusCopyWith<String, $Res> get loadingState {
+    return $StatusCopyWith<String, $Res>(_value.loadingState, (value) {
       return _then(_value.copyWith(loadingState: value));
     });
   }
@@ -767,8 +767,8 @@ class __$$ProfileEditorStateEditImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $OperationStatusCopyWith<$Res> get deleteState {
-    return $OperationStatusCopyWith<$Res>(_value.deleteState, (value) {
+  $OperationStatusCopyWith<String, $Res> get deleteState {
+    return $OperationStatusCopyWith<String, $Res>(_value.deleteState, (value) {
       return _then(_value.copyWith(deleteState: value));
     });
   }
@@ -790,7 +790,7 @@ class _$ProfileEditorStateEditImpl implements ProfileEditorStateEdit {
   @override
   final String uid;
   @override
-  final Status loadingState;
+  final Status<String> loadingState;
   @override
   final String name;
   @override
@@ -801,10 +801,10 @@ class _$ProfileEditorStateEditImpl implements ProfileEditorStateEdit {
   final String? nameError;
   @override
   @JsonKey()
-  final OperationStatus uploadState;
+  final OperationStatus<String> uploadState;
   @override
   @JsonKey()
-  final OperationStatus deleteState;
+  final OperationStatus<String> deleteState;
 
   @override
   String toString() {
@@ -846,17 +846,18 @@ class _$ProfileEditorStateEditImpl implements ProfileEditorStateEdit {
 
 abstract class ProfileEditorStateEdit implements ProfileEditorState {
   const factory ProfileEditorStateEdit(
-      {required final String uid,
-      required final Status loadingState,
-      required final String name,
-      required final String login,
-      required final Role role,
-      final String? nameError,
-      final OperationStatus uploadState,
-      final OperationStatus deleteState}) = _$ProfileEditorStateEditImpl;
+          {required final String uid,
+          required final Status<String> loadingState,
+          required final String name,
+          required final String login,
+          required final Role role,
+          final String? nameError,
+          final OperationStatus<String> uploadState,
+          final OperationStatus<String> deleteState}) =
+      _$ProfileEditorStateEditImpl;
 
   String get uid;
-  Status get loadingState;
+  Status<String> get loadingState;
   @override
   String get name;
   @override
@@ -866,8 +867,8 @@ abstract class ProfileEditorStateEdit implements ProfileEditorState {
   @override
   String? get nameError;
   @override
-  OperationStatus get uploadState;
-  OperationStatus get deleteState;
+  OperationStatus<String> get uploadState;
+  OperationStatus<String> get deleteState;
 
   /// Create a copy of ProfileEditorState
   /// with the given fields replaced by the non-null parameter values.
@@ -895,10 +896,10 @@ abstract class _$$ProfileEditorStateCreateImplCopyWith<$Res>
       String password,
       String? passwordError,
       bool isPasswordVisible,
-      OperationStatus uploadState});
+      OperationStatus<String> uploadState});
 
   @override
-  $OperationStatusCopyWith<$Res> get uploadState;
+  $OperationStatusCopyWith<String, $Res> get uploadState;
 }
 
 /// @nodoc
@@ -962,7 +963,7 @@ class __$$ProfileEditorStateCreateImplCopyWithImpl<$Res>
       uploadState: null == uploadState
           ? _value.uploadState
           : uploadState // ignore: cast_nullable_to_non_nullable
-              as OperationStatus,
+              as OperationStatus<String>,
     ));
   }
 }
@@ -1004,7 +1005,7 @@ class _$ProfileEditorStateCreateImpl implements ProfileEditorStateCreate {
   final bool isPasswordVisible;
   @override
   @JsonKey()
-  final OperationStatus uploadState;
+  final OperationStatus<String> uploadState;
 
   @override
   String toString() {
@@ -1058,15 +1059,16 @@ class _$ProfileEditorStateCreateImpl implements ProfileEditorStateCreate {
 
 abstract class ProfileEditorStateCreate implements ProfileEditorState {
   const factory ProfileEditorStateCreate(
-      {final String name,
-      final String? nameError,
-      final String login,
-      final String? loginError,
-      final Role role,
-      final String password,
-      final String? passwordError,
-      final bool isPasswordVisible,
-      final OperationStatus uploadState}) = _$ProfileEditorStateCreateImpl;
+          {final String name,
+          final String? nameError,
+          final String login,
+          final String? loginError,
+          final Role role,
+          final String password,
+          final String? passwordError,
+          final bool isPasswordVisible,
+          final OperationStatus<String> uploadState}) =
+      _$ProfileEditorStateCreateImpl;
 
   @override
   String get name;
@@ -1081,7 +1083,7 @@ abstract class ProfileEditorStateCreate implements ProfileEditorState {
   String? get passwordError;
   bool get isPasswordVisible;
   @override
-  OperationStatus get uploadState;
+  OperationStatus<String> get uploadState;
 
   /// Create a copy of ProfileEditorState
   /// with the given fields replaced by the non-null parameter values.

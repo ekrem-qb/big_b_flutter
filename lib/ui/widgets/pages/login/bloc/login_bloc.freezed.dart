@@ -305,7 +305,7 @@ mixin _$LoginState {
   String get password => throw _privateConstructorUsedError;
   String? get passwordError => throw _privateConstructorUsedError;
   bool get isPasswordVisible => throw _privateConstructorUsedError;
-  OperationStatus get loginStatus => throw _privateConstructorUsedError;
+  OperationStatus<String> get loginStatus => throw _privateConstructorUsedError;
 
   /// Create a copy of LoginState
   /// with the given fields replaced by the non-null parameter values.
@@ -326,9 +326,9 @@ abstract class $LoginStateCopyWith<$Res> {
       String password,
       String? passwordError,
       bool isPasswordVisible,
-      OperationStatus loginStatus});
+      OperationStatus<String> loginStatus});
 
-  $OperationStatusCopyWith<$Res> get loginStatus;
+  $OperationStatusCopyWith<String, $Res> get loginStatus;
 }
 
 /// @nodoc
@@ -377,7 +377,7 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
       loginStatus: null == loginStatus
           ? _value.loginStatus
           : loginStatus // ignore: cast_nullable_to_non_nullable
-              as OperationStatus,
+              as OperationStatus<String>,
     ) as $Val);
   }
 
@@ -385,8 +385,8 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $OperationStatusCopyWith<$Res> get loginStatus {
-    return $OperationStatusCopyWith<$Res>(_value.loginStatus, (value) {
+  $OperationStatusCopyWith<String, $Res> get loginStatus {
+    return $OperationStatusCopyWith<String, $Res>(_value.loginStatus, (value) {
       return _then(_value.copyWith(loginStatus: value) as $Val);
     });
   }
@@ -406,10 +406,10 @@ abstract class _$$LoginStateSignedInImplCopyWith<$Res>
       String password,
       String? passwordError,
       bool isPasswordVisible,
-      OperationStatus loginStatus});
+      OperationStatus<String> loginStatus});
 
   @override
-  $OperationStatusCopyWith<$Res> get loginStatus;
+  $OperationStatusCopyWith<String, $Res> get loginStatus;
 }
 
 /// @nodoc
@@ -456,7 +456,7 @@ class __$$LoginStateSignedInImplCopyWithImpl<$Res>
       loginStatus: null == loginStatus
           ? _value.loginStatus
           : loginStatus // ignore: cast_nullable_to_non_nullable
-              as OperationStatus,
+              as OperationStatus<String>,
     ));
   }
 }
@@ -487,7 +487,7 @@ class _$LoginStateSignedInImpl implements _LoginStateSignedIn {
   final bool isPasswordVisible;
   @override
   @JsonKey()
-  final OperationStatus loginStatus;
+  final OperationStatus<String> loginStatus;
 
   @override
   String toString() {
@@ -533,7 +533,7 @@ abstract class _LoginStateSignedIn implements LoginState {
       final String password,
       final String? passwordError,
       final bool isPasswordVisible,
-      final OperationStatus loginStatus}) = _$LoginStateSignedInImpl;
+      final OperationStatus<String> loginStatus}) = _$LoginStateSignedInImpl;
 
   @override
   String get email;
@@ -546,7 +546,7 @@ abstract class _LoginStateSignedIn implements LoginState {
   @override
   bool get isPasswordVisible;
   @override
-  OperationStatus get loginStatus;
+  OperationStatus<String> get loginStatus;
 
   /// Create a copy of LoginState
   /// with the given fields replaced by the non-null parameter values.
