@@ -4,26 +4,30 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../entity/status.dart';
 import '../../extensions/snackbar.dart';
-import '../app/bloc/app_bloc.dart';
 import 'bloc/login_bloc.dart';
 
 @RoutePage()
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  const LoginPage({this.onSignedIn, super.key});
+
+  final VoidCallback? onSignedIn;
 
   @override
   Widget build(final BuildContext context) {
     return BlocProvider(
       create: (final context) => LoginBloc(),
-      child: const LoginView(),
+      child: LoginView(onSignedIn: onSignedIn),
     );
   }
 }
 
 class LoginView extends StatelessWidget {
   const LoginView({
+    this.onSignedIn,
     super.key,
   });
+
+  final VoidCallback? onSignedIn;
 
   @override
   Widget build(final BuildContext context) {
@@ -36,7 +40,7 @@ class LoginView extends StatelessWidget {
             ):
             showSnackbar(text: error, context: context);
           case OperationStatusCompleted():
-            context.read<AppBloc>().add(const AppEventSignedIn());
+            onSignedIn?.call();
           default:
         }
       },

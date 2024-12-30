@@ -2,9 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../api/database.dart';
 import '../../../app_router/app_router.dart';
 import '../../extensions/app_bar_controller.dart';
-import '../../pages/app/bloc/app_bloc.dart';
 
 @RoutePage()
 class MorePage extends StatelessWidget {
@@ -68,8 +68,6 @@ class _LogoutButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final bloc = context.read<AppBloc>();
-
     final (
       appBar,
       isScrolled,
@@ -85,7 +83,7 @@ class _LogoutButton extends StatelessWidget {
         visualDensity: VisualDensity.standard,
         elevation: appBar.isScrolled ? const WidgetStatePropertyAll(0) : null,
       ),
-      onPressed: () => bloc.add(const AppEventSignOutRequested()),
+      onPressed: () => db.auth.signOut(),
       icon: const Icon(Icons.logout),
       label: const Text('Çıkış'),
     );

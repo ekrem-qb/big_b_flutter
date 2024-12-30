@@ -10,25 +10,6 @@
 part of 'app_router.dart';
 
 /// generated route for
-/// [AppPage]
-class AppRoute extends PageRouteInfo<void> {
-  const AppRoute({List<PageRouteInfo>? children})
-      : super(
-          AppRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'AppRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const AppPage();
-    },
-  );
-}
-
-/// generated route for
 /// [FirstTabPage]
 class FirstTabRoute extends PageRouteInfo<void> {
   const FirstTabRoute({List<PageRouteInfo>? children})
@@ -87,10 +68,17 @@ class HomeRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [LoginPage]
-class LoginRoute extends PageRouteInfo<void> {
-  const LoginRoute({List<PageRouteInfo>? children})
-      : super(
+class LoginRoute extends PageRouteInfo<LoginRouteArgs> {
+  LoginRoute({
+    VoidCallback? onSignedIn,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           LoginRoute.name,
+          args: LoginRouteArgs(
+            onSignedIn: onSignedIn,
+            key: key,
+          ),
           initialChildren: children,
         );
 
@@ -99,9 +87,30 @@ class LoginRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const LoginPage();
+      final args =
+          data.argsAs<LoginRouteArgs>(orElse: () => const LoginRouteArgs());
+      return LoginPage(
+        onSignedIn: args.onSignedIn,
+        key: args.key,
+      );
     },
   );
+}
+
+class LoginRouteArgs {
+  const LoginRouteArgs({
+    this.onSignedIn,
+    this.key,
+  });
+
+  final VoidCallback? onSignedIn;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'LoginRouteArgs{onSignedIn: $onSignedIn, key: $key}';
+  }
 }
 
 /// generated route for

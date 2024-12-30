@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../api/database.dart';
 import '../../api/entity/planned_task/planned_task.dart';
 import '../../api/entity/profile/profile.dart';
 import '../../api/entity/recording/recording.dart';
@@ -10,7 +11,6 @@ import '../../api/entity/violation/violation.dart';
 import '../widgets/dialogs/task_viewer/task_viewer_dialog.dart';
 import '../widgets/dialogs/violation_viewer/violation_viewer_dialog.dart';
 import '../widgets/extensions/dialog_router.dart';
-import '../widgets/pages/app/app_page.dart';
 import '../widgets/pages/home/home_page.dart';
 import '../widgets/pages/login/login_page.dart';
 import '../widgets/pages/player/player_page.dart';
@@ -29,125 +29,134 @@ part 'app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Page|Screen|Dialog,Route')
 class AppRouter extends RootStackRouter {
+  void onNavigation(final NavigationResolver resolver, final StackRouter router) {
+    if (db.auth.currentSession?.isExpired ?? true) {
+      resolver.redirect(
+        LoginRoute(
+          onSignedIn: resolver.next,
+        ),
+      );
+    } else {
+      resolver.next();
+    }
+  }
+
   @override
   List<AutoRoute> get routes {
     return [
       CupertinoRoute(
-        path: '/',
-        page: AppRoute.page,
+        path: '/login',
+        page: LoginRoute.page,
+      ),
+      CupertinoRoute(
+        path: '/home',
+        page: HomeRoute.page,
         initial: true,
+        guards: [
+          AutoRouteGuard.simple(onNavigation),
+        ],
         children: [
-          CupertinoRoute(
-            path: 'login',
-            page: LoginRoute.page,
+          RedirectRoute(
+            path: '',
+            redirectTo: 'home',
           ),
           CupertinoRoute(
             path: 'home',
-            page: HomeRoute.page,
+            page: FirstTabRoute.page,
             children: [
-              RedirectRoute(
+              CupertinoRoute(
                 path: '',
-                redirectTo: 'home',
+                page: ViolationsRoute.page,
+                children: [
+                  DialogRoute(
+                    path: ':id',
+                    page: ViolationViewerRoute.page,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          CupertinoRoute(
+            path: 'recordings',
+            page: SecondTabRoute.page,
+            children: [
+              CupertinoRoute(path: '', page: RecordingsRoute.page),
+              CupertinoRoute(
+                path: ':recordingId/line/:textLineId',
+                page: PlayerRoute.page,
               ),
               CupertinoRoute(
-                path: 'home',
-                page: FirstTabRoute.page,
+                path: ':id/violations',
+                page: ViolationsRoute.page,
                 children: [
-                  CupertinoRoute(
-                    path: '',
-                    page: ViolationsRoute.page,
-                    children: [
-                      DialogRoute(
-                        path: ':id',
-                        page: ViolationViewerRoute.page,
-                      ),
-                    ],
+                  DialogRoute(
+                    path: ':id',
+                    page: ViolationViewerRoute.page,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          CupertinoRoute(
+            path: 'tasks',
+            page: ThirdTabRoute.page,
+            children: [
+              CupertinoRoute(
+                path: '',
+                page: TasksRoute.page,
+                children: [
+                  DialogRoute(
+                    path: ':id/view',
+                    page: TaskViewerRoute.page,
                   ),
                 ],
               ),
               CupertinoRoute(
-                path: 'recordings',
-                page: SecondTabRoute.page,
-                children: [
-                  CupertinoRoute(path: '', page: RecordingsRoute.page),
-                  CupertinoRoute(
-                    path: ':recordingId/line/:textLineId',
-                    page: PlayerRoute.page,
-                  ),
-                  CupertinoRoute(
-                    path: ':id/violations',
-                    page: ViolationsRoute.page,
-                    children: [
-                      DialogRoute(
-                        path: ':id',
-                        page: ViolationViewerRoute.page,
-                      ),
-                    ],
-                  ),
-                ],
+                path: 'new',
+                page: NewTaskEditorRoute.page,
               ),
               CupertinoRoute(
-                path: 'tasks',
-                page: ThirdTabRoute.page,
-                children: [
-                  CupertinoRoute(
-                    path: '',
-                    page: TasksRoute.page,
-                    children: [
-                      DialogRoute(
-                        path: ':id/view',
-                        page: TaskViewerRoute.page,
-                      ),
-                    ],
-                  ),
-                  CupertinoRoute(
-                    path: 'new',
-                    page: NewTaskEditorRoute.page,
-                  ),
-                  CupertinoRoute(
-                    path: ':taskId/edit',
-                    page: TaskEditorRoute.page,
-                  ),
-                  CupertinoRoute(
-                    path: 'planned',
-                    page: PlannedTasksRoute.page,
-                  ),
-                  CupertinoRoute(
-                    path: 'planned/:plannedTaskId',
-                    page: PlannedTaskEditorRoute.page,
-                  ),
-                ],
+                path: ':taskId/edit',
+                page: TaskEditorRoute.page,
               ),
               CupertinoRoute(
-                path: 'more',
-                page: FourthTabRoute.page,
-                children: [
-                  CupertinoRoute(path: '', page: MoreRoute.page),
-                  CupertinoRoute(
-                    path: 'profiles',
-                    page: ProfilesRoute.page,
-                  ),
-                  CupertinoRoute(
-                    path: ':uid',
-                    page: ProfileEditorRoute.page,
-                  ),
-                  CupertinoRoute(
-                    path: 'new',
-                    page: NewProfileEditorRoute.page,
-                  ),
-                  CupertinoRoute(
-                    path: 'rules',
-                    page: RulesRoute.page,
-                  ),
-                  CupertinoRoute(
-                    path: 'rules/:id',
-                    page: RuleEditorRoute.page,
-                  ),
-                  CupertinoRoute(
-                    path: 'rules/new',
-                    page: NewRuleEditorRoute.page,
-                  ),
-                ],
+                path: 'planned',
+                page: PlannedTasksRoute.page,
+              ),
+              CupertinoRoute(
+                path: 'planned/:plannedTaskId',
+                page: PlannedTaskEditorRoute.page,
+              ),
+            ],
+          ),
+          CupertinoRoute(
+            path: 'more',
+            page: FourthTabRoute.page,
+            children: [
+              CupertinoRoute(path: '', page: MoreRoute.page),
+              CupertinoRoute(
+                path: 'profiles',
+                page: ProfilesRoute.page,
+              ),
+              CupertinoRoute(
+                path: ':uid',
+                page: ProfileEditorRoute.page,
+              ),
+              CupertinoRoute(
+                path: 'new',
+                page: NewProfileEditorRoute.page,
+              ),
+              CupertinoRoute(
+                path: 'rules',
+                page: RulesRoute.page,
+              ),
+              CupertinoRoute(
+                path: 'rules/:id',
+                page: RuleEditorRoute.page,
+              ),
+              CupertinoRoute(
+                path: 'rules/new',
+                page: NewRuleEditorRoute.page,
               ),
             ],
           ),
