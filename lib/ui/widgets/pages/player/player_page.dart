@@ -280,11 +280,17 @@ class _Text extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.5),
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (final context, final index) {
-                        return Card(
-                          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          child: Text(
-                            '',
-                            style: theme.textTheme.titleLarge,
+                        return Align(
+                          alignment: index.isOdd ? Alignment.centerRight : Alignment.centerLeft,
+                          child: Card(
+                            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              child: Text(
+                                'Hello' * (index + 1),
+                                style: theme.textTheme.bodyLarge,
+                              ),
+                            ),
                           ),
                         );
                       },
