@@ -29,15 +29,31 @@ part 'app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Page|Screen|Dialog,Route')
 class AppRouter extends RootStackRouter {
-  void onNavigation(final NavigationResolver resolver, final StackRouter router) {
-    if (db.auth.currentSession?.isExpired ?? true) {
-      resolver.redirect(
+  Future<void> onNavigation(final NavigationResolver resolver, final StackRouter router) async {
+    if (!await isSignedIn()) {
+      await resolver.redirect(
         LoginRoute(
           onSignedIn: resolver.next,
         ),
       );
     } else {
       resolver.next();
+    }
+  }
+
+  Future<bool> isSignedIn() async {
+    try {
+      final session = db.auth.currentSession;
+      if (session == null) return false;
+
+      if (session.isExpired) {
+        final successfullyRefreshed = !((await db.auth.refreshSession()).session?.isExpired ?? true);
+        return successfullyRefreshed;
+      } else {
+        return true;
+      }
+    } catch (e) {
+      return false;
     }
   }
 
