@@ -32,7 +32,7 @@ abstract final class $RecordingImplJsonKeys {
 }
 
 const _$ProcessingEnumMap = {
-  Processing.none: 'none',
-  Processing.onlyText: 'onlyText',
-  Processing.textAndViolations: 'textAndViolations',
+  Processing.none: 'None',
+  Processing.onlyText: 'OnlyText',
+  Processing.textAndViolations: 'TextAndViolations',
 };
