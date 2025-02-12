@@ -15,7 +15,7 @@ Future<void> main() async {
   await Database.init();
   Bloc.observer = AppBlocObserver();
   HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: kIsWeb ? HydratedStorage.webStorageDirectory : await getApplicationDocumentsDirectory(),
+    storageDirectory: kIsWeb ? HydratedStorageDirectory.web : HydratedStorageDirectory((await getApplicationDocumentsDirectory()).path),
   );
   runApp(MyApp());
 }

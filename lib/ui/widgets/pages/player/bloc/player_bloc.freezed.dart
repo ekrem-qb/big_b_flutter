@@ -74,7 +74,7 @@ class _$PlayerEventLoadRequestedImpl
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'PlayerEvent.loadRequested'));
+    properties..add(DiagnosticsProperty('type', 'PlayerEvent.loadRequested'));
   }
 
   @override
@@ -129,7 +129,7 @@ class _$PlayerEventAudioLoadRequestedImpl
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-        .add(DiagnosticsProperty('type', 'PlayerEvent.audioLoadRequested'));
+      ..add(DiagnosticsProperty('type', 'PlayerEvent.audioLoadRequested'));
   }
 
   @override
@@ -185,7 +185,7 @@ class _$PlayerEventTextLoadRequestedImpl
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-        .add(DiagnosticsProperty('type', 'PlayerEvent.textLoadRequested'));
+      ..add(DiagnosticsProperty('type', 'PlayerEvent.textLoadRequested'));
   }
 
   @override
@@ -812,7 +812,7 @@ class _$PlayerEventPlayPauseButtonPressedImpl
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-        .add(DiagnosticsProperty('type', 'PlayerEvent.playPauseButtonPressed'));
+      ..add(DiagnosticsProperty('type', 'PlayerEvent.playPauseButtonPressed'));
   }
 
   @override
@@ -1354,7 +1354,7 @@ class _$PlayerTextStateNoneImpl
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'PlayerTextState.none'));
+    properties..add(DiagnosticsProperty('type', 'PlayerTextState.none'));
   }
 
   @override

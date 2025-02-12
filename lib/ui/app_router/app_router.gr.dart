@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -13,10 +14,7 @@ part of 'app_router.dart';
 /// [FirstTabPage]
 class FirstTabRoute extends PageRouteInfo<void> {
   const FirstTabRoute({List<PageRouteInfo>? children})
-      : super(
-          FirstTabRoute.name,
-          initialChildren: children,
-        );
+    : super(FirstTabRoute.name, initialChildren: children);
 
   static const String name = 'FirstTabRoute';
 
@@ -32,10 +30,7 @@ class FirstTabRoute extends PageRouteInfo<void> {
 /// [FourthTabPage]
 class FourthTabRoute extends PageRouteInfo<void> {
   const FourthTabRoute({List<PageRouteInfo>? children})
-      : super(
-          FourthTabRoute.name,
-          initialChildren: children,
-        );
+    : super(FourthTabRoute.name, initialChildren: children);
 
   static const String name = 'FourthTabRoute';
 
@@ -51,10 +46,7 @@ class FourthTabRoute extends PageRouteInfo<void> {
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})
-      : super(
-          HomeRoute.name,
-          initialChildren: children,
-        );
+    : super(HomeRoute.name, initialChildren: children);
 
   static const String name = 'HomeRoute';
 
@@ -74,34 +66,26 @@ class LoginRoute extends PageRouteInfo<LoginRouteArgs> {
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
-          LoginRoute.name,
-          args: LoginRouteArgs(
-            onSignedIn: onSignedIn,
-            key: key,
-          ),
-          initialChildren: children,
-        );
+         LoginRoute.name,
+         args: LoginRouteArgs(onSignedIn: onSignedIn, key: key),
+         initialChildren: children,
+       );
 
   static const String name = 'LoginRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      final args =
-          data.argsAs<LoginRouteArgs>(orElse: () => const LoginRouteArgs());
-      return LoginPage(
-        onSignedIn: args.onSignedIn,
-        key: args.key,
+      final args = data.argsAs<LoginRouteArgs>(
+        orElse: () => const LoginRouteArgs(),
       );
+      return LoginPage(onSignedIn: args.onSignedIn, key: args.key);
     },
   );
 }
 
 class LoginRouteArgs {
-  const LoginRouteArgs({
-    this.onSignedIn,
-    this.key,
-  });
+  const LoginRouteArgs({this.onSignedIn, this.key});
 
   final VoidCallback? onSignedIn;
 
@@ -117,10 +101,7 @@ class LoginRouteArgs {
 /// [MorePage]
 class MoreRoute extends PageRouteInfo<void> {
   const MoreRoute({List<PageRouteInfo>? children})
-      : super(
-          MoreRoute.name,
-          initialChildren: children,
-        );
+    : super(MoreRoute.name, initialChildren: children);
 
   static const String name = 'MoreRoute';
 
@@ -136,10 +117,7 @@ class MoreRoute extends PageRouteInfo<void> {
 /// [NewProfileEditorPage]
 class NewProfileEditorRoute extends PageRouteInfo<void> {
   const NewProfileEditorRoute({List<PageRouteInfo>? children})
-      : super(
-          NewProfileEditorRoute.name,
-          initialChildren: children,
-        );
+    : super(NewProfileEditorRoute.name, initialChildren: children);
 
   static const String name = 'NewProfileEditorRoute';
 
@@ -155,10 +133,7 @@ class NewProfileEditorRoute extends PageRouteInfo<void> {
 /// [NewRuleEditorPage]
 class NewRuleEditorRoute extends PageRouteInfo<void> {
   const NewRuleEditorRoute({List<PageRouteInfo>? children})
-      : super(
-          NewRuleEditorRoute.name,
-          initialChildren: children,
-        );
+    : super(NewRuleEditorRoute.name, initialChildren: children);
 
   static const String name = 'NewRuleEditorRoute';
 
@@ -174,10 +149,7 @@ class NewRuleEditorRoute extends PageRouteInfo<void> {
 /// [NewTaskEditorPage]
 class NewTaskEditorRoute extends PageRouteInfo<void> {
   const NewTaskEditorRoute({List<PageRouteInfo>? children})
-      : super(
-          NewTaskEditorRoute.name,
-          initialChildren: children,
-        );
+    : super(NewTaskEditorRoute.name, initialChildren: children);
 
   static const String name = 'NewTaskEditorRoute';
 
@@ -198,15 +170,15 @@ class PlannedTaskEditorRoute extends PageRouteInfo<PlannedTaskEditorRouteArgs> {
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
-          PlannedTaskEditorRoute.name,
-          args: PlannedTaskEditorRouteArgs(
-            plannedTaskId: plannedTaskId,
-            plannedTask: plannedTask,
-            key: key,
-          ),
-          rawPathParams: {'plannedTaskId': plannedTaskId},
-          initialChildren: children,
-        );
+         PlannedTaskEditorRoute.name,
+         args: PlannedTaskEditorRouteArgs(
+           plannedTaskId: plannedTaskId,
+           plannedTask: plannedTask,
+           key: key,
+         ),
+         rawPathParams: {'plannedTaskId': plannedTaskId},
+         initialChildren: children,
+       );
 
   static const String name = 'PlannedTaskEditorRoute';
 
@@ -215,8 +187,11 @@ class PlannedTaskEditorRoute extends PageRouteInfo<PlannedTaskEditorRouteArgs> {
     builder: (data) {
       final pathParams = data.inheritedPathParams;
       final args = data.argsAs<PlannedTaskEditorRouteArgs>(
-          orElse: () => PlannedTaskEditorRouteArgs(
-              plannedTaskId: pathParams.getInt('plannedTaskId')));
+        orElse:
+            () => PlannedTaskEditorRouteArgs(
+              plannedTaskId: pathParams.getInt('plannedTaskId'),
+            ),
+      );
       return PlannedTaskEditorPage(
         plannedTaskId: args.plannedTaskId,
         plannedTask: args.plannedTask,
@@ -249,10 +224,7 @@ class PlannedTaskEditorRouteArgs {
 /// [PlannedTasksPage]
 class PlannedTasksRoute extends PageRouteInfo<void> {
   const PlannedTasksRoute({List<PageRouteInfo>? children})
-      : super(
-          PlannedTasksRoute.name,
-          initialChildren: children,
-        );
+    : super(PlannedTasksRoute.name, initialChildren: children);
 
   static const String name = 'PlannedTasksRoute';
 
@@ -274,19 +246,16 @@ class PlayerRoute extends PageRouteInfo<PlayerRouteArgs> {
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
-          PlayerRoute.name,
-          args: PlayerRouteArgs(
-            recordingId: recordingId,
-            textLineId: textLineId,
-            recording: recording,
-            key: key,
-          ),
-          rawPathParams: {
-            'recordingId': recordingId,
-            'textLineId': textLineId,
-          },
-          initialChildren: children,
-        );
+         PlayerRoute.name,
+         args: PlayerRouteArgs(
+           recordingId: recordingId,
+           textLineId: textLineId,
+           recording: recording,
+           key: key,
+         ),
+         rawPathParams: {'recordingId': recordingId, 'textLineId': textLineId},
+         initialChildren: children,
+       );
 
   static const String name = 'PlayerRoute';
 
@@ -295,10 +264,12 @@ class PlayerRoute extends PageRouteInfo<PlayerRouteArgs> {
     builder: (data) {
       final pathParams = data.inheritedPathParams;
       final args = data.argsAs<PlayerRouteArgs>(
-          orElse: () => PlayerRouteArgs(
-                recordingId: pathParams.getInt('recordingId'),
-                textLineId: pathParams.optInt('textLineId'),
-              ));
+        orElse:
+            () => PlayerRouteArgs(
+              recordingId: pathParams.getInt('recordingId'),
+              textLineId: pathParams.optInt('textLineId'),
+            ),
+      );
       return PlayerPage(
         recordingId: args.recordingId,
         textLineId: args.textLineId,
@@ -340,15 +311,11 @@ class ProfileEditorRoute extends PageRouteInfo<ProfileEditorRouteArgs> {
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
-          ProfileEditorRoute.name,
-          args: ProfileEditorRouteArgs(
-            uid: uid,
-            profile: profile,
-            key: key,
-          ),
-          rawPathParams: {'uid': uid},
-          initialChildren: children,
-        );
+         ProfileEditorRoute.name,
+         args: ProfileEditorRouteArgs(uid: uid, profile: profile, key: key),
+         rawPathParams: {'uid': uid},
+         initialChildren: children,
+       );
 
   static const String name = 'ProfileEditorRoute';
 
@@ -357,8 +324,8 @@ class ProfileEditorRoute extends PageRouteInfo<ProfileEditorRouteArgs> {
     builder: (data) {
       final pathParams = data.inheritedPathParams;
       final args = data.argsAs<ProfileEditorRouteArgs>(
-          orElse: () =>
-              ProfileEditorRouteArgs(uid: pathParams.getString('uid')));
+        orElse: () => ProfileEditorRouteArgs(uid: pathParams.getString('uid')),
+      );
       return ProfileEditorPage(
         uid: args.uid,
         profile: args.profile,
@@ -369,11 +336,7 @@ class ProfileEditorRoute extends PageRouteInfo<ProfileEditorRouteArgs> {
 }
 
 class ProfileEditorRouteArgs {
-  const ProfileEditorRouteArgs({
-    required this.uid,
-    this.profile,
-    this.key,
-  });
+  const ProfileEditorRouteArgs({required this.uid, this.profile, this.key});
 
   final String uid;
 
@@ -391,10 +354,7 @@ class ProfileEditorRouteArgs {
 /// [ProfilesPage]
 class ProfilesRoute extends PageRouteInfo<void> {
   const ProfilesRoute({List<PageRouteInfo>? children})
-      : super(
-          ProfilesRoute.name,
-          initialChildren: children,
-        );
+    : super(ProfilesRoute.name, initialChildren: children);
 
   static const String name = 'ProfilesRoute';
 
@@ -410,10 +370,7 @@ class ProfilesRoute extends PageRouteInfo<void> {
 /// [RecordingsPage]
 class RecordingsRoute extends PageRouteInfo<void> {
   const RecordingsRoute({List<PageRouteInfo>? children})
-      : super(
-          RecordingsRoute.name,
-          initialChildren: children,
-        );
+    : super(RecordingsRoute.name, initialChildren: children);
 
   static const String name = 'RecordingsRoute';
 
@@ -434,15 +391,11 @@ class RuleEditorRoute extends PageRouteInfo<RuleEditorRouteArgs> {
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
-          RuleEditorRoute.name,
-          args: RuleEditorRouteArgs(
-            id: id,
-            rule: rule,
-            key: key,
-          ),
-          rawPathParams: {'id': id},
-          initialChildren: children,
-        );
+         RuleEditorRoute.name,
+         args: RuleEditorRouteArgs(id: id, rule: rule, key: key),
+         rawPathParams: {'id': id},
+         initialChildren: children,
+       );
 
   static const String name = 'RuleEditorRoute';
 
@@ -451,22 +404,15 @@ class RuleEditorRoute extends PageRouteInfo<RuleEditorRouteArgs> {
     builder: (data) {
       final pathParams = data.inheritedPathParams;
       final args = data.argsAs<RuleEditorRouteArgs>(
-          orElse: () => RuleEditorRouteArgs(id: pathParams.getInt('id')));
-      return RuleEditorPage(
-        id: args.id,
-        rule: args.rule,
-        key: args.key,
+        orElse: () => RuleEditorRouteArgs(id: pathParams.getInt('id')),
       );
+      return RuleEditorPage(id: args.id, rule: args.rule, key: args.key);
     },
   );
 }
 
 class RuleEditorRouteArgs {
-  const RuleEditorRouteArgs({
-    required this.id,
-    this.rule,
-    this.key,
-  });
+  const RuleEditorRouteArgs({required this.id, this.rule, this.key});
 
   final int id;
 
@@ -484,10 +430,7 @@ class RuleEditorRouteArgs {
 /// [RulesPage]
 class RulesRoute extends PageRouteInfo<void> {
   const RulesRoute({List<PageRouteInfo>? children})
-      : super(
-          RulesRoute.name,
-          initialChildren: children,
-        );
+    : super(RulesRoute.name, initialChildren: children);
 
   static const String name = 'RulesRoute';
 
@@ -503,10 +446,7 @@ class RulesRoute extends PageRouteInfo<void> {
 /// [SecondTabPage]
 class SecondTabRoute extends PageRouteInfo<void> {
   const SecondTabRoute({List<PageRouteInfo>? children})
-      : super(
-          SecondTabRoute.name,
-          initialChildren: children,
-        );
+    : super(SecondTabRoute.name, initialChildren: children);
 
   static const String name = 'SecondTabRoute';
 
@@ -527,15 +467,11 @@ class TaskEditorRoute extends PageRouteInfo<TaskEditorRouteArgs> {
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
-          TaskEditorRoute.name,
-          args: TaskEditorRouteArgs(
-            taskId: taskId,
-            task: task,
-            key: key,
-          ),
-          rawPathParams: {'taskId': taskId},
-          initialChildren: children,
-        );
+         TaskEditorRoute.name,
+         args: TaskEditorRouteArgs(taskId: taskId, task: task, key: key),
+         rawPathParams: {'taskId': taskId},
+         initialChildren: children,
+       );
 
   static const String name = 'TaskEditorRoute';
 
@@ -544,8 +480,8 @@ class TaskEditorRoute extends PageRouteInfo<TaskEditorRouteArgs> {
     builder: (data) {
       final pathParams = data.inheritedPathParams;
       final args = data.argsAs<TaskEditorRouteArgs>(
-          orElse: () =>
-              TaskEditorRouteArgs(taskId: pathParams.getInt('taskId')));
+        orElse: () => TaskEditorRouteArgs(taskId: pathParams.getInt('taskId')),
+      );
       return TaskEditorPage(
         taskId: args.taskId,
         task: args.task,
@@ -556,11 +492,7 @@ class TaskEditorRoute extends PageRouteInfo<TaskEditorRouteArgs> {
 }
 
 class TaskEditorRouteArgs {
-  const TaskEditorRouteArgs({
-    required this.taskId,
-    this.task,
-    this.key,
-  });
+  const TaskEditorRouteArgs({required this.taskId, this.task, this.key});
 
   final int taskId;
 
@@ -583,15 +515,11 @@ class TaskViewerRoute extends PageRouteInfo<TaskViewerRouteArgs> {
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
-          TaskViewerRoute.name,
-          args: TaskViewerRouteArgs(
-            id: id,
-            task: task,
-            key: key,
-          ),
-          rawPathParams: {'id': id},
-          initialChildren: children,
-        );
+         TaskViewerRoute.name,
+         args: TaskViewerRouteArgs(id: id, task: task, key: key),
+         rawPathParams: {'id': id},
+         initialChildren: children,
+       );
 
   static const String name = 'TaskViewerRoute';
 
@@ -600,22 +528,15 @@ class TaskViewerRoute extends PageRouteInfo<TaskViewerRouteArgs> {
     builder: (data) {
       final pathParams = data.inheritedPathParams;
       final args = data.argsAs<TaskViewerRouteArgs>(
-          orElse: () => TaskViewerRouteArgs(id: pathParams.getInt('id')));
-      return TaskViewerDialog(
-        id: args.id,
-        task: args.task,
-        key: args.key,
+        orElse: () => TaskViewerRouteArgs(id: pathParams.getInt('id')),
       );
+      return TaskViewerDialog(id: args.id, task: args.task, key: args.key);
     },
   );
 }
 
 class TaskViewerRouteArgs {
-  const TaskViewerRouteArgs({
-    required this.id,
-    this.task,
-    this.key,
-  });
+  const TaskViewerRouteArgs({required this.id, this.task, this.key});
 
   final int id;
 
@@ -633,10 +554,7 @@ class TaskViewerRouteArgs {
 /// [TasksPage]
 class TasksRoute extends PageRouteInfo<void> {
   const TasksRoute({List<PageRouteInfo>? children})
-      : super(
-          TasksRoute.name,
-          initialChildren: children,
-        );
+    : super(TasksRoute.name, initialChildren: children);
 
   static const String name = 'TasksRoute';
 
@@ -652,10 +570,7 @@ class TasksRoute extends PageRouteInfo<void> {
 /// [ThirdTabPage]
 class ThirdTabRoute extends PageRouteInfo<void> {
   const ThirdTabRoute({List<PageRouteInfo>? children})
-      : super(
-          ThirdTabRoute.name,
-          initialChildren: children,
-        );
+    : super(ThirdTabRoute.name, initialChildren: children);
 
   static const String name = 'ThirdTabRoute';
 
@@ -676,15 +591,11 @@ class ViolationViewerRoute extends PageRouteInfo<ViolationViewerRouteArgs> {
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
-          ViolationViewerRoute.name,
-          args: ViolationViewerRouteArgs(
-            id: id,
-            violation: violation,
-            key: key,
-          ),
-          rawPathParams: {'id': id},
-          initialChildren: children,
-        );
+         ViolationViewerRoute.name,
+         args: ViolationViewerRouteArgs(id: id, violation: violation, key: key),
+         rawPathParams: {'id': id},
+         initialChildren: children,
+       );
 
   static const String name = 'ViolationViewerRoute';
 
@@ -693,7 +604,8 @@ class ViolationViewerRoute extends PageRouteInfo<ViolationViewerRouteArgs> {
     builder: (data) {
       final pathParams = data.inheritedPathParams;
       final args = data.argsAs<ViolationViewerRouteArgs>(
-          orElse: () => ViolationViewerRouteArgs(id: pathParams.getInt('id')));
+        orElse: () => ViolationViewerRouteArgs(id: pathParams.getInt('id')),
+      );
       return ViolationViewerDialog(
         id: args.id,
         violation: args.violation,
@@ -704,11 +616,7 @@ class ViolationViewerRoute extends PageRouteInfo<ViolationViewerRouteArgs> {
 }
 
 class ViolationViewerRouteArgs {
-  const ViolationViewerRouteArgs({
-    required this.id,
-    this.violation,
-    this.key,
-  });
+  const ViolationViewerRouteArgs({required this.id, this.violation, this.key});
 
   final int id;
 
@@ -732,16 +640,16 @@ class ViolationsRoute extends PageRouteInfo<ViolationsRouteArgs> {
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
-          ViolationsRoute.name,
-          args: ViolationsRouteArgs(
-            id: id,
-            violations: violations,
-            sortNewFirst: sortNewFirst,
-            key: key,
-          ),
-          rawPathParams: {'id': id},
-          initialChildren: children,
-        );
+         ViolationsRoute.name,
+         args: ViolationsRouteArgs(
+           id: id,
+           violations: violations,
+           sortNewFirst: sortNewFirst,
+           key: key,
+         ),
+         rawPathParams: {'id': id},
+         initialChildren: children,
+       );
 
   static const String name = 'ViolationsRoute';
 
@@ -750,7 +658,8 @@ class ViolationsRoute extends PageRouteInfo<ViolationsRouteArgs> {
     builder: (data) {
       final pathParams = data.inheritedPathParams;
       final args = data.argsAs<ViolationsRouteArgs>(
-          orElse: () => ViolationsRouteArgs(id: pathParams.optInt('id')));
+        orElse: () => ViolationsRouteArgs(id: pathParams.optInt('id')),
+      );
       return ViolationsPage(
         id: args.id,
         violations: args.violations,
