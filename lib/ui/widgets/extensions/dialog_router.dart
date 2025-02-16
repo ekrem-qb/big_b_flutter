@@ -6,7 +6,10 @@ import 'package:provider/provider.dart';
 // The curve and initial scale values were mostly eyeballed from iOS, however
 // they reuse the same animation curve that was modeled after native page
 // transitions.
-final Animatable<double> _dialogScaleTween = Tween<double>(begin: 1.3, end: 1).chain(CurveTween(curve: Curves.linearToEaseOut));
+final Animatable<double> _dialogScaleTween = Tween<double>(
+  begin: 1.3,
+  end: 1,
+).chain(CurveTween(curve: Curves.linearToEaseOut));
 const _transitionDuration = Durations.medium1;
 const Color kCupertinoModalBarrierColor = CupertinoDynamicColor.withBrightness(
   color: Color(0x33000000),
@@ -24,10 +27,7 @@ Widget _buildCupertinoDialogTransitions(
     curve: Curves.easeInOut,
   );
   if (animation.status == AnimationStatus.reverse) {
-    return FadeTransition(
-      opacity: fadeAnimation,
-      child: child,
-    );
+    return FadeTransition(opacity: fadeAnimation, child: child);
   }
   return FadeTransition(
     opacity: fadeAnimation,
@@ -39,9 +39,7 @@ Widget _buildCupertinoDialogTransitions(
 }
 
 class DialogRouter extends StatefulWidget {
-  const DialogRouter({
-    super.key,
-  });
+  const DialogRouter({super.key});
 
   @override
   State<DialogRouter> createState() => _DialogRouterState();
@@ -83,11 +81,11 @@ class _DialogRouterState extends State<DialogRouter> {
             builder: (final context, final _) {
               return isOpen || _animationController.isAnimating
                   ? _buildCupertinoDialogTransitions(
-                      context,
-                      _animationController.view,
-                      kAlwaysDismissedAnimation,
-                      child,
-                    )
+                    context,
+                    _animationController.view,
+                    kAlwaysDismissedAnimation,
+                    child,
+                  )
                   : const SizedBox.shrink();
             },
           ),
@@ -121,23 +119,29 @@ class DialogRoute<T> extends CustomRoute<T> {
     super.restorationId,
     super.barrierColor,
   }) : super(
-          customRouteBuilder: <T>(
-            final BuildContext context,
-            final Widget child,
-            final AutoRoutePage<T> page,
-          ) =>
-              DialogRouteBuilder<T>(
-            page: page,
-            routeType: CustomRouteType(
-              barrierDismissible: barrierDismissible,
-              barrierLabel: barrierLabel,
-              barrierColor: barrierColor ?? CupertinoDynamicColor.resolve(kCupertinoModalBarrierColor, context),
-            ),
-          ),
-        );
+         customRouteBuilder:
+             <T>(
+               final BuildContext context,
+               final Widget child,
+               final AutoRoutePage<T> page,
+             ) => DialogRouteBuilder<T>(
+               page: page,
+               routeType: CustomRouteType(
+                 barrierDismissible: barrierDismissible,
+                 barrierLabel: barrierLabel,
+                 barrierColor:
+                     barrierColor ??
+                     CupertinoDynamicColor.resolve(
+                       kCupertinoModalBarrierColor,
+                       context,
+                     ),
+               ),
+             ),
+       );
 }
 
-class DialogRouteBuilder<T> extends PageRoute<T> with DialogRouteTransitionMixin<T> {
+class DialogRouteBuilder<T> extends PageRoute<T>
+    with DialogRouteTransitionMixin<T> {
   DialogRouteBuilder({
     required final AutoRoutePage<T> page,
     required this.routeType,
@@ -172,14 +176,12 @@ mixin DialogRouteTransitionMixin<T> on PageRoute<T> {
   Widget buildContent(final BuildContext context);
 
   @override
-  Duration get transitionDuration => Duration(
-        milliseconds: routeType.durationInMilliseconds ?? 300,
-      );
+  Duration get transitionDuration =>
+      Duration(milliseconds: routeType.durationInMilliseconds ?? 300);
 
   @override
-  Duration get reverseTransitionDuration => Duration(
-        milliseconds: routeType.reverseDurationInMilliseconds ?? 300,
-      );
+  Duration get reverseTransitionDuration =>
+      Duration(milliseconds: routeType.reverseDurationInMilliseconds ?? 300);
 
   @override
   bool get barrierDismissible => routeType.barrierDismissible;
@@ -203,11 +205,13 @@ mixin DialogRouteTransitionMixin<T> on PageRoute<T> {
 
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (final didPop, final result) => animationController?.reverse().then((final _) {
-        if (context.mounted) {
-          context.router.removeLast();
-        }
-      }),
+      onPopInvokedWithResult:
+          (final didPop, final result) =>
+              animationController?.reverse().then((final _) {
+                if (context.mounted) {
+                  context.router.removeLast();
+                }
+              }),
       child: Semantics(
         scopesRoute: true,
         explicitChildNodes: true,

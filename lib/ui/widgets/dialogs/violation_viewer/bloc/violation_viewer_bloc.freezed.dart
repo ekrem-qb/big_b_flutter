@@ -12,21 +12,25 @@ part of 'violation_viewer_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ViolationViewerEvent {}
 
 /// @nodoc
 abstract class $ViolationViewerEventCopyWith<$Res> {
-  factory $ViolationViewerEventCopyWith(ViolationViewerEvent value,
-          $Res Function(ViolationViewerEvent) then) =
-      _$ViolationViewerEventCopyWithImpl<$Res, ViolationViewerEvent>;
+  factory $ViolationViewerEventCopyWith(
+    ViolationViewerEvent value,
+    $Res Function(ViolationViewerEvent) then,
+  ) = _$ViolationViewerEventCopyWithImpl<$Res, ViolationViewerEvent>;
 }
 
 /// @nodoc
-class _$ViolationViewerEventCopyWithImpl<$Res,
-        $Val extends ViolationViewerEvent>
+class _$ViolationViewerEventCopyWithImpl<
+  $Res,
+  $Val extends ViolationViewerEvent
+>
     implements $ViolationViewerEventCopyWith<$Res> {
   _$ViolationViewerEventCopyWithImpl(this._value, this._then);
 
@@ -42,20 +46,23 @@ class _$ViolationViewerEventCopyWithImpl<$Res,
 /// @nodoc
 abstract class _$$ViolationViewerEventLoadRequestedImplCopyWith<$Res> {
   factory _$$ViolationViewerEventLoadRequestedImplCopyWith(
-          _$ViolationViewerEventLoadRequestedImpl value,
-          $Res Function(_$ViolationViewerEventLoadRequestedImpl) then) =
-      __$$ViolationViewerEventLoadRequestedImplCopyWithImpl<$Res>;
+    _$ViolationViewerEventLoadRequestedImpl value,
+    $Res Function(_$ViolationViewerEventLoadRequestedImpl) then,
+  ) = __$$ViolationViewerEventLoadRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$ViolationViewerEventLoadRequestedImplCopyWithImpl<$Res>
-    extends _$ViolationViewerEventCopyWithImpl<$Res,
-        _$ViolationViewerEventLoadRequestedImpl>
+    extends
+        _$ViolationViewerEventCopyWithImpl<
+          $Res,
+          _$ViolationViewerEventLoadRequestedImpl
+        >
     implements _$$ViolationViewerEventLoadRequestedImplCopyWith<$Res> {
   __$$ViolationViewerEventLoadRequestedImplCopyWithImpl(
-      _$ViolationViewerEventLoadRequestedImpl _value,
-      $Res Function(_$ViolationViewerEventLoadRequestedImpl) _then)
-      : super(_value, _then);
+    _$ViolationViewerEventLoadRequestedImpl _value,
+    $Res Function(_$ViolationViewerEventLoadRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ViolationViewerEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -104,9 +111,10 @@ mixin _$ViolationViewerState {
 
 /// @nodoc
 abstract class $ViolationViewerStateCopyWith<$Res> {
-  factory $ViolationViewerStateCopyWith(ViolationViewerState value,
-          $Res Function(ViolationViewerState) then) =
-      _$ViolationViewerStateCopyWithImpl<$Res, ViolationViewerState>;
+  factory $ViolationViewerStateCopyWith(
+    ViolationViewerState value,
+    $Res Function(ViolationViewerState) then,
+  ) = _$ViolationViewerStateCopyWithImpl<$Res, ViolationViewerState>;
   @useResult
   $Res call({int id, StatusOf<Violation, String> violation});
 
@@ -114,8 +122,10 @@ abstract class $ViolationViewerStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ViolationViewerStateCopyWithImpl<$Res,
-        $Val extends ViolationViewerState>
+class _$ViolationViewerStateCopyWithImpl<
+  $Res,
+  $Val extends ViolationViewerState
+>
     implements $ViolationViewerStateCopyWith<$Res> {
   _$ViolationViewerStateCopyWithImpl(this._value, this._then);
 
@@ -128,20 +138,22 @@ class _$ViolationViewerStateCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? violation = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      violation: null == violation
-          ? _value.violation
-          : violation // ignore: cast_nullable_to_non_nullable
-              as StatusOf<Violation, String>,
-    ) as $Val);
+  $Res call({Object? id = null, Object? violation = null}) {
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as int,
+            violation:
+                null == violation
+                    ? _value.violation
+                    : violation // ignore: cast_nullable_to_non_nullable
+                        as StatusOf<Violation, String>,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of ViolationViewerState
@@ -149,8 +161,9 @@ class _$ViolationViewerStateCopyWithImpl<$Res,
   @override
   @pragma('vm:prefer-inline')
   $StatusOfCopyWith<Violation, String, $Res> get violation {
-    return $StatusOfCopyWith<Violation, String, $Res>(_value.violation,
-        (value) {
+    return $StatusOfCopyWith<Violation, String, $Res>(_value.violation, (
+      value,
+    ) {
       return _then(_value.copyWith(violation: value) as $Val);
     });
   }
@@ -159,9 +172,10 @@ class _$ViolationViewerStateCopyWithImpl<$Res,
 /// @nodoc
 abstract class _$$ViolationViewerStateImplCopyWith<$Res>
     implements $ViolationViewerStateCopyWith<$Res> {
-  factory _$$ViolationViewerStateImplCopyWith(_$ViolationViewerStateImpl value,
-          $Res Function(_$ViolationViewerStateImpl) then) =
-      __$$ViolationViewerStateImplCopyWithImpl<$Res>;
+  factory _$$ViolationViewerStateImplCopyWith(
+    _$ViolationViewerStateImpl value,
+    $Res Function(_$ViolationViewerStateImpl) then,
+  ) = __$$ViolationViewerStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, StatusOf<Violation, String> violation});
@@ -174,28 +188,30 @@ abstract class _$$ViolationViewerStateImplCopyWith<$Res>
 class __$$ViolationViewerStateImplCopyWithImpl<$Res>
     extends _$ViolationViewerStateCopyWithImpl<$Res, _$ViolationViewerStateImpl>
     implements _$$ViolationViewerStateImplCopyWith<$Res> {
-  __$$ViolationViewerStateImplCopyWithImpl(_$ViolationViewerStateImpl _value,
-      $Res Function(_$ViolationViewerStateImpl) _then)
-      : super(_value, _then);
+  __$$ViolationViewerStateImplCopyWithImpl(
+    _$ViolationViewerStateImpl _value,
+    $Res Function(_$ViolationViewerStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ViolationViewerState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? violation = null,
-  }) {
-    return _then(_$ViolationViewerStateImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      violation: null == violation
-          ? _value.violation
-          : violation // ignore: cast_nullable_to_non_nullable
-              as StatusOf<Violation, String>,
-    ));
+  $Res call({Object? id = null, Object? violation = null}) {
+    return _then(
+      _$ViolationViewerStateImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as int,
+        violation:
+            null == violation
+                ? _value.violation
+                : violation // ignore: cast_nullable_to_non_nullable
+                    as StatusOf<Violation, String>,
+      ),
+    );
   }
 }
 
@@ -233,16 +249,18 @@ class _$ViolationViewerStateImpl implements _ViolationViewerState {
   @override
   @pragma('vm:prefer-inline')
   _$$ViolationViewerStateImplCopyWith<_$ViolationViewerStateImpl>
-      get copyWith =>
-          __$$ViolationViewerStateImplCopyWithImpl<_$ViolationViewerStateImpl>(
-              this, _$identity);
+  get copyWith =>
+      __$$ViolationViewerStateImplCopyWithImpl<_$ViolationViewerStateImpl>(
+        this,
+        _$identity,
+      );
 }
 
 abstract class _ViolationViewerState implements ViolationViewerState {
-  const factory _ViolationViewerState(
-          {required final int id,
-          required final StatusOf<Violation, String> violation}) =
-      _$ViolationViewerStateImpl;
+  const factory _ViolationViewerState({
+    required final int id,
+    required final StatusOf<Violation, String> violation,
+  }) = _$ViolationViewerStateImpl;
 
   @override
   int get id;
@@ -254,5 +272,5 @@ abstract class _ViolationViewerState implements ViolationViewerState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ViolationViewerStateImplCopyWith<_$ViolationViewerStateImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }

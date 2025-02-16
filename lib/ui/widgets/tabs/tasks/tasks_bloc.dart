@@ -22,13 +22,15 @@ class TasksBloc extends ListerBloc<Task> {
   String get idFieldKey => $TaskImplJsonKeys.id;
 
   @override
-  List<Task>? Function(List<Map<String, dynamic>> data) get converter => Task.converter;
+  List<Task>? Function(List<Map<String, dynamic>> data) get converter =>
+      Task.converter;
 
   @override
   Task Function(Map<String, dynamic> json) get fromJson => Task.fromJson;
 
   @override
-  bool Function(Task a, Task b) get isAfter => (final a, final b) => a.updatedAt.isAfter(b.updatedAt);
+  bool Function(Task a, Task b) get isAfter =>
+      (final a, final b) => a.updatedAt.isAfter(b.updatedAt);
 
   @override
   ListerFilters<Task>? get filters => null;

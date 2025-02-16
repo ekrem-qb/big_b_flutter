@@ -17,9 +17,7 @@ class PlannedTasksPage extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Görev Planlama'),
-      ),
+      appBar: AppBar(title: const Text('Görev Planlama')),
       body: const Lister<PlannedTasksBloc, PlannedTask>.cards(
         blocCreator: PlannedTasksBloc.new,
         itemContentBuilder: _Item.new,
@@ -61,36 +59,41 @@ class _Item extends StatelessWidget {
           if (plannedTask.isImageRequired)
             const Padding(
               padding: EdgeInsets.only(right: 8),
-              child: Icon(
-                Icons.photo,
-                size: 16,
-              ),
+              child: Icon(Icons.photo, size: 16),
             ),
           Padding(
             padding: const EdgeInsets.only(right: 8),
-            child: Text(
-              plannedTask.deadline.toTime().toMinutesAndSeconds(),
-            ),
+            child: Text(plannedTask.deadline.toTime().toMinutesAndSeconds()),
           ),
-          if (isWeekdaySelected(0, plannedTask.weekdays)) _Day(day: 0, text: weekdayNames[0]),
-          if (isWeekdaySelected(1, plannedTask.weekdays)) _Day(day: 1, text: weekdayNames[1]),
-          if (isWeekdaySelected(2, plannedTask.weekdays)) _Day(day: 2, text: weekdayNames[2]),
-          if (isWeekdaySelected(3, plannedTask.weekdays)) _Day(day: 3, text: weekdayNames[3]),
-          if (isWeekdaySelected(4, plannedTask.weekdays)) _Day(day: 4, text: weekdayNames[4]),
-          if (isWeekdaySelected(5, plannedTask.weekdays)) _Day(day: 5, text: weekdayNames[5]),
-          if (isWeekdaySelected(6, plannedTask.weekdays)) _Day(day: 6, text: weekdayNames[6]),
+          if (isWeekdaySelected(0, plannedTask.weekdays))
+            _Day(day: 0, text: weekdayNames[0]),
+          if (isWeekdaySelected(1, plannedTask.weekdays))
+            _Day(day: 1, text: weekdayNames[1]),
+          if (isWeekdaySelected(2, plannedTask.weekdays))
+            _Day(day: 2, text: weekdayNames[2]),
+          if (isWeekdaySelected(3, plannedTask.weekdays))
+            _Day(day: 3, text: weekdayNames[3]),
+          if (isWeekdaySelected(4, plannedTask.weekdays))
+            _Day(day: 4, text: weekdayNames[4]),
+          if (isWeekdaySelected(5, plannedTask.weekdays))
+            _Day(day: 5, text: weekdayNames[5]),
+          if (isWeekdaySelected(6, plannedTask.weekdays))
+            _Day(day: 6, text: weekdayNames[6]),
         ],
       ),
-      onTap: () => context.router.push(PlannedTaskEditorRoute(plannedTaskId: plannedTask.id, plannedTask: plannedTask)),
+      onTap:
+          () => context.router.push(
+            PlannedTaskEditorRoute(
+              plannedTaskId: plannedTask.id,
+              plannedTask: plannedTask,
+            ),
+          ),
     );
   }
 }
 
 class _Day extends StatelessWidget {
-  const _Day({
-    required this.day,
-    required this.text,
-  });
+  const _Day({required this.day, required this.text});
 
   final int day;
   final String text;
@@ -104,20 +107,14 @@ class _Day extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             border: Border.fromBorderSide(
-              BorderSide(
-                color: Theme.of(context).colorScheme.outlineVariant,
-              ),
+              BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
             ),
           ),
           child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              minHeight: 24,
-            ),
+            constraints: const BoxConstraints(minHeight: 24),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-              child: FittedBox(
-                child: Text(text),
-              ),
+              child: FittedBox(child: Text(text)),
             ),
           ),
         ),

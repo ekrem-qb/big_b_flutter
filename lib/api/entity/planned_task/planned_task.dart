@@ -20,10 +20,12 @@ class PlannedTask with _$PlannedTask implements Entity {
     @JsonKey(includeToJson: false) required final List<Profile> executives,
   }) = _PlannedTask;
 
-  factory PlannedTask.fromJson(final Map<String, dynamic> json) => _$PlannedTaskFromJson(json);
+  factory PlannedTask.fromJson(final Map<String, dynamic> json) =>
+      _$PlannedTaskFromJson(json);
 
   static const tableName = 'planned_tasks';
-  static const executivesTableName = '${tableName}_${$PlannedTaskImplJsonKeys.executives}';
+  static const executivesTableName =
+      '${tableName}_${$PlannedTaskImplJsonKeys.executives}';
   static final joinTables = [
     JoinTable(
       joinFieldName: $PlannedTaskImplJsonKeys.executives,
@@ -31,7 +33,9 @@ class PlannedTask with _$PlannedTask implements Entity {
       fieldNames: Profile.fieldNames,
     ),
   ];
-  static final fieldNames = '${joinTables.join(',')},${_$$PlannedTaskImplFieldMap.values.toSet().difference(joinTables.map((final e) => e.joinFieldName).toSet()).join(',')}';
+  static final fieldNames =
+      '${joinTables.join(',')},${_$$PlannedTaskImplFieldMap.values.toSet().difference(joinTables.map((final e) => e.joinFieldName).toSet()).join(',')}';
 
-  static List<PlannedTask>? converter(final List<Map<String, dynamic>> data) => data.map(PlannedTask.fromJson).toList();
+  static List<PlannedTask>? converter(final List<Map<String, dynamic>> data) =>
+      data.map(PlannedTask.fromJson).toList();
 }

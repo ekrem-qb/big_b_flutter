@@ -22,12 +22,15 @@ class Task with _$Task implements Entity {
     @JsonKey(includeToJson: false) required final List<Profile> executives,
   }) = _Task;
 
-  factory Task.fromJson(final Map<String, dynamic> json) => _$TaskFromJson(json);
+  factory Task.fromJson(final Map<String, dynamic> json) =>
+      _$TaskFromJson(json);
 
-  static Task? maybeFromJson(final Map<String, dynamic>? json) => json != null ? _$TaskFromJson(json) : null;
+  static Task? maybeFromJson(final Map<String, dynamic>? json) =>
+      json != null ? _$TaskFromJson(json) : null;
 
   static const tableName = 'tasks';
-  static const executivesTableName = '${tableName}_${$TaskImplJsonKeys.executives}';
+  static const executivesTableName =
+      '${tableName}_${$TaskImplJsonKeys.executives}';
   static final joinTables = [
     JoinTable(
       joinFieldName: $TaskImplJsonKeys.executives,
@@ -35,7 +38,9 @@ class Task with _$Task implements Entity {
       fieldNames: Profile.fieldNames,
     ),
   ];
-  static final fieldNames = '${joinTables.join(',')},${_$$TaskImplFieldMap.values.toSet().difference(joinTables.map((final e) => e.joinFieldName).toSet()).join(',')}';
+  static final fieldNames =
+      '${joinTables.join(',')},${_$$TaskImplFieldMap.values.toSet().difference(joinTables.map((final e) => e.joinFieldName).toSet()).join(',')}';
 
-  static List<Task>? converter(final List<Map<String, dynamic>> data) => data.map(Task.fromJson).toList();
+  static List<Task>? converter(final List<Map<String, dynamic>> data) =>
+      data.map(Task.fromJson).toList();
 }

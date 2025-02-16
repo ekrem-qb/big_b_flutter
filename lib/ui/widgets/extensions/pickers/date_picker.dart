@@ -12,7 +12,11 @@ Future<DateTime?> showCupertinoDatePicker({
   return showCupertinoModalPopup<DateTime?>(
     context: context,
     builder: (final context) {
-      return _Widget(initialDate: initialDate, minimumDate: minimumDate, showDayOfWeek: showDayOfWeek);
+      return _Widget(
+        initialDate: initialDate,
+        minimumDate: minimumDate,
+        showDayOfWeek: showDayOfWeek,
+      );
     },
   );
 }
@@ -51,7 +55,11 @@ class _Widget extends StatelessWidget {
   Widget build(final BuildContext context) {
     return Provider(
       create: (final context) => _Model(context, initialDate),
-      child: _Picker(initialDate: initialDate, minimumDate: minimumDate, showDayOfWeek: showDayOfWeek),
+      child: _Picker(
+        initialDate: initialDate,
+        minimumDate: minimumDate,
+        showDayOfWeek: showDayOfWeek,
+      ),
     );
   }
 }

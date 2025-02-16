@@ -7,13 +7,13 @@ part of 'violation.dart';
 // **************************************************************************
 
 _$NormalViolationImpl _$$NormalViolationImplFromJson(
-        Map<String, dynamic> json) =>
-    _$NormalViolationImpl(
-      id: (json['id'] as num).toInt(),
-      rule: Rule.fromJson(json['rule'] as Map<String, dynamic>),
-      record: Recording.fromJson(json['record'] as Map<String, dynamic>),
-      $type: json['type'] as String?,
-    );
+  Map<String, dynamic> json,
+) => _$NormalViolationImpl(
+  id: (json['id'] as num).toInt(),
+  rule: Rule.fromJson(json['rule'] as Map<String, dynamic>),
+  record: Recording.fromJson(json['record'] as Map<String, dynamic>),
+  $type: json['type'] as String?,
+);
 
 const _$$NormalViolationImplFieldMap = <String, String>{
   'id': 'id',
@@ -30,16 +30,16 @@ abstract final class $NormalViolationImplJsonKeys {
 }
 
 _$HighlightViolationImpl _$$HighlightViolationImplFromJson(
-        Map<String, dynamic> json) =>
-    _$HighlightViolationImpl(
-      id: (json['id'] as num).toInt(),
-      rule: Rule.fromJson(json['rule'] as Map<String, dynamic>),
-      record: Recording.fromJson(json['record'] as Map<String, dynamic>),
-      line: TextLine.fromJson(json['line'] as Map<String, dynamic>),
-      startIndex: (json['start_index'] as num).toInt(),
-      endIndex: (json['end_index'] as num).toInt(),
-      $type: json['type'] as String?,
-    );
+  Map<String, dynamic> json,
+) => _$HighlightViolationImpl(
+  id: (json['id'] as num).toInt(),
+  rule: Rule.fromJson(json['rule'] as Map<String, dynamic>),
+  record: Recording.fromJson(json['record'] as Map<String, dynamic>),
+  line: TextLine.fromJson(json['line'] as Map<String, dynamic>),
+  startIndex: (json['start_index'] as num).toInt(),
+  endIndex: (json['end_index'] as num).toInt(),
+  $type: json['type'] as String?,
+);
 
 const _$$HighlightViolationImplFieldMap = <String, String>{
   'id': 'id',

@@ -14,9 +14,10 @@ _$PlannedTaskImpl _$$PlannedTaskImplFromJson(Map<String, dynamic> json) =>
       isImageRequired: json['is_image_required'] as bool,
       updatedAt: DateTime.parse(json['updated_at'] as String).toLocal(),
       weekdays: (json['weekdays'] as num).toInt(),
-      executives: (json['executives'] as List<dynamic>)
-          .map((e) => Profile.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      executives:
+          (json['executives'] as List<dynamic>)
+              .map((e) => Profile.fromJson(e as Map<String, dynamic>))
+              .toList(),
     );
 
 const _$$PlannedTaskImplFieldMap = <String, String>{

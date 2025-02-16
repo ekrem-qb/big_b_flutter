@@ -12,7 +12,8 @@ part of 'task.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 Task _$TaskFromJson(Map<String, dynamic> json) {
   return _Task.fromJson(json);
@@ -47,16 +48,17 @@ abstract class $TaskCopyWith<$Res> {
   factory $TaskCopyWith(Task value, $Res Function(Task) then) =
       _$TaskCopyWithImpl<$Res, Task>;
   @useResult
-  $Res call(
-      {@JsonKey(includeToJson: false) int id,
-      String text,
-      bool isDone,
-      DateTime updatedAt,
-      DateTime deadline,
-      Duration delay,
-      bool isImageRequired,
-      Uri? imageUrl,
-      @JsonKey(includeToJson: false) List<Profile> executives});
+  $Res call({
+    @JsonKey(includeToJson: false) int id,
+    String text,
+    bool isDone,
+    DateTime updatedAt,
+    DateTime deadline,
+    Duration delay,
+    bool isImageRequired,
+    Uri? imageUrl,
+    @JsonKey(includeToJson: false) List<Profile> executives,
+  });
 }
 
 /// @nodoc
@@ -84,64 +86,78 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
     Object? imageUrl = freezed,
     Object? executives = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-      isDone: null == isDone
-          ? _value.isDone
-          : isDone // ignore: cast_nullable_to_non_nullable
-              as bool,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      deadline: null == deadline
-          ? _value.deadline
-          : deadline // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      delay: null == delay
-          ? _value.delay
-          : delay // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      isImageRequired: null == isImageRequired
-          ? _value.isImageRequired
-          : isImageRequired // ignore: cast_nullable_to_non_nullable
-              as bool,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as Uri?,
-      executives: null == executives
-          ? _value.executives
-          : executives // ignore: cast_nullable_to_non_nullable
-              as List<Profile>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as int,
+            text:
+                null == text
+                    ? _value.text
+                    : text // ignore: cast_nullable_to_non_nullable
+                        as String,
+            isDone:
+                null == isDone
+                    ? _value.isDone
+                    : isDone // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            updatedAt:
+                null == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+            deadline:
+                null == deadline
+                    ? _value.deadline
+                    : deadline // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+            delay:
+                null == delay
+                    ? _value.delay
+                    : delay // ignore: cast_nullable_to_non_nullable
+                        as Duration,
+            isImageRequired:
+                null == isImageRequired
+                    ? _value.isImageRequired
+                    : isImageRequired // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            imageUrl:
+                freezed == imageUrl
+                    ? _value.imageUrl
+                    : imageUrl // ignore: cast_nullable_to_non_nullable
+                        as Uri?,
+            executives:
+                null == executives
+                    ? _value.executives
+                    : executives // ignore: cast_nullable_to_non_nullable
+                        as List<Profile>,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
   factory _$$TaskImplCopyWith(
-          _$TaskImpl value, $Res Function(_$TaskImpl) then) =
-      __$$TaskImplCopyWithImpl<$Res>;
+    _$TaskImpl value,
+    $Res Function(_$TaskImpl) then,
+  ) = __$$TaskImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(includeToJson: false) int id,
-      String text,
-      bool isDone,
-      DateTime updatedAt,
-      DateTime deadline,
-      Duration delay,
-      bool isImageRequired,
-      Uri? imageUrl,
-      @JsonKey(includeToJson: false) List<Profile> executives});
+  $Res call({
+    @JsonKey(includeToJson: false) int id,
+    String text,
+    bool isDone,
+    DateTime updatedAt,
+    DateTime deadline,
+    Duration delay,
+    bool isImageRequired,
+    Uri? imageUrl,
+    @JsonKey(includeToJson: false) List<Profile> executives,
+  });
 }
 
 /// @nodoc
@@ -149,7 +165,7 @@ class __$$TaskImplCopyWithImpl<$Res>
     extends _$TaskCopyWithImpl<$Res, _$TaskImpl>
     implements _$$TaskImplCopyWith<$Res> {
   __$$TaskImplCopyWithImpl(_$TaskImpl _value, $Res Function(_$TaskImpl) _then)
-      : super(_value, _then);
+    : super(_value, _then);
 
   /// Create a copy of Task
   /// with the given fields replaced by the non-null parameter values.
@@ -166,61 +182,72 @@ class __$$TaskImplCopyWithImpl<$Res>
     Object? imageUrl = freezed,
     Object? executives = null,
   }) {
-    return _then(_$TaskImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-      isDone: null == isDone
-          ? _value.isDone
-          : isDone // ignore: cast_nullable_to_non_nullable
-              as bool,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      deadline: null == deadline
-          ? _value.deadline
-          : deadline // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      delay: null == delay
-          ? _value.delay
-          : delay // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      isImageRequired: null == isImageRequired
-          ? _value.isImageRequired
-          : isImageRequired // ignore: cast_nullable_to_non_nullable
-              as bool,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as Uri?,
-      executives: null == executives
-          ? _value._executives
-          : executives // ignore: cast_nullable_to_non_nullable
-              as List<Profile>,
-    ));
+    return _then(
+      _$TaskImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as int,
+        text:
+            null == text
+                ? _value.text
+                : text // ignore: cast_nullable_to_non_nullable
+                    as String,
+        isDone:
+            null == isDone
+                ? _value.isDone
+                : isDone // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        updatedAt:
+            null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+        deadline:
+            null == deadline
+                ? _value.deadline
+                : deadline // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+        delay:
+            null == delay
+                ? _value.delay
+                : delay // ignore: cast_nullable_to_non_nullable
+                    as Duration,
+        isImageRequired:
+            null == isImageRequired
+                ? _value.isImageRequired
+                : isImageRequired // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        imageUrl:
+            freezed == imageUrl
+                ? _value.imageUrl
+                : imageUrl // ignore: cast_nullable_to_non_nullable
+                    as Uri?,
+        executives:
+            null == executives
+                ? _value._executives
+                : executives // ignore: cast_nullable_to_non_nullable
+                    as List<Profile>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$TaskImpl implements _Task {
-  const _$TaskImpl(
-      {@JsonKey(includeToJson: false) required this.id,
-      required this.text,
-      required this.isDone,
-      required this.updatedAt,
-      required this.deadline,
-      required this.delay,
-      required this.isImageRequired,
-      this.imageUrl,
-      @JsonKey(includeToJson: false) required final List<Profile> executives})
-      : _executives = executives;
+  const _$TaskImpl({
+    @JsonKey(includeToJson: false) required this.id,
+    required this.text,
+    required this.isDone,
+    required this.updatedAt,
+    required this.deadline,
+    required this.delay,
+    required this.isImageRequired,
+    this.imageUrl,
+    @JsonKey(includeToJson: false) required final List<Profile> executives,
+  }) : _executives = executives;
 
   factory _$TaskImpl.fromJson(Map<String, dynamic> json) =>
       _$$TaskImplFromJson(json);
@@ -242,9 +269,9 @@ class _$TaskImpl implements _Task {
   final bool isImageRequired;
   @override
   final Uri? imageUrl;
-// ignore: always_put_required_named_parameters_first
+  // ignore: always_put_required_named_parameters_first
   final List<Profile> _executives;
-// ignore: always_put_required_named_parameters_first
+  // ignore: always_put_required_named_parameters_first
   @override
   @JsonKey(includeToJson: false)
   List<Profile> get executives {
@@ -275,23 +302,26 @@ class _$TaskImpl implements _Task {
                 other.isImageRequired == isImageRequired) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
-            const DeepCollectionEquality()
-                .equals(other._executives, _executives));
+            const DeepCollectionEquality().equals(
+              other._executives,
+              _executives,
+            ));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      text,
-      isDone,
-      updatedAt,
-      deadline,
-      delay,
-      isImageRequired,
-      imageUrl,
-      const DeepCollectionEquality().hash(_executives));
+    runtimeType,
+    id,
+    text,
+    isDone,
+    updatedAt,
+    deadline,
+    delay,
+    isImageRequired,
+    imageUrl,
+    const DeepCollectionEquality().hash(_executives),
+  );
 
   /// Create a copy of Task
   /// with the given fields replaced by the non-null parameter values.
@@ -303,24 +333,22 @@ class _$TaskImpl implements _Task {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TaskImplToJson(
-      this,
-    );
+    return _$$TaskImplToJson(this);
   }
 }
 
 abstract class _Task implements Task {
-  const factory _Task(
-      {@JsonKey(includeToJson: false) required final int id,
-      required final String text,
-      required final bool isDone,
-      required final DateTime updatedAt,
-      required final DateTime deadline,
-      required final Duration delay,
-      required final bool isImageRequired,
-      final Uri? imageUrl,
-      @JsonKey(includeToJson: false)
-      required final List<Profile> executives}) = _$TaskImpl;
+  const factory _Task({
+    @JsonKey(includeToJson: false) required final int id,
+    required final String text,
+    required final bool isDone,
+    required final DateTime updatedAt,
+    required final DateTime deadline,
+    required final Duration delay,
+    required final bool isImageRequired,
+    final Uri? imageUrl,
+    @JsonKey(includeToJson: false) required final List<Profile> executives,
+  }) = _$TaskImpl;
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$TaskImpl.fromJson;
 

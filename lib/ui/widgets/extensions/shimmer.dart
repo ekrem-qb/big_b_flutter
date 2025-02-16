@@ -19,12 +19,7 @@ import 'fade_transition_builder.dart';
 /// * [ShimmerDirection.ttb] top to bottom direction
 /// * [ShimmerDirection.btt] bottom to top direction
 ///
-enum ShimmerDirection {
-  ltr,
-  rtl,
-  ttb,
-  btt
-}
+enum ShimmerDirection { ltr, rtl, ttb, btt }
 
 ///
 /// A widget renders shimmer effect over [child] widget tree.
@@ -88,22 +83,16 @@ class Shimmer extends StatefulWidget {
     this.enabled = true,
     super.key,
   }) : gradient = LinearGradient(
-          begin: Alignment.topLeft,
-          colors: <Color>[
-            baseColor,
-            baseColor,
-            highlightColor,
-            baseColor,
-            baseColor,
-          ],
-          stops: const <double>[
-            0,
-            0.35,
-            0.5,
-            0.65,
-            1,
-          ],
-        );
+         begin: Alignment.topLeft,
+         colors: <Color>[
+           baseColor,
+           baseColor,
+           highlightColor,
+           baseColor,
+           baseColor,
+         ],
+         stops: const <double>[0, 0.35, 0.5, 0.65, 1],
+       );
 
   final Widget child;
   final Duration period;
@@ -120,7 +109,9 @@ class Shimmer extends StatefulWidget {
   void debugFillProperties(final DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty<Gradient>('gradient', gradient, defaultValue: null))
+      ..add(
+        DiagnosticsProperty<Gradient>('gradient', gradient, defaultValue: null),
+      )
       ..add(EnumProperty<ShimmerDirection>('direction', direction))
       ..add(DiagnosticsProperty<Duration>('period', period, defaultValue: null))
       ..add(DiagnosticsProperty<bool>('enabled', enabled, defaultValue: null))
@@ -167,18 +158,21 @@ class _ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
     return AnimatedSwitcher(
       duration: widget.period * 0.25,
       transitionBuilder: fadeTransitionBuilder,
-      child: widget.enabled
-          ? AnimatedBuilder(
-              animation: _controller,
-              child: widget.child,
-              builder: (final BuildContext context, final Widget? child) => _Shimmer(
-                direction: widget.direction,
-                gradient: widget.gradient,
-                percent: _controller.value,
-                child: child,
-              ),
-            )
-          : widget.child,
+      child:
+          widget.enabled
+              ? AnimatedBuilder(
+                animation: _controller,
+                child: widget.child,
+                builder:
+                    (final BuildContext context, final Widget? child) =>
+                        _Shimmer(
+                          direction: widget.direction,
+                          gradient: widget.gradient,
+                          percent: _controller.value,
+                          child: child,
+                        ),
+              )
+              : widget.child,
     );
   }
 
@@ -208,7 +202,10 @@ class _Shimmer extends SingleChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(final BuildContext context, final _ShimmerFilter shimmer) {
+  void updateRenderObject(
+    final BuildContext context,
+    final _ShimmerFilter shimmer,
+  ) {
     shimmer
       ..percent = percent
       ..gradient = gradient

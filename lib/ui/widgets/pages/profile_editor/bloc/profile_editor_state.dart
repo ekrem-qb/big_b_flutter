@@ -9,8 +9,10 @@ sealed class ProfileEditorState with _$ProfileEditorState {
     required final String login,
     required final Role role,
     final String? nameError,
-    @Default(OperationStatusInitial()) final OperationStatus<String> uploadState,
-    @Default(OperationStatusInitial()) final OperationStatus<String> deleteState,
+    @Default(OperationStatusInitial())
+    final OperationStatus<String> uploadState,
+    @Default(OperationStatusInitial())
+    final OperationStatus<String> deleteState,
   }) = ProfileEditorStateEdit;
 
   const factory ProfileEditorState.create({
@@ -22,6 +24,7 @@ sealed class ProfileEditorState with _$ProfileEditorState {
     @Default('') final String password,
     final String? passwordError,
     @Default(false) final bool isPasswordVisible,
-    @Default(OperationStatusInitial()) final OperationStatus<String> uploadState,
+    @Default(OperationStatusInitial())
+    final OperationStatus<String> uploadState,
   }) = ProfileEditorStateCreate;
 }

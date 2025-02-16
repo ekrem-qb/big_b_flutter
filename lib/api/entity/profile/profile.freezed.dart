@@ -12,7 +12,8 @@ part of 'profile.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 Profile _$ProfileFromJson(Map<String, dynamic> json) {
   return _Profile.fromJson(json);
@@ -45,13 +46,14 @@ abstract class $ProfileCopyWith<$Res> {
   factory $ProfileCopyWith(Profile value, $Res Function(Profile) then) =
       _$ProfileCopyWithImpl<$Res, Profile>;
   @useResult
-  $Res call(
-      {@JsonKey(includeToJson: false) String uid,
-      String name,
-      @JsonKey(fromJson: _removeMail, includeToJson: false) String login,
-      Role role,
-      @JsonKey(includeToJson: false) DateTime createdAt,
-      @JsonKey(includeToJson: false) bool isDeleted});
+  $Res call({
+    @JsonKey(includeToJson: false) String uid,
+    String name,
+    @JsonKey(fromJson: _removeMail, includeToJson: false) String login,
+    Role role,
+    @JsonKey(includeToJson: false) DateTime createdAt,
+    @JsonKey(includeToJson: false) bool isDeleted,
+  });
 }
 
 /// @nodoc
@@ -76,49 +78,60 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? createdAt = null,
     Object? isDeleted = null,
   }) {
-    return _then(_value.copyWith(
-      uid: null == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      login: null == login
-          ? _value.login
-          : login // ignore: cast_nullable_to_non_nullable
-              as String,
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as Role,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            uid:
+                null == uid
+                    ? _value.uid
+                    : uid // ignore: cast_nullable_to_non_nullable
+                        as String,
+            name:
+                null == name
+                    ? _value.name
+                    : name // ignore: cast_nullable_to_non_nullable
+                        as String,
+            login:
+                null == login
+                    ? _value.login
+                    : login // ignore: cast_nullable_to_non_nullable
+                        as String,
+            role:
+                null == role
+                    ? _value.role
+                    : role // ignore: cast_nullable_to_non_nullable
+                        as Role,
+            createdAt:
+                null == createdAt
+                    ? _value.createdAt
+                    : createdAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+            isDeleted:
+                null == isDeleted
+                    ? _value.isDeleted
+                    : isDeleted // ignore: cast_nullable_to_non_nullable
+                        as bool,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   factory _$$ProfileImplCopyWith(
-          _$ProfileImpl value, $Res Function(_$ProfileImpl) then) =
-      __$$ProfileImplCopyWithImpl<$Res>;
+    _$ProfileImpl value,
+    $Res Function(_$ProfileImpl) then,
+  ) = __$$ProfileImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(includeToJson: false) String uid,
-      String name,
-      @JsonKey(fromJson: _removeMail, includeToJson: false) String login,
-      Role role,
-      @JsonKey(includeToJson: false) DateTime createdAt,
-      @JsonKey(includeToJson: false) bool isDeleted});
+  $Res call({
+    @JsonKey(includeToJson: false) String uid,
+    String name,
+    @JsonKey(fromJson: _removeMail, includeToJson: false) String login,
+    Role role,
+    @JsonKey(includeToJson: false) DateTime createdAt,
+    @JsonKey(includeToJson: false) bool isDeleted,
+  });
 }
 
 /// @nodoc
@@ -126,8 +139,9 @@ class __$$ProfileImplCopyWithImpl<$Res>
     extends _$ProfileCopyWithImpl<$Res, _$ProfileImpl>
     implements _$$ProfileImplCopyWith<$Res> {
   __$$ProfileImplCopyWithImpl(
-      _$ProfileImpl _value, $Res Function(_$ProfileImpl) _then)
-      : super(_value, _then);
+    _$ProfileImpl _value,
+    $Res Function(_$ProfileImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Profile
   /// with the given fields replaced by the non-null parameter values.
@@ -141,46 +155,54 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? isDeleted = null,
   }) {
-    return _then(_$ProfileImpl(
-      uid: null == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      login: null == login
-          ? _value.login
-          : login // ignore: cast_nullable_to_non_nullable
-              as String,
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as Role,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$ProfileImpl(
+        uid:
+            null == uid
+                ? _value.uid
+                : uid // ignore: cast_nullable_to_non_nullable
+                    as String,
+        name:
+            null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                    as String,
+        login:
+            null == login
+                ? _value.login
+                : login // ignore: cast_nullable_to_non_nullable
+                    as String,
+        role:
+            null == role
+                ? _value.role
+                : role // ignore: cast_nullable_to_non_nullable
+                    as Role,
+        createdAt:
+            null == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+        isDeleted:
+            null == isDeleted
+                ? _value.isDeleted
+                : isDeleted // ignore: cast_nullable_to_non_nullable
+                    as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$ProfileImpl extends _Profile {
-  const _$ProfileImpl(
-      {@JsonKey(includeToJson: false) required this.uid,
-      required this.name,
-      @JsonKey(fromJson: _removeMail, includeToJson: false) required this.login,
-      required this.role,
-      @JsonKey(includeToJson: false) required this.createdAt,
-      @JsonKey(includeToJson: false) this.isDeleted = false})
-      : super._();
+  const _$ProfileImpl({
+    @JsonKey(includeToJson: false) required this.uid,
+    required this.name,
+    @JsonKey(fromJson: _removeMail, includeToJson: false) required this.login,
+    required this.role,
+    @JsonKey(includeToJson: false) required this.createdAt,
+    @JsonKey(includeToJson: false) this.isDeleted = false,
+  }) : super._();
 
   factory _$ProfileImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileImplFromJson(json);
@@ -237,21 +259,20 @@ class _$ProfileImpl extends _Profile {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ProfileImplToJson(
-      this,
-    );
+    return _$$ProfileImplToJson(this);
   }
 }
 
 abstract class _Profile extends Profile {
-  const factory _Profile(
-      {@JsonKey(includeToJson: false) required final String uid,
-      required final String name,
-      @JsonKey(fromJson: _removeMail, includeToJson: false)
-      required final String login,
-      required final Role role,
-      @JsonKey(includeToJson: false) required final DateTime createdAt,
-      @JsonKey(includeToJson: false) final bool isDeleted}) = _$ProfileImpl;
+  const factory _Profile({
+    @JsonKey(includeToJson: false) required final String uid,
+    required final String name,
+    @JsonKey(fromJson: _removeMail, includeToJson: false)
+    required final String login,
+    required final Role role,
+    @JsonKey(includeToJson: false) required final DateTime createdAt,
+    @JsonKey(includeToJson: false) final bool isDeleted,
+  }) = _$ProfileImpl;
   const _Profile._() : super._();
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$ProfileImpl.fromJson;

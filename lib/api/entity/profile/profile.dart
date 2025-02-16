@@ -12,7 +12,8 @@ class Profile with _$Profile implements Entity {
   const factory Profile({
     @JsonKey(includeToJson: false) required final String uid,
     required final String name,
-    @JsonKey(fromJson: _removeMail, includeToJson: false) required final String login,
+    @JsonKey(fromJson: _removeMail, includeToJson: false)
+    required final String login,
     required final Role role,
     @JsonKey(includeToJson: false) required final DateTime createdAt,
     @Default(false) @JsonKey(includeToJson: false) final bool isDeleted,
@@ -20,7 +21,8 @@ class Profile with _$Profile implements Entity {
 
   const Profile._();
 
-  factory Profile.fromJson(final Map<String, dynamic> json) => _$ProfileFromJson(json);
+  factory Profile.fromJson(final Map<String, dynamic> json) =>
+      _$ProfileFromJson(json);
 
   @override
   Object get id => uid;
@@ -29,7 +31,8 @@ class Profile with _$Profile implements Entity {
   static const joinTables = <JoinTable>[];
   static final fieldNames = _$$ProfileImplFieldMap.values.join(',');
 
-  static List<Profile>? converter(final List<Map<String, dynamic>> data) => data.map(Profile.fromJson).toList();
+  static List<Profile>? converter(final List<Map<String, dynamic>> data) =>
+      data.map(Profile.fromJson).toList();
 }
 
 String _removeMail(final String email) {

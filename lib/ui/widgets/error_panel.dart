@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ErrorPanel extends StatelessWidget {
-  const ErrorPanel({
-    required this.error,
-    required this.onRefresh,
-    super.key,
-  });
+  const ErrorPanel({required this.error, required this.onRefresh, super.key});
 
   final String error;
   final void Function() onRefresh;
@@ -16,10 +12,7 @@ class ErrorPanel extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
-            Icons.error_outline_rounded,
-            size: 64,
-          ),
+          const Icon(Icons.error_outline_rounded, size: 64),
           Padding(
             padding: const EdgeInsets.all(32),
             child: Text(

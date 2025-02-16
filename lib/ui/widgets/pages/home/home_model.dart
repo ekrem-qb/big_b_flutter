@@ -31,7 +31,10 @@ class HomeModel extends RestorableProperty<HomeState> {
     final newHistory = Uint8List.fromList([
       if (_state.history.lengthInBytes > 0) ...[
         _state.history[0],
-        ...Uint8List.sublistView(_state.history, 1).where((final index) => index != newIndex),
+        ...Uint8List.sublistView(
+          _state.history,
+          1,
+        ).where((final index) => index != newIndex),
       ],
       newIndex,
     ]);
@@ -43,17 +46,16 @@ class HomeModel extends RestorableProperty<HomeState> {
   void goBack() {
     if (_state.history.isEmpty) return;
 
-    _state = _state.copyWith(history: _state.history.sublist(0, _state.history.length - 1));
+    _state = _state.copyWith(
+      history: _state.history.sublist(0, _state.history.length - 1),
+    );
     notifyListeners();
     _tabsRouter.setActiveIndex(_state.history.lastOrNull ?? 0);
   }
 
   @override
-  HomeState createDefaultValue() => HomeState(
-        history: Uint8List.fromList([
-          _tabsRouter.activeIndex,
-        ]),
-      );
+  HomeState createDefaultValue() =>
+      HomeState(history: Uint8List.fromList([_tabsRouter.activeIndex]));
 
   @override
   void initWithValue(final HomeState value) {
@@ -62,7 +64,9 @@ class HomeModel extends RestorableProperty<HomeState> {
 
   @override
   HomeState fromPrimitives(final Object? data) {
-    return data != null ? HomeState.fromJson((data as Map<Object?, Object?>).cast()) : HomeState(history: Uint8List(0));
+    return data != null
+        ? HomeState.fromJson((data as Map<Object?, Object?>).cast())
+        : HomeState(history: Uint8List(0));
   }
 
   @override

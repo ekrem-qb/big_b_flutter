@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'extensions/shimmer.dart';
 
 class ListViewShimmer extends StatelessWidget {
-  const ListViewShimmer({
-    this.hasSubtitle = true,
-    super.key,
-  });
+  const ListViewShimmer({this.hasSubtitle = true, super.key});
 
   final bool hasSubtitle;
 
@@ -16,7 +13,12 @@ class ListViewShimmer extends StatelessWidget {
 
     return Shimmer.fromColors(
       baseColor: colorScheme.surfaceContainerLow,
-      highlightColor: Color.lerp(colorScheme.onSurface, colorScheme.surfaceContainerLow, 0.85)!,
+      highlightColor:
+          Color.lerp(
+            colorScheme.onSurface,
+            colorScheme.surfaceContainerLow,
+            0.85,
+          )!,
       child: ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (final BuildContext context, final int index) {

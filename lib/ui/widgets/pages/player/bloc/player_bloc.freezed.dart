@@ -12,7 +12,8 @@ part of 'player_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$PlayerEvent {}
@@ -20,8 +21,9 @@ mixin _$PlayerEvent {}
 /// @nodoc
 abstract class $PlayerEventCopyWith<$Res> {
   factory $PlayerEventCopyWith(
-          PlayerEvent value, $Res Function(PlayerEvent) then) =
-      _$PlayerEventCopyWithImpl<$Res, PlayerEvent>;
+    PlayerEvent value,
+    $Res Function(PlayerEvent) then,
+  ) = _$PlayerEventCopyWithImpl<$Res, PlayerEvent>;
 }
 
 /// @nodoc
@@ -41,9 +43,9 @@ class _$PlayerEventCopyWithImpl<$Res, $Val extends PlayerEvent>
 /// @nodoc
 abstract class _$$PlayerEventLoadRequestedImplCopyWith<$Res> {
   factory _$$PlayerEventLoadRequestedImplCopyWith(
-          _$PlayerEventLoadRequestedImpl value,
-          $Res Function(_$PlayerEventLoadRequestedImpl) then) =
-      __$$PlayerEventLoadRequestedImplCopyWithImpl<$Res>;
+    _$PlayerEventLoadRequestedImpl value,
+    $Res Function(_$PlayerEventLoadRequestedImpl) then,
+  ) = __$$PlayerEventLoadRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -51,9 +53,9 @@ class __$$PlayerEventLoadRequestedImplCopyWithImpl<$Res>
     extends _$PlayerEventCopyWithImpl<$Res, _$PlayerEventLoadRequestedImpl>
     implements _$$PlayerEventLoadRequestedImplCopyWith<$Res> {
   __$$PlayerEventLoadRequestedImplCopyWithImpl(
-      _$PlayerEventLoadRequestedImpl _value,
-      $Res Function(_$PlayerEventLoadRequestedImpl) _then)
-      : super(_value, _then);
+    _$PlayerEventLoadRequestedImpl _value,
+    $Res Function(_$PlayerEventLoadRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of PlayerEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -95,9 +97,9 @@ abstract class PlayerEventLoadRequested implements PlayerEvent {
 /// @nodoc
 abstract class _$$PlayerEventAudioLoadRequestedImplCopyWith<$Res> {
   factory _$$PlayerEventAudioLoadRequestedImplCopyWith(
-          _$PlayerEventAudioLoadRequestedImpl value,
-          $Res Function(_$PlayerEventAudioLoadRequestedImpl) then) =
-      __$$PlayerEventAudioLoadRequestedImplCopyWithImpl<$Res>;
+    _$PlayerEventAudioLoadRequestedImpl value,
+    $Res Function(_$PlayerEventAudioLoadRequestedImpl) then,
+  ) = __$$PlayerEventAudioLoadRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -105,9 +107,9 @@ class __$$PlayerEventAudioLoadRequestedImplCopyWithImpl<$Res>
     extends _$PlayerEventCopyWithImpl<$Res, _$PlayerEventAudioLoadRequestedImpl>
     implements _$$PlayerEventAudioLoadRequestedImplCopyWith<$Res> {
   __$$PlayerEventAudioLoadRequestedImplCopyWithImpl(
-      _$PlayerEventAudioLoadRequestedImpl _value,
-      $Res Function(_$PlayerEventAudioLoadRequestedImpl) _then)
-      : super(_value, _then);
+    _$PlayerEventAudioLoadRequestedImpl _value,
+    $Res Function(_$PlayerEventAudioLoadRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of PlayerEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -151,9 +153,9 @@ abstract class PlayerEventAudioLoadRequested implements PlayerEvent {
 /// @nodoc
 abstract class _$$PlayerEventTextLoadRequestedImplCopyWith<$Res> {
   factory _$$PlayerEventTextLoadRequestedImplCopyWith(
-          _$PlayerEventTextLoadRequestedImpl value,
-          $Res Function(_$PlayerEventTextLoadRequestedImpl) then) =
-      __$$PlayerEventTextLoadRequestedImplCopyWithImpl<$Res>;
+    _$PlayerEventTextLoadRequestedImpl value,
+    $Res Function(_$PlayerEventTextLoadRequestedImpl) then,
+  ) = __$$PlayerEventTextLoadRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -161,9 +163,9 @@ class __$$PlayerEventTextLoadRequestedImplCopyWithImpl<$Res>
     extends _$PlayerEventCopyWithImpl<$Res, _$PlayerEventTextLoadRequestedImpl>
     implements _$$PlayerEventTextLoadRequestedImplCopyWith<$Res> {
   __$$PlayerEventTextLoadRequestedImplCopyWithImpl(
-      _$PlayerEventTextLoadRequestedImpl _value,
-      $Res Function(_$PlayerEventTextLoadRequestedImpl) _then)
-      : super(_value, _then);
+    _$PlayerEventTextLoadRequestedImpl _value,
+    $Res Function(_$PlayerEventTextLoadRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of PlayerEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -207,9 +209,9 @@ abstract class PlayerEventTextLoadRequested implements PlayerEvent {
 /// @nodoc
 abstract class _$$PlayerEventDurationChangedImplCopyWith<$Res> {
   factory _$$PlayerEventDurationChangedImplCopyWith(
-          _$PlayerEventDurationChangedImpl value,
-          $Res Function(_$PlayerEventDurationChangedImpl) then) =
-      __$$PlayerEventDurationChangedImplCopyWithImpl<$Res>;
+    _$PlayerEventDurationChangedImpl value,
+    $Res Function(_$PlayerEventDurationChangedImpl) then,
+  ) = __$$PlayerEventDurationChangedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Duration duration});
 }
@@ -219,23 +221,24 @@ class __$$PlayerEventDurationChangedImplCopyWithImpl<$Res>
     extends _$PlayerEventCopyWithImpl<$Res, _$PlayerEventDurationChangedImpl>
     implements _$$PlayerEventDurationChangedImplCopyWith<$Res> {
   __$$PlayerEventDurationChangedImplCopyWithImpl(
-      _$PlayerEventDurationChangedImpl _value,
-      $Res Function(_$PlayerEventDurationChangedImpl) _then)
-      : super(_value, _then);
+    _$PlayerEventDurationChangedImpl _value,
+    $Res Function(_$PlayerEventDurationChangedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of PlayerEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? duration = null,
-  }) {
-    return _then(_$PlayerEventDurationChangedImpl(
-      duration: null == duration
-          ? _value.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as Duration,
-    ));
+  $Res call({Object? duration = null}) {
+    return _then(
+      _$PlayerEventDurationChangedImpl(
+        duration:
+            null == duration
+                ? _value.duration
+                : duration // ignore: cast_nullable_to_non_nullable
+                    as Duration,
+      ),
+    );
   }
 }
 
@@ -280,13 +283,15 @@ class _$PlayerEventDurationChangedImpl
   @override
   @pragma('vm:prefer-inline')
   _$$PlayerEventDurationChangedImplCopyWith<_$PlayerEventDurationChangedImpl>
-      get copyWith => __$$PlayerEventDurationChangedImplCopyWithImpl<
-          _$PlayerEventDurationChangedImpl>(this, _$identity);
+  get copyWith => __$$PlayerEventDurationChangedImplCopyWithImpl<
+    _$PlayerEventDurationChangedImpl
+  >(this, _$identity);
 }
 
 abstract class _PlayerEventDurationChanged implements PlayerEvent {
-  const factory _PlayerEventDurationChanged(
-      {required final Duration duration}) = _$PlayerEventDurationChangedImpl;
+  const factory _PlayerEventDurationChanged({
+    required final Duration duration,
+  }) = _$PlayerEventDurationChangedImpl;
 
   Duration get duration;
 
@@ -294,15 +299,15 @@ abstract class _PlayerEventDurationChanged implements PlayerEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PlayerEventDurationChangedImplCopyWith<_$PlayerEventDurationChangedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$PlayerEventPlayingChangedImplCopyWith<$Res> {
   factory _$$PlayerEventPlayingChangedImplCopyWith(
-          _$PlayerEventPlayingChangedImpl value,
-          $Res Function(_$PlayerEventPlayingChangedImpl) then) =
-      __$$PlayerEventPlayingChangedImplCopyWithImpl<$Res>;
+    _$PlayerEventPlayingChangedImpl value,
+    $Res Function(_$PlayerEventPlayingChangedImpl) then,
+  ) = __$$PlayerEventPlayingChangedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({bool isPlaying});
 }
@@ -312,23 +317,24 @@ class __$$PlayerEventPlayingChangedImplCopyWithImpl<$Res>
     extends _$PlayerEventCopyWithImpl<$Res, _$PlayerEventPlayingChangedImpl>
     implements _$$PlayerEventPlayingChangedImplCopyWith<$Res> {
   __$$PlayerEventPlayingChangedImplCopyWithImpl(
-      _$PlayerEventPlayingChangedImpl _value,
-      $Res Function(_$PlayerEventPlayingChangedImpl) _then)
-      : super(_value, _then);
+    _$PlayerEventPlayingChangedImpl _value,
+    $Res Function(_$PlayerEventPlayingChangedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of PlayerEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? isPlaying = null,
-  }) {
-    return _then(_$PlayerEventPlayingChangedImpl(
-      isPlaying: null == isPlaying
-          ? _value.isPlaying
-          : isPlaying // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+  $Res call({Object? isPlaying = null}) {
+    return _then(
+      _$PlayerEventPlayingChangedImpl(
+        isPlaying:
+            null == isPlaying
+                ? _value.isPlaying
+                : isPlaying // ignore: cast_nullable_to_non_nullable
+                    as bool,
+      ),
+    );
   }
 }
 
@@ -373,8 +379,9 @@ class _$PlayerEventPlayingChangedImpl
   @override
   @pragma('vm:prefer-inline')
   _$$PlayerEventPlayingChangedImplCopyWith<_$PlayerEventPlayingChangedImpl>
-      get copyWith => __$$PlayerEventPlayingChangedImplCopyWithImpl<
-          _$PlayerEventPlayingChangedImpl>(this, _$identity);
+  get copyWith => __$$PlayerEventPlayingChangedImplCopyWithImpl<
+    _$PlayerEventPlayingChangedImpl
+  >(this, _$identity);
 }
 
 abstract class _PlayerEventPlayingChanged implements PlayerEvent {
@@ -387,14 +394,15 @@ abstract class _PlayerEventPlayingChanged implements PlayerEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PlayerEventPlayingChangedImplCopyWith<_$PlayerEventPlayingChangedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$PlayerEventErrorImplCopyWith<$Res> {
-  factory _$$PlayerEventErrorImplCopyWith(_$PlayerEventErrorImpl value,
-          $Res Function(_$PlayerEventErrorImpl) then) =
-      __$$PlayerEventErrorImplCopyWithImpl<$Res>;
+  factory _$$PlayerEventErrorImplCopyWith(
+    _$PlayerEventErrorImpl value,
+    $Res Function(_$PlayerEventErrorImpl) then,
+  ) = __$$PlayerEventErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String error});
 }
@@ -403,23 +411,25 @@ abstract class _$$PlayerEventErrorImplCopyWith<$Res> {
 class __$$PlayerEventErrorImplCopyWithImpl<$Res>
     extends _$PlayerEventCopyWithImpl<$Res, _$PlayerEventErrorImpl>
     implements _$$PlayerEventErrorImplCopyWith<$Res> {
-  __$$PlayerEventErrorImplCopyWithImpl(_$PlayerEventErrorImpl _value,
-      $Res Function(_$PlayerEventErrorImpl) _then)
-      : super(_value, _then);
+  __$$PlayerEventErrorImplCopyWithImpl(
+    _$PlayerEventErrorImpl _value,
+    $Res Function(_$PlayerEventErrorImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of PlayerEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? error = null,
-  }) {
-    return _then(_$PlayerEventErrorImpl(
-      error: null == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? error = null}) {
+    return _then(
+      _$PlayerEventErrorImpl(
+        error:
+            null == error
+                ? _value.error
+                : error // ignore: cast_nullable_to_non_nullable
+                    as String,
+      ),
+    );
   }
 }
 
@@ -464,7 +474,9 @@ class _$PlayerEventErrorImpl
   @pragma('vm:prefer-inline')
   _$$PlayerEventErrorImplCopyWith<_$PlayerEventErrorImpl> get copyWith =>
       __$$PlayerEventErrorImplCopyWithImpl<_$PlayerEventErrorImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _PlayerEventError implements PlayerEvent {
@@ -483,9 +495,9 @@ abstract class _PlayerEventError implements PlayerEvent {
 /// @nodoc
 abstract class _$$PlayerEventPositionChangedImplCopyWith<$Res> {
   factory _$$PlayerEventPositionChangedImplCopyWith(
-          _$PlayerEventPositionChangedImpl value,
-          $Res Function(_$PlayerEventPositionChangedImpl) then) =
-      __$$PlayerEventPositionChangedImplCopyWithImpl<$Res>;
+    _$PlayerEventPositionChangedImpl value,
+    $Res Function(_$PlayerEventPositionChangedImpl) then,
+  ) = __$$PlayerEventPositionChangedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Duration position});
 }
@@ -495,23 +507,24 @@ class __$$PlayerEventPositionChangedImplCopyWithImpl<$Res>
     extends _$PlayerEventCopyWithImpl<$Res, _$PlayerEventPositionChangedImpl>
     implements _$$PlayerEventPositionChangedImplCopyWith<$Res> {
   __$$PlayerEventPositionChangedImplCopyWithImpl(
-      _$PlayerEventPositionChangedImpl _value,
-      $Res Function(_$PlayerEventPositionChangedImpl) _then)
-      : super(_value, _then);
+    _$PlayerEventPositionChangedImpl _value,
+    $Res Function(_$PlayerEventPositionChangedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of PlayerEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? position = null,
-  }) {
-    return _then(_$PlayerEventPositionChangedImpl(
-      position: null == position
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as Duration,
-    ));
+  $Res call({Object? position = null}) {
+    return _then(
+      _$PlayerEventPositionChangedImpl(
+        position:
+            null == position
+                ? _value.position
+                : position // ignore: cast_nullable_to_non_nullable
+                    as Duration,
+      ),
+    );
   }
 }
 
@@ -556,13 +569,15 @@ class _$PlayerEventPositionChangedImpl
   @override
   @pragma('vm:prefer-inline')
   _$$PlayerEventPositionChangedImplCopyWith<_$PlayerEventPositionChangedImpl>
-      get copyWith => __$$PlayerEventPositionChangedImplCopyWithImpl<
-          _$PlayerEventPositionChangedImpl>(this, _$identity);
+  get copyWith => __$$PlayerEventPositionChangedImplCopyWithImpl<
+    _$PlayerEventPositionChangedImpl
+  >(this, _$identity);
 }
 
 abstract class _PlayerEventPositionChanged implements PlayerEvent {
-  const factory _PlayerEventPositionChanged(
-      {required final Duration position}) = _$PlayerEventPositionChangedImpl;
+  const factory _PlayerEventPositionChanged({
+    required final Duration position,
+  }) = _$PlayerEventPositionChangedImpl;
 
   Duration get position;
 
@@ -570,47 +585,47 @@ abstract class _PlayerEventPositionChanged implements PlayerEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PlayerEventPositionChangedImplCopyWith<_$PlayerEventPositionChangedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$PlayerEventJumpToLineRequestedImplCopyWith<$Res> {
   factory _$$PlayerEventJumpToLineRequestedImplCopyWith(
-          _$PlayerEventJumpToLineRequestedImpl value,
-          $Res Function(_$PlayerEventJumpToLineRequestedImpl) then) =
-      __$$PlayerEventJumpToLineRequestedImplCopyWithImpl<$Res>;
+    _$PlayerEventJumpToLineRequestedImpl value,
+    $Res Function(_$PlayerEventJumpToLineRequestedImpl) then,
+  ) = __$$PlayerEventJumpToLineRequestedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int index, bool seekPlayer});
 }
 
 /// @nodoc
 class __$$PlayerEventJumpToLineRequestedImplCopyWithImpl<$Res>
-    extends _$PlayerEventCopyWithImpl<$Res,
-        _$PlayerEventJumpToLineRequestedImpl>
+    extends
+        _$PlayerEventCopyWithImpl<$Res, _$PlayerEventJumpToLineRequestedImpl>
     implements _$$PlayerEventJumpToLineRequestedImplCopyWith<$Res> {
   __$$PlayerEventJumpToLineRequestedImplCopyWithImpl(
-      _$PlayerEventJumpToLineRequestedImpl _value,
-      $Res Function(_$PlayerEventJumpToLineRequestedImpl) _then)
-      : super(_value, _then);
+    _$PlayerEventJumpToLineRequestedImpl _value,
+    $Res Function(_$PlayerEventJumpToLineRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of PlayerEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? index = null,
-    Object? seekPlayer = null,
-  }) {
-    return _then(_$PlayerEventJumpToLineRequestedImpl(
-      null == index
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
-              as int,
-      seekPlayer: null == seekPlayer
-          ? _value.seekPlayer
-          : seekPlayer // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+  $Res call({Object? index = null, Object? seekPlayer = null}) {
+    return _then(
+      _$PlayerEventJumpToLineRequestedImpl(
+        null == index
+            ? _value.index
+            : index // ignore: cast_nullable_to_non_nullable
+                as int,
+        seekPlayer:
+            null == seekPlayer
+                ? _value.seekPlayer
+                : seekPlayer // ignore: cast_nullable_to_non_nullable
+                    as bool,
+      ),
+    );
   }
 }
 
@@ -619,8 +634,10 @@ class __$$PlayerEventJumpToLineRequestedImplCopyWithImpl<$Res>
 class _$PlayerEventJumpToLineRequestedImpl
     with DiagnosticableTreeMixin
     implements PlayerEventJumpToLineRequested {
-  const _$PlayerEventJumpToLineRequestedImpl(this.index,
-      {this.seekPlayer = true});
+  const _$PlayerEventJumpToLineRequestedImpl(
+    this.index, {
+    this.seekPlayer = true,
+  });
 
   @override
   final int index;
@@ -661,14 +678,18 @@ class _$PlayerEventJumpToLineRequestedImpl
   @override
   @pragma('vm:prefer-inline')
   _$$PlayerEventJumpToLineRequestedImplCopyWith<
-          _$PlayerEventJumpToLineRequestedImpl>
-      get copyWith => __$$PlayerEventJumpToLineRequestedImplCopyWithImpl<
-          _$PlayerEventJumpToLineRequestedImpl>(this, _$identity);
+    _$PlayerEventJumpToLineRequestedImpl
+  >
+  get copyWith => __$$PlayerEventJumpToLineRequestedImplCopyWithImpl<
+    _$PlayerEventJumpToLineRequestedImpl
+  >(this, _$identity);
 }
 
 abstract class PlayerEventJumpToLineRequested implements PlayerEvent {
-  const factory PlayerEventJumpToLineRequested(final int index,
-      {final bool seekPlayer}) = _$PlayerEventJumpToLineRequestedImpl;
+  const factory PlayerEventJumpToLineRequested(
+    final int index, {
+    final bool seekPlayer,
+  }) = _$PlayerEventJumpToLineRequestedImpl;
 
   int get index;
   bool get seekPlayer;
@@ -677,16 +698,17 @@ abstract class PlayerEventJumpToLineRequested implements PlayerEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PlayerEventJumpToLineRequestedImplCopyWith<
-          _$PlayerEventJumpToLineRequestedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+    _$PlayerEventJumpToLineRequestedImpl
+  >
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$PlayerEventSeekRequestedImplCopyWith<$Res> {
   factory _$$PlayerEventSeekRequestedImplCopyWith(
-          _$PlayerEventSeekRequestedImpl value,
-          $Res Function(_$PlayerEventSeekRequestedImpl) then) =
-      __$$PlayerEventSeekRequestedImplCopyWithImpl<$Res>;
+    _$PlayerEventSeekRequestedImpl value,
+    $Res Function(_$PlayerEventSeekRequestedImpl) then,
+  ) = __$$PlayerEventSeekRequestedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Duration position});
 }
@@ -696,23 +718,23 @@ class __$$PlayerEventSeekRequestedImplCopyWithImpl<$Res>
     extends _$PlayerEventCopyWithImpl<$Res, _$PlayerEventSeekRequestedImpl>
     implements _$$PlayerEventSeekRequestedImplCopyWith<$Res> {
   __$$PlayerEventSeekRequestedImplCopyWithImpl(
-      _$PlayerEventSeekRequestedImpl _value,
-      $Res Function(_$PlayerEventSeekRequestedImpl) _then)
-      : super(_value, _then);
+    _$PlayerEventSeekRequestedImpl _value,
+    $Res Function(_$PlayerEventSeekRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of PlayerEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? position = null,
-  }) {
-    return _then(_$PlayerEventSeekRequestedImpl(
-      null == position
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as Duration,
-    ));
+  $Res call({Object? position = null}) {
+    return _then(
+      _$PlayerEventSeekRequestedImpl(
+        null == position
+            ? _value.position
+            : position // ignore: cast_nullable_to_non_nullable
+                as Duration,
+      ),
+    );
   }
 }
 
@@ -757,8 +779,9 @@ class _$PlayerEventSeekRequestedImpl
   @override
   @pragma('vm:prefer-inline')
   _$$PlayerEventSeekRequestedImplCopyWith<_$PlayerEventSeekRequestedImpl>
-      get copyWith => __$$PlayerEventSeekRequestedImplCopyWithImpl<
-          _$PlayerEventSeekRequestedImpl>(this, _$identity);
+  get copyWith => __$$PlayerEventSeekRequestedImplCopyWithImpl<
+    _$PlayerEventSeekRequestedImpl
+  >(this, _$identity);
 }
 
 abstract class PlayerEventSeekRequested implements PlayerEvent {
@@ -771,26 +794,26 @@ abstract class PlayerEventSeekRequested implements PlayerEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PlayerEventSeekRequestedImplCopyWith<_$PlayerEventSeekRequestedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$PlayerEventPlayPauseButtonPressedImplCopyWith<$Res> {
   factory _$$PlayerEventPlayPauseButtonPressedImplCopyWith(
-          _$PlayerEventPlayPauseButtonPressedImpl value,
-          $Res Function(_$PlayerEventPlayPauseButtonPressedImpl) then) =
-      __$$PlayerEventPlayPauseButtonPressedImplCopyWithImpl<$Res>;
+    _$PlayerEventPlayPauseButtonPressedImpl value,
+    $Res Function(_$PlayerEventPlayPauseButtonPressedImpl) then,
+  ) = __$$PlayerEventPlayPauseButtonPressedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$PlayerEventPlayPauseButtonPressedImplCopyWithImpl<$Res>
-    extends _$PlayerEventCopyWithImpl<$Res,
-        _$PlayerEventPlayPauseButtonPressedImpl>
+    extends
+        _$PlayerEventCopyWithImpl<$Res, _$PlayerEventPlayPauseButtonPressedImpl>
     implements _$$PlayerEventPlayPauseButtonPressedImplCopyWith<$Res> {
   __$$PlayerEventPlayPauseButtonPressedImplCopyWithImpl(
-      _$PlayerEventPlayPauseButtonPressedImpl _value,
-      $Res Function(_$PlayerEventPlayPauseButtonPressedImpl) _then)
-      : super(_value, _then);
+    _$PlayerEventPlayPauseButtonPressedImpl _value,
+    $Res Function(_$PlayerEventPlayPauseButtonPressedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of PlayerEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -852,15 +875,17 @@ mixin _$PlayerState {
 /// @nodoc
 abstract class $PlayerStateCopyWith<$Res> {
   factory $PlayerStateCopyWith(
-          PlayerState value, $Res Function(PlayerState) then) =
-      _$PlayerStateCopyWithImpl<$Res, PlayerState>;
+    PlayerState value,
+    $Res Function(PlayerState) then,
+  ) = _$PlayerStateCopyWithImpl<$Res, PlayerState>;
   @useResult
-  $Res call(
-      {int recordingId,
-      int? currentTextLineId,
-      StatusOf<Recording, String> recordingState,
-      StatusOf<PlayerAudioState, String> audioState,
-      StatusOf<PlayerTextState, String> textState});
+  $Res call({
+    int recordingId,
+    int? currentTextLineId,
+    StatusOf<Recording, String> recordingState,
+    StatusOf<PlayerAudioState, String> audioState,
+    StatusOf<PlayerTextState, String> textState,
+  });
 
   $StatusOfCopyWith<Recording, String, $Res> get recordingState;
   $StatusOfCopyWith<PlayerAudioState, String, $Res> get audioState;
@@ -888,28 +913,36 @@ class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
     Object? audioState = null,
     Object? textState = null,
   }) {
-    return _then(_value.copyWith(
-      recordingId: null == recordingId
-          ? _value.recordingId
-          : recordingId // ignore: cast_nullable_to_non_nullable
-              as int,
-      currentTextLineId: freezed == currentTextLineId
-          ? _value.currentTextLineId
-          : currentTextLineId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      recordingState: null == recordingState
-          ? _value.recordingState
-          : recordingState // ignore: cast_nullable_to_non_nullable
-              as StatusOf<Recording, String>,
-      audioState: null == audioState
-          ? _value.audioState
-          : audioState // ignore: cast_nullable_to_non_nullable
-              as StatusOf<PlayerAudioState, String>,
-      textState: null == textState
-          ? _value.textState
-          : textState // ignore: cast_nullable_to_non_nullable
-              as StatusOf<PlayerTextState, String>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            recordingId:
+                null == recordingId
+                    ? _value.recordingId
+                    : recordingId // ignore: cast_nullable_to_non_nullable
+                        as int,
+            currentTextLineId:
+                freezed == currentTextLineId
+                    ? _value.currentTextLineId
+                    : currentTextLineId // ignore: cast_nullable_to_non_nullable
+                        as int?,
+            recordingState:
+                null == recordingState
+                    ? _value.recordingState
+                    : recordingState // ignore: cast_nullable_to_non_nullable
+                        as StatusOf<Recording, String>,
+            audioState:
+                null == audioState
+                    ? _value.audioState
+                    : audioState // ignore: cast_nullable_to_non_nullable
+                        as StatusOf<PlayerAudioState, String>,
+            textState:
+                null == textState
+                    ? _value.textState
+                    : textState // ignore: cast_nullable_to_non_nullable
+                        as StatusOf<PlayerTextState, String>,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of PlayerState
@@ -917,8 +950,9 @@ class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
   @override
   @pragma('vm:prefer-inline')
   $StatusOfCopyWith<Recording, String, $Res> get recordingState {
-    return $StatusOfCopyWith<Recording, String, $Res>(_value.recordingState,
-        (value) {
+    return $StatusOfCopyWith<Recording, String, $Res>(_value.recordingState, (
+      value,
+    ) {
       return _then(_value.copyWith(recordingState: value) as $Val);
     });
   }
@@ -928,10 +962,12 @@ class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
   @override
   @pragma('vm:prefer-inline')
   $StatusOfCopyWith<PlayerAudioState, String, $Res> get audioState {
-    return $StatusOfCopyWith<PlayerAudioState, String, $Res>(_value.audioState,
-        (value) {
-      return _then(_value.copyWith(audioState: value) as $Val);
-    });
+    return $StatusOfCopyWith<PlayerAudioState, String, $Res>(
+      _value.audioState,
+      (value) {
+        return _then(_value.copyWith(audioState: value) as $Val);
+      },
+    );
   }
 
   /// Create a copy of PlayerState
@@ -939,8 +975,9 @@ class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
   @override
   @pragma('vm:prefer-inline')
   $StatusOfCopyWith<PlayerTextState, String, $Res> get textState {
-    return $StatusOfCopyWith<PlayerTextState, String, $Res>(_value.textState,
-        (value) {
+    return $StatusOfCopyWith<PlayerTextState, String, $Res>(_value.textState, (
+      value,
+    ) {
       return _then(_value.copyWith(textState: value) as $Val);
     });
   }
@@ -950,16 +987,18 @@ class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
 abstract class _$$PlayerStateImplCopyWith<$Res>
     implements $PlayerStateCopyWith<$Res> {
   factory _$$PlayerStateImplCopyWith(
-          _$PlayerStateImpl value, $Res Function(_$PlayerStateImpl) then) =
-      __$$PlayerStateImplCopyWithImpl<$Res>;
+    _$PlayerStateImpl value,
+    $Res Function(_$PlayerStateImpl) then,
+  ) = __$$PlayerStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int recordingId,
-      int? currentTextLineId,
-      StatusOf<Recording, String> recordingState,
-      StatusOf<PlayerAudioState, String> audioState,
-      StatusOf<PlayerTextState, String> textState});
+  $Res call({
+    int recordingId,
+    int? currentTextLineId,
+    StatusOf<Recording, String> recordingState,
+    StatusOf<PlayerAudioState, String> audioState,
+    StatusOf<PlayerTextState, String> textState,
+  });
 
   @override
   $StatusOfCopyWith<Recording, String, $Res> get recordingState;
@@ -974,8 +1013,9 @@ class __$$PlayerStateImplCopyWithImpl<$Res>
     extends _$PlayerStateCopyWithImpl<$Res, _$PlayerStateImpl>
     implements _$$PlayerStateImplCopyWith<$Res> {
   __$$PlayerStateImplCopyWithImpl(
-      _$PlayerStateImpl _value, $Res Function(_$PlayerStateImpl) _then)
-      : super(_value, _then);
+    _$PlayerStateImpl _value,
+    $Res Function(_$PlayerStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of PlayerState
   /// with the given fields replaced by the non-null parameter values.
@@ -988,40 +1028,48 @@ class __$$PlayerStateImplCopyWithImpl<$Res>
     Object? audioState = null,
     Object? textState = null,
   }) {
-    return _then(_$PlayerStateImpl(
-      recordingId: null == recordingId
-          ? _value.recordingId
-          : recordingId // ignore: cast_nullable_to_non_nullable
-              as int,
-      currentTextLineId: freezed == currentTextLineId
-          ? _value.currentTextLineId
-          : currentTextLineId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      recordingState: null == recordingState
-          ? _value.recordingState
-          : recordingState // ignore: cast_nullable_to_non_nullable
-              as StatusOf<Recording, String>,
-      audioState: null == audioState
-          ? _value.audioState
-          : audioState // ignore: cast_nullable_to_non_nullable
-              as StatusOf<PlayerAudioState, String>,
-      textState: null == textState
-          ? _value.textState
-          : textState // ignore: cast_nullable_to_non_nullable
-              as StatusOf<PlayerTextState, String>,
-    ));
+    return _then(
+      _$PlayerStateImpl(
+        recordingId:
+            null == recordingId
+                ? _value.recordingId
+                : recordingId // ignore: cast_nullable_to_non_nullable
+                    as int,
+        currentTextLineId:
+            freezed == currentTextLineId
+                ? _value.currentTextLineId
+                : currentTextLineId // ignore: cast_nullable_to_non_nullable
+                    as int?,
+        recordingState:
+            null == recordingState
+                ? _value.recordingState
+                : recordingState // ignore: cast_nullable_to_non_nullable
+                    as StatusOf<Recording, String>,
+        audioState:
+            null == audioState
+                ? _value.audioState
+                : audioState // ignore: cast_nullable_to_non_nullable
+                    as StatusOf<PlayerAudioState, String>,
+        textState:
+            null == textState
+                ? _value.textState
+                : textState // ignore: cast_nullable_to_non_nullable
+                    as StatusOf<PlayerTextState, String>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
-  const _$PlayerStateImpl(
-      {required this.recordingId,
-      this.currentTextLineId,
-      this.recordingState = const StatusOfLoading(),
-      this.audioState = const StatusOfLoading(),
-      this.textState = const StatusOfLoading()});
+  const _$PlayerStateImpl({
+    required this.recordingId,
+    this.currentTextLineId,
+    this.recordingState = const StatusOfLoading(),
+    this.audioState = const StatusOfLoading(),
+    this.textState = const StatusOfLoading(),
+  });
 
   @override
   final int recordingId;
@@ -1072,8 +1120,14 @@ class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, recordingId, currentTextLineId,
-      recordingState, audioState, textState);
+  int get hashCode => Object.hash(
+    runtimeType,
+    recordingId,
+    currentTextLineId,
+    recordingState,
+    audioState,
+    textState,
+  );
 
   /// Create a copy of PlayerState
   /// with the given fields replaced by the non-null parameter values.
@@ -1085,12 +1139,13 @@ class _$PlayerStateImpl with DiagnosticableTreeMixin implements _PlayerState {
 }
 
 abstract class _PlayerState implements PlayerState {
-  const factory _PlayerState(
-      {required final int recordingId,
-      final int? currentTextLineId,
-      final StatusOf<Recording, String> recordingState,
-      final StatusOf<PlayerAudioState, String> audioState,
-      final StatusOf<PlayerTextState, String> textState}) = _$PlayerStateImpl;
+  const factory _PlayerState({
+    required final int recordingId,
+    final int? currentTextLineId,
+    final StatusOf<Recording, String> recordingState,
+    final StatusOf<PlayerAudioState, String> audioState,
+    final StatusOf<PlayerTextState, String> textState,
+  }) = _$PlayerStateImpl;
 
   @override
   int get recordingId;
@@ -1127,8 +1182,9 @@ mixin _$PlayerAudioState {
 /// @nodoc
 abstract class $PlayerAudioStateCopyWith<$Res> {
   factory $PlayerAudioStateCopyWith(
-          PlayerAudioState value, $Res Function(PlayerAudioState) then) =
-      _$PlayerAudioStateCopyWithImpl<$Res, PlayerAudioState>;
+    PlayerAudioState value,
+    $Res Function(PlayerAudioState) then,
+  ) = _$PlayerAudioStateCopyWithImpl<$Res, PlayerAudioState>;
   @useResult
   $Res call({Duration position, Duration duration, bool isPlaying});
 }
@@ -1152,29 +1208,36 @@ class _$PlayerAudioStateCopyWithImpl<$Res, $Val extends PlayerAudioState>
     Object? duration = null,
     Object? isPlaying = null,
   }) {
-    return _then(_value.copyWith(
-      position: null == position
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      duration: null == duration
-          ? _value.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      isPlaying: null == isPlaying
-          ? _value.isPlaying
-          : isPlaying // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            position:
+                null == position
+                    ? _value.position
+                    : position // ignore: cast_nullable_to_non_nullable
+                        as Duration,
+            duration:
+                null == duration
+                    ? _value.duration
+                    : duration // ignore: cast_nullable_to_non_nullable
+                        as Duration,
+            isPlaying:
+                null == isPlaying
+                    ? _value.isPlaying
+                    : isPlaying // ignore: cast_nullable_to_non_nullable
+                        as bool,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$PlayerAudioStateImplCopyWith<$Res>
     implements $PlayerAudioStateCopyWith<$Res> {
-  factory _$$PlayerAudioStateImplCopyWith(_$PlayerAudioStateImpl value,
-          $Res Function(_$PlayerAudioStateImpl) then) =
-      __$$PlayerAudioStateImplCopyWithImpl<$Res>;
+  factory _$$PlayerAudioStateImplCopyWith(
+    _$PlayerAudioStateImpl value,
+    $Res Function(_$PlayerAudioStateImpl) then,
+  ) = __$$PlayerAudioStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Duration position, Duration duration, bool isPlaying});
@@ -1184,9 +1247,10 @@ abstract class _$$PlayerAudioStateImplCopyWith<$Res>
 class __$$PlayerAudioStateImplCopyWithImpl<$Res>
     extends _$PlayerAudioStateCopyWithImpl<$Res, _$PlayerAudioStateImpl>
     implements _$$PlayerAudioStateImplCopyWith<$Res> {
-  __$$PlayerAudioStateImplCopyWithImpl(_$PlayerAudioStateImpl _value,
-      $Res Function(_$PlayerAudioStateImpl) _then)
-      : super(_value, _then);
+  __$$PlayerAudioStateImplCopyWithImpl(
+    _$PlayerAudioStateImpl _value,
+    $Res Function(_$PlayerAudioStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of PlayerAudioState
   /// with the given fields replaced by the non-null parameter values.
@@ -1197,20 +1261,25 @@ class __$$PlayerAudioStateImplCopyWithImpl<$Res>
     Object? duration = null,
     Object? isPlaying = null,
   }) {
-    return _then(_$PlayerAudioStateImpl(
-      position: null == position
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      duration: null == duration
-          ? _value.duration
-          : duration // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      isPlaying: null == isPlaying
-          ? _value.isPlaying
-          : isPlaying // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$PlayerAudioStateImpl(
+        position:
+            null == position
+                ? _value.position
+                : position // ignore: cast_nullable_to_non_nullable
+                    as Duration,
+        duration:
+            null == duration
+                ? _value.duration
+                : duration // ignore: cast_nullable_to_non_nullable
+                    as Duration,
+        isPlaying:
+            null == isPlaying
+                ? _value.isPlaying
+                : isPlaying // ignore: cast_nullable_to_non_nullable
+                    as bool,
+      ),
+    );
   }
 }
 
@@ -1219,10 +1288,11 @@ class __$$PlayerAudioStateImplCopyWithImpl<$Res>
 class _$PlayerAudioStateImpl
     with DiagnosticableTreeMixin
     implements _PlayerAudioState {
-  const _$PlayerAudioStateImpl(
-      {this.position = Duration.zero,
-      this.duration = const Duration(seconds: 1),
-      this.isPlaying = false});
+  const _$PlayerAudioStateImpl({
+    this.position = Duration.zero,
+    this.duration = const Duration(seconds: 1),
+    this.isPlaying = false,
+  });
 
   @override
   @JsonKey()
@@ -1272,14 +1342,17 @@ class _$PlayerAudioStateImpl
   @pragma('vm:prefer-inline')
   _$$PlayerAudioStateImplCopyWith<_$PlayerAudioStateImpl> get copyWith =>
       __$$PlayerAudioStateImplCopyWithImpl<_$PlayerAudioStateImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _PlayerAudioState implements PlayerAudioState {
-  const factory _PlayerAudioState(
-      {final Duration position,
-      final Duration duration,
-      final bool isPlaying}) = _$PlayerAudioStateImpl;
+  const factory _PlayerAudioState({
+    final Duration position,
+    final Duration duration,
+    final bool isPlaying,
+  }) = _$PlayerAudioStateImpl;
 
   @override
   Duration get position;
@@ -1302,8 +1375,9 @@ mixin _$PlayerTextState {}
 /// @nodoc
 abstract class $PlayerTextStateCopyWith<$Res> {
   factory $PlayerTextStateCopyWith(
-          PlayerTextState value, $Res Function(PlayerTextState) then) =
-      _$PlayerTextStateCopyWithImpl<$Res, PlayerTextState>;
+    PlayerTextState value,
+    $Res Function(PlayerTextState) then,
+  ) = _$PlayerTextStateCopyWithImpl<$Res, PlayerTextState>;
 }
 
 /// @nodoc
@@ -1322,18 +1396,20 @@ class _$PlayerTextStateCopyWithImpl<$Res, $Val extends PlayerTextState>
 
 /// @nodoc
 abstract class _$$PlayerTextStateNoneImplCopyWith<$Res> {
-  factory _$$PlayerTextStateNoneImplCopyWith(_$PlayerTextStateNoneImpl value,
-          $Res Function(_$PlayerTextStateNoneImpl) then) =
-      __$$PlayerTextStateNoneImplCopyWithImpl<$Res>;
+  factory _$$PlayerTextStateNoneImplCopyWith(
+    _$PlayerTextStateNoneImpl value,
+    $Res Function(_$PlayerTextStateNoneImpl) then,
+  ) = __$$PlayerTextStateNoneImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$PlayerTextStateNoneImplCopyWithImpl<$Res>
     extends _$PlayerTextStateCopyWithImpl<$Res, _$PlayerTextStateNoneImpl>
     implements _$$PlayerTextStateNoneImplCopyWith<$Res> {
-  __$$PlayerTextStateNoneImplCopyWithImpl(_$PlayerTextStateNoneImpl _value,
-      $Res Function(_$PlayerTextStateNoneImpl) _then)
-      : super(_value, _then);
+  __$$PlayerTextStateNoneImplCopyWithImpl(
+    _$PlayerTextStateNoneImpl _value,
+    $Res Function(_$PlayerTextStateNoneImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of PlayerTextState
   /// with the given fields replaced by the non-null parameter values.
@@ -1375,9 +1451,9 @@ abstract class PlayerTextStateNone implements PlayerTextState {
 /// @nodoc
 abstract class _$$PlayerTextStateOnlyTextImplCopyWith<$Res> {
   factory _$$PlayerTextStateOnlyTextImplCopyWith(
-          _$PlayerTextStateOnlyTextImpl value,
-          $Res Function(_$PlayerTextStateOnlyTextImpl) then) =
-      __$$PlayerTextStateOnlyTextImplCopyWithImpl<$Res>;
+    _$PlayerTextStateOnlyTextImpl value,
+    $Res Function(_$PlayerTextStateOnlyTextImpl) then,
+  ) = __$$PlayerTextStateOnlyTextImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int currentTextLine, List<TextLine> textLines});
 }
@@ -1387,28 +1463,29 @@ class __$$PlayerTextStateOnlyTextImplCopyWithImpl<$Res>
     extends _$PlayerTextStateCopyWithImpl<$Res, _$PlayerTextStateOnlyTextImpl>
     implements _$$PlayerTextStateOnlyTextImplCopyWith<$Res> {
   __$$PlayerTextStateOnlyTextImplCopyWithImpl(
-      _$PlayerTextStateOnlyTextImpl _value,
-      $Res Function(_$PlayerTextStateOnlyTextImpl) _then)
-      : super(_value, _then);
+    _$PlayerTextStateOnlyTextImpl _value,
+    $Res Function(_$PlayerTextStateOnlyTextImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of PlayerTextState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? currentTextLine = null,
-    Object? textLines = null,
-  }) {
-    return _then(_$PlayerTextStateOnlyTextImpl(
-      currentTextLine: null == currentTextLine
-          ? _value.currentTextLine
-          : currentTextLine // ignore: cast_nullable_to_non_nullable
-              as int,
-      textLines: null == textLines
-          ? _value._textLines
-          : textLines // ignore: cast_nullable_to_non_nullable
-              as List<TextLine>,
-    ));
+  $Res call({Object? currentTextLine = null, Object? textLines = null}) {
+    return _then(
+      _$PlayerTextStateOnlyTextImpl(
+        currentTextLine:
+            null == currentTextLine
+                ? _value.currentTextLine
+                : currentTextLine // ignore: cast_nullable_to_non_nullable
+                    as int,
+        textLines:
+            null == textLines
+                ? _value._textLines
+                : textLines // ignore: cast_nullable_to_non_nullable
+                    as List<TextLine>,
+      ),
+    );
   }
 }
 
@@ -1417,9 +1494,10 @@ class __$$PlayerTextStateOnlyTextImplCopyWithImpl<$Res>
 class _$PlayerTextStateOnlyTextImpl
     with DiagnosticableTreeMixin
     implements PlayerTextStateOnlyText {
-  const _$PlayerTextStateOnlyTextImpl(
-      {this.currentTextLine = 0, final List<TextLine> textLines = const []})
-      : _textLines = textLines;
+  const _$PlayerTextStateOnlyTextImpl({
+    this.currentTextLine = 0,
+    final List<TextLine> textLines = const [],
+  }) : _textLines = textLines;
 
   @override
   @JsonKey()
@@ -1454,13 +1532,18 @@ class _$PlayerTextStateOnlyTextImpl
             other is _$PlayerTextStateOnlyTextImpl &&
             (identical(other.currentTextLine, currentTextLine) ||
                 other.currentTextLine == currentTextLine) &&
-            const DeepCollectionEquality()
-                .equals(other._textLines, _textLines));
+            const DeepCollectionEquality().equals(
+              other._textLines,
+              _textLines,
+            ));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, currentTextLine,
-      const DeepCollectionEquality().hash(_textLines));
+  int get hashCode => Object.hash(
+    runtimeType,
+    currentTextLine,
+    const DeepCollectionEquality().hash(_textLines),
+  );
 
   /// Create a copy of PlayerTextState
   /// with the given fields replaced by the non-null parameter values.
@@ -1468,14 +1551,16 @@ class _$PlayerTextStateOnlyTextImpl
   @override
   @pragma('vm:prefer-inline')
   _$$PlayerTextStateOnlyTextImplCopyWith<_$PlayerTextStateOnlyTextImpl>
-      get copyWith => __$$PlayerTextStateOnlyTextImplCopyWithImpl<
-          _$PlayerTextStateOnlyTextImpl>(this, _$identity);
+  get copyWith => __$$PlayerTextStateOnlyTextImplCopyWithImpl<
+    _$PlayerTextStateOnlyTextImpl
+  >(this, _$identity);
 }
 
 abstract class PlayerTextStateOnlyText implements PlayerTextState {
-  const factory PlayerTextStateOnlyText(
-      {final int currentTextLine,
-      final List<TextLine> textLines}) = _$PlayerTextStateOnlyTextImpl;
+  const factory PlayerTextStateOnlyText({
+    final int currentTextLine,
+    final List<TextLine> textLines,
+  }) = _$PlayerTextStateOnlyTextImpl;
 
   int get currentTextLine;
   List<TextLine> get textLines;
@@ -1484,34 +1569,38 @@ abstract class PlayerTextStateOnlyText implements PlayerTextState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PlayerTextStateOnlyTextImplCopyWith<_$PlayerTextStateOnlyTextImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$PlayerTextStateTextAndViolationsImplCopyWith<$Res> {
   factory _$$PlayerTextStateTextAndViolationsImplCopyWith(
-          _$PlayerTextStateTextAndViolationsImpl value,
-          $Res Function(_$PlayerTextStateTextAndViolationsImpl) then) =
-      __$$PlayerTextStateTextAndViolationsImplCopyWithImpl<$Res>;
+    _$PlayerTextStateTextAndViolationsImpl value,
+    $Res Function(_$PlayerTextStateTextAndViolationsImpl) then,
+  ) = __$$PlayerTextStateTextAndViolationsImplCopyWithImpl<$Res>;
   @useResult
-  $Res call(
-      {int currentTextLine,
-      List<TextLine> textLines,
-      List<List<HighlightViolation>> highlights,
-      StatusOf<List<Violation>, String> violations});
+  $Res call({
+    int currentTextLine,
+    List<TextLine> textLines,
+    List<List<HighlightViolation>> highlights,
+    StatusOf<List<Violation>, String> violations,
+  });
 
   $StatusOfCopyWith<List<Violation>, String, $Res> get violations;
 }
 
 /// @nodoc
 class __$$PlayerTextStateTextAndViolationsImplCopyWithImpl<$Res>
-    extends _$PlayerTextStateCopyWithImpl<$Res,
-        _$PlayerTextStateTextAndViolationsImpl>
+    extends
+        _$PlayerTextStateCopyWithImpl<
+          $Res,
+          _$PlayerTextStateTextAndViolationsImpl
+        >
     implements _$$PlayerTextStateTextAndViolationsImplCopyWith<$Res> {
   __$$PlayerTextStateTextAndViolationsImplCopyWithImpl(
-      _$PlayerTextStateTextAndViolationsImpl _value,
-      $Res Function(_$PlayerTextStateTextAndViolationsImpl) _then)
-      : super(_value, _then);
+    _$PlayerTextStateTextAndViolationsImpl _value,
+    $Res Function(_$PlayerTextStateTextAndViolationsImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of PlayerTextState
   /// with the given fields replaced by the non-null parameter values.
@@ -1523,24 +1612,30 @@ class __$$PlayerTextStateTextAndViolationsImplCopyWithImpl<$Res>
     Object? highlights = null,
     Object? violations = null,
   }) {
-    return _then(_$PlayerTextStateTextAndViolationsImpl(
-      currentTextLine: null == currentTextLine
-          ? _value.currentTextLine
-          : currentTextLine // ignore: cast_nullable_to_non_nullable
-              as int,
-      textLines: null == textLines
-          ? _value._textLines
-          : textLines // ignore: cast_nullable_to_non_nullable
-              as List<TextLine>,
-      highlights: null == highlights
-          ? _value._highlights
-          : highlights // ignore: cast_nullable_to_non_nullable
-              as List<List<HighlightViolation>>,
-      violations: null == violations
-          ? _value.violations
-          : violations // ignore: cast_nullable_to_non_nullable
-              as StatusOf<List<Violation>, String>,
-    ));
+    return _then(
+      _$PlayerTextStateTextAndViolationsImpl(
+        currentTextLine:
+            null == currentTextLine
+                ? _value.currentTextLine
+                : currentTextLine // ignore: cast_nullable_to_non_nullable
+                    as int,
+        textLines:
+            null == textLines
+                ? _value._textLines
+                : textLines // ignore: cast_nullable_to_non_nullable
+                    as List<TextLine>,
+        highlights:
+            null == highlights
+                ? _value._highlights
+                : highlights // ignore: cast_nullable_to_non_nullable
+                    as List<List<HighlightViolation>>,
+        violations:
+            null == violations
+                ? _value.violations
+                : violations // ignore: cast_nullable_to_non_nullable
+                    as StatusOf<List<Violation>, String>,
+      ),
+    );
   }
 
   /// Create a copy of PlayerTextState
@@ -1548,8 +1643,9 @@ class __$$PlayerTextStateTextAndViolationsImplCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $StatusOfCopyWith<List<Violation>, String, $Res> get violations {
-    return $StatusOfCopyWith<List<Violation>, String, $Res>(_value.violations,
-        (value) {
+    return $StatusOfCopyWith<List<Violation>, String, $Res>(_value.violations, (
+      value,
+    ) {
       return _then(_value.copyWith(violations: value));
     });
   }
@@ -1560,13 +1656,13 @@ class __$$PlayerTextStateTextAndViolationsImplCopyWithImpl<$Res>
 class _$PlayerTextStateTextAndViolationsImpl
     with DiagnosticableTreeMixin
     implements PlayerTextStateTextAndViolations {
-  const _$PlayerTextStateTextAndViolationsImpl(
-      {this.currentTextLine = 0,
-      final List<TextLine> textLines = const [],
-      final List<List<HighlightViolation>> highlights = const [],
-      this.violations = const StatusOfLoading()})
-      : _textLines = textLines,
-        _highlights = highlights;
+  const _$PlayerTextStateTextAndViolationsImpl({
+    this.currentTextLine = 0,
+    final List<TextLine> textLines = const [],
+    final List<List<HighlightViolation>> highlights = const [],
+    this.violations = const StatusOfLoading(),
+  }) : _textLines = textLines,
+       _highlights = highlights;
 
   @override
   @JsonKey()
@@ -1616,21 +1712,26 @@ class _$PlayerTextStateTextAndViolationsImpl
             other is _$PlayerTextStateTextAndViolationsImpl &&
             (identical(other.currentTextLine, currentTextLine) ||
                 other.currentTextLine == currentTextLine) &&
-            const DeepCollectionEquality()
-                .equals(other._textLines, _textLines) &&
-            const DeepCollectionEquality()
-                .equals(other._highlights, _highlights) &&
+            const DeepCollectionEquality().equals(
+              other._textLines,
+              _textLines,
+            ) &&
+            const DeepCollectionEquality().equals(
+              other._highlights,
+              _highlights,
+            ) &&
             (identical(other.violations, violations) ||
                 other.violations == violations));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      currentTextLine,
-      const DeepCollectionEquality().hash(_textLines),
-      const DeepCollectionEquality().hash(_highlights),
-      violations);
+    runtimeType,
+    currentTextLine,
+    const DeepCollectionEquality().hash(_textLines),
+    const DeepCollectionEquality().hash(_highlights),
+    violations,
+  );
 
   /// Create a copy of PlayerTextState
   /// with the given fields replaced by the non-null parameter values.
@@ -1638,18 +1739,20 @@ class _$PlayerTextStateTextAndViolationsImpl
   @override
   @pragma('vm:prefer-inline')
   _$$PlayerTextStateTextAndViolationsImplCopyWith<
-          _$PlayerTextStateTextAndViolationsImpl>
-      get copyWith => __$$PlayerTextStateTextAndViolationsImplCopyWithImpl<
-          _$PlayerTextStateTextAndViolationsImpl>(this, _$identity);
+    _$PlayerTextStateTextAndViolationsImpl
+  >
+  get copyWith => __$$PlayerTextStateTextAndViolationsImplCopyWithImpl<
+    _$PlayerTextStateTextAndViolationsImpl
+  >(this, _$identity);
 }
 
 abstract class PlayerTextStateTextAndViolations implements PlayerTextState {
-  const factory PlayerTextStateTextAndViolations(
-          {final int currentTextLine,
-          final List<TextLine> textLines,
-          final List<List<HighlightViolation>> highlights,
-          final StatusOf<List<Violation>, String> violations}) =
-      _$PlayerTextStateTextAndViolationsImpl;
+  const factory PlayerTextStateTextAndViolations({
+    final int currentTextLine,
+    final List<TextLine> textLines,
+    final List<List<HighlightViolation>> highlights,
+    final StatusOf<List<Violation>, String> violations,
+  }) = _$PlayerTextStateTextAndViolationsImpl;
 
   int get currentTextLine;
   List<TextLine> get textLines;
@@ -1660,6 +1763,7 @@ abstract class PlayerTextStateTextAndViolations implements PlayerTextState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PlayerTextStateTextAndViolationsImplCopyWith<
-          _$PlayerTextStateTextAndViolationsImpl>
-      get copyWith => throw _privateConstructorUsedError;
+    _$PlayerTextStateTextAndViolationsImpl
+  >
+  get copyWith => throw _privateConstructorUsedError;
 }

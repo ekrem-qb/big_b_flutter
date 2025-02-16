@@ -12,7 +12,8 @@ part of 'login_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$LoginEvent {}
@@ -20,8 +21,9 @@ mixin _$LoginEvent {}
 /// @nodoc
 abstract class $LoginEventCopyWith<$Res> {
   factory $LoginEventCopyWith(
-          LoginEvent value, $Res Function(LoginEvent) then) =
-      _$LoginEventCopyWithImpl<$Res, LoginEvent>;
+    LoginEvent value,
+    $Res Function(LoginEvent) then,
+  ) = _$LoginEventCopyWithImpl<$Res, LoginEvent>;
 }
 
 /// @nodoc
@@ -41,9 +43,9 @@ class _$LoginEventCopyWithImpl<$Res, $Val extends LoginEvent>
 /// @nodoc
 abstract class _$$LoginEventEmailChangedImplCopyWith<$Res> {
   factory _$$LoginEventEmailChangedImplCopyWith(
-          _$LoginEventEmailChangedImpl value,
-          $Res Function(_$LoginEventEmailChangedImpl) then) =
-      __$$LoginEventEmailChangedImplCopyWithImpl<$Res>;
+    _$LoginEventEmailChangedImpl value,
+    $Res Function(_$LoginEventEmailChangedImpl) then,
+  ) = __$$LoginEventEmailChangedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String email});
 }
@@ -53,23 +55,23 @@ class __$$LoginEventEmailChangedImplCopyWithImpl<$Res>
     extends _$LoginEventCopyWithImpl<$Res, _$LoginEventEmailChangedImpl>
     implements _$$LoginEventEmailChangedImplCopyWith<$Res> {
   __$$LoginEventEmailChangedImplCopyWithImpl(
-      _$LoginEventEmailChangedImpl _value,
-      $Res Function(_$LoginEventEmailChangedImpl) _then)
-      : super(_value, _then);
+    _$LoginEventEmailChangedImpl _value,
+    $Res Function(_$LoginEventEmailChangedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of LoginEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? email = null,
-  }) {
-    return _then(_$LoginEventEmailChangedImpl(
-      null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? email = null}) {
+    return _then(
+      _$LoginEventEmailChangedImpl(
+        null == email
+            ? _value.email
+            : email // ignore: cast_nullable_to_non_nullable
+                as String,
+      ),
+    );
   }
 }
 
@@ -103,8 +105,11 @@ class _$LoginEventEmailChangedImpl implements LoginEventEmailChanged {
   @override
   @pragma('vm:prefer-inline')
   _$$LoginEventEmailChangedImplCopyWith<_$LoginEventEmailChangedImpl>
-      get copyWith => __$$LoginEventEmailChangedImplCopyWithImpl<
-          _$LoginEventEmailChangedImpl>(this, _$identity);
+  get copyWith =>
+      __$$LoginEventEmailChangedImplCopyWithImpl<_$LoginEventEmailChangedImpl>(
+        this,
+        _$identity,
+      );
 }
 
 abstract class LoginEventEmailChanged implements LoginEvent {
@@ -117,15 +122,15 @@ abstract class LoginEventEmailChanged implements LoginEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoginEventEmailChangedImplCopyWith<_$LoginEventEmailChangedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$LoginEventPasswordChangedImplCopyWith<$Res> {
   factory _$$LoginEventPasswordChangedImplCopyWith(
-          _$LoginEventPasswordChangedImpl value,
-          $Res Function(_$LoginEventPasswordChangedImpl) then) =
-      __$$LoginEventPasswordChangedImplCopyWithImpl<$Res>;
+    _$LoginEventPasswordChangedImpl value,
+    $Res Function(_$LoginEventPasswordChangedImpl) then,
+  ) = __$$LoginEventPasswordChangedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String password});
 }
@@ -135,23 +140,23 @@ class __$$LoginEventPasswordChangedImplCopyWithImpl<$Res>
     extends _$LoginEventCopyWithImpl<$Res, _$LoginEventPasswordChangedImpl>
     implements _$$LoginEventPasswordChangedImplCopyWith<$Res> {
   __$$LoginEventPasswordChangedImplCopyWithImpl(
-      _$LoginEventPasswordChangedImpl _value,
-      $Res Function(_$LoginEventPasswordChangedImpl) _then)
-      : super(_value, _then);
+    _$LoginEventPasswordChangedImpl _value,
+    $Res Function(_$LoginEventPasswordChangedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of LoginEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? password = null,
-  }) {
-    return _then(_$LoginEventPasswordChangedImpl(
-      null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? password = null}) {
+    return _then(
+      _$LoginEventPasswordChangedImpl(
+        null == password
+            ? _value.password
+            : password // ignore: cast_nullable_to_non_nullable
+                as String,
+      ),
+    );
   }
 }
 
@@ -186,8 +191,9 @@ class _$LoginEventPasswordChangedImpl implements LoginEventPasswordChanged {
   @override
   @pragma('vm:prefer-inline')
   _$$LoginEventPasswordChangedImplCopyWith<_$LoginEventPasswordChangedImpl>
-      get copyWith => __$$LoginEventPasswordChangedImplCopyWithImpl<
-          _$LoginEventPasswordChangedImpl>(this, _$identity);
+  get copyWith => __$$LoginEventPasswordChangedImplCopyWithImpl<
+    _$LoginEventPasswordChangedImpl
+  >(this, _$identity);
 }
 
 abstract class LoginEventPasswordChanged implements LoginEvent {
@@ -200,26 +206,29 @@ abstract class LoginEventPasswordChanged implements LoginEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LoginEventPasswordChangedImplCopyWith<_$LoginEventPasswordChangedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$LoginEventPasswordVisibilityToggledImplCopyWith<$Res> {
   factory _$$LoginEventPasswordVisibilityToggledImplCopyWith(
-          _$LoginEventPasswordVisibilityToggledImpl value,
-          $Res Function(_$LoginEventPasswordVisibilityToggledImpl) then) =
-      __$$LoginEventPasswordVisibilityToggledImplCopyWithImpl<$Res>;
+    _$LoginEventPasswordVisibilityToggledImpl value,
+    $Res Function(_$LoginEventPasswordVisibilityToggledImpl) then,
+  ) = __$$LoginEventPasswordVisibilityToggledImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$LoginEventPasswordVisibilityToggledImplCopyWithImpl<$Res>
-    extends _$LoginEventCopyWithImpl<$Res,
-        _$LoginEventPasswordVisibilityToggledImpl>
+    extends
+        _$LoginEventCopyWithImpl<
+          $Res,
+          _$LoginEventPasswordVisibilityToggledImpl
+        >
     implements _$$LoginEventPasswordVisibilityToggledImplCopyWith<$Res> {
   __$$LoginEventPasswordVisibilityToggledImplCopyWithImpl(
-      _$LoginEventPasswordVisibilityToggledImpl _value,
-      $Res Function(_$LoginEventPasswordVisibilityToggledImpl) _then)
-      : super(_value, _then);
+    _$LoginEventPasswordVisibilityToggledImpl _value,
+    $Res Function(_$LoginEventPasswordVisibilityToggledImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of LoginEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -255,9 +264,9 @@ abstract class LoginEventPasswordVisibilityToggled implements LoginEvent {
 /// @nodoc
 abstract class _$$LoginEventLoginRequestedImplCopyWith<$Res> {
   factory _$$LoginEventLoginRequestedImplCopyWith(
-          _$LoginEventLoginRequestedImpl value,
-          $Res Function(_$LoginEventLoginRequestedImpl) then) =
-      __$$LoginEventLoginRequestedImplCopyWithImpl<$Res>;
+    _$LoginEventLoginRequestedImpl value,
+    $Res Function(_$LoginEventLoginRequestedImpl) then,
+  ) = __$$LoginEventLoginRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -265,9 +274,9 @@ class __$$LoginEventLoginRequestedImplCopyWithImpl<$Res>
     extends _$LoginEventCopyWithImpl<$Res, _$LoginEventLoginRequestedImpl>
     implements _$$LoginEventLoginRequestedImplCopyWith<$Res> {
   __$$LoginEventLoginRequestedImplCopyWithImpl(
-      _$LoginEventLoginRequestedImpl _value,
-      $Res Function(_$LoginEventLoginRequestedImpl) _then)
-      : super(_value, _then);
+    _$LoginEventLoginRequestedImpl _value,
+    $Res Function(_$LoginEventLoginRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of LoginEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -317,16 +326,18 @@ mixin _$LoginState {
 /// @nodoc
 abstract class $LoginStateCopyWith<$Res> {
   factory $LoginStateCopyWith(
-          LoginState value, $Res Function(LoginState) then) =
-      _$LoginStateCopyWithImpl<$Res, LoginState>;
+    LoginState value,
+    $Res Function(LoginState) then,
+  ) = _$LoginStateCopyWithImpl<$Res, LoginState>;
   @useResult
-  $Res call(
-      {String email,
-      String? emailError,
-      String password,
-      String? passwordError,
-      bool isPasswordVisible,
-      OperationStatus<String> loginStatus});
+  $Res call({
+    String email,
+    String? emailError,
+    String password,
+    String? passwordError,
+    bool isPasswordVisible,
+    OperationStatus<String> loginStatus,
+  });
 
   $OperationStatusCopyWith<String, $Res> get loginStatus;
 }
@@ -353,32 +364,41 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
     Object? isPasswordVisible = null,
     Object? loginStatus = null,
   }) {
-    return _then(_value.copyWith(
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      emailError: freezed == emailError
-          ? _value.emailError
-          : emailError // ignore: cast_nullable_to_non_nullable
-              as String?,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      passwordError: freezed == passwordError
-          ? _value.passwordError
-          : passwordError // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isPasswordVisible: null == isPasswordVisible
-          ? _value.isPasswordVisible
-          : isPasswordVisible // ignore: cast_nullable_to_non_nullable
-              as bool,
-      loginStatus: null == loginStatus
-          ? _value.loginStatus
-          : loginStatus // ignore: cast_nullable_to_non_nullable
-              as OperationStatus<String>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            email:
+                null == email
+                    ? _value.email
+                    : email // ignore: cast_nullable_to_non_nullable
+                        as String,
+            emailError:
+                freezed == emailError
+                    ? _value.emailError
+                    : emailError // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            password:
+                null == password
+                    ? _value.password
+                    : password // ignore: cast_nullable_to_non_nullable
+                        as String,
+            passwordError:
+                freezed == passwordError
+                    ? _value.passwordError
+                    : passwordError // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            isPasswordVisible:
+                null == isPasswordVisible
+                    ? _value.isPasswordVisible
+                    : isPasswordVisible // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            loginStatus:
+                null == loginStatus
+                    ? _value.loginStatus
+                    : loginStatus // ignore: cast_nullable_to_non_nullable
+                        as OperationStatus<String>,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of LoginState
@@ -395,18 +415,20 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
 /// @nodoc
 abstract class _$$LoginStateSignedInImplCopyWith<$Res>
     implements $LoginStateCopyWith<$Res> {
-  factory _$$LoginStateSignedInImplCopyWith(_$LoginStateSignedInImpl value,
-          $Res Function(_$LoginStateSignedInImpl) then) =
-      __$$LoginStateSignedInImplCopyWithImpl<$Res>;
+  factory _$$LoginStateSignedInImplCopyWith(
+    _$LoginStateSignedInImpl value,
+    $Res Function(_$LoginStateSignedInImpl) then,
+  ) = __$$LoginStateSignedInImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String email,
-      String? emailError,
-      String password,
-      String? passwordError,
-      bool isPasswordVisible,
-      OperationStatus<String> loginStatus});
+  $Res call({
+    String email,
+    String? emailError,
+    String password,
+    String? passwordError,
+    bool isPasswordVisible,
+    OperationStatus<String> loginStatus,
+  });
 
   @override
   $OperationStatusCopyWith<String, $Res> get loginStatus;
@@ -416,9 +438,10 @@ abstract class _$$LoginStateSignedInImplCopyWith<$Res>
 class __$$LoginStateSignedInImplCopyWithImpl<$Res>
     extends _$LoginStateCopyWithImpl<$Res, _$LoginStateSignedInImpl>
     implements _$$LoginStateSignedInImplCopyWith<$Res> {
-  __$$LoginStateSignedInImplCopyWithImpl(_$LoginStateSignedInImpl _value,
-      $Res Function(_$LoginStateSignedInImpl) _then)
-      : super(_value, _then);
+  __$$LoginStateSignedInImplCopyWithImpl(
+    _$LoginStateSignedInImpl _value,
+    $Res Function(_$LoginStateSignedInImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of LoginState
   /// with the given fields replaced by the non-null parameter values.
@@ -432,45 +455,54 @@ class __$$LoginStateSignedInImplCopyWithImpl<$Res>
     Object? isPasswordVisible = null,
     Object? loginStatus = null,
   }) {
-    return _then(_$LoginStateSignedInImpl(
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      emailError: freezed == emailError
-          ? _value.emailError
-          : emailError // ignore: cast_nullable_to_non_nullable
-              as String?,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      passwordError: freezed == passwordError
-          ? _value.passwordError
-          : passwordError // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isPasswordVisible: null == isPasswordVisible
-          ? _value.isPasswordVisible
-          : isPasswordVisible // ignore: cast_nullable_to_non_nullable
-              as bool,
-      loginStatus: null == loginStatus
-          ? _value.loginStatus
-          : loginStatus // ignore: cast_nullable_to_non_nullable
-              as OperationStatus<String>,
-    ));
+    return _then(
+      _$LoginStateSignedInImpl(
+        email:
+            null == email
+                ? _value.email
+                : email // ignore: cast_nullable_to_non_nullable
+                    as String,
+        emailError:
+            freezed == emailError
+                ? _value.emailError
+                : emailError // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        password:
+            null == password
+                ? _value.password
+                : password // ignore: cast_nullable_to_non_nullable
+                    as String,
+        passwordError:
+            freezed == passwordError
+                ? _value.passwordError
+                : passwordError // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        isPasswordVisible:
+            null == isPasswordVisible
+                ? _value.isPasswordVisible
+                : isPasswordVisible // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        loginStatus:
+            null == loginStatus
+                ? _value.loginStatus
+                : loginStatus // ignore: cast_nullable_to_non_nullable
+                    as OperationStatus<String>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$LoginStateSignedInImpl implements _LoginStateSignedIn {
-  const _$LoginStateSignedInImpl(
-      {this.email = '',
-      this.emailError,
-      this.password = '',
-      this.passwordError,
-      this.isPasswordVisible = false,
-      this.loginStatus = const OperationStatusInitial()});
+  const _$LoginStateSignedInImpl({
+    this.email = '',
+    this.emailError,
+    this.password = '',
+    this.passwordError,
+    this.isPasswordVisible = false,
+    this.loginStatus = const OperationStatusInitial(),
+  });
 
   @override
   @JsonKey()
@@ -513,8 +545,15 @@ class _$LoginStateSignedInImpl implements _LoginStateSignedIn {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, email, emailError, password,
-      passwordError, isPasswordVisible, loginStatus);
+  int get hashCode => Object.hash(
+    runtimeType,
+    email,
+    emailError,
+    password,
+    passwordError,
+    isPasswordVisible,
+    loginStatus,
+  );
 
   /// Create a copy of LoginState
   /// with the given fields replaced by the non-null parameter values.
@@ -523,17 +562,20 @@ class _$LoginStateSignedInImpl implements _LoginStateSignedIn {
   @pragma('vm:prefer-inline')
   _$$LoginStateSignedInImplCopyWith<_$LoginStateSignedInImpl> get copyWith =>
       __$$LoginStateSignedInImplCopyWithImpl<_$LoginStateSignedInImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _LoginStateSignedIn implements LoginState {
-  const factory _LoginStateSignedIn(
-      {final String email,
-      final String? emailError,
-      final String password,
-      final String? passwordError,
-      final bool isPasswordVisible,
-      final OperationStatus<String> loginStatus}) = _$LoginStateSignedInImpl;
+  const factory _LoginStateSignedIn({
+    final String email,
+    final String? emailError,
+    final String password,
+    final String? passwordError,
+    final bool isPasswordVisible,
+    final OperationStatus<String> loginStatus,
+  }) = _$LoginStateSignedInImpl;
 
   @override
   String get email;

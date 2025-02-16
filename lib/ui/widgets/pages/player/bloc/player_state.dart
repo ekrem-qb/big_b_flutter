@@ -5,9 +5,12 @@ sealed class PlayerState with _$PlayerState {
   const factory PlayerState({
     required final int recordingId,
     final int? currentTextLineId,
-    @Default(StatusOfLoading()) final StatusOf<Recording, String> recordingState,
-    @Default(StatusOfLoading()) final StatusOf<PlayerAudioState, String> audioState,
-    @Default(StatusOfLoading()) final StatusOf<PlayerTextState, String> textState,
+    @Default(StatusOfLoading())
+    final StatusOf<Recording, String> recordingState,
+    @Default(StatusOfLoading())
+    final StatusOf<PlayerAudioState, String> audioState,
+    @Default(StatusOfLoading())
+    final StatusOf<PlayerTextState, String> textState,
   }) = _PlayerState;
 }
 
@@ -33,6 +36,7 @@ sealed class PlayerTextState with _$PlayerTextState {
     @Default(0) final int currentTextLine,
     @Default([]) final List<TextLine> textLines,
     @Default([]) final List<List<HighlightViolation>> highlights,
-    @Default(StatusOfLoading()) final StatusOf<List<Violation>, String> violations,
+    @Default(StatusOfLoading())
+    final StatusOf<List<Violation>, String> violations,
   }) = PlayerTextStateTextAndViolations;
 }

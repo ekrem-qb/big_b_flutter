@@ -18,10 +18,12 @@ class TextLine with _$TextLine implements Entity {
     required final bool isEmployee,
   }) = _TextLine;
 
-  factory TextLine.fromJson(final Map<String, dynamic> json) => _$TextLineFromJson(json);
+  factory TextLine.fromJson(final Map<String, dynamic> json) =>
+      _$TextLineFromJson(json);
 
   static const tableName = 'lines';
   static final fieldNames = _$$TextLineImplFieldMap.values.join(',');
 
-  static List<TextLine>? converter(final List<Map<String, dynamic>> data) => data.map(TextLine.fromJson).toList();
+  static List<TextLine>? converter(final List<Map<String, dynamic>> data) =>
+      data.map(TextLine.fromJson).toList();
 }

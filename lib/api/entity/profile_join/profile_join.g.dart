@@ -23,7 +23,4 @@ abstract final class $ProfileJoinImplJsonKeys {
 }
 
 Map<String, dynamic> _$$ProfileJoinImplToJson(_$ProfileJoinImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'profile': instance.profile,
-    };
+    <String, dynamic>{'id': instance.id, 'profile': instance.profile};

@@ -35,9 +35,7 @@ class _Model {
 }
 
 class _Widget extends StatelessWidget {
-  const _Widget({
-    required this.initialTime,
-  });
+  const _Widget({required this.initialTime});
 
   final Duration initialTime;
 
@@ -51,9 +49,7 @@ class _Widget extends StatelessWidget {
 }
 
 class _Picker extends StatelessWidget {
-  const _Picker({
-    required this.initialTime,
-  });
+  const _Picker({required this.initialTime});
 
   final Duration initialTime;
 

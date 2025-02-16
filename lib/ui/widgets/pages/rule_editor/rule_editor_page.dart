@@ -46,26 +46,17 @@ class RuleEditorPage extends StatelessWidget {
 }
 
 class RuleEditorView extends StatelessWidget {
-  const RuleEditorView({
-    required this.isNew,
-    super.key,
-  });
+  const RuleEditorView({required this.isNew, super.key});
 
   final bool isNew;
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      _,
-    ) = context.select(
+    final (bloc, _) = context.select(
       (final RuleEditorBloc bloc) => (
         bloc,
         switch (bloc.state) {
-          RuleEditorStateEdit(
-            :final editState,
-          ) =>
-            editState.runtimeType,
+          RuleEditorStateEdit(:final editState) => editState.runtimeType,
           RuleEditorStateCreate() => null,
         },
       ),
@@ -74,39 +65,29 @@ class RuleEditorView extends StatelessWidget {
     return BlocListener<RuleEditorBloc, RuleEditorState>(
       listener: (final context, final state) async {
         switch (state) {
-          case RuleEditorStateCreate(
-                  :final uploadState,
-                ) ||
-                RuleEditorStateEdit(
-                  editState: StatusOfData(
-                    data: RuleEditorStateEditState(
-                      :final uploadState,
-                    )
-                  )
-                ):
+          case RuleEditorStateCreate(:final uploadState) ||
+              RuleEditorStateEdit(
+                editState: StatusOfData(
+                  data: RuleEditorStateEditState(:final uploadState),
+                ),
+              ):
             switch (uploadState) {
               case OperationStatusCompleted():
                 Navigator.pop(context);
-              case OperationStatusError(
-                  :final error
-                ):
+              case OperationStatusError(:final error):
                 showSnackbar(text: error, context: context);
               default:
             }
             switch (state) {
               case RuleEditorStateEdit(
-                  editState: StatusOfData(
-                    data: RuleEditorStateEditState(
-                      :final deleteState,
-                    )
-                  )
-                ):
+                editState: StatusOfData(
+                  data: RuleEditorStateEditState(:final deleteState),
+                ),
+              ):
                 switch (deleteState) {
                   case OperationStatusCompleted():
                     Navigator.pop(context);
-                  case OperationStatusError(
-                      :final error
-                    ):
+                  case OperationStatusError(:final error):
                     showSnackbar(text: error, context: context);
                   default:
                 }
@@ -118,27 +99,19 @@ class RuleEditorView extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: isNew ? const Text('Yeni kural') : null,
-          actions: [
-            if (!isNew) const _DeleteButton(),
-          ],
+          actions: [if (!isNew) const _DeleteButton()],
         ),
         body: switch (bloc.state) {
-          RuleEditorStateEdit(
-            :final editState,
-          ) =>
-            switch (editState) {
-              StatusOfLoading() => const Center(
-                  child: CircularProgressIndicator(),
-                ),
-              StatusOfError(
-                :final error
-              ) =>
-                ErrorPanel(
-                  error: error,
-                  onRefresh: () => bloc.add(const RuleEditorEventLoadRequested()),
-                ),
-              _ => _Body(isNew: isNew),
-            },
+          RuleEditorStateEdit(:final editState) => switch (editState) {
+            StatusOfLoading() => const Center(
+              child: CircularProgressIndicator(),
+            ),
+            StatusOfError(:final error) => ErrorPanel(
+              error: error,
+              onRefresh: () => bloc.add(const RuleEditorEventLoadRequested()),
+            ),
+            _ => _Body(isNew: isNew),
+          },
           _ => _Body(isNew: isNew),
         },
         bottomNavigationBar: switch (bloc.state) {
@@ -154,53 +127,32 @@ class RuleEditorView extends StatelessWidget {
 }
 
 class _Body extends StatelessWidget {
-  const _Body({
-    required this.isNew,
-  });
+  const _Body({required this.isNew});
 
   final bool isNew;
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      _,
-    ) = context.select(
+    final (bloc, _) = context.select(
       (final RuleEditorBloc bloc) => (
         bloc,
         switch (bloc.state) {
-          RuleEditorStateCreate(
-            rule: Rule(
-              :final runtimeType,
-            ),
-          ) ||
+          RuleEditorStateCreate(rule: Rule(:final runtimeType)) ||
           RuleEditorStateEdit(
             editState: StatusOfData(
-              data: RuleEditorStateEditState(
-                rule: Rule(
-                  :final runtimeType,
-                ),
-              ),
+              data: RuleEditorStateEditState(rule: Rule(:final runtimeType)),
             ),
-          ) =>
-            runtimeType,
+          ) => runtimeType,
           _ => null,
         },
       ),
     );
 
     final rule = switch (bloc.state) {
-      RuleEditorStateCreate(
-        :final rule,
-      ) ||
+      RuleEditorStateCreate(:final rule) ||
       RuleEditorStateEdit(
-        editState: StatusOfData(
-          data: RuleEditorStateEditState(
-            :final rule,
-          ),
-        ),
-      ) =>
-        rule,
+        editState: StatusOfData(data: RuleEditorStateEditState(:final rule)),
+      ) => rule,
       _ => const NameRule(id: -1, color: Colors.red),
     };
 
@@ -223,22 +175,22 @@ class _Body extends StatelessWidget {
                   const _Type(),
                   ...?switch (rule) {
                     WordsRule() => [
-                        const SizedBox(height: 16),
-                        const Text('Kelimeler', style: smallTextStyle),
-                        const SizedBox(height: 8),
-                        const _Words(),
-                      ],
+                      const SizedBox(height: 16),
+                      const Text('Kelimeler', style: smallTextStyle),
+                      const SizedBox(height: 8),
+                      const _Words(),
+                    ],
                     NameRule() => null,
                     CustomRule() => [
-                        const SizedBox(height: 16),
-                        const Text('Açıklama', style: smallTextStyle),
-                        const SizedBox(height: 8),
-                        const _Description(),
-                        const SizedBox(height: 16),
-                        const Text('Detaylar', style: smallTextStyle),
-                        const SizedBox(height: 8),
-                        const _Details(),
-                      ],
+                      const SizedBox(height: 16),
+                      const Text('Açıklama', style: smallTextStyle),
+                      const SizedBox(height: 8),
+                      const _Description(),
+                      const SizedBox(height: 16),
+                      const Text('Detaylar', style: smallTextStyle),
+                      const SizedBox(height: 8),
+                      const _Details(),
+                    ],
                   },
                   const SizedBox(height: 24),
                   const _Color(),
@@ -260,7 +212,10 @@ class _DeleteButton extends StatelessWidget {
     final bloc = context.read<RuleEditorBloc>();
 
     return ConstrainedBox(
-      constraints: const BoxConstraints.tightFor(width: kToolbarHeight, height: kToolbarHeight),
+      constraints: const BoxConstraints.tightFor(
+        width: kToolbarHeight,
+        height: kToolbarHeight,
+      ),
       child: IconButton(
         icon: const Icon(Icons.delete),
         tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
@@ -279,28 +234,20 @@ class _Type extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      type,
-    ) = context.select(
+    final (bloc, type) = context.select(
       (final RuleEditorBloc bloc) => (
         bloc,
         switch (bloc.state) {
-          RuleEditorStateCreate(
-            :final rule,
-          ) ||
+          RuleEditorStateCreate(:final rule) ||
           RuleEditorStateEdit(
             editState: StatusOfData(
-              data: RuleEditorStateEditState(
-                :final rule,
-              ),
+              data: RuleEditorStateEditState(:final rule),
             ),
-          ) =>
-            switch (rule) {
-              WordsRule() => WordsRule,
-              NameRule() => NameRule,
-              CustomRule() => CustomRule,
-            },
+          ) => switch (rule) {
+            WordsRule() => WordsRule,
+            NameRule() => NameRule,
+            CustomRule() => CustomRule,
+          },
           _ => CustomRule,
         },
       ),
@@ -309,24 +256,26 @@ class _Type extends StatelessWidget {
     return DropdownButtonFormField(
       isExpanded: true,
       value: type,
-      onChanged: (final value) => bloc.add(
-        RuleEditorEventTypeChanged(
-          switch (value!) {
-            const (WordsRule) => const WordsRule(id: -1, words: {}, color: Colors.red),
-            const (NameRule) => const NameRule(id: -1, color: Colors.red),
-            _ => const CustomRule(id: -1, description: '', details: '', color: Colors.red),
-          },
-        ),
-      ),
+      onChanged:
+          (final value) => bloc.add(
+            RuleEditorEventTypeChanged(switch (value!) {
+              const (WordsRule) => const WordsRule(
+                id: -1,
+                words: {},
+                color: Colors.red,
+              ),
+              const (NameRule) => const NameRule(id: -1, color: Colors.red),
+              _ => const CustomRule(
+                id: -1,
+                description: '',
+                details: '',
+                color: Colors.red,
+              ),
+            }),
+          ),
       items: const [
-        DropdownMenuItem(
-          value: WordsRule,
-          child: RuleTileContent<WordsRule>(),
-        ),
-        DropdownMenuItem(
-          value: NameRule,
-          child: RuleTileContent<NameRule>(),
-        ),
+        DropdownMenuItem(value: WordsRule, child: RuleTileContent<WordsRule>()),
+        DropdownMenuItem(value: NameRule, child: RuleTileContent<NameRule>()),
         DropdownMenuItem(
           value: CustomRule,
           child: RuleTileContent<CustomRule>(),
@@ -341,28 +290,16 @@ class _Words extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      words,
-    ) = context.select(
+    final (bloc, words) = context.select(
       (final RuleEditorBloc bloc) => (
         bloc,
         switch (bloc.state) {
-          RuleEditorStateCreate(
-            rule: WordsRule(
-              :final words,
-            ),
-          ) ||
+          RuleEditorStateCreate(rule: WordsRule(:final words)) ||
           RuleEditorStateEdit(
             editState: StatusOfData(
-              data: RuleEditorStateEditState(
-                rule: WordsRule(
-                  :final words,
-                ),
-              ),
+              data: RuleEditorStateEditState(rule: WordsRule(:final words)),
             ),
-          ) =>
-            words,
+          ) => words,
           _ => Set<String>.unmodifiable({}),
         },
       ),
@@ -370,7 +307,11 @@ class _Words extends StatelessWidget {
 
     return Wrap(
       spacing: 8,
-      runSpacing: Theme.of(context).materialTapTargetSize == MaterialTapTargetSize.shrinkWrap ? 8 : 0,
+      runSpacing:
+          Theme.of(context).materialTapTargetSize ==
+                  MaterialTapTargetSize.shrinkWrap
+              ? 8
+              : 0,
       children: [
         for (final word in words)
           Chip(
@@ -399,49 +340,33 @@ class _Description extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      error,
-      description,
-    ) = context.select((final RuleEditorBloc bloc) {
+    final (bloc, error, description) = context.select((
+      final RuleEditorBloc bloc,
+    ) {
       return switch (bloc.state) {
         RuleEditorStateCreate(
           :final descriptionError,
-          rule: CustomRule(
-            :final description,
-          )
+          rule: CustomRule(:final description),
         ) ||
         RuleEditorStateEdit(
           editState: StatusOfData(
             data: RuleEditorStateEditState(
               :final descriptionError,
-              rule: CustomRule(
-                :final description,
-              )
+              rule: CustomRule(:final description),
             ),
           ),
-        ) =>
-          (
-            bloc,
-            descriptionError,
-            description,
-          ),
-        _ => (
-            bloc,
-            '',
-            '',
-          ),
+        ) => (bloc, descriptionError, description),
+        _ => (bloc, '', ''),
       };
     });
 
     return TextFormField(
-      decoration: InputDecoration(
-        errorText: error,
-      ),
+      decoration: InputDecoration(errorText: error),
       minLines: 1,
       maxLines: 8,
       initialValue: description,
-      onChanged: (final value) => bloc.add(RuleEditorEventDescriptionChanged(value)),
+      onChanged:
+          (final value) => bloc.add(RuleEditorEventDescriptionChanged(value)),
     );
   }
 }
@@ -453,21 +378,12 @@ class _Details extends StatelessWidget {
   Widget build(final BuildContext context) {
     final bloc = context.read<RuleEditorBloc>();
     final details = switch (bloc.state) {
-      RuleEditorStateCreate(
-        rule: CustomRule(
-          :final details,
-        ),
-      ) ||
+      RuleEditorStateCreate(rule: CustomRule(:final details)) ||
       RuleEditorStateEdit(
         editState: StatusOfData(
-          data: RuleEditorStateEditState(
-            rule: CustomRule(
-              :final details,
-            ),
-          ),
+          data: RuleEditorStateEditState(rule: CustomRule(:final details)),
         ),
-      ) =>
-        details,
+      ) => details,
       _ => '',
     };
 
@@ -475,7 +391,8 @@ class _Details extends StatelessWidget {
       minLines: 3,
       maxLines: 8,
       initialValue: details,
-      onChanged: (final value) => bloc.add(RuleEditorEventDetailsChanged(value)),
+      onChanged:
+          (final value) => bloc.add(RuleEditorEventDetailsChanged(value)),
     );
   }
 }
@@ -485,28 +402,16 @@ class _Color extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      color,
-    ) = context.select(
+    final (bloc, color) = context.select(
       (final RuleEditorBloc bloc) => (
         bloc,
         switch (bloc.state) {
-          RuleEditorStateCreate(
-            rule: Rule(
-              :final color,
-            ),
-          ) ||
+          RuleEditorStateCreate(rule: Rule(:final color)) ||
           RuleEditorStateEdit(
             editState: StatusOfData(
-              data: RuleEditorStateEditState(
-                rule: Rule(
-                  :final color,
-                ),
-              ),
+              data: RuleEditorStateEditState(rule: Rule(:final color)),
             ),
-          ) =>
-            color,
+          ) => color,
           _ => Colors.red,
         },
       ),
@@ -514,13 +419,12 @@ class _Color extends StatelessWidget {
 
     return ColorPicker(
       hasBorder: Theme.of(context).brightness == Brightness.light,
-      pickersEnabled: const {
-        ColorPickerType.accent: false,
-      },
+      pickersEnabled: const {ColorPickerType.accent: false},
       enableShadesSelection: false,
       padding: EdgeInsets.zero,
       color: color,
-      onColorChanged: (final value) => bloc.add(RuleEditorEventColorChanged(value)),
+      onColorChanged:
+          (final value) => bloc.add(RuleEditorEventColorChanged(value)),
     );
   }
 }
@@ -530,24 +434,16 @@ class _SaveButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      uploadState,
-    ) = context.select(
+    final (bloc, uploadState) = context.select(
       (final RuleEditorBloc bloc) => (
         bloc,
         switch (bloc.state) {
-          RuleEditorStateCreate(
-            :final uploadState
-          ) ||
+          RuleEditorStateCreate(:final uploadState) ||
           RuleEditorStateEdit(
             editState: StatusOfData(
-              data: RuleEditorStateEditState(
-                :final uploadState,
-              ),
+              data: RuleEditorStateEditState(:final uploadState),
             ),
-          ) =>
-            uploadState,
+          ) => uploadState,
           _ => const OperationStatusInitial(),
         },
       ),

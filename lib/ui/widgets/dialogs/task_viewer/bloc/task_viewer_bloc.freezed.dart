@@ -12,7 +12,8 @@ part of 'task_viewer_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$TaskViewerEvent {}
@@ -20,8 +21,9 @@ mixin _$TaskViewerEvent {}
 /// @nodoc
 abstract class $TaskViewerEventCopyWith<$Res> {
   factory $TaskViewerEventCopyWith(
-          TaskViewerEvent value, $Res Function(TaskViewerEvent) then) =
-      _$TaskViewerEventCopyWithImpl<$Res, TaskViewerEvent>;
+    TaskViewerEvent value,
+    $Res Function(TaskViewerEvent) then,
+  ) = _$TaskViewerEventCopyWithImpl<$Res, TaskViewerEvent>;
 }
 
 /// @nodoc
@@ -41,20 +43,20 @@ class _$TaskViewerEventCopyWithImpl<$Res, $Val extends TaskViewerEvent>
 /// @nodoc
 abstract class _$$TaskViewerEventLoadRequestedImplCopyWith<$Res> {
   factory _$$TaskViewerEventLoadRequestedImplCopyWith(
-          _$TaskViewerEventLoadRequestedImpl value,
-          $Res Function(_$TaskViewerEventLoadRequestedImpl) then) =
-      __$$TaskViewerEventLoadRequestedImplCopyWithImpl<$Res>;
+    _$TaskViewerEventLoadRequestedImpl value,
+    $Res Function(_$TaskViewerEventLoadRequestedImpl) then,
+  ) = __$$TaskViewerEventLoadRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$TaskViewerEventLoadRequestedImplCopyWithImpl<$Res>
-    extends _$TaskViewerEventCopyWithImpl<$Res,
-        _$TaskViewerEventLoadRequestedImpl>
+    extends
+        _$TaskViewerEventCopyWithImpl<$Res, _$TaskViewerEventLoadRequestedImpl>
     implements _$$TaskViewerEventLoadRequestedImplCopyWith<$Res> {
   __$$TaskViewerEventLoadRequestedImplCopyWithImpl(
-      _$TaskViewerEventLoadRequestedImpl _value,
-      $Res Function(_$TaskViewerEventLoadRequestedImpl) _then)
-      : super(_value, _then);
+    _$TaskViewerEventLoadRequestedImpl _value,
+    $Res Function(_$TaskViewerEventLoadRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TaskViewerEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -90,20 +92,23 @@ abstract class TaskViewerEventLoadRequested implements TaskViewerEvent {
 /// @nodoc
 abstract class _$$TaskViewerEventDeleteRequestedImplCopyWith<$Res> {
   factory _$$TaskViewerEventDeleteRequestedImplCopyWith(
-          _$TaskViewerEventDeleteRequestedImpl value,
-          $Res Function(_$TaskViewerEventDeleteRequestedImpl) then) =
-      __$$TaskViewerEventDeleteRequestedImplCopyWithImpl<$Res>;
+    _$TaskViewerEventDeleteRequestedImpl value,
+    $Res Function(_$TaskViewerEventDeleteRequestedImpl) then,
+  ) = __$$TaskViewerEventDeleteRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$TaskViewerEventDeleteRequestedImplCopyWithImpl<$Res>
-    extends _$TaskViewerEventCopyWithImpl<$Res,
-        _$TaskViewerEventDeleteRequestedImpl>
+    extends
+        _$TaskViewerEventCopyWithImpl<
+          $Res,
+          _$TaskViewerEventDeleteRequestedImpl
+        >
     implements _$$TaskViewerEventDeleteRequestedImplCopyWith<$Res> {
   __$$TaskViewerEventDeleteRequestedImplCopyWithImpl(
-      _$TaskViewerEventDeleteRequestedImpl _value,
-      $Res Function(_$TaskViewerEventDeleteRequestedImpl) _then)
-      : super(_value, _then);
+    _$TaskViewerEventDeleteRequestedImpl _value,
+    $Res Function(_$TaskViewerEventDeleteRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TaskViewerEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -152,13 +157,15 @@ mixin _$TaskViewerState {
 /// @nodoc
 abstract class $TaskViewerStateCopyWith<$Res> {
   factory $TaskViewerStateCopyWith(
-          TaskViewerState value, $Res Function(TaskViewerState) then) =
-      _$TaskViewerStateCopyWithImpl<$Res, TaskViewerState>;
+    TaskViewerState value,
+    $Res Function(TaskViewerState) then,
+  ) = _$TaskViewerStateCopyWithImpl<$Res, TaskViewerState>;
   @useResult
-  $Res call(
-      {int id,
-      StatusOf<Task, String> task,
-      OperationStatus<String> deleteState});
+  $Res call({
+    int id,
+    StatusOf<Task, String> task,
+    OperationStatus<String> deleteState,
+  });
 
   $StatusOfCopyWith<Task, String, $Res> get task;
   $OperationStatusCopyWith<String, $Res> get deleteState;
@@ -183,20 +190,26 @@ class _$TaskViewerStateCopyWithImpl<$Res, $Val extends TaskViewerState>
     Object? task = null,
     Object? deleteState = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      task: null == task
-          ? _value.task
-          : task // ignore: cast_nullable_to_non_nullable
-              as StatusOf<Task, String>,
-      deleteState: null == deleteState
-          ? _value.deleteState
-          : deleteState // ignore: cast_nullable_to_non_nullable
-              as OperationStatus<String>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as int,
+            task:
+                null == task
+                    ? _value.task
+                    : task // ignore: cast_nullable_to_non_nullable
+                        as StatusOf<Task, String>,
+            deleteState:
+                null == deleteState
+                    ? _value.deleteState
+                    : deleteState // ignore: cast_nullable_to_non_nullable
+                        as OperationStatus<String>,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of TaskViewerState
@@ -223,15 +236,17 @@ class _$TaskViewerStateCopyWithImpl<$Res, $Val extends TaskViewerState>
 /// @nodoc
 abstract class _$$TaskViewerStateImplCopyWith<$Res>
     implements $TaskViewerStateCopyWith<$Res> {
-  factory _$$TaskViewerStateImplCopyWith(_$TaskViewerStateImpl value,
-          $Res Function(_$TaskViewerStateImpl) then) =
-      __$$TaskViewerStateImplCopyWithImpl<$Res>;
+  factory _$$TaskViewerStateImplCopyWith(
+    _$TaskViewerStateImpl value,
+    $Res Function(_$TaskViewerStateImpl) then,
+  ) = __$$TaskViewerStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int id,
-      StatusOf<Task, String> task,
-      OperationStatus<String> deleteState});
+  $Res call({
+    int id,
+    StatusOf<Task, String> task,
+    OperationStatus<String> deleteState,
+  });
 
   @override
   $StatusOfCopyWith<Task, String, $Res> get task;
@@ -244,8 +259,9 @@ class __$$TaskViewerStateImplCopyWithImpl<$Res>
     extends _$TaskViewerStateCopyWithImpl<$Res, _$TaskViewerStateImpl>
     implements _$$TaskViewerStateImplCopyWith<$Res> {
   __$$TaskViewerStateImplCopyWithImpl(
-      _$TaskViewerStateImpl _value, $Res Function(_$TaskViewerStateImpl) _then)
-      : super(_value, _then);
+    _$TaskViewerStateImpl _value,
+    $Res Function(_$TaskViewerStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TaskViewerState
   /// with the given fields replaced by the non-null parameter values.
@@ -256,30 +272,36 @@ class __$$TaskViewerStateImplCopyWithImpl<$Res>
     Object? task = null,
     Object? deleteState = null,
   }) {
-    return _then(_$TaskViewerStateImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      task: null == task
-          ? _value.task
-          : task // ignore: cast_nullable_to_non_nullable
-              as StatusOf<Task, String>,
-      deleteState: null == deleteState
-          ? _value.deleteState
-          : deleteState // ignore: cast_nullable_to_non_nullable
-              as OperationStatus<String>,
-    ));
+    return _then(
+      _$TaskViewerStateImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as int,
+        task:
+            null == task
+                ? _value.task
+                : task // ignore: cast_nullable_to_non_nullable
+                    as StatusOf<Task, String>,
+        deleteState:
+            null == deleteState
+                ? _value.deleteState
+                : deleteState // ignore: cast_nullable_to_non_nullable
+                    as OperationStatus<String>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$TaskViewerStateImpl implements _TaskViewerState {
-  const _$TaskViewerStateImpl(
-      {required this.id,
-      required this.task,
-      this.deleteState = const OperationStatusInitial()});
+  const _$TaskViewerStateImpl({
+    required this.id,
+    required this.task,
+    this.deleteState = const OperationStatusInitial(),
+  });
 
   @override
   final int id;
@@ -315,14 +337,17 @@ class _$TaskViewerStateImpl implements _TaskViewerState {
   @pragma('vm:prefer-inline')
   _$$TaskViewerStateImplCopyWith<_$TaskViewerStateImpl> get copyWith =>
       __$$TaskViewerStateImplCopyWithImpl<_$TaskViewerStateImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _TaskViewerState implements TaskViewerState {
-  const factory _TaskViewerState(
-      {required final int id,
-      required final StatusOf<Task, String> task,
-      final OperationStatus<String> deleteState}) = _$TaskViewerStateImpl;
+  const factory _TaskViewerState({
+    required final int id,
+    required final StatusOf<Task, String> task,
+    final OperationStatus<String> deleteState,
+  }) = _$TaskViewerStateImpl;
 
   @override
   int get id;

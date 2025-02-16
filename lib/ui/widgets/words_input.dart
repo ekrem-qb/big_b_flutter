@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-final _regExp = RegExp(r"(?:(?<=^|[^a-zA-Z0-9\u0080-\uFFFF ])'|'(?=[^a-zA-Z0-9\u0080-\uFFFF ]|$)|[^a-zA-Z0-9\u0080-\uFFFF '])+");
+final _regExp = RegExp(
+  r"(?:(?<=^|[^a-zA-Z0-9\u0080-\uFFFF ])'|'(?=[^a-zA-Z0-9\u0080-\uFFFF ]|$)|[^a-zA-Z0-9\u0080-\uFFFF '])+",
+);
 
 Future<Iterable<String>> showWordsInput(final BuildContext context) async {
   final words = await showCupertinoModalPopup<Iterable<String>>(
@@ -54,7 +56,10 @@ class _WordsInput extends StatelessWidget {
       Navigator.of(context).pop();
       return;
     }
-    final words = trimmedValue.split(_regExp).where((final e) => e.trim().isNotEmpty).map((final e) => e.trim());
+    final words = trimmedValue
+        .split(_regExp)
+        .where((final e) => e.trim().isNotEmpty)
+        .map((final e) => e.trim());
     Navigator.of(context).pop(words);
   }
 }

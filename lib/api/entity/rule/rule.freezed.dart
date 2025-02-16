@@ -12,7 +12,8 @@ part of 'rule.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 Rule _$RuleFromJson(Map<String, dynamic> json) {
   switch (json['type']) {
@@ -25,7 +26,11 @@ Rule _$RuleFromJson(Map<String, dynamic> json) {
 
     default:
       throw CheckedFromJsonException(
-          json, 'type', 'Rule', 'Invalid union type "${json['type']}"!');
+        json,
+        'type',
+        'Rule',
+        'Invalid union type "${json['type']}"!',
+      );
   }
 }
 
@@ -50,9 +55,10 @@ abstract class $RuleCopyWith<$Res> {
   factory $RuleCopyWith(Rule value, $Res Function(Rule) then) =
       _$RuleCopyWithImpl<$Res, Rule>;
   @useResult
-  $Res call(
-      {@JsonKey(includeToJson: false) int id,
-      @JsonKey(fromJson: Color.new, toJson: colorToJson) Color color});
+  $Res call({
+    @JsonKey(includeToJson: false) int id,
+    @JsonKey(fromJson: Color.new, toJson: colorToJson) Color color,
+  });
 }
 
 /// @nodoc
@@ -69,34 +75,38 @@ class _$RuleCopyWithImpl<$Res, $Val extends Rule>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? color = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      color: null == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as Color,
-    ) as $Val);
+  $Res call({Object? id = null, Object? color = null}) {
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as int,
+            color:
+                null == color
+                    ? _value.color
+                    : color // ignore: cast_nullable_to_non_nullable
+                        as Color,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$WordsRuleImplCopyWith<$Res> implements $RuleCopyWith<$Res> {
   factory _$$WordsRuleImplCopyWith(
-          _$WordsRuleImpl value, $Res Function(_$WordsRuleImpl) then) =
-      __$$WordsRuleImplCopyWithImpl<$Res>;
+    _$WordsRuleImpl value,
+    $Res Function(_$WordsRuleImpl) then,
+  ) = __$$WordsRuleImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(includeToJson: false) int id,
-      Set<String> words,
-      @JsonKey(fromJson: Color.new, toJson: colorToJson) Color color});
+  $Res call({
+    @JsonKey(includeToJson: false) int id,
+    Set<String> words,
+    @JsonKey(fromJson: Color.new, toJson: colorToJson) Color color,
+  });
 }
 
 /// @nodoc
@@ -104,45 +114,47 @@ class __$$WordsRuleImplCopyWithImpl<$Res>
     extends _$RuleCopyWithImpl<$Res, _$WordsRuleImpl>
     implements _$$WordsRuleImplCopyWith<$Res> {
   __$$WordsRuleImplCopyWithImpl(
-      _$WordsRuleImpl _value, $Res Function(_$WordsRuleImpl) _then)
-      : super(_value, _then);
+    _$WordsRuleImpl _value,
+    $Res Function(_$WordsRuleImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Rule
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? words = null,
-    Object? color = null,
-  }) {
-    return _then(_$WordsRuleImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      words: null == words
-          ? _value._words
-          : words // ignore: cast_nullable_to_non_nullable
-              as Set<String>,
-      color: null == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as Color,
-    ));
+  $Res call({Object? id = null, Object? words = null, Object? color = null}) {
+    return _then(
+      _$WordsRuleImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as int,
+        words:
+            null == words
+                ? _value._words
+                : words // ignore: cast_nullable_to_non_nullable
+                    as Set<String>,
+        color:
+            null == color
+                ? _value.color
+                : color // ignore: cast_nullable_to_non_nullable
+                    as Color,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$WordsRuleImpl implements WordsRule {
-  const _$WordsRuleImpl(
-      {@JsonKey(includeToJson: false) required this.id,
-      required final Set<String> words,
-      @JsonKey(fromJson: Color.new, toJson: colorToJson) required this.color,
-      final String? $type})
-      : _words = words,
-        $type = $type ?? 'words';
+  const _$WordsRuleImpl({
+    @JsonKey(includeToJson: false) required this.id,
+    required final Set<String> words,
+    @JsonKey(fromJson: Color.new, toJson: colorToJson) required this.color,
+    final String? $type,
+  }) : _words = words,
+       $type = $type ?? 'words';
 
   factory _$WordsRuleImpl.fromJson(Map<String, dynamic> json) =>
       _$$WordsRuleImplFromJson(json);
@@ -183,7 +195,11 @@ class _$WordsRuleImpl implements WordsRule {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, const DeepCollectionEquality().hash(_words), color);
+    runtimeType,
+    id,
+    const DeepCollectionEquality().hash(_words),
+    color,
+  );
 
   /// Create a copy of Rule
   /// with the given fields replaced by the non-null parameter values.
@@ -195,18 +211,17 @@ class _$WordsRuleImpl implements WordsRule {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$WordsRuleImplToJson(
-      this,
-    );
+    return _$$WordsRuleImplToJson(this);
   }
 }
 
 abstract class WordsRule implements Rule {
-  const factory WordsRule(
-      {@JsonKey(includeToJson: false) required final int id,
-      required final Set<String> words,
-      @JsonKey(fromJson: Color.new, toJson: colorToJson)
-      required final Color color}) = _$WordsRuleImpl;
+  const factory WordsRule({
+    @JsonKey(includeToJson: false) required final int id,
+    required final Set<String> words,
+    @JsonKey(fromJson: Color.new, toJson: colorToJson)
+    required final Color color,
+  }) = _$WordsRuleImpl;
 
   factory WordsRule.fromJson(Map<String, dynamic> json) =
       _$WordsRuleImpl.fromJson;
@@ -230,13 +245,15 @@ abstract class WordsRule implements Rule {
 /// @nodoc
 abstract class _$$NameRuleImplCopyWith<$Res> implements $RuleCopyWith<$Res> {
   factory _$$NameRuleImplCopyWith(
-          _$NameRuleImpl value, $Res Function(_$NameRuleImpl) then) =
-      __$$NameRuleImplCopyWithImpl<$Res>;
+    _$NameRuleImpl value,
+    $Res Function(_$NameRuleImpl) then,
+  ) = __$$NameRuleImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(includeToJson: false) int id,
-      @JsonKey(fromJson: Color.new, toJson: colorToJson) Color color});
+  $Res call({
+    @JsonKey(includeToJson: false) int id,
+    @JsonKey(fromJson: Color.new, toJson: colorToJson) Color color,
+  });
 }
 
 /// @nodoc
@@ -244,38 +261,40 @@ class __$$NameRuleImplCopyWithImpl<$Res>
     extends _$RuleCopyWithImpl<$Res, _$NameRuleImpl>
     implements _$$NameRuleImplCopyWith<$Res> {
   __$$NameRuleImplCopyWithImpl(
-      _$NameRuleImpl _value, $Res Function(_$NameRuleImpl) _then)
-      : super(_value, _then);
+    _$NameRuleImpl _value,
+    $Res Function(_$NameRuleImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Rule
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? color = null,
-  }) {
-    return _then(_$NameRuleImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      color: null == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as Color,
-    ));
+  $Res call({Object? id = null, Object? color = null}) {
+    return _then(
+      _$NameRuleImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as int,
+        color:
+            null == color
+                ? _value.color
+                : color // ignore: cast_nullable_to_non_nullable
+                    as Color,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$NameRuleImpl implements NameRule {
-  const _$NameRuleImpl(
-      {@JsonKey(includeToJson: false) required this.id,
-      @JsonKey(fromJson: Color.new, toJson: colorToJson) required this.color,
-      final String? $type})
-      : $type = $type ?? 'name';
+  const _$NameRuleImpl({
+    @JsonKey(includeToJson: false) required this.id,
+    @JsonKey(fromJson: Color.new, toJson: colorToJson) required this.color,
+    final String? $type,
+  }) : $type = $type ?? 'name';
 
   factory _$NameRuleImpl.fromJson(Map<String, dynamic> json) =>
       _$$NameRuleImplFromJson(json);
@@ -318,17 +337,16 @@ class _$NameRuleImpl implements NameRule {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$NameRuleImplToJson(
-      this,
-    );
+    return _$$NameRuleImplToJson(this);
   }
 }
 
 abstract class NameRule implements Rule {
-  const factory NameRule(
-      {@JsonKey(includeToJson: false) required final int id,
-      @JsonKey(fromJson: Color.new, toJson: colorToJson)
-      required final Color color}) = _$NameRuleImpl;
+  const factory NameRule({
+    @JsonKey(includeToJson: false) required final int id,
+    @JsonKey(fromJson: Color.new, toJson: colorToJson)
+    required final Color color,
+  }) = _$NameRuleImpl;
 
   factory NameRule.fromJson(Map<String, dynamic> json) =
       _$NameRuleImpl.fromJson;
@@ -351,15 +369,17 @@ abstract class NameRule implements Rule {
 /// @nodoc
 abstract class _$$CustomRuleImplCopyWith<$Res> implements $RuleCopyWith<$Res> {
   factory _$$CustomRuleImplCopyWith(
-          _$CustomRuleImpl value, $Res Function(_$CustomRuleImpl) then) =
-      __$$CustomRuleImplCopyWithImpl<$Res>;
+    _$CustomRuleImpl value,
+    $Res Function(_$CustomRuleImpl) then,
+  ) = __$$CustomRuleImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(includeToJson: false) int id,
-      String description,
-      String details,
-      @JsonKey(fromJson: Color.new, toJson: colorToJson) Color color});
+  $Res call({
+    @JsonKey(includeToJson: false) int id,
+    String description,
+    String details,
+    @JsonKey(fromJson: Color.new, toJson: colorToJson) Color color,
+  });
 }
 
 /// @nodoc
@@ -367,8 +387,9 @@ class __$$CustomRuleImplCopyWithImpl<$Res>
     extends _$RuleCopyWithImpl<$Res, _$CustomRuleImpl>
     implements _$$CustomRuleImplCopyWith<$Res> {
   __$$CustomRuleImplCopyWithImpl(
-      _$CustomRuleImpl _value, $Res Function(_$CustomRuleImpl) _then)
-      : super(_value, _then);
+    _$CustomRuleImpl _value,
+    $Res Function(_$CustomRuleImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Rule
   /// with the given fields replaced by the non-null parameter values.
@@ -380,37 +401,43 @@ class __$$CustomRuleImplCopyWithImpl<$Res>
     Object? details = null,
     Object? color = null,
   }) {
-    return _then(_$CustomRuleImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      details: null == details
-          ? _value.details
-          : details // ignore: cast_nullable_to_non_nullable
-              as String,
-      color: null == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as Color,
-    ));
+    return _then(
+      _$CustomRuleImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as int,
+        description:
+            null == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                    as String,
+        details:
+            null == details
+                ? _value.details
+                : details // ignore: cast_nullable_to_non_nullable
+                    as String,
+        color:
+            null == color
+                ? _value.color
+                : color // ignore: cast_nullable_to_non_nullable
+                    as Color,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$CustomRuleImpl implements CustomRule {
-  const _$CustomRuleImpl(
-      {@JsonKey(includeToJson: false) required this.id,
-      required this.description,
-      required this.details,
-      @JsonKey(fromJson: Color.new, toJson: colorToJson) required this.color,
-      final String? $type})
-      : $type = $type ?? 'custom';
+  const _$CustomRuleImpl({
+    @JsonKey(includeToJson: false) required this.id,
+    required this.description,
+    required this.details,
+    @JsonKey(fromJson: Color.new, toJson: colorToJson) required this.color,
+    final String? $type,
+  }) : $type = $type ?? 'custom';
 
   factory _$CustomRuleImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomRuleImplFromJson(json);
@@ -460,19 +487,18 @@ class _$CustomRuleImpl implements CustomRule {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CustomRuleImplToJson(
-      this,
-    );
+    return _$$CustomRuleImplToJson(this);
   }
 }
 
 abstract class CustomRule implements Rule {
-  const factory CustomRule(
-      {@JsonKey(includeToJson: false) required final int id,
-      required final String description,
-      required final String details,
-      @JsonKey(fromJson: Color.new, toJson: colorToJson)
-      required final Color color}) = _$CustomRuleImpl;
+  const factory CustomRule({
+    @JsonKey(includeToJson: false) required final int id,
+    required final String description,
+    required final String details,
+    @JsonKey(fromJson: Color.new, toJson: colorToJson)
+    required final Color color,
+  }) = _$CustomRuleImpl;
 
   factory CustomRule.fromJson(Map<String, dynamic> json) =
       _$CustomRuleImpl.fromJson;

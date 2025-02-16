@@ -40,7 +40,4 @@ Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) =>
       'role': _$RoleEnumMap[instance.role]!,
     };
 
-const _$RoleEnumMap = {
-  Role.employee: 'Employee',
-  Role.manager: 'Manager',
-};
+const _$RoleEnumMap = {Role.employee: 'Employee', Role.manager: 'Manager'};

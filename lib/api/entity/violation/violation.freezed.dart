@@ -12,7 +12,8 @@ part of 'violation.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 Violation _$ViolationFromJson(Map<String, dynamic> json) {
   switch (json['type']) {
@@ -23,7 +24,11 @@ Violation _$ViolationFromJson(Map<String, dynamic> json) {
 
     default:
       throw CheckedFromJsonException(
-          json, 'type', 'Violation', 'Invalid union type "${json['type']}"!');
+        json,
+        'type',
+        'Violation',
+        'Invalid union type "${json['type']}"!',
+      );
   }
 }
 
@@ -65,25 +70,27 @@ class _$ViolationCopyWithImpl<$Res, $Val extends Violation>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? rule = null,
-    Object? record = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      rule: null == rule
-          ? _value.rule
-          : rule // ignore: cast_nullable_to_non_nullable
-              as Rule,
-      record: null == record
-          ? _value.record
-          : record // ignore: cast_nullable_to_non_nullable
-              as Recording,
-    ) as $Val);
+  $Res call({Object? id = null, Object? rule = null, Object? record = null}) {
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as int,
+            rule:
+                null == rule
+                    ? _value.rule
+                    : rule // ignore: cast_nullable_to_non_nullable
+                        as Rule,
+            record:
+                null == record
+                    ? _value.record
+                    : record // ignore: cast_nullable_to_non_nullable
+                        as Recording,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of Violation
@@ -110,9 +117,10 @@ class _$ViolationCopyWithImpl<$Res, $Val extends Violation>
 /// @nodoc
 abstract class _$$NormalViolationImplCopyWith<$Res>
     implements $ViolationCopyWith<$Res> {
-  factory _$$NormalViolationImplCopyWith(_$NormalViolationImpl value,
-          $Res Function(_$NormalViolationImpl) then) =
-      __$$NormalViolationImplCopyWithImpl<$Res>;
+  factory _$$NormalViolationImplCopyWith(
+    _$NormalViolationImpl value,
+    $Res Function(_$NormalViolationImpl) then,
+  ) = __$$NormalViolationImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, Rule rule, Recording record});
@@ -128,44 +136,46 @@ class __$$NormalViolationImplCopyWithImpl<$Res>
     extends _$ViolationCopyWithImpl<$Res, _$NormalViolationImpl>
     implements _$$NormalViolationImplCopyWith<$Res> {
   __$$NormalViolationImplCopyWithImpl(
-      _$NormalViolationImpl _value, $Res Function(_$NormalViolationImpl) _then)
-      : super(_value, _then);
+    _$NormalViolationImpl _value,
+    $Res Function(_$NormalViolationImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Violation
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? id = null,
-    Object? rule = null,
-    Object? record = null,
-  }) {
-    return _then(_$NormalViolationImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      rule: null == rule
-          ? _value.rule
-          : rule // ignore: cast_nullable_to_non_nullable
-              as Rule,
-      record: null == record
-          ? _value.record
-          : record // ignore: cast_nullable_to_non_nullable
-              as Recording,
-    ));
+  $Res call({Object? id = null, Object? rule = null, Object? record = null}) {
+    return _then(
+      _$NormalViolationImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as int,
+        rule:
+            null == rule
+                ? _value.rule
+                : rule // ignore: cast_nullable_to_non_nullable
+                    as Rule,
+        record:
+            null == record
+                ? _value.record
+                : record // ignore: cast_nullable_to_non_nullable
+                    as Recording,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable(createToJson: false)
 class _$NormalViolationImpl implements NormalViolation {
-  _$NormalViolationImpl(
-      {required this.id,
-      required this.rule,
-      required this.record,
-      final String? $type})
-      : $type = $type ?? 'normal';
+  _$NormalViolationImpl({
+    required this.id,
+    required this.rule,
+    required this.record,
+    final String? $type,
+  }) : $type = $type ?? 'normal';
 
   factory _$NormalViolationImpl.fromJson(Map<String, dynamic> json) =>
       _$$NormalViolationImplFromJson(json);
@@ -206,14 +216,17 @@ class _$NormalViolationImpl implements NormalViolation {
   @pragma('vm:prefer-inline')
   _$$NormalViolationImplCopyWith<_$NormalViolationImpl> get copyWith =>
       __$$NormalViolationImplCopyWithImpl<_$NormalViolationImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class NormalViolation implements Violation {
-  factory NormalViolation(
-      {required final int id,
-      required final Rule rule,
-      required final Recording record}) = _$NormalViolationImpl;
+  factory NormalViolation({
+    required final int id,
+    required final Rule rule,
+    required final Recording record,
+  }) = _$NormalViolationImpl;
 
   factory NormalViolation.fromJson(Map<String, dynamic> json) =
       _$NormalViolationImpl.fromJson;
@@ -236,18 +249,20 @@ abstract class NormalViolation implements Violation {
 /// @nodoc
 abstract class _$$HighlightViolationImplCopyWith<$Res>
     implements $ViolationCopyWith<$Res> {
-  factory _$$HighlightViolationImplCopyWith(_$HighlightViolationImpl value,
-          $Res Function(_$HighlightViolationImpl) then) =
-      __$$HighlightViolationImplCopyWithImpl<$Res>;
+  factory _$$HighlightViolationImplCopyWith(
+    _$HighlightViolationImpl value,
+    $Res Function(_$HighlightViolationImpl) then,
+  ) = __$$HighlightViolationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int id,
-      Rule rule,
-      Recording record,
-      TextLine line,
-      int startIndex,
-      int endIndex});
+  $Res call({
+    int id,
+    Rule rule,
+    Recording record,
+    TextLine line,
+    int startIndex,
+    int endIndex,
+  });
 
   @override
   $RuleCopyWith<$Res> get rule;
@@ -260,9 +275,10 @@ abstract class _$$HighlightViolationImplCopyWith<$Res>
 class __$$HighlightViolationImplCopyWithImpl<$Res>
     extends _$ViolationCopyWithImpl<$Res, _$HighlightViolationImpl>
     implements _$$HighlightViolationImplCopyWith<$Res> {
-  __$$HighlightViolationImplCopyWithImpl(_$HighlightViolationImpl _value,
-      $Res Function(_$HighlightViolationImpl) _then)
-      : super(_value, _then);
+  __$$HighlightViolationImplCopyWithImpl(
+    _$HighlightViolationImpl _value,
+    $Res Function(_$HighlightViolationImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Violation
   /// with the given fields replaced by the non-null parameter values.
@@ -276,32 +292,40 @@ class __$$HighlightViolationImplCopyWithImpl<$Res>
     Object? startIndex = null,
     Object? endIndex = null,
   }) {
-    return _then(_$HighlightViolationImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      rule: null == rule
-          ? _value.rule
-          : rule // ignore: cast_nullable_to_non_nullable
-              as Rule,
-      record: null == record
-          ? _value.record
-          : record // ignore: cast_nullable_to_non_nullable
-              as Recording,
-      line: null == line
-          ? _value.line
-          : line // ignore: cast_nullable_to_non_nullable
-              as TextLine,
-      startIndex: null == startIndex
-          ? _value.startIndex
-          : startIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      endIndex: null == endIndex
-          ? _value.endIndex
-          : endIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+    return _then(
+      _$HighlightViolationImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as int,
+        rule:
+            null == rule
+                ? _value.rule
+                : rule // ignore: cast_nullable_to_non_nullable
+                    as Rule,
+        record:
+            null == record
+                ? _value.record
+                : record // ignore: cast_nullable_to_non_nullable
+                    as Recording,
+        line:
+            null == line
+                ? _value.line
+                : line // ignore: cast_nullable_to_non_nullable
+                    as TextLine,
+        startIndex:
+            null == startIndex
+                ? _value.startIndex
+                : startIndex // ignore: cast_nullable_to_non_nullable
+                    as int,
+        endIndex:
+            null == endIndex
+                ? _value.endIndex
+                : endIndex // ignore: cast_nullable_to_non_nullable
+                    as int,
+      ),
+    );
   }
 
   /// Create a copy of Violation
@@ -318,15 +342,15 @@ class __$$HighlightViolationImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable(createToJson: false)
 class _$HighlightViolationImpl implements HighlightViolation {
-  _$HighlightViolationImpl(
-      {required this.id,
-      required this.rule,
-      required this.record,
-      required this.line,
-      required this.startIndex,
-      required this.endIndex,
-      final String? $type})
-      : $type = $type ?? 'highlight';
+  _$HighlightViolationImpl({
+    required this.id,
+    required this.rule,
+    required this.record,
+    required this.line,
+    required this.startIndex,
+    required this.endIndex,
+    final String? $type,
+  }) : $type = $type ?? 'highlight';
 
   factory _$HighlightViolationImpl.fromJson(Map<String, dynamic> json) =>
       _$$HighlightViolationImplFromJson(json);
@@ -379,17 +403,20 @@ class _$HighlightViolationImpl implements HighlightViolation {
   @pragma('vm:prefer-inline')
   _$$HighlightViolationImplCopyWith<_$HighlightViolationImpl> get copyWith =>
       __$$HighlightViolationImplCopyWithImpl<_$HighlightViolationImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class HighlightViolation implements Violation {
-  factory HighlightViolation(
-      {required final int id,
-      required final Rule rule,
-      required final Recording record,
-      required final TextLine line,
-      required final int startIndex,
-      required final int endIndex}) = _$HighlightViolationImpl;
+  factory HighlightViolation({
+    required final int id,
+    required final Rule rule,
+    required final Recording record,
+    required final TextLine line,
+    required final int startIndex,
+    required final int endIndex,
+  }) = _$HighlightViolationImpl;
 
   factory HighlightViolation.fromJson(Map<String, dynamic> json) =
       _$HighlightViolationImpl.fromJson;

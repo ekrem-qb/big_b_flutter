@@ -12,7 +12,8 @@ part of 'task_editor_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$TaskEditorEvent {}
@@ -20,8 +21,9 @@ mixin _$TaskEditorEvent {}
 /// @nodoc
 abstract class $TaskEditorEventCopyWith<$Res> {
   factory $TaskEditorEventCopyWith(
-          TaskEditorEvent value, $Res Function(TaskEditorEvent) then) =
-      _$TaskEditorEventCopyWithImpl<$Res, TaskEditorEvent>;
+    TaskEditorEvent value,
+    $Res Function(TaskEditorEvent) then,
+  ) = _$TaskEditorEventCopyWithImpl<$Res, TaskEditorEvent>;
 }
 
 /// @nodoc
@@ -41,20 +43,20 @@ class _$TaskEditorEventCopyWithImpl<$Res, $Val extends TaskEditorEvent>
 /// @nodoc
 abstract class _$$TaskEditorEventLoadRequestedImplCopyWith<$Res> {
   factory _$$TaskEditorEventLoadRequestedImplCopyWith(
-          _$TaskEditorEventLoadRequestedImpl value,
-          $Res Function(_$TaskEditorEventLoadRequestedImpl) then) =
-      __$$TaskEditorEventLoadRequestedImplCopyWithImpl<$Res>;
+    _$TaskEditorEventLoadRequestedImpl value,
+    $Res Function(_$TaskEditorEventLoadRequestedImpl) then,
+  ) = __$$TaskEditorEventLoadRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$TaskEditorEventLoadRequestedImplCopyWithImpl<$Res>
-    extends _$TaskEditorEventCopyWithImpl<$Res,
-        _$TaskEditorEventLoadRequestedImpl>
+    extends
+        _$TaskEditorEventCopyWithImpl<$Res, _$TaskEditorEventLoadRequestedImpl>
     implements _$$TaskEditorEventLoadRequestedImplCopyWith<$Res> {
   __$$TaskEditorEventLoadRequestedImplCopyWithImpl(
-      _$TaskEditorEventLoadRequestedImpl _value,
-      $Res Function(_$TaskEditorEventLoadRequestedImpl) _then)
-      : super(_value, _then);
+    _$TaskEditorEventLoadRequestedImpl _value,
+    $Res Function(_$TaskEditorEventLoadRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TaskEditorEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -90,36 +92,36 @@ abstract class TaskEditorEventLoadRequested implements TaskEditorEvent {
 /// @nodoc
 abstract class _$$TaskEditorEventTextChangedImplCopyWith<$Res> {
   factory _$$TaskEditorEventTextChangedImplCopyWith(
-          _$TaskEditorEventTextChangedImpl value,
-          $Res Function(_$TaskEditorEventTextChangedImpl) then) =
-      __$$TaskEditorEventTextChangedImplCopyWithImpl<$Res>;
+    _$TaskEditorEventTextChangedImpl value,
+    $Res Function(_$TaskEditorEventTextChangedImpl) then,
+  ) = __$$TaskEditorEventTextChangedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String text});
 }
 
 /// @nodoc
 class __$$TaskEditorEventTextChangedImplCopyWithImpl<$Res>
-    extends _$TaskEditorEventCopyWithImpl<$Res,
-        _$TaskEditorEventTextChangedImpl>
+    extends
+        _$TaskEditorEventCopyWithImpl<$Res, _$TaskEditorEventTextChangedImpl>
     implements _$$TaskEditorEventTextChangedImplCopyWith<$Res> {
   __$$TaskEditorEventTextChangedImplCopyWithImpl(
-      _$TaskEditorEventTextChangedImpl _value,
-      $Res Function(_$TaskEditorEventTextChangedImpl) _then)
-      : super(_value, _then);
+    _$TaskEditorEventTextChangedImpl _value,
+    $Res Function(_$TaskEditorEventTextChangedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TaskEditorEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? text = null,
-  }) {
-    return _then(_$TaskEditorEventTextChangedImpl(
-      null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? text = null}) {
+    return _then(
+      _$TaskEditorEventTextChangedImpl(
+        null == text
+            ? _value.text
+            : text // ignore: cast_nullable_to_non_nullable
+                as String,
+      ),
+    );
   }
 }
 
@@ -153,8 +155,9 @@ class _$TaskEditorEventTextChangedImpl implements TaskEditorEventTextChanged {
   @override
   @pragma('vm:prefer-inline')
   _$$TaskEditorEventTextChangedImplCopyWith<_$TaskEditorEventTextChangedImpl>
-      get copyWith => __$$TaskEditorEventTextChangedImplCopyWithImpl<
-          _$TaskEditorEventTextChangedImpl>(this, _$identity);
+  get copyWith => __$$TaskEditorEventTextChangedImplCopyWithImpl<
+    _$TaskEditorEventTextChangedImpl
+  >(this, _$identity);
 }
 
 abstract class TaskEditorEventTextChanged implements TaskEditorEvent {
@@ -167,42 +170,46 @@ abstract class TaskEditorEventTextChanged implements TaskEditorEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TaskEditorEventTextChangedImplCopyWith<_$TaskEditorEventTextChangedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$TaskEditorEventIsImageRequiredChangedImplCopyWith<$Res> {
   factory _$$TaskEditorEventIsImageRequiredChangedImplCopyWith(
-          _$TaskEditorEventIsImageRequiredChangedImpl value,
-          $Res Function(_$TaskEditorEventIsImageRequiredChangedImpl) then) =
-      __$$TaskEditorEventIsImageRequiredChangedImplCopyWithImpl<$Res>;
+    _$TaskEditorEventIsImageRequiredChangedImpl value,
+    $Res Function(_$TaskEditorEventIsImageRequiredChangedImpl) then,
+  ) = __$$TaskEditorEventIsImageRequiredChangedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({bool value});
 }
 
 /// @nodoc
 class __$$TaskEditorEventIsImageRequiredChangedImplCopyWithImpl<$Res>
-    extends _$TaskEditorEventCopyWithImpl<$Res,
-        _$TaskEditorEventIsImageRequiredChangedImpl>
+    extends
+        _$TaskEditorEventCopyWithImpl<
+          $Res,
+          _$TaskEditorEventIsImageRequiredChangedImpl
+        >
     implements _$$TaskEditorEventIsImageRequiredChangedImplCopyWith<$Res> {
   __$$TaskEditorEventIsImageRequiredChangedImplCopyWithImpl(
-      _$TaskEditorEventIsImageRequiredChangedImpl _value,
-      $Res Function(_$TaskEditorEventIsImageRequiredChangedImpl) _then)
-      : super(_value, _then);
+    _$TaskEditorEventIsImageRequiredChangedImpl _value,
+    $Res Function(_$TaskEditorEventIsImageRequiredChangedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TaskEditorEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? value = null,
-  }) {
-    return _then(_$TaskEditorEventIsImageRequiredChangedImpl(
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+  $Res call({Object? value = null}) {
+    return _then(
+      _$TaskEditorEventIsImageRequiredChangedImpl(
+        value:
+            null == value
+                ? _value.value
+                : value // ignore: cast_nullable_to_non_nullable
+                    as bool,
+      ),
+    );
   }
 }
 
@@ -237,16 +244,18 @@ class _$TaskEditorEventIsImageRequiredChangedImpl
   @override
   @pragma('vm:prefer-inline')
   _$$TaskEditorEventIsImageRequiredChangedImplCopyWith<
-          _$TaskEditorEventIsImageRequiredChangedImpl>
-      get copyWith => __$$TaskEditorEventIsImageRequiredChangedImplCopyWithImpl<
-          _$TaskEditorEventIsImageRequiredChangedImpl>(this, _$identity);
+    _$TaskEditorEventIsImageRequiredChangedImpl
+  >
+  get copyWith => __$$TaskEditorEventIsImageRequiredChangedImplCopyWithImpl<
+    _$TaskEditorEventIsImageRequiredChangedImpl
+  >(this, _$identity);
 }
 
 abstract class TaskEditorEventIsImageRequiredChanged
     implements TaskEditorEvent {
-  const factory TaskEditorEventIsImageRequiredChanged(
-          {required final bool value}) =
-      _$TaskEditorEventIsImageRequiredChangedImpl;
+  const factory TaskEditorEventIsImageRequiredChanged({
+    required final bool value,
+  }) = _$TaskEditorEventIsImageRequiredChangedImpl;
 
   bool get value;
 
@@ -254,43 +263,44 @@ abstract class TaskEditorEventIsImageRequiredChanged
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TaskEditorEventIsImageRequiredChangedImplCopyWith<
-          _$TaskEditorEventIsImageRequiredChangedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+    _$TaskEditorEventIsImageRequiredChangedImpl
+  >
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$TaskEditorEventTimeChangedImplCopyWith<$Res> {
   factory _$$TaskEditorEventTimeChangedImplCopyWith(
-          _$TaskEditorEventTimeChangedImpl value,
-          $Res Function(_$TaskEditorEventTimeChangedImpl) then) =
-      __$$TaskEditorEventTimeChangedImplCopyWithImpl<$Res>;
+    _$TaskEditorEventTimeChangedImpl value,
+    $Res Function(_$TaskEditorEventTimeChangedImpl) then,
+  ) = __$$TaskEditorEventTimeChangedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Duration time});
 }
 
 /// @nodoc
 class __$$TaskEditorEventTimeChangedImplCopyWithImpl<$Res>
-    extends _$TaskEditorEventCopyWithImpl<$Res,
-        _$TaskEditorEventTimeChangedImpl>
+    extends
+        _$TaskEditorEventCopyWithImpl<$Res, _$TaskEditorEventTimeChangedImpl>
     implements _$$TaskEditorEventTimeChangedImplCopyWith<$Res> {
   __$$TaskEditorEventTimeChangedImplCopyWithImpl(
-      _$TaskEditorEventTimeChangedImpl _value,
-      $Res Function(_$TaskEditorEventTimeChangedImpl) _then)
-      : super(_value, _then);
+    _$TaskEditorEventTimeChangedImpl _value,
+    $Res Function(_$TaskEditorEventTimeChangedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TaskEditorEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? time = null,
-  }) {
-    return _then(_$TaskEditorEventTimeChangedImpl(
-      null == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as Duration,
-    ));
+  $Res call({Object? time = null}) {
+    return _then(
+      _$TaskEditorEventTimeChangedImpl(
+        null == time
+            ? _value.time
+            : time // ignore: cast_nullable_to_non_nullable
+                as Duration,
+      ),
+    );
   }
 }
 
@@ -324,8 +334,9 @@ class _$TaskEditorEventTimeChangedImpl implements TaskEditorEventTimeChanged {
   @override
   @pragma('vm:prefer-inline')
   _$$TaskEditorEventTimeChangedImplCopyWith<_$TaskEditorEventTimeChangedImpl>
-      get copyWith => __$$TaskEditorEventTimeChangedImplCopyWithImpl<
-          _$TaskEditorEventTimeChangedImpl>(this, _$identity);
+  get copyWith => __$$TaskEditorEventTimeChangedImplCopyWithImpl<
+    _$TaskEditorEventTimeChangedImpl
+  >(this, _$identity);
 }
 
 abstract class TaskEditorEventTimeChanged implements TaskEditorEvent {
@@ -338,42 +349,42 @@ abstract class TaskEditorEventTimeChanged implements TaskEditorEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TaskEditorEventTimeChangedImplCopyWith<_$TaskEditorEventTimeChangedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$TaskEditorEventDateChangedImplCopyWith<$Res> {
   factory _$$TaskEditorEventDateChangedImplCopyWith(
-          _$TaskEditorEventDateChangedImpl value,
-          $Res Function(_$TaskEditorEventDateChangedImpl) then) =
-      __$$TaskEditorEventDateChangedImplCopyWithImpl<$Res>;
+    _$TaskEditorEventDateChangedImpl value,
+    $Res Function(_$TaskEditorEventDateChangedImpl) then,
+  ) = __$$TaskEditorEventDateChangedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({DateTime date});
 }
 
 /// @nodoc
 class __$$TaskEditorEventDateChangedImplCopyWithImpl<$Res>
-    extends _$TaskEditorEventCopyWithImpl<$Res,
-        _$TaskEditorEventDateChangedImpl>
+    extends
+        _$TaskEditorEventCopyWithImpl<$Res, _$TaskEditorEventDateChangedImpl>
     implements _$$TaskEditorEventDateChangedImplCopyWith<$Res> {
   __$$TaskEditorEventDateChangedImplCopyWithImpl(
-      _$TaskEditorEventDateChangedImpl _value,
-      $Res Function(_$TaskEditorEventDateChangedImpl) _then)
-      : super(_value, _then);
+    _$TaskEditorEventDateChangedImpl _value,
+    $Res Function(_$TaskEditorEventDateChangedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TaskEditorEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? date = null,
-  }) {
-    return _then(_$TaskEditorEventDateChangedImpl(
-      null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ));
+  $Res call({Object? date = null}) {
+    return _then(
+      _$TaskEditorEventDateChangedImpl(
+        null == date
+            ? _value.date
+            : date // ignore: cast_nullable_to_non_nullable
+                as DateTime,
+      ),
+    );
   }
 }
 
@@ -407,8 +418,9 @@ class _$TaskEditorEventDateChangedImpl implements TaskEditorEventDateChanged {
   @override
   @pragma('vm:prefer-inline')
   _$$TaskEditorEventDateChangedImplCopyWith<_$TaskEditorEventDateChangedImpl>
-      get copyWith => __$$TaskEditorEventDateChangedImplCopyWithImpl<
-          _$TaskEditorEventDateChangedImpl>(this, _$identity);
+  get copyWith => __$$TaskEditorEventDateChangedImplCopyWithImpl<
+    _$TaskEditorEventDateChangedImpl
+  >(this, _$identity);
 }
 
 abstract class TaskEditorEventDateChanged implements TaskEditorEvent {
@@ -421,47 +433,48 @@ abstract class TaskEditorEventDateChanged implements TaskEditorEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TaskEditorEventDateChangedImplCopyWith<_$TaskEditorEventDateChangedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$TaskEditorEventWeekdayToggledImplCopyWith<$Res> {
   factory _$$TaskEditorEventWeekdayToggledImplCopyWith(
-          _$TaskEditorEventWeekdayToggledImpl value,
-          $Res Function(_$TaskEditorEventWeekdayToggledImpl) then) =
-      __$$TaskEditorEventWeekdayToggledImplCopyWithImpl<$Res>;
+    _$TaskEditorEventWeekdayToggledImpl value,
+    $Res Function(_$TaskEditorEventWeekdayToggledImpl) then,
+  ) = __$$TaskEditorEventWeekdayToggledImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int day, bool value});
 }
 
 /// @nodoc
 class __$$TaskEditorEventWeekdayToggledImplCopyWithImpl<$Res>
-    extends _$TaskEditorEventCopyWithImpl<$Res,
-        _$TaskEditorEventWeekdayToggledImpl>
+    extends
+        _$TaskEditorEventCopyWithImpl<$Res, _$TaskEditorEventWeekdayToggledImpl>
     implements _$$TaskEditorEventWeekdayToggledImplCopyWith<$Res> {
   __$$TaskEditorEventWeekdayToggledImplCopyWithImpl(
-      _$TaskEditorEventWeekdayToggledImpl _value,
-      $Res Function(_$TaskEditorEventWeekdayToggledImpl) _then)
-      : super(_value, _then);
+    _$TaskEditorEventWeekdayToggledImpl _value,
+    $Res Function(_$TaskEditorEventWeekdayToggledImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TaskEditorEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? day = null,
-    Object? value = null,
-  }) {
-    return _then(_$TaskEditorEventWeekdayToggledImpl(
-      day: null == day
-          ? _value.day
-          : day // ignore: cast_nullable_to_non_nullable
-              as int,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+  $Res call({Object? day = null, Object? value = null}) {
+    return _then(
+      _$TaskEditorEventWeekdayToggledImpl(
+        day:
+            null == day
+                ? _value.day
+                : day // ignore: cast_nullable_to_non_nullable
+                    as int,
+        value:
+            null == value
+                ? _value.value
+                : value // ignore: cast_nullable_to_non_nullable
+                    as bool,
+      ),
+    );
   }
 }
 
@@ -469,8 +482,10 @@ class __$$TaskEditorEventWeekdayToggledImplCopyWithImpl<$Res>
 
 class _$TaskEditorEventWeekdayToggledImpl
     implements TaskEditorEventWeekdayToggled {
-  const _$TaskEditorEventWeekdayToggledImpl(
-      {required this.day, required this.value});
+  const _$TaskEditorEventWeekdayToggledImpl({
+    required this.day,
+    required this.value,
+  });
 
   @override
   final int day;
@@ -500,15 +515,18 @@ class _$TaskEditorEventWeekdayToggledImpl
   @override
   @pragma('vm:prefer-inline')
   _$$TaskEditorEventWeekdayToggledImplCopyWith<
-          _$TaskEditorEventWeekdayToggledImpl>
-      get copyWith => __$$TaskEditorEventWeekdayToggledImplCopyWithImpl<
-          _$TaskEditorEventWeekdayToggledImpl>(this, _$identity);
+    _$TaskEditorEventWeekdayToggledImpl
+  >
+  get copyWith => __$$TaskEditorEventWeekdayToggledImplCopyWithImpl<
+    _$TaskEditorEventWeekdayToggledImpl
+  >(this, _$identity);
 }
 
 abstract class TaskEditorEventWeekdayToggled implements TaskEditorEvent {
-  const factory TaskEditorEventWeekdayToggled(
-      {required final int day,
-      required final bool value}) = _$TaskEditorEventWeekdayToggledImpl;
+  const factory TaskEditorEventWeekdayToggled({
+    required final int day,
+    required final bool value,
+  }) = _$TaskEditorEventWeekdayToggledImpl;
 
   int get day;
   bool get value;
@@ -517,43 +535,47 @@ abstract class TaskEditorEventWeekdayToggled implements TaskEditorEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TaskEditorEventWeekdayToggledImplCopyWith<
-          _$TaskEditorEventWeekdayToggledImpl>
-      get copyWith => throw _privateConstructorUsedError;
+    _$TaskEditorEventWeekdayToggledImpl
+  >
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$TaskEditorEventExecutivesAddedImplCopyWith<$Res> {
   factory _$$TaskEditorEventExecutivesAddedImplCopyWith(
-          _$TaskEditorEventExecutivesAddedImpl value,
-          $Res Function(_$TaskEditorEventExecutivesAddedImpl) then) =
-      __$$TaskEditorEventExecutivesAddedImplCopyWithImpl<$Res>;
+    _$TaskEditorEventExecutivesAddedImpl value,
+    $Res Function(_$TaskEditorEventExecutivesAddedImpl) then,
+  ) = __$$TaskEditorEventExecutivesAddedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<Profile> executives});
 }
 
 /// @nodoc
 class __$$TaskEditorEventExecutivesAddedImplCopyWithImpl<$Res>
-    extends _$TaskEditorEventCopyWithImpl<$Res,
-        _$TaskEditorEventExecutivesAddedImpl>
+    extends
+        _$TaskEditorEventCopyWithImpl<
+          $Res,
+          _$TaskEditorEventExecutivesAddedImpl
+        >
     implements _$$TaskEditorEventExecutivesAddedImplCopyWith<$Res> {
   __$$TaskEditorEventExecutivesAddedImplCopyWithImpl(
-      _$TaskEditorEventExecutivesAddedImpl _value,
-      $Res Function(_$TaskEditorEventExecutivesAddedImpl) _then)
-      : super(_value, _then);
+    _$TaskEditorEventExecutivesAddedImpl _value,
+    $Res Function(_$TaskEditorEventExecutivesAddedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TaskEditorEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? executives = null,
-  }) {
-    return _then(_$TaskEditorEventExecutivesAddedImpl(
-      null == executives
-          ? _value._executives
-          : executives // ignore: cast_nullable_to_non_nullable
-              as List<Profile>,
-    ));
+  $Res call({Object? executives = null}) {
+    return _then(
+      _$TaskEditorEventExecutivesAddedImpl(
+        null == executives
+            ? _value._executives
+            : executives // ignore: cast_nullable_to_non_nullable
+                as List<Profile>,
+      ),
+    );
   }
 }
 
@@ -562,7 +584,7 @@ class __$$TaskEditorEventExecutivesAddedImplCopyWithImpl<$Res>
 class _$TaskEditorEventExecutivesAddedImpl
     implements TaskEditorEventExecutivesAdded {
   const _$TaskEditorEventExecutivesAddedImpl(final List<Profile> executives)
-      : _executives = executives;
+    : _executives = executives;
 
   final List<Profile> _executives;
   @override
@@ -582,13 +604,17 @@ class _$TaskEditorEventExecutivesAddedImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TaskEditorEventExecutivesAddedImpl &&
-            const DeepCollectionEquality()
-                .equals(other._executives, _executives));
+            const DeepCollectionEquality().equals(
+              other._executives,
+              _executives,
+            ));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_executives));
+    runtimeType,
+    const DeepCollectionEquality().hash(_executives),
+  );
 
   /// Create a copy of TaskEditorEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -596,9 +622,11 @@ class _$TaskEditorEventExecutivesAddedImpl
   @override
   @pragma('vm:prefer-inline')
   _$$TaskEditorEventExecutivesAddedImplCopyWith<
-          _$TaskEditorEventExecutivesAddedImpl>
-      get copyWith => __$$TaskEditorEventExecutivesAddedImplCopyWithImpl<
-          _$TaskEditorEventExecutivesAddedImpl>(this, _$identity);
+    _$TaskEditorEventExecutivesAddedImpl
+  >
+  get copyWith => __$$TaskEditorEventExecutivesAddedImplCopyWithImpl<
+    _$TaskEditorEventExecutivesAddedImpl
+  >(this, _$identity);
 }
 
 abstract class TaskEditorEventExecutivesAdded implements TaskEditorEvent {
@@ -611,43 +639,47 @@ abstract class TaskEditorEventExecutivesAdded implements TaskEditorEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TaskEditorEventExecutivesAddedImplCopyWith<
-          _$TaskEditorEventExecutivesAddedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+    _$TaskEditorEventExecutivesAddedImpl
+  >
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$TaskEditorEventExecutiveRemovedImplCopyWith<$Res> {
   factory _$$TaskEditorEventExecutiveRemovedImplCopyWith(
-          _$TaskEditorEventExecutiveRemovedImpl value,
-          $Res Function(_$TaskEditorEventExecutiveRemovedImpl) then) =
-      __$$TaskEditorEventExecutiveRemovedImplCopyWithImpl<$Res>;
+    _$TaskEditorEventExecutiveRemovedImpl value,
+    $Res Function(_$TaskEditorEventExecutiveRemovedImpl) then,
+  ) = __$$TaskEditorEventExecutiveRemovedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int index});
 }
 
 /// @nodoc
 class __$$TaskEditorEventExecutiveRemovedImplCopyWithImpl<$Res>
-    extends _$TaskEditorEventCopyWithImpl<$Res,
-        _$TaskEditorEventExecutiveRemovedImpl>
+    extends
+        _$TaskEditorEventCopyWithImpl<
+          $Res,
+          _$TaskEditorEventExecutiveRemovedImpl
+        >
     implements _$$TaskEditorEventExecutiveRemovedImplCopyWith<$Res> {
   __$$TaskEditorEventExecutiveRemovedImplCopyWithImpl(
-      _$TaskEditorEventExecutiveRemovedImpl _value,
-      $Res Function(_$TaskEditorEventExecutiveRemovedImpl) _then)
-      : super(_value, _then);
+    _$TaskEditorEventExecutiveRemovedImpl _value,
+    $Res Function(_$TaskEditorEventExecutiveRemovedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TaskEditorEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? index = null,
-  }) {
-    return _then(_$TaskEditorEventExecutiveRemovedImpl(
-      null == index
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+  $Res call({Object? index = null}) {
+    return _then(
+      _$TaskEditorEventExecutiveRemovedImpl(
+        null == index
+            ? _value.index
+            : index // ignore: cast_nullable_to_non_nullable
+                as int,
+      ),
+    );
   }
 }
 
@@ -682,9 +714,11 @@ class _$TaskEditorEventExecutiveRemovedImpl
   @override
   @pragma('vm:prefer-inline')
   _$$TaskEditorEventExecutiveRemovedImplCopyWith<
-          _$TaskEditorEventExecutiveRemovedImpl>
-      get copyWith => __$$TaskEditorEventExecutiveRemovedImplCopyWithImpl<
-          _$TaskEditorEventExecutiveRemovedImpl>(this, _$identity);
+    _$TaskEditorEventExecutiveRemovedImpl
+  >
+  get copyWith => __$$TaskEditorEventExecutiveRemovedImplCopyWithImpl<
+    _$TaskEditorEventExecutiveRemovedImpl
+  >(this, _$identity);
 }
 
 abstract class TaskEditorEventExecutiveRemoved implements TaskEditorEvent {
@@ -697,27 +731,28 @@ abstract class TaskEditorEventExecutiveRemoved implements TaskEditorEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TaskEditorEventExecutiveRemovedImplCopyWith<
-          _$TaskEditorEventExecutiveRemovedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+    _$TaskEditorEventExecutiveRemovedImpl
+  >
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$TaskEditorEventSaveRequestedImplCopyWith<$Res> {
   factory _$$TaskEditorEventSaveRequestedImplCopyWith(
-          _$TaskEditorEventSaveRequestedImpl value,
-          $Res Function(_$TaskEditorEventSaveRequestedImpl) then) =
-      __$$TaskEditorEventSaveRequestedImplCopyWithImpl<$Res>;
+    _$TaskEditorEventSaveRequestedImpl value,
+    $Res Function(_$TaskEditorEventSaveRequestedImpl) then,
+  ) = __$$TaskEditorEventSaveRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$TaskEditorEventSaveRequestedImplCopyWithImpl<$Res>
-    extends _$TaskEditorEventCopyWithImpl<$Res,
-        _$TaskEditorEventSaveRequestedImpl>
+    extends
+        _$TaskEditorEventCopyWithImpl<$Res, _$TaskEditorEventSaveRequestedImpl>
     implements _$$TaskEditorEventSaveRequestedImplCopyWith<$Res> {
   __$$TaskEditorEventSaveRequestedImplCopyWithImpl(
-      _$TaskEditorEventSaveRequestedImpl _value,
-      $Res Function(_$TaskEditorEventSaveRequestedImpl) _then)
-      : super(_value, _then);
+    _$TaskEditorEventSaveRequestedImpl _value,
+    $Res Function(_$TaskEditorEventSaveRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TaskEditorEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -753,20 +788,23 @@ abstract class TaskEditorEventSaveRequested implements TaskEditorEvent {
 /// @nodoc
 abstract class _$$TaskEditorEventDeleteRequestedImplCopyWith<$Res> {
   factory _$$TaskEditorEventDeleteRequestedImplCopyWith(
-          _$TaskEditorEventDeleteRequestedImpl value,
-          $Res Function(_$TaskEditorEventDeleteRequestedImpl) then) =
-      __$$TaskEditorEventDeleteRequestedImplCopyWithImpl<$Res>;
+    _$TaskEditorEventDeleteRequestedImpl value,
+    $Res Function(_$TaskEditorEventDeleteRequestedImpl) then,
+  ) = __$$TaskEditorEventDeleteRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$TaskEditorEventDeleteRequestedImplCopyWithImpl<$Res>
-    extends _$TaskEditorEventCopyWithImpl<$Res,
-        _$TaskEditorEventDeleteRequestedImpl>
+    extends
+        _$TaskEditorEventCopyWithImpl<
+          $Res,
+          _$TaskEditorEventDeleteRequestedImpl
+        >
     implements _$$TaskEditorEventDeleteRequestedImplCopyWith<$Res> {
   __$$TaskEditorEventDeleteRequestedImplCopyWithImpl(
-      _$TaskEditorEventDeleteRequestedImpl _value,
-      $Res Function(_$TaskEditorEventDeleteRequestedImpl) _then)
-      : super(_value, _then);
+    _$TaskEditorEventDeleteRequestedImpl _value,
+    $Res Function(_$TaskEditorEventDeleteRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TaskEditorEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -826,24 +864,26 @@ mixin _$TaskEditorState {
 /// @nodoc
 abstract class $TaskEditorStateCopyWith<$Res> {
   factory $TaskEditorStateCopyWith(
-          TaskEditorState value, $Res Function(TaskEditorState) then) =
-      _$TaskEditorStateCopyWithImpl<$Res, TaskEditorState>;
+    TaskEditorState value,
+    $Res Function(TaskEditorState) then,
+  ) = _$TaskEditorStateCopyWithImpl<$Res, TaskEditorState>;
   @useResult
-  $Res call(
-      {bool isNew,
-      int id,
-      Status<String> loadingState,
-      bool isPlanned,
-      bool isRepeated,
-      String text,
-      String? textError,
-      bool isImageRequired,
-      Duration time,
-      DateTime date,
-      int weekdays,
-      List<Profile> executives,
-      OperationStatus<String> uploadState,
-      OperationStatus<String> deleteState});
+  $Res call({
+    bool isNew,
+    int id,
+    Status<String> loadingState,
+    bool isPlanned,
+    bool isRepeated,
+    String text,
+    String? textError,
+    bool isImageRequired,
+    Duration time,
+    DateTime date,
+    int weekdays,
+    List<Profile> executives,
+    OperationStatus<String> uploadState,
+    OperationStatus<String> deleteState,
+  });
 
   $StatusCopyWith<String, $Res> get loadingState;
   $OperationStatusCopyWith<String, $Res> get uploadState;
@@ -880,64 +920,81 @@ class _$TaskEditorStateCopyWithImpl<$Res, $Val extends TaskEditorState>
     Object? uploadState = null,
     Object? deleteState = null,
   }) {
-    return _then(_value.copyWith(
-      isNew: null == isNew
-          ? _value.isNew
-          : isNew // ignore: cast_nullable_to_non_nullable
-              as bool,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      loadingState: null == loadingState
-          ? _value.loadingState
-          : loadingState // ignore: cast_nullable_to_non_nullable
-              as Status<String>,
-      isPlanned: null == isPlanned
-          ? _value.isPlanned
-          : isPlanned // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isRepeated: null == isRepeated
-          ? _value.isRepeated
-          : isRepeated // ignore: cast_nullable_to_non_nullable
-              as bool,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-      textError: freezed == textError
-          ? _value.textError
-          : textError // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isImageRequired: null == isImageRequired
-          ? _value.isImageRequired
-          : isImageRequired // ignore: cast_nullable_to_non_nullable
-              as bool,
-      time: null == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      weekdays: null == weekdays
-          ? _value.weekdays
-          : weekdays // ignore: cast_nullable_to_non_nullable
-              as int,
-      executives: null == executives
-          ? _value.executives
-          : executives // ignore: cast_nullable_to_non_nullable
-              as List<Profile>,
-      uploadState: null == uploadState
-          ? _value.uploadState
-          : uploadState // ignore: cast_nullable_to_non_nullable
-              as OperationStatus<String>,
-      deleteState: null == deleteState
-          ? _value.deleteState
-          : deleteState // ignore: cast_nullable_to_non_nullable
-              as OperationStatus<String>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            isNew:
+                null == isNew
+                    ? _value.isNew
+                    : isNew // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as int,
+            loadingState:
+                null == loadingState
+                    ? _value.loadingState
+                    : loadingState // ignore: cast_nullable_to_non_nullable
+                        as Status<String>,
+            isPlanned:
+                null == isPlanned
+                    ? _value.isPlanned
+                    : isPlanned // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            isRepeated:
+                null == isRepeated
+                    ? _value.isRepeated
+                    : isRepeated // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            text:
+                null == text
+                    ? _value.text
+                    : text // ignore: cast_nullable_to_non_nullable
+                        as String,
+            textError:
+                freezed == textError
+                    ? _value.textError
+                    : textError // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            isImageRequired:
+                null == isImageRequired
+                    ? _value.isImageRequired
+                    : isImageRequired // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            time:
+                null == time
+                    ? _value.time
+                    : time // ignore: cast_nullable_to_non_nullable
+                        as Duration,
+            date:
+                null == date
+                    ? _value.date
+                    : date // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+            weekdays:
+                null == weekdays
+                    ? _value.weekdays
+                    : weekdays // ignore: cast_nullable_to_non_nullable
+                        as int,
+            executives:
+                null == executives
+                    ? _value.executives
+                    : executives // ignore: cast_nullable_to_non_nullable
+                        as List<Profile>,
+            uploadState:
+                null == uploadState
+                    ? _value.uploadState
+                    : uploadState // ignore: cast_nullable_to_non_nullable
+                        as OperationStatus<String>,
+            deleteState:
+                null == deleteState
+                    ? _value.deleteState
+                    : deleteState // ignore: cast_nullable_to_non_nullable
+                        as OperationStatus<String>,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of TaskEditorState
@@ -974,26 +1031,28 @@ class _$TaskEditorStateCopyWithImpl<$Res, $Val extends TaskEditorState>
 /// @nodoc
 abstract class _$$TaskEditorStateImplCopyWith<$Res>
     implements $TaskEditorStateCopyWith<$Res> {
-  factory _$$TaskEditorStateImplCopyWith(_$TaskEditorStateImpl value,
-          $Res Function(_$TaskEditorStateImpl) then) =
-      __$$TaskEditorStateImplCopyWithImpl<$Res>;
+  factory _$$TaskEditorStateImplCopyWith(
+    _$TaskEditorStateImpl value,
+    $Res Function(_$TaskEditorStateImpl) then,
+  ) = __$$TaskEditorStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {bool isNew,
-      int id,
-      Status<String> loadingState,
-      bool isPlanned,
-      bool isRepeated,
-      String text,
-      String? textError,
-      bool isImageRequired,
-      Duration time,
-      DateTime date,
-      int weekdays,
-      List<Profile> executives,
-      OperationStatus<String> uploadState,
-      OperationStatus<String> deleteState});
+  $Res call({
+    bool isNew,
+    int id,
+    Status<String> loadingState,
+    bool isPlanned,
+    bool isRepeated,
+    String text,
+    String? textError,
+    bool isImageRequired,
+    Duration time,
+    DateTime date,
+    int weekdays,
+    List<Profile> executives,
+    OperationStatus<String> uploadState,
+    OperationStatus<String> deleteState,
+  });
 
   @override
   $StatusCopyWith<String, $Res> get loadingState;
@@ -1008,8 +1067,9 @@ class __$$TaskEditorStateImplCopyWithImpl<$Res>
     extends _$TaskEditorStateCopyWithImpl<$Res, _$TaskEditorStateImpl>
     implements _$$TaskEditorStateImplCopyWith<$Res> {
   __$$TaskEditorStateImplCopyWithImpl(
-      _$TaskEditorStateImpl _value, $Res Function(_$TaskEditorStateImpl) _then)
-      : super(_value, _then);
+    _$TaskEditorStateImpl _value,
+    $Res Function(_$TaskEditorStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TaskEditorState
   /// with the given fields replaced by the non-null parameter values.
@@ -1031,86 +1091,102 @@ class __$$TaskEditorStateImplCopyWithImpl<$Res>
     Object? uploadState = null,
     Object? deleteState = null,
   }) {
-    return _then(_$TaskEditorStateImpl(
-      isNew: null == isNew
-          ? _value.isNew
-          : isNew // ignore: cast_nullable_to_non_nullable
-              as bool,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      loadingState: null == loadingState
-          ? _value.loadingState
-          : loadingState // ignore: cast_nullable_to_non_nullable
-              as Status<String>,
-      isPlanned: null == isPlanned
-          ? _value.isPlanned
-          : isPlanned // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isRepeated: null == isRepeated
-          ? _value.isRepeated
-          : isRepeated // ignore: cast_nullable_to_non_nullable
-              as bool,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-      textError: freezed == textError
-          ? _value.textError
-          : textError // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isImageRequired: null == isImageRequired
-          ? _value.isImageRequired
-          : isImageRequired // ignore: cast_nullable_to_non_nullable
-              as bool,
-      time: null == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      weekdays: null == weekdays
-          ? _value.weekdays
-          : weekdays // ignore: cast_nullable_to_non_nullable
-              as int,
-      executives: null == executives
-          ? _value._executives
-          : executives // ignore: cast_nullable_to_non_nullable
-              as List<Profile>,
-      uploadState: null == uploadState
-          ? _value.uploadState
-          : uploadState // ignore: cast_nullable_to_non_nullable
-              as OperationStatus<String>,
-      deleteState: null == deleteState
-          ? _value.deleteState
-          : deleteState // ignore: cast_nullable_to_non_nullable
-              as OperationStatus<String>,
-    ));
+    return _then(
+      _$TaskEditorStateImpl(
+        isNew:
+            null == isNew
+                ? _value.isNew
+                : isNew // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as int,
+        loadingState:
+            null == loadingState
+                ? _value.loadingState
+                : loadingState // ignore: cast_nullable_to_non_nullable
+                    as Status<String>,
+        isPlanned:
+            null == isPlanned
+                ? _value.isPlanned
+                : isPlanned // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        isRepeated:
+            null == isRepeated
+                ? _value.isRepeated
+                : isRepeated // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        text:
+            null == text
+                ? _value.text
+                : text // ignore: cast_nullable_to_non_nullable
+                    as String,
+        textError:
+            freezed == textError
+                ? _value.textError
+                : textError // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        isImageRequired:
+            null == isImageRequired
+                ? _value.isImageRequired
+                : isImageRequired // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        time:
+            null == time
+                ? _value.time
+                : time // ignore: cast_nullable_to_non_nullable
+                    as Duration,
+        date:
+            null == date
+                ? _value.date
+                : date // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+        weekdays:
+            null == weekdays
+                ? _value.weekdays
+                : weekdays // ignore: cast_nullable_to_non_nullable
+                    as int,
+        executives:
+            null == executives
+                ? _value._executives
+                : executives // ignore: cast_nullable_to_non_nullable
+                    as List<Profile>,
+        uploadState:
+            null == uploadState
+                ? _value.uploadState
+                : uploadState // ignore: cast_nullable_to_non_nullable
+                    as OperationStatus<String>,
+        deleteState:
+            null == deleteState
+                ? _value.deleteState
+                : deleteState // ignore: cast_nullable_to_non_nullable
+                    as OperationStatus<String>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$TaskEditorStateImpl implements _TaskEditorState {
-  const _$TaskEditorStateImpl(
-      {required this.isNew,
-      required this.id,
-      required this.loadingState,
-      required this.isPlanned,
-      required this.isRepeated,
-      required this.text,
-      required this.textError,
-      required this.isImageRequired,
-      required this.time,
-      required this.date,
-      required this.weekdays,
-      required final List<Profile> executives,
-      required this.uploadState,
-      required this.deleteState})
-      : _executives = executives;
+  const _$TaskEditorStateImpl({
+    required this.isNew,
+    required this.id,
+    required this.loadingState,
+    required this.isPlanned,
+    required this.isRepeated,
+    required this.text,
+    required this.textError,
+    required this.isImageRequired,
+    required this.time,
+    required this.date,
+    required this.weekdays,
+    required final List<Profile> executives,
+    required this.uploadState,
+    required this.deleteState,
+  }) : _executives = executives;
 
   @override
   final bool isNew;
@@ -1174,8 +1250,10 @@ class _$TaskEditorStateImpl implements _TaskEditorState {
             (identical(other.date, date) || other.date == date) &&
             (identical(other.weekdays, weekdays) ||
                 other.weekdays == weekdays) &&
-            const DeepCollectionEquality()
-                .equals(other._executives, _executives) &&
+            const DeepCollectionEquality().equals(
+              other._executives,
+              _executives,
+            ) &&
             (identical(other.uploadState, uploadState) ||
                 other.uploadState == uploadState) &&
             (identical(other.deleteState, deleteState) ||
@@ -1184,21 +1262,22 @@ class _$TaskEditorStateImpl implements _TaskEditorState {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      isNew,
-      id,
-      loadingState,
-      isPlanned,
-      isRepeated,
-      text,
-      textError,
-      isImageRequired,
-      time,
-      date,
-      weekdays,
-      const DeepCollectionEquality().hash(_executives),
-      uploadState,
-      deleteState);
+    runtimeType,
+    isNew,
+    id,
+    loadingState,
+    isPlanned,
+    isRepeated,
+    text,
+    textError,
+    isImageRequired,
+    time,
+    date,
+    weekdays,
+    const DeepCollectionEquality().hash(_executives),
+    uploadState,
+    deleteState,
+  );
 
   /// Create a copy of TaskEditorState
   /// with the given fields replaced by the non-null parameter values.
@@ -1207,26 +1286,28 @@ class _$TaskEditorStateImpl implements _TaskEditorState {
   @pragma('vm:prefer-inline')
   _$$TaskEditorStateImplCopyWith<_$TaskEditorStateImpl> get copyWith =>
       __$$TaskEditorStateImplCopyWithImpl<_$TaskEditorStateImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _TaskEditorState implements TaskEditorState {
-  const factory _TaskEditorState(
-          {required final bool isNew,
-          required final int id,
-          required final Status<String> loadingState,
-          required final bool isPlanned,
-          required final bool isRepeated,
-          required final String text,
-          required final String? textError,
-          required final bool isImageRequired,
-          required final Duration time,
-          required final DateTime date,
-          required final int weekdays,
-          required final List<Profile> executives,
-          required final OperationStatus<String> uploadState,
-          required final OperationStatus<String> deleteState}) =
-      _$TaskEditorStateImpl;
+  const factory _TaskEditorState({
+    required final bool isNew,
+    required final int id,
+    required final Status<String> loadingState,
+    required final bool isPlanned,
+    required final bool isRepeated,
+    required final String text,
+    required final String? textError,
+    required final bool isImageRequired,
+    required final Duration time,
+    required final DateTime date,
+    required final int weekdays,
+    required final List<Profile> executives,
+    required final OperationStatus<String> uploadState,
+    required final OperationStatus<String> deleteState,
+  }) = _$TaskEditorStateImpl;
 
   @override
   bool get isNew;

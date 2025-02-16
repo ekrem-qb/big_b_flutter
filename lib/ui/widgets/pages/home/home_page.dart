@@ -18,10 +18,7 @@ class HomePage extends StatelessWidget {
         const MoreRoute(),
       ],
       transitionBuilder: (final context, final child, final animation) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
+        return FadeTransition(opacity: animation, child: child);
       },
       builder: (final context, final child) {
         final tabsRouter = context.tabsRouter;
@@ -43,10 +40,26 @@ class HomePage extends StatelessWidget {
                 selectedIndex: tabsRouter.activeIndex,
                 onDestinationSelected: onDestinationSelected,
                 destinations: const [
-                  NavigationDestination(icon: Icon(Icons.home), label: 'Ana Sayfa', tooltip: ''),
-                  NavigationDestination(icon: Icon(Icons.mic), label: 'Kayıtlar', tooltip: ''),
-                  NavigationDestination(icon: Icon(Icons.task_alt), label: 'Görevler', tooltip: ''),
-                  NavigationDestination(icon: Icon(Icons.menu), label: 'Gene', tooltip: ''),
+                  NavigationDestination(
+                    icon: Icon(Icons.home),
+                    label: 'Ana Sayfa',
+                    tooltip: '',
+                  ),
+                  NavigationDestination(
+                    icon: Icon(Icons.mic),
+                    label: 'Kayıtlar',
+                    tooltip: '',
+                  ),
+                  NavigationDestination(
+                    icon: Icon(Icons.task_alt),
+                    label: 'Görevler',
+                    tooltip: '',
+                  ),
+                  NavigationDestination(
+                    icon: Icon(Icons.menu),
+                    label: 'Gene',
+                    tooltip: '',
+                  ),
                 ],
               );
             },
@@ -58,9 +71,7 @@ class HomePage extends StatelessWidget {
 }
 
 class _Body extends StatefulWidget {
-  const _Body({
-    required this.child,
-  });
+  const _Body({required this.child});
 
   final Widget child;
 
@@ -111,7 +122,10 @@ class _BodyState extends State<_Body> with RestorationMixin {
   String? get restorationId => 'home';
 
   @override
-  void restoreState(final RestorationBucket? oldBucket, final bool initialRestore) {
+  void restoreState(
+    final RestorationBucket? oldBucket,
+    final bool initialRestore,
+  ) {
     registerForRestoration(_model, 'home');
   }
 

@@ -31,19 +31,24 @@ class ViolationsBloc extends ListerBloc<Violation> {
   String get idFieldKey => $NormalViolationImplJsonKeys.id;
 
   @override
-  List<Violation>? Function(List<Map<String, dynamic>> data) get converter => Violation.converter;
+  List<Violation>? Function(List<Map<String, dynamic>> data) get converter =>
+      Violation.converter;
 
   @override
-  Violation Function(Map<String, dynamic> json) get fromJson => Violation.fromJson;
+  Violation Function(Map<String, dynamic> json) get fromJson =>
+      Violation.fromJson;
 
   @override
-  bool Function(Violation a, Violation b) get isAfter => (final a, final b) => sortNewFirst ? a.id > b.id : a.id < b.id;
+  bool Function(Violation a, Violation b) get isAfter =>
+      (final a, final b) => sortNewFirst ? a.id > b.id : a.id < b.id;
 
   @override
-  ListerFilters<Violation>? get filters => recordingId != null
-      ? (
-          <T>(final query) => query.eq($NormalViolationImplJsonKeys.record, recordingId!),
-          (final item) => item.record.id == recordingId,
-        )
-      : null;
+  ListerFilters<Violation>? get filters =>
+      recordingId != null
+          ? (
+            <T>(final query) =>
+                query.eq($NormalViolationImplJsonKeys.record, recordingId!),
+            (final item) => item.record.id == recordingId,
+          )
+          : null;
 }

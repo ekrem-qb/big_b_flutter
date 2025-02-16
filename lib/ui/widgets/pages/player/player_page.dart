@@ -38,44 +38,35 @@ class PlayerPage extends StatelessWidget {
   Widget build(final BuildContext context) {
     return BlocProvider(
       key: ValueKey(recordingId),
-      create: (final context) => PlayerBloc(
-        recordingId: recordingId,
-        textLineId: textLineId,
-        recording: recording,
-      ),
+      create:
+          (final context) => PlayerBloc(
+            recordingId: recordingId,
+            textLineId: textLineId,
+            recording: recording,
+          ),
       child: const PlayerView(),
     );
   }
 }
 
 class PlayerView extends StatelessWidget {
-  const PlayerView({
-    super.key,
-  });
+  const PlayerView({super.key});
 
   @override
   Widget build(final BuildContext context) {
     return BlocListener<PlayerBloc, PlayerState>(
-      listenWhen: (final previous, final current) =>
-          switch (previous.audioState) {
-            StatusOfError(
-              :final error,
-            ) =>
-              error,
-            _ => null,
-          } !=
-          switch (current.audioState) {
-            StatusOfError(
-              :final error,
-            ) =>
-              error,
-            _ => null,
-          },
+      listenWhen:
+          (final previous, final current) =>
+              switch (previous.audioState) {
+                StatusOfError(:final error) => error,
+                _ => null,
+              } !=
+              switch (current.audioState) {
+                StatusOfError(:final error) => error,
+                _ => null,
+              },
       listener: (final context, final state) {
-        if (state.audioState
-            case StatusOfError(
-              :final error,
-            )) {
+        if (state.audioState case StatusOfError(:final error)) {
           showSnackbar(text: error, context: context);
         }
       },
@@ -83,11 +74,11 @@ class PlayerView extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           scrolledUnderElevation: 0,
-          systemOverlayStyle: Theme.of(context).brightness == Brightness.light ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light,
-          actions: const [
-            _ViolationsButton(),
-            SizedBox(width: 8),
-          ],
+          systemOverlayStyle:
+              Theme.of(context).brightness == Brightness.light
+                  ? SystemUiOverlayStyle.dark
+                  : SystemUiOverlayStyle.light,
+          actions: const [_ViolationsButton(), SizedBox(width: 8)],
         ),
         extendBodyBehindAppBar: true,
         body: const _Player(),
@@ -101,42 +92,41 @@ class _ViolationsButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      isViolationsProcessed,
-    ) = context.select(
-      (final PlayerBloc bloc) => (
-        bloc,
-        bloc.state.textState is StatusOfData,
-      ),
+    final (bloc, isViolationsProcessed) = context.select(
+      (final PlayerBloc bloc) => (bloc, bloc.state.textState is StatusOfData),
     );
 
     return ElevatedButton.icon(
-      icon: isViolationsProcessed ? const Icon(Icons.report_outlined) : const Icon(Icons.cloud_sync),
-      label: isViolationsProcessed ? const Text('İhlaller') : const Text('İhlaller aranıyor...'),
-      onPressed: isViolationsProcessed
-          ? () {
-              final violations = switch (bloc.state.textState) {
-                StatusOfData(
-                  data: PlayerTextStateTextAndViolations(
-                    violations: StatusOfData(
-                      :final data,
+      icon:
+          isViolationsProcessed
+              ? const Icon(Icons.report_outlined)
+              : const Icon(Icons.cloud_sync),
+      label:
+          isViolationsProcessed
+              ? const Text('İhlaller')
+              : const Text('İhlaller aranıyor...'),
+      onPressed:
+          isViolationsProcessed
+              ? () {
+                final violations = switch (bloc.state.textState) {
+                  StatusOfData(
+                    data: PlayerTextStateTextAndViolations(
+                      violations: StatusOfData(:final data),
                     ),
-                  ),
-                ) =>
-                  data,
-                _ => null,
-              };
+                  ) =>
+                    data,
+                  _ => null,
+                };
 
-              context.pushRoute(
-                ViolationsRoute(
-                  id: bloc.state.recordingId,
-                  violations: violations,
-                  sortNewFirst: true,
-                ),
-              );
-            }
-          : null,
+                context.pushRoute(
+                  ViolationsRoute(
+                    id: bloc.state.recordingId,
+                    violations: violations,
+                    sortNewFirst: true,
+                  ),
+                );
+              }
+              : null,
     );
   }
 }
@@ -146,77 +136,60 @@ class _Player extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      _,
-    ) = context.select(
-      (final PlayerBloc bloc) => (
-        bloc,
-        bloc.state.recordingState.runtimeType,
-      ),
+    final (bloc, _) = context.select(
+      (final PlayerBloc bloc) => (bloc, bloc.state.recordingState.runtimeType),
     );
 
     return switch (bloc.state.recordingState) {
-      StatusOfLoading() => const Center(
-          child: CircularProgressIndicator(),
-        ),
-      StatusOfError(
-        :final error,
-      ) =>
-        ErrorPanel(
-          error: error,
-          onRefresh: () => bloc.add(const PlayerEventLoadRequested()),
-        ),
+      StatusOfLoading() => const Center(child: CircularProgressIndicator()),
+      StatusOfError(:final error) => ErrorPanel(
+        error: error,
+        onRefresh: () => bloc.add(const PlayerEventLoadRequested()),
+      ),
       StatusOfData() => CallbackShortcuts(
-          bindings: {
-            const SingleActivator(LogicalKeyboardKey.arrowUp): () => switch (bloc.state.textState) {
-                  StatusOfData(
-                    data: PlayerTextStateOnlyText(
-                          :final currentTextLine,
-                        ) ||
-                        PlayerTextStateTextAndViolations(
-                          :final currentTextLine,
-                        ),
-                  ) =>
-                    bloc.add(PlayerEventJumpToLineRequested(currentTextLine - 1)),
-                  _ => null,
-                },
-            const SingleActivator(LogicalKeyboardKey.arrowDown): () => switch (bloc.state.textState) {
-                  StatusOfData(
-                    data: PlayerTextStateOnlyText(
-                          :final currentTextLine,
-                        ) ||
-                        PlayerTextStateTextAndViolations(
-                          :final currentTextLine,
-                        ),
-                  ) =>
-                    bloc.add(PlayerEventJumpToLineRequested(currentTextLine + 1)),
-                  _ => null,
-                },
-            const SingleActivator(LogicalKeyboardKey.space, includeRepeats: false): () => bloc.add(const PlayerEventPlayPauseButtonPressed()),
-          },
-          child: const Padding(
-            padding: EdgeInsets.only(bottom: 16),
-            child: Column(
-              children: [
-                _Text(),
-                _Slider(),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _Time(),
-                      _PlayButton(),
-                      _TotalTime(),
-                    ],
-                  ),
+        bindings: {
+          const SingleActivator(LogicalKeyboardKey.arrowUp):
+              () => switch (bloc.state.textState) {
+                StatusOfData(
+                  data: PlayerTextStateOnlyText(:final currentTextLine) ||
+                      PlayerTextStateTextAndViolations(:final currentTextLine),
+                ) =>
+                  bloc.add(PlayerEventJumpToLineRequested(currentTextLine - 1)),
+                _ => null,
+              },
+          const SingleActivator(LogicalKeyboardKey.arrowDown):
+              () => switch (bloc.state.textState) {
+                StatusOfData(
+                  data: PlayerTextStateOnlyText(:final currentTextLine) ||
+                      PlayerTextStateTextAndViolations(:final currentTextLine),
+                ) =>
+                  bloc.add(PlayerEventJumpToLineRequested(currentTextLine + 1)),
+                _ => null,
+              },
+          const SingleActivator(
+                LogicalKeyboardKey.space,
+                includeRepeats: false,
+              ):
+              () => bloc.add(const PlayerEventPlayPauseButtonPressed()),
+        },
+        child: const Padding(
+          padding: EdgeInsets.only(bottom: 16),
+          child: Column(
+            children: [
+              _Text(),
+              _Slider(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [_Time(), _PlayButton(), _TotalTime()],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
+      ),
     };
   }
 }
@@ -250,14 +223,8 @@ class _Text extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      _,
-    ) = context.select(
-      (final PlayerBloc bloc) => (
-        bloc,
-        bloc.state.textState.runtimeType,
-      ),
+    final (bloc, _) = context.select(
+      (final PlayerBloc bloc) => (bloc, bloc.state.textState.runtimeType),
     );
 
     final theme = Theme.of(context);
@@ -268,44 +235,57 @@ class _Text extends StatelessWidget {
         transitionBuilder: fadeTransitionBuilder,
         child: switch (bloc.state.textState) {
           StatusOfLoading() => Shimmer.fromColors(
-              baseColor: Color.lerp(theme.colorScheme.onSurface, theme.colorScheme.surfaceContainerLow, 0.85)!,
-              highlightColor: theme.colorScheme.onSurface,
-              child: ShaderMask(
-                shaderCallback: _gradient.createShader,
-                blendMode: BlendMode.dstIn,
-                child: LayoutBuilder(
-                  builder: (final context, final constraints) {
-                    return ScrollablePositionedList.builder(
-                      itemCount: 100,
-                      padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.5),
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (final context, final index) {
-                        return Align(
-                          alignment: index.isOdd ? Alignment.centerRight : Alignment.centerLeft,
-                          child: Card(
-                            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                              child: Text(
-                                'Hello' * (index + 1),
-                                style: theme.textTheme.bodyLarge,
-                              ),
+            baseColor:
+                Color.lerp(
+                  theme.colorScheme.onSurface,
+                  theme.colorScheme.surfaceContainerLow,
+                  0.85,
+                )!,
+            highlightColor: theme.colorScheme.onSurface,
+            child: ShaderMask(
+              shaderCallback: _gradient.createShader,
+              blendMode: BlendMode.dstIn,
+              child: LayoutBuilder(
+                builder: (final context, final constraints) {
+                  return ScrollablePositionedList.builder(
+                    itemCount: 100,
+                    padding: EdgeInsets.symmetric(
+                      vertical: constraints.maxHeight * 0.5,
+                    ),
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (final context, final index) {
+                      return Align(
+                        alignment:
+                            index.isOdd
+                                ? Alignment.centerRight
+                                : Alignment.centerLeft,
+                        child: Card(
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            child: Text(
+                              'Hello' * (index + 1),
+                              style: theme.textTheme.bodyLarge,
                             ),
                           ),
-                        );
-                      },
-                    );
-                  },
-                ),
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
             ),
-          StatusOfError(
-            :final error,
-          ) =>
-            ErrorPanel(
-              error: error,
-              onRefresh: () => bloc.add(const PlayerEventTextLoadRequested()),
-            ),
+          ),
+          StatusOfError(:final error) => ErrorPanel(
+            error: error,
+            onRefresh: () => bloc.add(const PlayerEventTextLoadRequested()),
+          ),
           StatusOfData() => const _LoadedText(),
         },
       ),
@@ -318,61 +298,55 @@ class _LoadedText extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      _,
-    ) = context.select(
+    final (bloc, _) = context.select(
       (final PlayerBloc bloc) => (
         bloc,
         switch (bloc.state.textState) {
-          StatusOfData(
-            :final data,
-          ) =>
-            data.runtimeType,
+          StatusOfData(:final data) => data.runtimeType,
           _ => null,
         },
       ),
     );
 
     return switch (bloc.state.textState) {
-      StatusOfData(
-        :final data,
-      ) =>
-        switch (data) {
-          PlayerTextStateOnlyText() || PlayerTextStateTextAndViolations() => ShaderMask(
-              shaderCallback: _gradient.createShader,
-              blendMode: BlendMode.dstIn,
-              child: LayoutBuilder(
-                builder: (final context, final constraints) {
-                  return PositionedSmoothMouseScroll(
-                    builder: (final context, final child, final controller, final physics) {
-                      return _TextList(
-                        constraints: constraints,
-                        scrollOffsetController: controller,
-                        physics: physics,
-                      );
-                    },
+      StatusOfData(:final data) => switch (data) {
+        PlayerTextStateOnlyText() ||
+        PlayerTextStateTextAndViolations() => ShaderMask(
+          shaderCallback: _gradient.createShader,
+          blendMode: BlendMode.dstIn,
+          child: LayoutBuilder(
+            builder: (final context, final constraints) {
+              return PositionedSmoothMouseScroll(
+                builder: (
+                  final context,
+                  final child,
+                  final controller,
+                  final physics,
+                ) {
+                  return _TextList(
+                    constraints: constraints,
+                    scrollOffsetController: controller,
+                    physics: physics,
                   );
                 },
+              );
+            },
+          ),
+        ),
+        PlayerTextStateNone() => const Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.cloud_sync_rounded, size: 64),
+              SizedBox(height: 36),
+              Text(
+                'AI is processing audio in cloud',
+                style: TextStyle(fontSize: 24),
               ),
-            ),
-          PlayerTextStateNone() => const Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.cloud_sync_rounded,
-                    size: 64,
-                  ),
-                  SizedBox(height: 36),
-                  Text(
-                    'AI is processing audio in cloud',
-                    style: TextStyle(fontSize: 24),
-                  ),
-                ],
-              ),
-            ),
-        },
+            ],
+          ),
+        ),
+      },
       _ => const SizedBox.shrink(),
     };
   }
@@ -416,14 +390,13 @@ class _TextListState extends State<_TextList> {
 
     final index = switch (bloc.state.textState) {
       StatusOfData(
-        data: PlayerTextStateOnlyText(
-              :final textLines,
-            ) ||
-            PlayerTextStateTextAndViolations(
-              :final textLines,
-            ),
+        data: PlayerTextStateOnlyText(:final textLines) ||
+            PlayerTextStateTextAndViolations(:final textLines),
       ) =>
-        textLines.indexWhere((final textLineWithHighlights) => textLineWithHighlights.id == args.textLineId),
+        textLines.indexWhere(
+          (final textLineWithHighlights) =>
+              textLineWithHighlights.id == args.textLineId,
+        ),
       _ => -1,
     };
 
@@ -440,10 +413,7 @@ class _TextListState extends State<_TextList> {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      count,
-      currentIndex
-    ) = context.select((final PlayerBloc bloc) {
+    final (count, currentIndex) = context.select((final PlayerBloc bloc) {
       return switch (bloc.state.textState) {
         StatusOfData(
           data: PlayerTextStateOnlyText(
@@ -455,55 +425,41 @@ class _TextListState extends State<_TextList> {
                 :final textLines,
               ),
         ) =>
-          (
-            textLines.length,
-            currentTextLine,
-          ),
-        _ => (
-            0,
-            0,
-          ),
+          (textLines.length, currentTextLine),
+        _ => (0, 0),
       };
     });
 
     return BlocListener<PlayerBloc, PlayerState>(
-      listenWhen: (final previous, final current) =>
-          switch (previous.textState) {
-            StatusOfData(
-              data: PlayerTextStateOnlyText(
-                    :final currentTextLine,
-                  ) ||
-                  PlayerTextStateTextAndViolations(
-                    :final currentTextLine,
-                  ),
-            ) =>
-              currentTextLine,
-            _ => null,
-          } !=
-          switch (current.textState) {
-            StatusOfData(
-              data: PlayerTextStateOnlyText(
-                    :final currentTextLine,
-                  ) ||
-                  PlayerTextStateTextAndViolations(
-                    :final currentTextLine,
-                  ),
-            ) =>
-              currentTextLine,
-            _ => null,
-          },
+      listenWhen:
+          (final previous, final current) =>
+              switch (previous.textState) {
+                StatusOfData(
+                  data: PlayerTextStateOnlyText(:final currentTextLine) ||
+                      PlayerTextStateTextAndViolations(:final currentTextLine),
+                ) =>
+                  currentTextLine,
+                _ => null,
+              } !=
+              switch (current.textState) {
+                StatusOfData(
+                  data: PlayerTextStateOnlyText(:final currentTextLine) ||
+                      PlayerTextStateTextAndViolations(:final currentTextLine),
+                ) =>
+                  currentTextLine,
+                _ => null,
+              },
       listener: (final context, final state) async {
-        if (state.textState
-            case StatusOfData(
-              data: PlayerTextStateOnlyText(
-                    :final currentTextLine,
-                    :final textLines,
-                  ) ||
-                  PlayerTextStateTextAndViolations(
-                    :final currentTextLine,
-                    :final textLines,
-                  ),
-            )) {
+        if (state.textState case StatusOfData(
+          data: PlayerTextStateOnlyText(
+                :final currentTextLine,
+                :final textLines,
+              ) ||
+              PlayerTextStateTextAndViolations(
+                :final currentTextLine,
+                :final textLines,
+              ),
+        )) {
           if (_scrollController.isAttached) {
             await _scrollController.scrollTo(
               index: currentTextLine,
@@ -528,7 +484,9 @@ class _TextListState extends State<_TextList> {
         initialAlignment: currentIndex != 0 ? 0.5 : 0,
         physics: widget.physics,
         itemCount: count,
-        padding: EdgeInsets.symmetric(vertical: widget.constraints.maxHeight * 0.5),
+        padding: EdgeInsets.symmetric(
+          vertical: widget.constraints.maxHeight * 0.5,
+        ),
         itemBuilder: _TextLine.new,
       ),
     );
@@ -542,11 +500,9 @@ class _TextLine extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      isCurrent,
-      isEmployee,
-    ) = context.select((final PlayerBloc bloc) {
+    final (bloc, isCurrent, isEmployee) = context.select((
+      final PlayerBloc bloc,
+    ) {
       return switch (bloc.state.textState) {
         StatusOfData(
           data: PlayerTextStateOnlyText(
@@ -563,11 +519,7 @@ class _TextLine extends StatelessWidget {
             currentTextLine == index,
             textLines.elementAtOrNull(index)?.isEmployee ?? false,
           ),
-        _ => (
-            bloc,
-            false,
-            false,
-          ),
+        _ => (bloc, false, false),
       };
     });
 
@@ -606,28 +558,25 @@ class _TextLineContent extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           shape: RoundedRectangleBorder(
             borderRadius: kDefaultRadius,
-            side: isCurrent
-                ? BorderSide(
-                    color: theme.colorScheme.primary,
-                    width: 2,
-                  )
-                : BorderSide.none,
+            side:
+                isCurrent
+                    ? BorderSide(color: theme.colorScheme.primary, width: 2)
+                    : BorderSide.none,
           ),
-          color: isEmployee
-              ? null
-              : Color.lerp(
-                  theme.colorScheme.surfaceContainer,
-                  theme.colorScheme.primaryContainer,
-                  0.5,
-                ),
+          color:
+              isEmployee
+                  ? null
+                  : Color.lerp(
+                    theme.colorScheme.surfaceContainer,
+                    theme.colorScheme.primaryContainer,
+                    0.5,
+                  ),
           child: InkWell(
             borderRadius: kDefaultRadius,
             onTap: onTap,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: _TextLineText(
-                index: index,
-              ),
+              child: _TextLineText(index: index),
             ),
           ),
         ),
@@ -637,9 +586,7 @@ class _TextLineContent extends StatelessWidget {
 }
 
 class _TextLineText extends StatefulWidget {
-  const _TextLineText({
-    required this.index,
-  });
+  const _TextLineText({required this.index});
 
   final int index;
 
@@ -651,32 +598,31 @@ class _TextLineTextState extends State<_TextLineText> {
   final List<GestureRecognizer> _gestureRecognizers = [];
 
   TapGestureRecognizer _createRecognizer({required final Violation violation}) {
-    final tapGestureRecognizer = TapGestureRecognizer()
-      ..onTap = () {
-        final violations = switch (context.read<PlayerBloc>().state.textState) {
-          StatusOfData(
-            data: PlayerTextStateTextAndViolations(
-              violations: StatusOfData(
-                :final data,
+    final tapGestureRecognizer =
+        TapGestureRecognizer()
+          ..onTap = () {
+            final violations = switch (context
+                .read<PlayerBloc>()
+                .state
+                .textState) {
+              StatusOfData(
+                data: PlayerTextStateTextAndViolations(
+                  violations: StatusOfData(:final data),
+                ),
+              ) =>
+                data,
+              _ => null,
+            };
+            context.router.push(
+              ViolationsRoute(
+                id: violation.record.id,
+                violations: violations,
+                children: [
+                  ViolationViewerRoute(id: violation.id, violation: violation),
+                ],
               ),
-            ),
-          ) =>
-            data,
-          _ => null,
-        };
-        context.router.push(
-          ViolationsRoute(
-            id: violation.record.id,
-            violations: violations,
-            children: [
-              ViolationViewerRoute(
-                id: violation.id,
-                violation: violation,
-              ),
-            ],
-          ),
-        );
-      };
+            );
+          };
     _gestureRecognizers.add(tapGestureRecognizer);
     return tapGestureRecognizer;
   }
@@ -693,34 +639,23 @@ class _TextLineTextState extends State<_TextLineText> {
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
 
-    final (
-      textLine,
-      highlights
-    ) = context.select((final PlayerBloc bloc) {
+    final (textLine, highlights) = context.select((final PlayerBloc bloc) {
       return switch (bloc.state.textState) {
-        StatusOfData(
-          data: PlayerTextStateOnlyText(
-            :final textLines,
-          )
-        ) =>
-          (
-            textLines.elementAtOrNull(widget.index),
-            null,
-          ),
+        StatusOfData(data: PlayerTextStateOnlyText(:final textLines)) => (
+          textLines.elementAtOrNull(widget.index),
+          null,
+        ),
         StatusOfData(
           data: PlayerTextStateTextAndViolations(
             :final textLines,
             :final highlights,
-          )
+          ),
         ) =>
           (
             textLines.elementAtOrNull(widget.index),
             highlights.elementAtOrNull(widget.index),
           ),
-        _ => (
-            null,
-            null,
-          ),
+        _ => (null, null),
       };
     });
 
@@ -735,11 +670,17 @@ class _TextLineTextState extends State<_TextLineText> {
       var charIndex = 0;
       for (var j = 0; j < highlights.length; j += 2) {
         if (charIndex < highlights[j].startIndex) {
-          final substring = textLine.text.substring(charIndex, highlights[j].startIndex);
+          final substring = textLine.text.substring(
+            charIndex,
+            highlights[j].startIndex,
+          );
           yield TextSpan(text: substring);
         }
 
-        final substring2 = textLine.text.substring(highlights[j].startIndex, highlights[j].endIndex);
+        final substring2 = textLine.text.substring(
+          highlights[j].startIndex,
+          highlights[j].endIndex,
+        );
 
         yield TextSpan(
           style: highlightedTextStyle(highlights[j].rule.color),
@@ -770,12 +711,7 @@ class _Time extends StatelessWidget {
   Widget build(final BuildContext context) {
     final position = context.select((final PlayerBloc bloc) {
       return switch (bloc.state.audioState) {
-        StatusOfData(
-          data: PlayerAudioState(
-            :final position,
-          ),
-        ) =>
-          position,
+        StatusOfData(data: PlayerAudioState(:final position)) => position,
         _ => null,
       };
     });
@@ -791,12 +727,7 @@ class _TotalTime extends StatelessWidget {
   Widget build(final BuildContext context) {
     final duration = context.select((final PlayerBloc bloc) {
       return switch (bloc.state.audioState) {
-        StatusOfData(
-          data: PlayerAudioState(
-            :final duration,
-          ),
-        ) =>
-          duration,
+        StatusOfData(data: PlayerAudioState(:final duration)) => duration,
         _ => null,
       };
     });
@@ -819,20 +750,16 @@ class _SliderState extends State<_Slider> {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      canPlay,
-      position,
-      duration,
-      isPlaying,
-    ) = context.select((final PlayerBloc bloc) {
+    final (bloc, canPlay, position, duration, isPlaying) = context.select((
+      final PlayerBloc bloc,
+    ) {
       return switch (bloc.state.audioState) {
         StatusOfData(
           data: PlayerAudioState(
             :final position,
             :final duration,
             :final isPlaying,
-          )
+          ),
         ) =>
           (
             bloc,
@@ -841,18 +768,15 @@ class _SliderState extends State<_Slider> {
             duration.inMicroseconds.toDouble(),
             isPlaying,
           ),
-        _ => (
-            bloc,
-            false,
-            0.0,
-            0.0,
-            false,
-          ),
+        _ => (bloc, false, 0.0, 0.0, false),
       };
     });
 
     return TweenAnimationBuilder(
-      tween: Tween<double>(begin: _currentValue, end: !_didJump ? position : _currentValue),
+      tween: Tween<double>(
+        begin: _currentValue,
+        end: !_didJump ? position : _currentValue,
+      ),
       curve: isPlaying ? Curves.linear : animationCurve,
       duration: animationDuration,
       onEnd: () {
@@ -869,20 +793,28 @@ class _SliderState extends State<_Slider> {
         return Slider(
           value: _currentValue,
           max: duration,
-          label: Duration(microseconds: _currentValue.toInt()).toMinutesAndSeconds(),
+          label:
+              Duration(
+                microseconds: _currentValue.toInt(),
+              ).toMinutesAndSeconds(),
           onChangeStart: (final newValue) {
             _isSeeking = true;
           },
-          onChanged: canPlay
-              ? (final newValue) {
-                  setState(() {
-                    _currentValue = newValue;
-                  });
-                }
-              : null,
+          onChanged:
+              canPlay
+                  ? (final newValue) {
+                    setState(() {
+                      _currentValue = newValue;
+                    });
+                  }
+                  : null,
           onChangeEnd: (final newValue) {
             _didJump = true;
-            bloc.add(PlayerEventSeekRequested(Duration(microseconds: newValue.toInt())));
+            bloc.add(
+              PlayerEventSeekRequested(
+                Duration(microseconds: newValue.toInt()),
+              ),
+            );
           },
         );
       },
@@ -895,36 +827,27 @@ class _PlayButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      _,
-    ) = context.select(
-      (final PlayerBloc bloc) => (
-        bloc,
-        bloc.state.audioState.runtimeType,
-      ),
+    final (bloc, _) = context.select(
+      (final PlayerBloc bloc) => (bloc, bloc.state.audioState.runtimeType),
     );
 
     return bloc.state.audioState is! StatusOfLoading
         ? IconButton.filled(
-            visualDensity: const VisualDensity(
-              horizontal: 2,
-              vertical: 2,
-            ),
-            onPressed: bloc.state.audioState is StatusOfData ? () => bloc.add(const PlayerEventPlayPauseButtonPressed()) : null,
-            icon: const _PlayButtonIcon(),
-          )
+          visualDensity: const VisualDensity(horizontal: 2, vertical: 2),
+          onPressed:
+              bloc.state.audioState is StatusOfData
+                  ? () => bloc.add(const PlayerEventPlayPauseButtonPressed())
+                  : null,
+          icon: const _PlayButtonIcon(),
+        )
         : const IconButton.filled(
-            visualDensity: VisualDensity(
-              horizontal: 2,
-              vertical: 2,
-            ),
-            onPressed: null,
-            icon: SizedBox.square(
-              dimension: 24,
-              child: CircularProgressIndicator(),
-            ),
-          );
+          visualDensity: VisualDensity(horizontal: 2, vertical: 2),
+          onPressed: null,
+          icon: SizedBox.square(
+            dimension: 24,
+            child: CircularProgressIndicator(),
+          ),
+        );
   }
 }
 
@@ -935,18 +858,11 @@ class _PlayButtonIcon extends StatelessWidget {
   Widget build(final BuildContext context) {
     final isPlaying = context.select((final PlayerBloc bloc) {
       return switch (bloc.state.audioState) {
-        StatusOfData(
-          data: PlayerAudioState(
-            :final isPlaying,
-          ),
-        ) =>
-          isPlaying,
+        StatusOfData(data: PlayerAudioState(:final isPlaying)) => isPlaying,
         _ => false,
       };
     });
 
-    return Icon(
-      isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
-    );
+    return Icon(isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded);
   }
 }

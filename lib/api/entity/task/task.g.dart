@@ -7,20 +7,20 @@ part of 'task.dart';
 // **************************************************************************
 
 _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
-      id: (json['id'] as num).toInt(),
-      text: json['text'] as String,
-      isDone: json['is_done'] as bool,
-      updatedAt: DateTime.parse(json['updated_at'] as String).toLocal(),
-      deadline: DateTime.parse(json['deadline'] as String).toLocal(),
-      delay: Duration(microseconds: (json['delay'] as num).toInt()),
-      isImageRequired: json['is_image_required'] as bool,
-      imageUrl: json['image_url'] == null
-          ? null
-          : Uri.parse(json['image_url'] as String),
-      executives: (json['executives'] as List<dynamic>)
+  id: (json['id'] as num).toInt(),
+  text: json['text'] as String,
+  isDone: json['is_done'] as bool,
+  updatedAt: DateTime.parse(json['updated_at'] as String).toLocal(),
+  deadline: DateTime.parse(json['deadline'] as String).toLocal(),
+  delay: Duration(microseconds: (json['delay'] as num).toInt()),
+  isImageRequired: json['is_image_required'] as bool,
+  imageUrl:
+      json['image_url'] == null ? null : Uri.parse(json['image_url'] as String),
+  executives:
+      (json['executives'] as List<dynamic>)
           .map((e) => Profile.fromJson(e as Map<String, dynamic>))
           .toList(),
-    );
+);
 
 const _$$TaskImplFieldMap = <String, String>{
   'id': 'id',

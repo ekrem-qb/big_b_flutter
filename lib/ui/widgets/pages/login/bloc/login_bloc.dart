@@ -14,7 +14,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       return switch (event) {
         LoginEventEmailChanged() => _onEmailChanged(event, emit),
         LoginEventPasswordChanged() => _onPasswordChanged(event, emit),
-        LoginEventPasswordVisibilityToggled() => _onPasswordVisibilityToggled(event, emit),
+        LoginEventPasswordVisibilityToggled() => _onPasswordVisibilityToggled(
+          event,
+          emit,
+        ),
         LoginEventLoginRequested() => _onLoginRequested(event, emit),
       };
     });
@@ -24,24 +27,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final LoginEventEmailChanged event,
     final Emitter<LoginState> emit,
   ) {
-    emit(
-      state.copyWith(
-        email: event.email.trim(),
-        emailError: null,
-      ),
-    );
+    emit(state.copyWith(email: event.email.trim(), emailError: null));
   }
 
   void _onPasswordChanged(
     final LoginEventPasswordChanged event,
     final Emitter<LoginState> emit,
   ) {
-    emit(
-      state.copyWith(
-        password: event.password.trim(),
-        passwordError: null,
-      ),
-    );
+    emit(state.copyWith(password: event.password.trim(), passwordError: null));
   }
 
   void _onPasswordVisibilityToggled(
@@ -79,23 +72,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         throw Exception('Beklenmeyen bir hata oluştu');
       }
 
-      emit(
-        state.copyWith(
-          loginStatus: const OperationStatusCompleted(),
-        ),
-      );
+      emit(state.copyWith(loginStatus: const OperationStatusCompleted()));
     } catch (e) {
-      emit(
-        state.copyWith(
-          loginStatus: OperationStatusError(e.toString()),
-        ),
-      );
+      emit(state.copyWith(loginStatus: OperationStatusError(e.toString())));
     } finally {
-      emit(
-        state.copyWith(
-          loginStatus: const OperationStatusInitial(),
-        ),
-      );
+      emit(state.copyWith(loginStatus: const OperationStatusInitial()));
     }
   }
 }

@@ -14,9 +14,7 @@ class RulesPage extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Kurallar'),
-      ),
+      appBar: AppBar(title: const Text('Kurallar')),
       body: const Lister<RulesBloc, Rule>.cards(
         blocCreator: RulesBloc.new,
         itemContentBuilder: RuleTile.new,

@@ -33,9 +33,7 @@ class TaskViewerDialog extends StatelessWidget {
 }
 
 class TaskViewerView extends StatelessWidget {
-  const TaskViewerView({
-    super.key,
-  });
+  const TaskViewerView({super.key});
 
   @override
   Widget build(final BuildContext context) {
@@ -44,9 +42,7 @@ class TaskViewerView extends StatelessWidget {
         switch (state.deleteState) {
           case OperationStatusCompleted():
             Navigator.pop(context);
-          case OperationStatusError(
-              :final error
-            ):
+          case OperationStatusError(:final error):
             showSnackbar(text: error, context: context);
           default:
         }
@@ -61,11 +57,14 @@ class TaskViewerView extends StatelessWidget {
             const SizedBox(width: 8),
             Flexible(
               child: ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxHeight: 140,
-                ),
+                constraints: const BoxConstraints(maxHeight: 140),
                 child: SmoothMouseScroll(
-                  builder: (final context, final child, final controller, final physics) {
+                  builder: (
+                    final context,
+                    final child,
+                    final controller,
+                    final physics,
+                  ) {
                     return SingleChildScrollView(
                       controller: controller,
                       physics: physics,
@@ -78,7 +77,12 @@ class TaskViewerView extends StatelessWidget {
           ],
         ),
         content: SmoothMouseScroll(
-          builder: (final context, final child, final controller, final physics) {
+          builder: (
+            final context,
+            final child,
+            final controller,
+            final physics,
+          ) {
             return SingleChildScrollView(
               controller: controller,
               physics: physics,
@@ -87,10 +91,7 @@ class TaskViewerView extends StatelessWidget {
           },
         ),
         actionsAlignment: MainAxisAlignment.spaceBetween,
-        actions: const [
-          _DeleteButton(),
-          _EditButton(),
-        ],
+        actions: const [_DeleteButton(), _EditButton()],
       ),
     );
   }
@@ -101,34 +102,21 @@ class _Task extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      _,
-    ) = context.select(
-      (final TaskViewerBloc bloc) => (
-        bloc,
-        bloc.state.task.runtimeType,
-      ),
+    final (bloc, _) = context.select(
+      (final TaskViewerBloc bloc) => (bloc, bloc.state.task.runtimeType),
     );
 
     return switch (bloc.state.task) {
       StatusOfData() => const Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _Image(),
-            SizedBox(height: 16),
-            _Time(),
-          ],
-        ),
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [_Image(), SizedBox(height: 16), _Time()],
+      ),
       StatusOfLoading() => const Center(child: CircularProgressIndicator()),
-      StatusOfError(
-        :final error,
-      ) =>
-        ErrorPanel(
-          error: error,
-          onRefresh: () => bloc.add(const TaskViewerEventLoadRequested()),
-        ),
+      StatusOfError(:final error) => ErrorPanel(
+        error: error,
+        onRefresh: () => bloc.add(const TaskViewerEventLoadRequested()),
+      ),
     };
   }
 }
@@ -140,18 +128,12 @@ class _IsDoneIcon extends StatelessWidget {
   Widget build(final BuildContext context) {
     final isDone = context.select((final TaskViewerBloc bloc) {
       return switch (bloc.state.task) {
-        StatusOfData(
-          :final data
-        ) =>
-          data.isDone,
+        StatusOfData(:final data) => data.isDone,
         _ => false,
       };
     });
 
-    return Icon(
-      isDone ? Icons.check_circle : Icons.circle_outlined,
-      size: 32,
-    );
+    return Icon(isDone ? Icons.check_circle : Icons.circle_outlined, size: 32);
   }
 }
 
@@ -162,18 +144,12 @@ class _Text extends StatelessWidget {
   Widget build(final BuildContext context) {
     final text = context.select((final TaskViewerBloc bloc) {
       return switch (bloc.state.task) {
-        StatusOfData(
-          :final data
-        ) =>
-          data.text,
+        StatusOfData(:final data) => data.text,
         _ => '',
       };
     });
 
-    return Text(
-      text,
-      style: const TextStyle(fontWeight: FontWeight.w500),
-    );
+    return Text(text, style: const TextStyle(fontWeight: FontWeight.w500));
   }
 }
 
@@ -184,10 +160,7 @@ class _Image extends StatelessWidget {
   Widget build(final BuildContext context) {
     final imageUrl = context.select((final TaskViewerBloc bloc) {
       return switch (bloc.state.task) {
-        StatusOfData(
-          :final data
-        ) =>
-          data.imageUrl,
+        StatusOfData(:final data) => data.imageUrl,
         _ => null,
       };
     });
@@ -195,52 +168,60 @@ class _Image extends StatelessWidget {
     return imageUrl == null
         ? const SizedBox.shrink()
         : GestureDetector(
-            onTap: () {},
-            child: Material(
-              elevation: 3,
-              clipBehavior: Clip.antiAlias,
-              borderRadius: kDefaultRadius,
-              child: Image.network(
-                imageUrl.toString(),
-                fit: BoxFit.cover,
-                frameBuilder: (final context, final child, final frame, final wasSynchronouslyLoaded) {
-                  final colorScheme = Theme.of(context).colorScheme;
-                  final isLoaded = frame != null;
+          onTap: () {},
+          child: Material(
+            elevation: 3,
+            clipBehavior: Clip.antiAlias,
+            borderRadius: kDefaultRadius,
+            child: Image.network(
+              imageUrl.toString(),
+              fit: BoxFit.cover,
+              frameBuilder: (
+                final context,
+                final child,
+                final frame,
+                final wasSynchronouslyLoaded,
+              ) {
+                final colorScheme = Theme.of(context).colorScheme;
+                final isLoaded = frame != null;
 
-                  return AnimatedSize(
-                    duration: Durations.medium1,
-                    child: Shimmer.fromColors(
-                      baseColor: colorScheme.surfaceContainerLow,
-                      highlightColor: Color.lerp(colorScheme.onSurface, colorScheme.surfaceContainerLow, 0.85)!,
-                      enabled: !isLoaded,
-                      child: isLoaded
-                          ? child
-                          : const ColoredBox(
+                return AnimatedSize(
+                  duration: Durations.medium1,
+                  child: Shimmer.fromColors(
+                    baseColor: colorScheme.surfaceContainerLow,
+                    highlightColor:
+                        Color.lerp(
+                          colorScheme.onSurface,
+                          colorScheme.surfaceContainerLow,
+                          0.85,
+                        )!,
+                    enabled: !isLoaded,
+                    child:
+                        isLoaded
+                            ? child
+                            : const ColoredBox(
                               color: Colors.white,
                               child: AspectRatio(
                                 aspectRatio: kImageAspectRatio,
                               ),
                             ),
+                  ),
+                );
+              },
+              errorBuilder: (final context, final error, final stackTrace) {
+                return const AspectRatio(
+                  aspectRatio: kImageAspectRatio,
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(64),
+                      child: Icon(Icons.image_not_supported, color: Colors.red),
                     ),
-                  );
-                },
-                errorBuilder: (final context, final error, final stackTrace) {
-                  return const AspectRatio(
-                    aspectRatio: kImageAspectRatio,
-                    child: Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(64),
-                        child: Icon(
-                          Icons.image_not_supported,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
-          );
+          ),
+        );
   }
 }
 
@@ -251,10 +232,7 @@ class _Time extends StatelessWidget {
   Widget build(final BuildContext context) {
     final isDone = context.select((final TaskViewerBloc bloc) {
       return switch (bloc.state.task) {
-        StatusOfData(
-          :final data
-        ) =>
-          data.isDone,
+        StatusOfData(:final data) => data.isDone,
         _ => false,
       };
     });
@@ -277,10 +255,7 @@ class _Deadline extends StatelessWidget {
   Widget build(final BuildContext context) {
     final deadline = context.select((final TaskViewerBloc bloc) {
       return switch (bloc.state.task) {
-        StatusOfData(
-          :final data
-        ) =>
-          data.deadline,
+        StatusOfData(:final data) => data.deadline,
         _ => null,
       };
     });
@@ -308,10 +283,7 @@ class _Delay extends StatelessWidget {
   Widget build(final BuildContext context) {
     final delay = context.select((final TaskViewerBloc bloc) {
       return switch (bloc.state.task) {
-        StatusOfData(
-          :final data
-        ) =>
-          data.delay,
+        StatusOfData(:final data) => data.delay,
         _ => null,
       };
     });
@@ -324,9 +296,7 @@ class _Delay extends StatelessWidget {
             color: delay == Duration.zero ? Colors.green : Colors.red,
             width: 4,
           ),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(16),
-          ),
+          borderRadius: const BorderRadius.all(Radius.circular(16)),
           insets: const EdgeInsets.only(bottom: -6),
         ),
         child: Row(
@@ -336,7 +306,9 @@ class _Delay extends StatelessWidget {
             const SizedBox(width: 8),
             Flexible(
               child: Text(
-                delay == Duration.zero ? 'Tam zamanında yapıldı' : '${delay?.abs()} Geç yapıldı',
+                delay == Duration.zero
+                    ? 'Tam zamanında yapıldı'
+                    : '${delay?.abs()} Geç yapıldı',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
@@ -376,18 +348,16 @@ class _EditButton extends StatelessWidget {
     return TextButton.icon(
       icon: const Icon(Icons.edit),
       label: const Text('Düzenle'),
-      onPressed: () => context.pushRoute(
-        TaskEditorRoute(
-          taskId: bloc.state.id,
-          task: switch (bloc.state.task) {
-            StatusOfData(
-              :final data
-            ) =>
-              data,
-            _ => null,
-          },
-        ),
-      ),
+      onPressed:
+          () => context.pushRoute(
+            TaskEditorRoute(
+              taskId: bloc.state.id,
+              task: switch (bloc.state.task) {
+                StatusOfData(:final data) => data,
+                _ => null,
+              },
+            ),
+          ),
     );
   }
 }

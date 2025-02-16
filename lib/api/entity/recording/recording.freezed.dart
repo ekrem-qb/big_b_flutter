@@ -12,7 +12,8 @@ part of 'recording.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 Recording _$RecordingFromJson(Map<String, dynamic> json) {
   return _Recording.fromJson(json);
@@ -39,12 +40,13 @@ abstract class $RecordingCopyWith<$Res> {
   factory $RecordingCopyWith(Recording value, $Res Function(Recording) then) =
       _$RecordingCopyWithImpl<$Res, Recording>;
   @useResult
-  $Res call(
-      {int id,
-      @JsonKey(name: 'url') String audioUrl,
-      Processing processed,
-      DateTime createdAt,
-      Profile employee});
+  $Res call({
+    int id,
+    @JsonKey(name: 'url') String audioUrl,
+    Processing processed,
+    DateTime createdAt,
+    Profile employee,
+  });
 
   $ProfileCopyWith<$Res> get employee;
 }
@@ -70,28 +72,36 @@ class _$RecordingCopyWithImpl<$Res, $Val extends Recording>
     Object? createdAt = null,
     Object? employee = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      audioUrl: null == audioUrl
-          ? _value.audioUrl
-          : audioUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      processed: null == processed
-          ? _value.processed
-          : processed // ignore: cast_nullable_to_non_nullable
-              as Processing,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      employee: null == employee
-          ? _value.employee
-          : employee // ignore: cast_nullable_to_non_nullable
-              as Profile,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as int,
+            audioUrl:
+                null == audioUrl
+                    ? _value.audioUrl
+                    : audioUrl // ignore: cast_nullable_to_non_nullable
+                        as String,
+            processed:
+                null == processed
+                    ? _value.processed
+                    : processed // ignore: cast_nullable_to_non_nullable
+                        as Processing,
+            createdAt:
+                null == createdAt
+                    ? _value.createdAt
+                    : createdAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+            employee:
+                null == employee
+                    ? _value.employee
+                    : employee // ignore: cast_nullable_to_non_nullable
+                        as Profile,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of Recording
@@ -109,16 +119,18 @@ class _$RecordingCopyWithImpl<$Res, $Val extends Recording>
 abstract class _$$RecordingImplCopyWith<$Res>
     implements $RecordingCopyWith<$Res> {
   factory _$$RecordingImplCopyWith(
-          _$RecordingImpl value, $Res Function(_$RecordingImpl) then) =
-      __$$RecordingImplCopyWithImpl<$Res>;
+    _$RecordingImpl value,
+    $Res Function(_$RecordingImpl) then,
+  ) = __$$RecordingImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int id,
-      @JsonKey(name: 'url') String audioUrl,
-      Processing processed,
-      DateTime createdAt,
-      Profile employee});
+  $Res call({
+    int id,
+    @JsonKey(name: 'url') String audioUrl,
+    Processing processed,
+    DateTime createdAt,
+    Profile employee,
+  });
 
   @override
   $ProfileCopyWith<$Res> get employee;
@@ -129,8 +141,9 @@ class __$$RecordingImplCopyWithImpl<$Res>
     extends _$RecordingCopyWithImpl<$Res, _$RecordingImpl>
     implements _$$RecordingImplCopyWith<$Res> {
   __$$RecordingImplCopyWithImpl(
-      _$RecordingImpl _value, $Res Function(_$RecordingImpl) _then)
-      : super(_value, _then);
+    _$RecordingImpl _value,
+    $Res Function(_$RecordingImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Recording
   /// with the given fields replaced by the non-null parameter values.
@@ -143,40 +156,48 @@ class __$$RecordingImplCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? employee = null,
   }) {
-    return _then(_$RecordingImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      audioUrl: null == audioUrl
-          ? _value.audioUrl
-          : audioUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      processed: null == processed
-          ? _value.processed
-          : processed // ignore: cast_nullable_to_non_nullable
-              as Processing,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      employee: null == employee
-          ? _value.employee
-          : employee // ignore: cast_nullable_to_non_nullable
-              as Profile,
-    ));
+    return _then(
+      _$RecordingImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as int,
+        audioUrl:
+            null == audioUrl
+                ? _value.audioUrl
+                : audioUrl // ignore: cast_nullable_to_non_nullable
+                    as String,
+        processed:
+            null == processed
+                ? _value.processed
+                : processed // ignore: cast_nullable_to_non_nullable
+                    as Processing,
+        createdAt:
+            null == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+        employee:
+            null == employee
+                ? _value.employee
+                : employee // ignore: cast_nullable_to_non_nullable
+                    as Profile,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable(createToJson: false)
 class _$RecordingImpl implements _Recording {
-  const _$RecordingImpl(
-      {required this.id,
-      @JsonKey(name: 'url') required this.audioUrl,
-      required this.processed,
-      required this.createdAt,
-      required this.employee});
+  const _$RecordingImpl({
+    required this.id,
+    @JsonKey(name: 'url') required this.audioUrl,
+    required this.processed,
+    required this.createdAt,
+    required this.employee,
+  });
 
   factory _$RecordingImpl.fromJson(Map<String, dynamic> json) =>
       _$$RecordingImplFromJson(json);
@@ -229,12 +250,13 @@ class _$RecordingImpl implements _Recording {
 }
 
 abstract class _Recording implements Recording {
-  const factory _Recording(
-      {required final int id,
-      @JsonKey(name: 'url') required final String audioUrl,
-      required final Processing processed,
-      required final DateTime createdAt,
-      required final Profile employee}) = _$RecordingImpl;
+  const factory _Recording({
+    required final int id,
+    @JsonKey(name: 'url') required final String audioUrl,
+    required final Processing processed,
+    required final DateTime createdAt,
+    required final Profile employee,
+  }) = _$RecordingImpl;
 
   factory _Recording.fromJson(Map<String, dynamic> json) =
       _$RecordingImpl.fromJson;

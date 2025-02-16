@@ -12,7 +12,8 @@ part of 'home_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 HomeState _$HomeStateFromJson(Map<String, dynamic> json) {
   return _HomeState.fromJson(json);
@@ -55,15 +56,17 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? history = null,
-  }) {
-    return _then(_value.copyWith(
-      history: null == history
-          ? _value.history
-          : history // ignore: cast_nullable_to_non_nullable
-              as Uint8List,
-    ) as $Val);
+  $Res call({Object? history = null}) {
+    return _then(
+      _value.copyWith(
+            history:
+                null == history
+                    ? _value.history
+                    : history // ignore: cast_nullable_to_non_nullable
+                        as Uint8List,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -71,8 +74,9 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
 abstract class _$$HomeStateImplCopyWith<$Res>
     implements $HomeStateCopyWith<$Res> {
   factory _$$HomeStateImplCopyWith(
-          _$HomeStateImpl value, $Res Function(_$HomeStateImpl) then) =
-      __$$HomeStateImplCopyWithImpl<$Res>;
+    _$HomeStateImpl value,
+    $Res Function(_$HomeStateImpl) then,
+  ) = __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({@Uint8ListConverter() Uint8List history});
@@ -83,22 +87,24 @@ class __$$HomeStateImplCopyWithImpl<$Res>
     extends _$HomeStateCopyWithImpl<$Res, _$HomeStateImpl>
     implements _$$HomeStateImplCopyWith<$Res> {
   __$$HomeStateImplCopyWithImpl(
-      _$HomeStateImpl _value, $Res Function(_$HomeStateImpl) _then)
-      : super(_value, _then);
+    _$HomeStateImpl _value,
+    $Res Function(_$HomeStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? history = null,
-  }) {
-    return _then(_$HomeStateImpl(
-      history: null == history
-          ? _value.history
-          : history // ignore: cast_nullable_to_non_nullable
-              as Uint8List,
-    ));
+  $Res call({Object? history = null}) {
+    return _then(
+      _$HomeStateImpl(
+        history:
+            null == history
+                ? _value.history
+                : history // ignore: cast_nullable_to_non_nullable
+                    as Uint8List,
+      ),
+    );
   }
 }
 
@@ -142,16 +148,14 @@ class _$HomeStateImpl implements _HomeState {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$HomeStateImplToJson(
-      this,
-    );
+    return _$$HomeStateImplToJson(this);
   }
 }
 
 abstract class _HomeState implements HomeState {
-  const factory _HomeState(
-          {@Uint8ListConverter() required final Uint8List history}) =
-      _$HomeStateImpl;
+  const factory _HomeState({
+    @Uint8ListConverter() required final Uint8List history,
+  }) = _$HomeStateImpl;
 
   factory _HomeState.fromJson(Map<String, dynamic> json) =
       _$HomeStateImpl.fromJson;

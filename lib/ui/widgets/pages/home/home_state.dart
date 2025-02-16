@@ -13,5 +13,6 @@ class HomeState with _$HomeState {
     @Uint8ListConverter() required final Uint8List history,
   }) = _HomeState;
 
-  factory HomeState.fromJson(final Map<String, dynamic> json) => _$HomeStateFromJson(json);
+  factory HomeState.fromJson(final Map<String, dynamic> json) =>
+      _$HomeStateFromJson(json);
 }

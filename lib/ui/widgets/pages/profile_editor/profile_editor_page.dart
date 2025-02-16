@@ -27,7 +27,11 @@ class NewProfileEditorPage extends StatelessWidget {
 
 @RoutePage()
 class ProfileEditorPage extends StatelessWidget {
-  const ProfileEditorPage({@pathParam required this.uid, this.profile, super.key});
+  const ProfileEditorPage({
+    @pathParam required this.uid,
+    this.profile,
+    super.key,
+  });
 
   final String uid;
   final Profile? profile;
@@ -36,35 +40,26 @@ class ProfileEditorPage extends StatelessWidget {
   Widget build(final BuildContext context) {
     return BlocProvider(
       key: ValueKey(uid),
-      create: (final context) => ProfileEditorBloc(
-        uid: uid,
-        originalProfile: profile,
-      ),
+      create:
+          (final context) =>
+              ProfileEditorBloc(uid: uid, originalProfile: profile),
       child: const TaskEditorView(isNew: false),
     );
   }
 }
 
 class TaskEditorView extends StatelessWidget {
-  const TaskEditorView({
-    required this.isNew,
-    super.key,
-  });
+  const TaskEditorView({required this.isNew, super.key});
 
   final bool isNew;
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      _,
-    ) = context.select(
+    final (bloc, _) = context.select(
       (final ProfileEditorBloc bloc) => (
         bloc,
         switch (bloc.state) {
-          ProfileEditorStateEdit(
-            :final loadingState
-          ) =>
+          ProfileEditorStateEdit(:final loadingState) =>
             loadingState.runtimeType,
           _ => null,
         },
@@ -76,22 +71,16 @@ class TaskEditorView extends StatelessWidget {
         switch (state.uploadState) {
           case OperationStatusCompleted():
             Navigator.pop(context);
-          case OperationStatusError(
-              :final error
-            ):
+          case OperationStatusError(:final error):
             showSnackbar(text: error, context: context);
           default:
         }
         switch (state) {
-          case ProfileEditorStateEdit(
-              :final deleteState
-            ):
+          case ProfileEditorStateEdit(:final deleteState):
             switch (deleteState) {
               case OperationStatusCompleted():
                 Navigator.pop(context);
-              case OperationStatusError(
-                  :final error
-                ):
+              case OperationStatusError(:final error):
                 showSnackbar(text: error, context: context);
               default:
             }
@@ -101,33 +90,25 @@ class TaskEditorView extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: isNew ? const Text('Yeni çalışan') : null,
-          actions: [
-            if (!isNew) const _DeleteButton(),
-          ],
+          actions: [if (!isNew) const _DeleteButton()],
         ),
         body: switch (bloc.state) {
-          ProfileEditorStateEdit(
-            :final loadingState,
-          ) =>
-            switch (loadingState) {
-              StatusLoading() => const Center(child: CircularProgressIndicator()),
-              StatusError(
-                :final error
-              ) =>
-                ErrorPanel(
-                  error: error,
-                  onRefresh: () => bloc.add(const ProfileEditorEventLoadRequested()),
-                ),
-              StatusCompleted() => _Body(isNew: isNew),
-            },
+          ProfileEditorStateEdit(:final loadingState) => switch (loadingState) {
+            StatusLoading() => const Center(child: CircularProgressIndicator()),
+            StatusError(:final error) => ErrorPanel(
+              error: error,
+              onRefresh:
+                  () => bloc.add(const ProfileEditorEventLoadRequested()),
+            ),
+            StatusCompleted() => _Body(isNew: isNew),
+          },
           _ => _Body(isNew: isNew),
         },
         bottomNavigationBar: switch (bloc.state) {
           ProfileEditorStateCreate() ||
           ProfileEditorStateEdit(
             loadingState: StatusCompleted(),
-          ) =>
-            const _SaveButton(),
+          ) => const _SaveButton(),
           _ => null,
         },
       ),
@@ -136,9 +117,7 @@ class TaskEditorView extends StatelessWidget {
 }
 
 class _Body extends StatelessWidget {
-  const _Body({
-    required this.isNew,
-  });
+  const _Body({required this.isNew});
 
   final bool isNew;
 
@@ -192,7 +171,10 @@ class _DeleteButton extends StatelessWidget {
     final bloc = context.read<ProfileEditorBloc>();
 
     return ConstrainedBox(
-      constraints: const BoxConstraints.tightFor(width: kToolbarHeight, height: kToolbarHeight),
+      constraints: const BoxConstraints.tightFor(
+        width: kToolbarHeight,
+        height: kToolbarHeight,
+      ),
       child: IconButton(
         icon: const Icon(Icons.delete),
         tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
@@ -211,14 +193,8 @@ class _Name extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      error,
-    ) = context.select(
-      (final ProfileEditorBloc bloc) => (
-        bloc,
-        bloc.state.nameError,
-      ),
+    final (bloc, error) = context.select(
+      (final ProfileEditorBloc bloc) => (bloc, bloc.state.nameError),
     );
 
     final name = bloc.state.name;
@@ -230,7 +206,8 @@ class _Name extends StatelessWidget {
         errorText: error,
       ),
       initialValue: name,
-      onChanged: (final value) => bloc.add(ProfileEditorEventNameChanged(value)),
+      onChanged:
+          (final value) => bloc.add(ProfileEditorEventNameChanged(value)),
     );
   }
 }
@@ -253,43 +230,30 @@ class _LoginState extends State<_Login> {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      error,
-    ) = context.select(
+    final (bloc, error) = context.select(
       (final ProfileEditorBloc bloc) => (
         bloc,
         switch (bloc.state) {
-          ProfileEditorStateCreate(
-            :final loginError
-          ) =>
-            loginError,
+          ProfileEditorStateCreate(:final loginError) => loginError,
           _ => null,
         },
       ),
     );
 
     return BlocListener<ProfileEditorBloc, ProfileEditorState>(
-      listenWhen: (final previous, final current) => switch (previous) {
-        ProfileEditorStateCreate(
-          :final login
-        ) =>
-          login !=
-              switch (current) {
-                ProfileEditorStateCreate(
-                  :final login
-                ) =>
-                  login,
-                _ => '',
-              },
-        _ => false,
-      },
+      listenWhen:
+          (final previous, final current) => switch (previous) {
+            ProfileEditorStateCreate(:final login) =>
+              login !=
+                  switch (current) {
+                    ProfileEditorStateCreate(:final login) => login,
+                    _ => '',
+                  },
+            _ => false,
+          },
       listener: (final context, final state) {
         _controller.text = switch (state) {
-          ProfileEditorStateCreate(
-            :final login
-          ) =>
-            login,
+          ProfileEditorStateCreate(:final login) => login,
           _ => '',
         };
       },
@@ -301,7 +265,8 @@ class _LoginState extends State<_Login> {
         ),
         controller: _controller,
         readOnly: bloc.state is! ProfileEditorStateCreate,
-        onChanged: (final value) => bloc.add(ProfileEditorEventLoginChanged(value)),
+        onChanged:
+            (final value) => bloc.add(ProfileEditorEventLoginChanged(value)),
       ),
     );
   }
@@ -312,34 +277,21 @@ class _Password extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      isPasswordVisible,
-      error,
-    ) = context.select((final ProfileEditorBloc bloc) {
+    final (bloc, isPasswordVisible, error) = context.select((
+      final ProfileEditorBloc bloc,
+    ) {
       return switch (bloc.state) {
         ProfileEditorStateCreate(
           :final isPasswordVisible,
           :final passwordError,
         ) =>
-          (
-            bloc,
-            isPasswordVisible,
-            passwordError,
-          ),
-        _ => (
-            bloc,
-            false,
-            '',
-          ),
+          (bloc, isPasswordVisible, passwordError),
+        _ => (bloc, false, ''),
       };
     });
 
     final password = switch (bloc.state) {
-      ProfileEditorStateCreate(
-        :final password
-      ) =>
-        password,
+      ProfileEditorStateCreate(:final password) => password,
       _ => '',
     };
 
@@ -352,15 +304,21 @@ class _Password extends StatelessWidget {
           suffixIcon: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 6),
             child: IconButton(
-              onPressed: () => bloc.add(const ProfileEditorEventPasswordVisibilityToggled()),
-              icon: Icon(isPasswordVisible ? Icons.visibility : Icons.visibility_off),
+              onPressed:
+                  () => bloc.add(
+                    const ProfileEditorEventPasswordVisibilityToggled(),
+                  ),
+              icon: Icon(
+                isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+              ),
             ),
           ),
           errorText: error,
         ),
         initialValue: password,
         obscureText: !isPasswordVisible,
-        onChanged: (final value) => bloc.add(ProfileEditorEventPasswordChanged(value)),
+        onChanged:
+            (final value) => bloc.add(ProfileEditorEventPasswordChanged(value)),
       ),
     );
   }
@@ -372,11 +330,12 @@ class _Role extends StatelessWidget {
     required this.role,
     required this.icon,
     final bool? isFirst,
-  }) : _borderRadius = isFirst != null
-            ? isFirst
-                ? _firstBorderRadius
-                : _lastBorderRadius
-            : BorderRadius.zero;
+  }) : _borderRadius =
+           isFirst != null
+               ? isFirst
+                   ? _firstBorderRadius
+                   : _lastBorderRadius
+               : BorderRadius.zero;
 
   static const _firstBorderRadius = BorderRadius.only(
     topLeft: Radius.circular(8),
@@ -395,19 +354,16 @@ class _Role extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      currentRole,
-    ) = context.select(
-      (final ProfileEditorBloc bloc) => (
-        bloc,
-        bloc.state.role,
-      ),
+    final (bloc, currentRole) = context.select(
+      (final ProfileEditorBloc bloc) => (bloc, bloc.state.role),
     );
 
     return Expanded(
       child: AnimatedCrossFade(
-        crossFadeState: currentRole == role ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+        crossFadeState:
+            currentRole == role
+                ? CrossFadeState.showFirst
+                : CrossFadeState.showSecond,
         duration: Durations.medium1,
         firstCurve: Curves.easeIn,
         secondCurve: Curves.easeOut,
@@ -421,7 +377,8 @@ class _Role extends StatelessWidget {
         ),
         secondChild: _RoleChip(
           isSelected: false,
-          onSelected: (final _) => bloc.add(ProfileEditorEventRoleChanged(role)),
+          onSelected:
+              (final _) => bloc.add(ProfileEditorEventRoleChanged(role)),
           borderRadius: _borderRadius,
           icon: icon,
           text: text,
@@ -453,9 +410,7 @@ class _RoleChip extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return ChoiceChip.elevated(
-      shape: RoundedRectangleBorder(
-        borderRadius: borderRadius,
-      ),
+      shape: RoundedRectangleBorder(borderRadius: borderRadius),
       visualDensity: const VisualDensity(
         horizontal: VisualDensity.maximumDensity,
         vertical: VisualDensity.maximumDensity,
@@ -469,13 +424,13 @@ class _RoleChip extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: isSelected ? Theme.of(context).colorScheme.onSecondaryContainer : null,
+                color:
+                    isSelected
+                        ? Theme.of(context).colorScheme.onSecondaryContainer
+                        : null,
               ),
               const SizedBox(width: 8),
-              Text(
-                text,
-                textAlign: TextAlign.center,
-              ),
+              Text(text, textAlign: TextAlign.center),
             ],
           ),
         ),
@@ -491,14 +446,8 @@ class _SaveButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      uploadState,
-    ) = context.select(
-      (final ProfileEditorBloc bloc) => (
-        bloc,
-        bloc.state.uploadState,
-      ),
+    final (bloc, uploadState) = context.select(
+      (final ProfileEditorBloc bloc) => (bloc, bloc.state.uploadState),
     );
 
     return SaveButton(

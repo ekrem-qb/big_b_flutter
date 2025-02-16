@@ -12,7 +12,8 @@ part of 'lister_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ListerEvent {}
@@ -20,8 +21,9 @@ mixin _$ListerEvent {}
 /// @nodoc
 abstract class $ListerEventCopyWith<$Res> {
   factory $ListerEventCopyWith(
-          ListerEvent value, $Res Function(ListerEvent) then) =
-      _$ListerEventCopyWithImpl<$Res, ListerEvent>;
+    ListerEvent value,
+    $Res Function(ListerEvent) then,
+  ) = _$ListerEventCopyWithImpl<$Res, ListerEvent>;
 }
 
 /// @nodoc
@@ -41,9 +43,9 @@ class _$ListerEventCopyWithImpl<$Res, $Val extends ListerEvent>
 /// @nodoc
 abstract class _$$ListerEventLoadRequestedImplCopyWith<$Res> {
   factory _$$ListerEventLoadRequestedImplCopyWith(
-          _$ListerEventLoadRequestedImpl value,
-          $Res Function(_$ListerEventLoadRequestedImpl) then) =
-      __$$ListerEventLoadRequestedImplCopyWithImpl<$Res>;
+    _$ListerEventLoadRequestedImpl value,
+    $Res Function(_$ListerEventLoadRequestedImpl) then,
+  ) = __$$ListerEventLoadRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -51,9 +53,9 @@ class __$$ListerEventLoadRequestedImplCopyWithImpl<$Res>
     extends _$ListerEventCopyWithImpl<$Res, _$ListerEventLoadRequestedImpl>
     implements _$$ListerEventLoadRequestedImplCopyWith<$Res> {
   __$$ListerEventLoadRequestedImplCopyWithImpl(
-      _$ListerEventLoadRequestedImpl _value,
-      $Res Function(_$ListerEventLoadRequestedImpl) _then)
-      : super(_value, _then);
+    _$ListerEventLoadRequestedImpl _value,
+    $Res Function(_$ListerEventLoadRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ListerEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -87,9 +89,9 @@ abstract class ListerEventLoadRequested implements ListerEvent {
 /// @nodoc
 abstract class _$$ListerEventLoadAfterRequestedImplCopyWith<$Res> {
   factory _$$ListerEventLoadAfterRequestedImplCopyWith(
-          _$ListerEventLoadAfterRequestedImpl value,
-          $Res Function(_$ListerEventLoadAfterRequestedImpl) then) =
-      __$$ListerEventLoadAfterRequestedImplCopyWithImpl<$Res>;
+    _$ListerEventLoadAfterRequestedImpl value,
+    $Res Function(_$ListerEventLoadAfterRequestedImpl) then,
+  ) = __$$ListerEventLoadAfterRequestedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int index});
 }
@@ -99,23 +101,23 @@ class __$$ListerEventLoadAfterRequestedImplCopyWithImpl<$Res>
     extends _$ListerEventCopyWithImpl<$Res, _$ListerEventLoadAfterRequestedImpl>
     implements _$$ListerEventLoadAfterRequestedImplCopyWith<$Res> {
   __$$ListerEventLoadAfterRequestedImplCopyWithImpl(
-      _$ListerEventLoadAfterRequestedImpl _value,
-      $Res Function(_$ListerEventLoadAfterRequestedImpl) _then)
-      : super(_value, _then);
+    _$ListerEventLoadAfterRequestedImpl _value,
+    $Res Function(_$ListerEventLoadAfterRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ListerEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? index = null,
-  }) {
-    return _then(_$ListerEventLoadAfterRequestedImpl(
-      null == index
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+  $Res call({Object? index = null}) {
+    return _then(
+      _$ListerEventLoadAfterRequestedImpl(
+        null == index
+            ? _value.index
+            : index // ignore: cast_nullable_to_non_nullable
+                as int,
+      ),
+    );
   }
 }
 
@@ -150,9 +152,11 @@ class _$ListerEventLoadAfterRequestedImpl
   @override
   @pragma('vm:prefer-inline')
   _$$ListerEventLoadAfterRequestedImplCopyWith<
-          _$ListerEventLoadAfterRequestedImpl>
-      get copyWith => __$$ListerEventLoadAfterRequestedImplCopyWithImpl<
-          _$ListerEventLoadAfterRequestedImpl>(this, _$identity);
+    _$ListerEventLoadAfterRequestedImpl
+  >
+  get copyWith => __$$ListerEventLoadAfterRequestedImplCopyWithImpl<
+    _$ListerEventLoadAfterRequestedImpl
+  >(this, _$identity);
 }
 
 abstract class ListerEventLoadAfterRequested implements ListerEvent {
@@ -165,16 +169,17 @@ abstract class ListerEventLoadAfterRequested implements ListerEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ListerEventLoadAfterRequestedImplCopyWith<
-          _$ListerEventLoadAfterRequestedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+    _$ListerEventLoadAfterRequestedImpl
+  >
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$ListerEventDataUpdatedImplCopyWith<$Res> {
   factory _$$ListerEventDataUpdatedImplCopyWith(
-          _$ListerEventDataUpdatedImpl value,
-          $Res Function(_$ListerEventDataUpdatedImpl) then) =
-      __$$ListerEventDataUpdatedImplCopyWithImpl<$Res>;
+    _$ListerEventDataUpdatedImpl value,
+    $Res Function(_$ListerEventDataUpdatedImpl) then,
+  ) = __$$ListerEventDataUpdatedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({PostgresChangePayload payload});
 }
@@ -184,23 +189,24 @@ class __$$ListerEventDataUpdatedImplCopyWithImpl<$Res>
     extends _$ListerEventCopyWithImpl<$Res, _$ListerEventDataUpdatedImpl>
     implements _$$ListerEventDataUpdatedImplCopyWith<$Res> {
   __$$ListerEventDataUpdatedImplCopyWithImpl(
-      _$ListerEventDataUpdatedImpl _value,
-      $Res Function(_$ListerEventDataUpdatedImpl) _then)
-      : super(_value, _then);
+    _$ListerEventDataUpdatedImpl _value,
+    $Res Function(_$ListerEventDataUpdatedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ListerEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? payload = null,
-  }) {
-    return _then(_$ListerEventDataUpdatedImpl(
-      payload: null == payload
-          ? _value.payload
-          : payload // ignore: cast_nullable_to_non_nullable
-              as PostgresChangePayload,
-    ));
+  $Res call({Object? payload = null}) {
+    return _then(
+      _$ListerEventDataUpdatedImpl(
+        payload:
+            null == payload
+                ? _value.payload
+                : payload // ignore: cast_nullable_to_non_nullable
+                    as PostgresChangePayload,
+      ),
+    );
   }
 }
 
@@ -234,14 +240,17 @@ class _$ListerEventDataUpdatedImpl implements _ListerEventDataUpdated {
   @override
   @pragma('vm:prefer-inline')
   _$$ListerEventDataUpdatedImplCopyWith<_$ListerEventDataUpdatedImpl>
-      get copyWith => __$$ListerEventDataUpdatedImplCopyWithImpl<
-          _$ListerEventDataUpdatedImpl>(this, _$identity);
+  get copyWith =>
+      __$$ListerEventDataUpdatedImplCopyWithImpl<_$ListerEventDataUpdatedImpl>(
+        this,
+        _$identity,
+      );
 }
 
 abstract class _ListerEventDataUpdated implements ListerEvent {
-  const factory _ListerEventDataUpdated(
-          {required final PostgresChangePayload payload}) =
-      _$ListerEventDataUpdatedImpl;
+  const factory _ListerEventDataUpdated({
+    required final PostgresChangePayload payload,
+  }) = _$ListerEventDataUpdatedImpl;
 
   PostgresChangePayload get payload;
 
@@ -249,7 +258,7 @@ abstract class _ListerEventDataUpdated implements ListerEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ListerEventDataUpdatedImplCopyWith<_$ListerEventDataUpdatedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -267,8 +276,9 @@ mixin _$ListerState<T> {
 /// @nodoc
 abstract class $ListerStateCopyWith<T, $Res> {
   factory $ListerStateCopyWith(
-          ListerState<T> value, $Res Function(ListerState<T>) then) =
-      _$ListerStateCopyWithImpl<T, $Res, ListerState<T>>;
+    ListerState<T> value,
+    $Res Function(ListerState<T>) then,
+  ) = _$ListerStateCopyWithImpl<T, $Res, ListerState<T>>;
   @useResult
   $Res call({int totalCount, List<T> items});
 }
@@ -287,29 +297,32 @@ class _$ListerStateCopyWithImpl<T, $Res, $Val extends ListerState<T>>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? totalCount = null,
-    Object? items = null,
-  }) {
-    return _then(_value.copyWith(
-      totalCount: null == totalCount
-          ? _value.totalCount
-          : totalCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      items: null == items
-          ? _value.items
-          : items // ignore: cast_nullable_to_non_nullable
-              as List<T>,
-    ) as $Val);
+  $Res call({Object? totalCount = null, Object? items = null}) {
+    return _then(
+      _value.copyWith(
+            totalCount:
+                null == totalCount
+                    ? _value.totalCount
+                    : totalCount // ignore: cast_nullable_to_non_nullable
+                        as int,
+            items:
+                null == items
+                    ? _value.items
+                    : items // ignore: cast_nullable_to_non_nullable
+                        as List<T>,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$ListerStateImplCopyWith<T, $Res>
     implements $ListerStateCopyWith<T, $Res> {
-  factory _$$ListerStateImplCopyWith(_$ListerStateImpl<T> value,
-          $Res Function(_$ListerStateImpl<T>) then) =
-      __$$ListerStateImplCopyWithImpl<T, $Res>;
+  factory _$$ListerStateImplCopyWith(
+    _$ListerStateImpl<T> value,
+    $Res Function(_$ListerStateImpl<T>) then,
+  ) = __$$ListerStateImplCopyWithImpl<T, $Res>;
   @override
   @useResult
   $Res call({int totalCount, List<T> items});
@@ -320,36 +333,39 @@ class __$$ListerStateImplCopyWithImpl<T, $Res>
     extends _$ListerStateCopyWithImpl<T, $Res, _$ListerStateImpl<T>>
     implements _$$ListerStateImplCopyWith<T, $Res> {
   __$$ListerStateImplCopyWithImpl(
-      _$ListerStateImpl<T> _value, $Res Function(_$ListerStateImpl<T>) _then)
-      : super(_value, _then);
+    _$ListerStateImpl<T> _value,
+    $Res Function(_$ListerStateImpl<T>) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ListerState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? totalCount = null,
-    Object? items = null,
-  }) {
-    return _then(_$ListerStateImpl<T>(
-      totalCount: null == totalCount
-          ? _value.totalCount
-          : totalCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      items: null == items
-          ? _value._items
-          : items // ignore: cast_nullable_to_non_nullable
-              as List<T>,
-    ));
+  $Res call({Object? totalCount = null, Object? items = null}) {
+    return _then(
+      _$ListerStateImpl<T>(
+        totalCount:
+            null == totalCount
+                ? _value.totalCount
+                : totalCount // ignore: cast_nullable_to_non_nullable
+                    as int,
+        items:
+            null == items
+                ? _value._items
+                : items // ignore: cast_nullable_to_non_nullable
+                    as List<T>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$ListerStateImpl<T> implements _ListerState<T> {
-  const _$ListerStateImpl(
-      {required this.totalCount, required final List<T> items})
-      : _items = items;
+  const _$ListerStateImpl({
+    required this.totalCount,
+    required final List<T> items,
+  }) : _items = items;
 
   @override
   final int totalCount;
@@ -378,7 +394,10 @@ class _$ListerStateImpl<T> implements _ListerState<T> {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, totalCount, const DeepCollectionEquality().hash(_items));
+    runtimeType,
+    totalCount,
+    const DeepCollectionEquality().hash(_items),
+  );
 
   /// Create a copy of ListerState
   /// with the given fields replaced by the non-null parameter values.
@@ -387,13 +406,16 @@ class _$ListerStateImpl<T> implements _ListerState<T> {
   @pragma('vm:prefer-inline')
   _$$ListerStateImplCopyWith<T, _$ListerStateImpl<T>> get copyWith =>
       __$$ListerStateImplCopyWithImpl<T, _$ListerStateImpl<T>>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _ListerState<T> implements ListerState<T> {
-  const factory _ListerState(
-      {required final int totalCount,
-      required final List<T> items}) = _$ListerStateImpl<T>;
+  const factory _ListerState({
+    required final int totalCount,
+    required final List<T> items,
+  }) = _$ListerStateImpl<T>;
 
   @override
   int get totalCount;

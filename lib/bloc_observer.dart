@@ -11,7 +11,11 @@ class AppBlocObserver extends BlocObserver {
   }
 
   @override
-  void onError(final BlocBase<dynamic> bloc, final Object error, final StackTrace stackTrace) {
+  void onError(
+    final BlocBase<dynamic> bloc,
+    final Object error,
+    final StackTrace stackTrace,
+  ) {
     super.onError(bloc, error, stackTrace);
     if (kDebugMode) {
       print('onError: ${bloc.runtimeType} $error $stackTrace');
@@ -19,7 +23,10 @@ class AppBlocObserver extends BlocObserver {
   }
 
   @override
-  void onTransition(final Bloc<dynamic, dynamic> bloc, final Transition<dynamic, dynamic> transition) {
+  void onTransition(
+    final Bloc<dynamic, dynamic> bloc,
+    final Transition<dynamic, dynamic> transition,
+  ) {
     super.onTransition(bloc, transition);
     if (kDebugMode) {
       print('onTransition: ${bloc.runtimeType} $transition');

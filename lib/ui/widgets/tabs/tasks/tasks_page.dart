@@ -18,12 +18,7 @@ class TasksPage extends StatelessWidget {
   Widget build(final BuildContext context) {
     return ChangeNotifierProvider(
       create: (final _) => AppBarController(),
-      child: const Stack(
-        children: [
-          _Scaffold(),
-          DialogRouter(),
-        ],
-      ),
+      child: const Stack(children: [_Scaffold(), DialogRouter()]),
     );
   }
 }
@@ -39,10 +34,7 @@ class _Scaffold extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Görevler'),
         notificationPredicate: appBar.onScroll,
-        actions: const [
-          _PlanningButton(),
-          SizedBox(width: 8),
-        ],
+        actions: const [_PlanningButton(), SizedBox(width: 8)],
       ),
       body: const Lister<TasksBloc, Task>.cards(
         blocCreator: TasksBloc.new,
@@ -60,14 +52,8 @@ class _PlanningButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      appBar,
-      isScrolled,
-    ) = context.select(
-      (final AppBarController appBar) => (
-        appBar,
-        appBar.isScrolled,
-      ),
+    final (appBar, isScrolled) = context.select(
+      (final AppBarController appBar) => (appBar, appBar.isScrolled),
     );
 
     return ElevatedButton.icon(
@@ -103,10 +89,12 @@ class _Item extends StatelessWidget {
   Widget build(final BuildContext context) {
     return task.isDone
         ? InkWell(
-            borderRadius: kDefaultRadius,
-            child: _ItemContent(task),
-            onTap: () => context.router.push(TaskViewerRoute(id: task.id, task: task)),
-          )
+          borderRadius: kDefaultRadius,
+          child: _ItemContent(task),
+          onTap:
+              () =>
+                  context.router.push(TaskViewerRoute(id: task.id, task: task)),
+        )
         : _ItemContent(task);
   }
 }
@@ -121,42 +109,34 @@ class _ItemContent extends StatelessWidget {
     return ListTile(
       mouseCursor: SystemMouseCursors.click,
       enabled: !task.isDone,
-      leading: task.isDone
-          ? const Icon(
-              Icons.check_circle,
-            )
-          : const Icon(
-              Icons.circle_outlined,
-            ),
+      leading:
+          task.isDone
+              ? const Icon(Icons.check_circle)
+              : const Icon(Icons.circle_outlined),
       title: Text(
         task.text,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
-        style: task.isDone
-            ? const TextStyle(
-                decoration: TextDecoration.lineThrough,
-              )
-            : null,
+        style:
+            task.isDone
+                ? const TextStyle(decoration: TextDecoration.lineThrough)
+                : null,
       ),
       subtitle: Row(
         children: [
           if (task.imageUrl != null)
             const Padding(
               padding: EdgeInsets.only(right: 8),
-              child: Icon(
-                Icons.photo,
-                size: 16,
-              ),
+              child: Icon(Icons.photo, size: 16),
             ),
           Padding(
             padding: const EdgeInsets.only(right: 8),
-            child: Text(
-              task.deadline.toString(),
-            ),
+            child: Text(task.deadline.toString()),
           ),
         ],
       ),
-      onTap: () => context.router.push(TaskViewerRoute(id: task.id, task: task)),
+      onTap:
+          () => context.router.push(TaskViewerRoute(id: task.id, task: task)),
     );
   }
 }

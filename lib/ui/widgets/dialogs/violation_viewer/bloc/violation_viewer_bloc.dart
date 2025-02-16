@@ -11,14 +11,18 @@ part 'violation_viewer_bloc.freezed.dart';
 part 'violation_viewer_event.dart';
 part 'violation_viewer_state.dart';
 
-class ViolationViewerBloc extends Bloc<ViolationViewerEvent, ViolationViewerState> {
+class ViolationViewerBloc
+    extends Bloc<ViolationViewerEvent, ViolationViewerState> {
   ViolationViewerBloc(final int id, final Violation? originalViolation)
-      : super(
-          ViolationViewerState(
-            id: id,
-            violation: originalViolation != null ? StatusOfData(originalViolation) : const StatusOfLoading(),
-          ),
-        ) {
+    : super(
+        ViolationViewerState(
+          id: id,
+          violation:
+              originalViolation != null
+                  ? StatusOfData(originalViolation)
+                  : const StatusOfLoading(),
+        ),
+      ) {
     on<ViolationViewerEvent>((final event, final emit) {
       return switch (event) {
         ViolationViewerEventLoadRequested() => _onLoadRequested(event, emit),
@@ -31,22 +35,24 @@ class ViolationViewerBloc extends Bloc<ViolationViewerEvent, ViolationViewerStat
           .onPostgresChanges(
             table: Violation.tableName,
             event: PostgresChangeEvent.all,
-            filter: PostgresChangeFilter(type: PostgresChangeFilterType.eq, column: $NormalViolationImplJsonKeys.id, value: id),
+            filter: PostgresChangeFilter(
+              type: PostgresChangeFilterType.eq,
+              column: $NormalViolationImplJsonKeys.id,
+              value: id,
+            ),
             callback: _reload,
           )
           .subscribe(),
-      ...Violation.joinTables.map(
-        (final joinTable) {
-          return db
-              .channel(generateHash())
-              .onPostgresChanges(
-                table: joinTable.tableName,
-                event: PostgresChangeEvent.update,
-                callback: _reload,
-              )
-              .subscribe();
-        },
-      ),
+      ...Violation.joinTables.map((final joinTable) {
+        return db
+            .channel(generateHash())
+            .onPostgresChanges(
+              table: joinTable.tableName,
+              event: PostgresChangeEvent.update,
+              callback: _reload,
+            )
+            .subscribe();
+      }),
     ];
 
     if (state.violation is StatusOfLoading) {
@@ -60,16 +66,26 @@ class ViolationViewerBloc extends Bloc<ViolationViewerEvent, ViolationViewerStat
     add(const ViolationViewerEventLoadRequested());
   }
 
-  Future<void> _onLoadRequested(final ViolationViewerEvent event, final Emitter<ViolationViewerState> emit) async {
+  Future<void> _onLoadRequested(
+    final ViolationViewerEvent event,
+    final Emitter<ViolationViewerState> emit,
+  ) async {
     try {
       if (state.violation is StatusOfError) {
         emit(state.copyWith(violation: const StatusOfLoading()));
       }
 
-      final violation = await db.from(Violation.tableName).select(Violation.fieldNames).eq($NormalViolationImplJsonKeys.id, state.id).maybeSingle().withConverter(Violation.maybeFromJson);
+      final violation = await db
+          .from(Violation.tableName)
+          .select(Violation.fieldNames)
+          .eq($NormalViolationImplJsonKeys.id, state.id)
+          .maybeSingle()
+          .withConverter(Violation.maybeFromJson);
 
       if (violation == null) {
-        emit(state.copyWith(violation: const StatusOfError('İhlal bulunamadı')));
+        emit(
+          state.copyWith(violation: const StatusOfError('İhlal bulunamadı')),
+        );
         return;
       }
 

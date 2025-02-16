@@ -14,9 +14,7 @@ class ProfilesPage extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Çalışanlar'),
-      ),
+      appBar: AppBar(title: const Text('Çalışanlar')),
       body: const Lister<ProfilesBloc, Profile>.cards(
         blocCreator: ProfilesBloc.new,
         itemContentBuilder: _Item.new,
@@ -48,23 +46,18 @@ class _Item extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return ListTile(
-      title: Text(
-        profile.name,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-      ),
+      title: Text(profile.name, maxLines: 2, overflow: TextOverflow.ellipsis),
       subtitle: Text(
         profile.login,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
       ),
-      trailing: profile.role == Role.manager ? const Icon(Icons.security) : null,
-      onTap: () => context.pushRoute(
-        ProfileEditorRoute(
-          uid: profile.uid,
-          profile: profile,
-        ),
-      ),
+      trailing:
+          profile.role == Role.manager ? const Icon(Icons.security) : null,
+      onTap:
+          () => context.pushRoute(
+            ProfileEditorRoute(uid: profile.uid, profile: profile),
+          ),
     );
   }
 }

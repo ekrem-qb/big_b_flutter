@@ -29,13 +29,12 @@ part 'app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Page|Screen|Dialog,Route')
 class AppRouter extends RootStackRouter {
-  Future<void> onNavigation(final NavigationResolver resolver, final StackRouter router) async {
+  Future<void> onNavigation(
+    final NavigationResolver resolver,
+    final StackRouter router,
+  ) async {
     if (!await isSignedIn()) {
-      await resolver.redirect(
-        LoginRoute(
-          onSignedIn: resolver.next,
-        ),
-      );
+      await resolver.redirect(LoginRoute(onSignedIn: resolver.next));
     } else {
       resolver.next();
     }
@@ -47,7 +46,8 @@ class AppRouter extends RootStackRouter {
       if (session == null) return false;
 
       if (session.isExpired) {
-        final successfullyRefreshed = !((await db.auth.refreshSession()).session?.isExpired ?? true);
+        final successfullyRefreshed =
+            !((await db.auth.refreshSession()).session?.isExpired ?? true);
         return successfullyRefreshed;
       } else {
         return true;
@@ -60,22 +60,14 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes {
     return [
-      CupertinoRoute(
-        path: '/login',
-        page: LoginRoute.page,
-      ),
+      CupertinoRoute(path: '/login', page: LoginRoute.page),
       CupertinoRoute(
         path: '/home',
         page: HomeRoute.page,
         initial: true,
-        guards: [
-          AutoRouteGuard.simple(onNavigation),
-        ],
+        guards: [AutoRouteGuard.simple(onNavigation)],
         children: [
-          RedirectRoute(
-            path: '',
-            redirectTo: 'home',
-          ),
+          RedirectRoute(path: '', redirectTo: 'home'),
           CupertinoRoute(
             path: 'home',
             page: FirstTabRoute.page,
@@ -84,10 +76,7 @@ class AppRouter extends RootStackRouter {
                 path: '',
                 page: ViolationsRoute.page,
                 children: [
-                  DialogRoute(
-                    path: ':id',
-                    page: ViolationViewerRoute.page,
-                  ),
+                  DialogRoute(path: ':id', page: ViolationViewerRoute.page),
                 ],
               ),
             ],
@@ -105,10 +94,7 @@ class AppRouter extends RootStackRouter {
                 path: ':id/violations',
                 page: ViolationsRoute.page,
                 children: [
-                  DialogRoute(
-                    path: ':id',
-                    page: ViolationViewerRoute.page,
-                  ),
+                  DialogRoute(path: ':id', page: ViolationViewerRoute.page),
                 ],
               ),
             ],
@@ -121,24 +107,12 @@ class AppRouter extends RootStackRouter {
                 path: '',
                 page: TasksRoute.page,
                 children: [
-                  DialogRoute(
-                    path: ':id/view',
-                    page: TaskViewerRoute.page,
-                  ),
+                  DialogRoute(path: ':id/view', page: TaskViewerRoute.page),
                 ],
               ),
-              CupertinoRoute(
-                path: 'new',
-                page: NewTaskEditorRoute.page,
-              ),
-              CupertinoRoute(
-                path: ':taskId/edit',
-                page: TaskEditorRoute.page,
-              ),
-              CupertinoRoute(
-                path: 'planned',
-                page: PlannedTasksRoute.page,
-              ),
+              CupertinoRoute(path: 'new', page: NewTaskEditorRoute.page),
+              CupertinoRoute(path: ':taskId/edit', page: TaskEditorRoute.page),
+              CupertinoRoute(path: 'planned', page: PlannedTasksRoute.page),
               CupertinoRoute(
                 path: 'planned/:plannedTaskId',
                 page: PlannedTaskEditorRoute.page,
@@ -150,30 +124,12 @@ class AppRouter extends RootStackRouter {
             page: FourthTabRoute.page,
             children: [
               CupertinoRoute(path: '', page: MoreRoute.page),
-              CupertinoRoute(
-                path: 'profiles',
-                page: ProfilesRoute.page,
-              ),
-              CupertinoRoute(
-                path: ':uid',
-                page: ProfileEditorRoute.page,
-              ),
-              CupertinoRoute(
-                path: 'new',
-                page: NewProfileEditorRoute.page,
-              ),
-              CupertinoRoute(
-                path: 'rules',
-                page: RulesRoute.page,
-              ),
-              CupertinoRoute(
-                path: 'rules/:id',
-                page: RuleEditorRoute.page,
-              ),
-              CupertinoRoute(
-                path: 'rules/new',
-                page: NewRuleEditorRoute.page,
-              ),
+              CupertinoRoute(path: 'profiles', page: ProfilesRoute.page),
+              CupertinoRoute(path: ':uid', page: ProfileEditorRoute.page),
+              CupertinoRoute(path: 'new', page: NewProfileEditorRoute.page),
+              CupertinoRoute(path: 'rules', page: RulesRoute.page),
+              CupertinoRoute(path: 'rules/:id', page: RuleEditorRoute.page),
+              CupertinoRoute(path: 'rules/new', page: NewRuleEditorRoute.page),
             ],
           ),
         ],

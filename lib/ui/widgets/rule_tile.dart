@@ -14,64 +14,44 @@ class RuleTile extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final subtitle = switch (rule) {
-      WordsRule(
-        :final words
-      ) =>
-        words.join(', '),
+      WordsRule(:final words) => words.join(', '),
       NameRule() => '',
-      CustomRule(
-        :final details
-      ) =>
-        details,
+      CustomRule(:final details) => details,
     };
 
     Future<void> onTap() async {
       await context.tabsRouter.navigateAll([
         const MoreRoute(),
         const RulesRoute(),
-        RuleEditorRoute(
-          id: rule.id,
-          rule: rule,
-        ),
+        RuleEditorRoute(id: rule.id, rule: rule),
       ]);
     }
 
     return ListTile(
       shape: RoundedRectangleBorder(
         borderRadius: kDefaultRadius,
-        side: BorderSide(
-          width: 2,
-          color: rule.color,
-        ),
+        side: BorderSide(width: 2, color: rule.color),
       ),
       title: switch (rule) {
         WordsRule() => const RuleTileContent<WordsRule>(),
         NameRule() => const RuleTileContent<NameRule>(),
-        CustomRule(
-          :final description,
-        ) =>
-          Text(
-            description,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
+        CustomRule(:final description) => Text(
+          description,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
       },
-      subtitle: subtitle.isNotEmpty
-          ? Text(
-              subtitle,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            )
-          : null,
+      subtitle:
+          subtitle.isNotEmpty
+              ? Text(subtitle, maxLines: 3, overflow: TextOverflow.ellipsis)
+              : null,
       onTap: onTap,
     );
   }
 }
 
 class RuleTileContent<T extends Rule> extends StatelessWidget {
-  const RuleTileContent({
-    super.key,
-  });
+  const RuleTileContent({super.key});
 
   static String textOf<T extends Rule>() {
     return switch (T) {
@@ -93,9 +73,7 @@ class RuleTileContent<T extends Rule> extends StatelessWidget {
   Widget build(final BuildContext context) {
     return Row(
       children: [
-        Icon(
-          iconOf<T>(),
-        ),
+        Icon(iconOf<T>()),
         const SizedBox(width: 8),
         Flexible(
           child: Text(

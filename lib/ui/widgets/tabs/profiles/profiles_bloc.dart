@@ -22,13 +22,15 @@ class ProfilesBloc extends ListerBloc<Profile> {
   String get idFieldKey => $ProfileImplJsonKeys.uid;
 
   @override
-  List<Profile>? Function(List<Map<String, dynamic>> data) get converter => Profile.converter;
+  List<Profile>? Function(List<Map<String, dynamic>> data) get converter =>
+      Profile.converter;
 
   @override
   Profile Function(Map<String, dynamic> json) get fromJson => Profile.fromJson;
 
   @override
-  bool Function(Profile a, Profile b) get isAfter => (final a, final b) => a.createdAt.isAfter(b.createdAt);
+  bool Function(Profile a, Profile b) get isAfter =>
+      (final a, final b) => a.createdAt.isAfter(b.createdAt);
 
   @override
   ListerFilters<Profile>? get filters => null;

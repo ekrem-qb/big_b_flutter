@@ -4,7 +4,13 @@ import 'package:provider/provider.dart';
 
 import '../../../theme.dart';
 
-typedef ScrollBuilder = Widget Function(BuildContext context, Widget? child, ScrollController controller, ScrollPhysics? physics);
+typedef ScrollBuilder =
+    Widget Function(
+      BuildContext context,
+      Widget? child,
+      ScrollController controller,
+      ScrollPhysics? physics,
+    );
 
 class _Model {
   double offset = 0;
@@ -43,7 +49,8 @@ class SmoothMouseScroll extends StatefulWidget {
 }
 
 class _SmoothMouseScrollState extends State<SmoothMouseScroll> {
-  late final ScrollController controller = widget.controller ?? ScrollController();
+  late final ScrollController controller =
+      widget.controller ?? ScrollController();
 
   @override
   Widget build(final BuildContext context) {
@@ -95,7 +102,8 @@ class _Widget extends StatelessWidget {
           case PointerScrollEvent():
             var milliseconds = scrollAnimationDuration.inMilliseconds;
 
-            model.offset += pointerSignal.scrollDelta.dy * scrollSpeedMultiplier;
+            model.offset +=
+                pointerSignal.scrollDelta.dy * scrollSpeedMultiplier;
 
             if (model.offset > controller.position.maxScrollExtent) {
               model.offset = controller.position.maxScrollExtent;
@@ -120,7 +128,9 @@ class _Widget extends StatelessWidget {
             context,
             child,
             controller,
-            WidgetsBinding.instance.mouseTracker.mouseIsConnected ? const NeverScrollableScrollPhysics() : null,
+            WidgetsBinding.instance.mouseTracker.mouseIsConnected
+                ? const NeverScrollableScrollPhysics()
+                : null,
           );
         },
         child: child,

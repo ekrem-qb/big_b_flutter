@@ -15,7 +15,11 @@ import 'bloc/violation_viewer_bloc.dart';
 
 @RoutePage()
 class ViolationViewerDialog extends StatelessWidget {
-  const ViolationViewerDialog({@pathParam required this.id, this.violation, super.key});
+  const ViolationViewerDialog({
+    @pathParam required this.id,
+    this.violation,
+    super.key,
+  });
 
   final int id;
   final Violation? violation;
@@ -31,9 +35,7 @@ class ViolationViewerDialog extends StatelessWidget {
 }
 
 class ViolationViewerView extends StatelessWidget {
-  const ViolationViewerView({
-    super.key,
-  });
+  const ViolationViewerView({super.key});
 
   @override
   Widget build(final BuildContext context) {
@@ -57,10 +59,7 @@ class _Violation extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      _,
-    ) = context.select(
+    final (bloc, _) = context.select(
       (final ViolationViewerBloc bloc) => (
         bloc,
         bloc.state.violation.runtimeType,
@@ -70,13 +69,10 @@ class _Violation extends StatelessWidget {
     return switch (bloc.state.violation) {
       StatusOfData() => const _ViolationContent(),
       StatusOfLoading() => const Center(child: CircularProgressIndicator()),
-      StatusOfError(
-        :final error,
-      ) =>
-        ErrorPanel(
-          error: error,
-          onRefresh: () => bloc.add(const ViolationViewerEventLoadRequested()),
-        ),
+      StatusOfError(:final error) => ErrorPanel(
+        error: error,
+        onRefresh: () => bloc.add(const ViolationViewerEventLoadRequested()),
+      ),
     };
   }
 }
@@ -86,17 +82,11 @@ class _ViolationContent extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      _,
-    ) = context.select(
+    final (bloc, _) = context.select(
       (final ViolationViewerBloc bloc) => (
         bloc,
         switch (bloc.state.violation) {
-          StatusOfData(
-            :final data,
-          ) =>
-            data.runtimeType,
+          StatusOfData(:final data) => data.runtimeType,
           _ => null,
         },
       ),
@@ -106,21 +96,14 @@ class _ViolationContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'İhlal edilen kural:',
-          style: textTheme.titleMedium,
-        ),
+        Text('İhlal edilen kural:', style: textTheme.titleMedium),
         const SizedBox(height: 8),
         const _Rule(),
-        if (bloc.state.violation
-            case StatusOfData(
-              data: HighlightViolation(),
-            )) ...[
+        if (bloc.state.violation case StatusOfData(
+          data: HighlightViolation(),
+        )) ...[
           const SizedBox(height: 16),
-          Text(
-            'İhlal yapılan yer:',
-            style: textTheme.titleMedium,
-          ),
+          Text('İhlal yapılan yer:', style: textTheme.titleMedium),
           const SizedBox(height: 8),
           const _Text(),
         ],
@@ -136,19 +119,13 @@ class _Rule extends StatelessWidget {
   Widget build(final BuildContext context) {
     final rule = context.select((final ViolationViewerBloc bloc) {
       return switch (bloc.state.violation) {
-        StatusOfData(
-          :final data
-        ) =>
-          data.rule,
+        StatusOfData(:final data) => data.rule,
         _ => null,
       };
     });
 
     return rule != null
-        ? Card(
-            margin: EdgeInsets.zero,
-            child: RuleTile(rule),
-          )
+        ? Card(margin: EdgeInsets.zero, child: RuleTile(rule))
         : const SizedBox.shrink();
   }
 }
@@ -160,10 +137,7 @@ class _Text extends StatelessWidget {
   Widget build(final BuildContext context) {
     final violation = context.select((final ViolationViewerBloc bloc) {
       return switch (bloc.state.violation) {
-        StatusOfData(
-          data: final HighlightViolation violation,
-        ) =>
-          violation,
+        StatusOfData(data: final HighlightViolation violation) => violation,
         _ => null,
       };
     });
@@ -171,51 +145,59 @@ class _Text extends StatelessWidget {
 
     return violation != null
         ? Card(
-            margin: EdgeInsets.zero,
-            child: InkWell(
-              borderRadius: kDefaultRadius,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: violation.line.text.substring(0, violation.startIndex),
+          margin: EdgeInsets.zero,
+          child: InkWell(
+            borderRadius: kDefaultRadius,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: violation.line.text.substring(
+                            0,
+                            violation.startIndex,
                           ),
-                          TextSpan(
-                            text: violation.line.text.substring(violation.startIndex, violation.endIndex),
-                            style: highlightedTextStyle(violation.rule.color),
+                        ),
+                        TextSpan(
+                          text: violation.line.text.substring(
+                            violation.startIndex,
+                            violation.endIndex,
                           ),
-                          TextSpan(
-                            text: violation.line.text.substring(violation.endIndex),
+                          style: highlightedTextStyle(violation.rule.color),
+                        ),
+                        TextSpan(
+                          text: violation.line.text.substring(
+                            violation.endIndex,
                           ),
-                        ],
-                      ),
-                      style: textTheme.bodyLarge,
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 8),
-                    Text(
-                      violation.line.time.toMinutesAndSeconds(),
-                      style: textTheme.labelSmall,
-                    ),
-                  ],
-                ),
-              ),
-              onTap: () {
-                context.tabsRouter.navigateAll([
-                  const RecordingsRoute(),
-                  PlayerRoute(
-                    recordingId: violation.record.id,
-                    recording: violation.record,
-                    textLineId: violation.line.id,
+                    style: textTheme.bodyLarge,
                   ),
-                ]);
-              },
+                  const SizedBox(width: 8),
+                  Text(
+                    violation.line.time.toMinutesAndSeconds(),
+                    style: textTheme.labelSmall,
+                  ),
+                ],
+              ),
             ),
-          )
+            onTap: () {
+              context.tabsRouter.navigateAll([
+                const RecordingsRoute(),
+                PlayerRoute(
+                  recordingId: violation.record.id,
+                  recording: violation.record,
+                  textLineId: violation.line.id,
+                ),
+              ]);
+            },
+          ),
+        )
         : const SizedBox.shrink();
   }
 }

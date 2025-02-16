@@ -14,9 +14,11 @@ import 'bloc/lister_bloc.dart';
 
 typedef ItemBuilder<TItem> = Widget Function(TItem?);
 typedef ItemContentBuilder<TItem> = Widget Function(TItem);
-typedef ListBuilder<TBloc, TItem> = Widget Function(int totalCount, ItemBuilder<TItem> itemBuilder);
+typedef ListBuilder<TBloc, TItem> =
+    Widget Function(int totalCount, ItemBuilder<TItem> itemBuilder);
 
-class Lister<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends StatelessWidget {
+class Lister<TBloc extends ListerBloc<TItem>, TItem extends Entity>
+    extends StatelessWidget {
   const Lister({
     required this.blocCreator,
     required this.listBuilder,
@@ -25,8 +27,8 @@ class Lister<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends Stat
     required this.noItemsIcon,
     required this.noItemsText,
     super.key,
-  })  : itemBuilder = itemBuilder,
-        itemContentBuilder = null;
+  }) : itemBuilder = itemBuilder,
+       itemContentBuilder = null;
 
   const Lister.cards({
     required this.blocCreator,
@@ -34,10 +36,10 @@ class Lister<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends Stat
     required this.noItemsIcon,
     required this.noItemsText,
     super.key,
-  })  : listBuilder = buildCardsList<TBloc, TItem>,
-        itemBuilder = null,
-        itemContentBuilder = itemContentBuilder,
-        loadingShimmer = const ListViewShimmer();
+  }) : listBuilder = buildCardsList<TBloc, TItem>,
+       itemBuilder = null,
+       itemContentBuilder = itemContentBuilder,
+       loadingShimmer = const ListViewShimmer();
 
   final ListBuilder<TBloc, TItem> listBuilder;
   final Widget loadingShimmer;
@@ -47,23 +49,23 @@ class Lister<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends Stat
   final String noItemsText;
   final TBloc Function() blocCreator;
 
-  static Widget Function(TItem?) buildItem<TItem>(final Widget Function(TItem item) itemContentBuilder) {
+  static Widget Function(TItem?) buildItem<TItem>(
+    final Widget Function(TItem item) itemContentBuilder,
+  ) {
     return (final item) {
       return Card(
-        child: item != null
-            ? itemContentBuilder(item)
-            : const ListTile(
-                title: Text(''),
-                subtitle: Text(''),
-              ),
+        child:
+            item != null
+                ? itemContentBuilder(item)
+                : const ListTile(title: Text(''), subtitle: Text('')),
       );
     };
   }
 
-  static Widget buildCardsList<TBloc extends ListerBloc<TItem>, TItem extends Entity>(
-    final int totalCount,
-    final ItemBuilder<TItem> itemBuilder,
-  ) {
+  static Widget buildCardsList<
+    TBloc extends ListerBloc<TItem>,
+    TItem extends Entity
+  >(final int totalCount, final ItemBuilder<TItem> itemBuilder) {
     return SmoothMouseScroll(
       builder: (final context, final child, final controller, final physics) {
         return ListView.builder(
@@ -71,11 +73,7 @@ class Lister<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends Stat
           physics: physics,
           itemCount: totalCount,
           itemBuilder: (final context, final index) {
-            return _Item<TBloc, TItem>(
-              context,
-              index,
-              itemBuilder,
-            );
+            return _Item<TBloc, TItem>(context, index, itemBuilder);
           },
         );
       },
@@ -97,7 +95,8 @@ class Lister<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends Stat
   }
 }
 
-class _ItemsList<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends StatelessWidget {
+class _ItemsList<TBloc extends ListerBloc<TItem>, TItem extends Entity>
+    extends StatelessWidget {
   const _ItemsList(
     this.listBuilder,
     this.loadingShimmer,
@@ -114,14 +113,8 @@ class _ItemsList<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends 
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      _,
-    ) = context.select(
-      (final TBloc bloc) => (
-        bloc,
-        bloc.state.runtimeType,
-      ),
+    final (bloc, _) = context.select(
+      (final TBloc bloc) => (bloc, bloc.state.runtimeType),
     );
 
     return AnimatedSwitcher(
@@ -130,24 +123,22 @@ class _ItemsList<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends 
       child: switch (bloc.state) {
         StatusOfLoading() => loadingShimmer,
         StatusOfData() => _ItemsListContent<TBloc, TItem>(
-            listBuilder,
-            itemBuilder,
-            noItemsIcon,
-            noItemsText,
-          ),
-        StatusOfError(
-          :final error
-        ) =>
-          ErrorPanel(
-            error: error,
-            onRefresh: () => bloc.add(const ListerEventLoadRequested()),
-          ),
+          listBuilder,
+          itemBuilder,
+          noItemsIcon,
+          noItemsText,
+        ),
+        StatusOfError(:final error) => ErrorPanel(
+          error: error,
+          onRefresh: () => bloc.add(const ListerEventLoadRequested()),
+        ),
       },
     );
   }
 }
 
-class _ItemsListContent<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends StatelessWidget {
+class _ItemsListContent<TBloc extends ListerBloc<TItem>, TItem extends Entity>
+    extends StatelessWidget {
   const _ItemsListContent(
     this.listBuilder,
     this.itemBuilder,
@@ -164,32 +155,24 @@ class _ItemsListContent<TBloc extends ListerBloc<TItem>, TItem extends Entity> e
   Widget build(final BuildContext context) {
     final count = context.select((final TBloc bloc) {
       return switch (bloc.state) {
-        StatusOfData(
-          :final data,
-        ) =>
-          data.totalCount,
+        StatusOfData(:final data) => data.totalCount,
         _ => 0,
       };
     });
 
     return count == 0
         ? Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  noItemsIcon,
-                  size: 64,
-                ),
-                Text(noItemsText),
-              ],
-            ),
-          )
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [Icon(noItemsIcon, size: 64), Text(noItemsText)],
+          ),
+        )
         : listBuilder(count, itemBuilder);
   }
 }
 
-class _Item<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends StatelessWidget {
+class _Item<TBloc extends ListerBloc<TItem>, TItem extends Entity>
+    extends StatelessWidget {
   const _Item(final BuildContext _, this.index, this.itemBuilder);
 
   final int index;
@@ -197,25 +180,14 @@ class _Item<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends State
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      exists,
-      isLoaded,
-    ) = context.select((final TBloc bloc) {
+    final (bloc, exists, isLoaded) = context.select((final TBloc bloc) {
       return switch (bloc.state) {
-        StatusOfData(
-          :final data,
-        ) =>
-          (
-            bloc,
-            data.totalCount > index,
-            data.items.length > index,
-          ),
-        _ => (
-            bloc,
-            false,
-            false,
-          ),
+        StatusOfData(:final data) => (
+          bloc,
+          data.totalCount > index,
+          data.items.length > index,
+        ),
+        _ => (bloc, false, false),
       };
     });
     final colorScheme = Theme.of(context).colorScheme;
@@ -226,16 +198,22 @@ class _Item<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends State
 
     return exists
         ? Shimmer.fromColors(
-            baseColor: colorScheme.surfaceContainerLow,
-            highlightColor: Color.lerp(colorScheme.onSurface, colorScheme.surfaceContainerLow, 0.85)!,
-            enabled: !isLoaded,
-            child: _ItemContent<TBloc, TItem>(index, itemBuilder),
-          )
+          baseColor: colorScheme.surfaceContainerLow,
+          highlightColor:
+              Color.lerp(
+                colorScheme.onSurface,
+                colorScheme.surfaceContainerLow,
+                0.85,
+              )!,
+          enabled: !isLoaded,
+          child: _ItemContent<TBloc, TItem>(index, itemBuilder),
+        )
         : const SizedBox.shrink();
   }
 }
 
-class _ItemContent<TBloc extends ListerBloc<TItem>, TItem extends Entity> extends StatelessWidget {
+class _ItemContent<TBloc extends ListerBloc<TItem>, TItem extends Entity>
+    extends StatelessWidget {
   const _ItemContent(this.index, this.itemBuilder);
 
   final int index;
@@ -245,10 +223,7 @@ class _ItemContent<TBloc extends ListerBloc<TItem>, TItem extends Entity> extend
   Widget build(final BuildContext context) {
     final item = context.select((final TBloc bloc) {
       return switch (bloc.state) {
-        StatusOfData(
-          :final data,
-        ) =>
-          data.items.elementAtOrNull(index),
+        StatusOfData(:final data) => data.items.elementAtOrNull(index),
         _ => null,
       };
     });

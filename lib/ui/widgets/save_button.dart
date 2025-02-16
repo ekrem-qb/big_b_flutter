@@ -19,19 +19,20 @@ class SaveButton extends StatelessWidget {
       child: AnimatedSwitcher(
         duration: Durations.long2,
         transitionBuilder: fadeTransitionBuilder,
-        child: isLoading
-            ? const LinearProgressIndicator(
-                minHeight: 56,
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-              )
-            : FractionallySizedBox(
-                widthFactor: 1,
-                child: FloatingActionButton.extended(
-                  icon: const Icon(Icons.save),
-                  label: const Text('Kaydet'),
-                  onPressed: onPressed,
+        child:
+            isLoading
+                ? const LinearProgressIndicator(
+                  minHeight: 56,
+                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                )
+                : FractionallySizedBox(
+                  widthFactor: 1,
+                  child: FloatingActionButton.extended(
+                    icon: const Icon(Icons.save),
+                    label: const Text('Kaydet'),
+                    onPressed: onPressed,
+                  ),
                 ),
-              ),
       ),
     );
   }

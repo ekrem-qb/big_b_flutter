@@ -14,12 +14,15 @@ part 'task_viewer_state.dart';
 
 class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
   TaskViewerBloc(final int id, final Task? originalTask)
-      : super(
-          TaskViewerState(
-            id: id,
-            task: originalTask != null ? StatusOfData(originalTask) : const StatusOfLoading(),
-          ),
-        ) {
+    : super(
+        TaskViewerState(
+          id: id,
+          task:
+              originalTask != null
+                  ? StatusOfData(originalTask)
+                  : const StatusOfLoading(),
+        ),
+      ) {
     on<TaskViewerEvent>((final event, final emit) {
       return switch (event) {
         TaskViewerEventLoadRequested() => _onLoadRequested(event, emit),
@@ -33,7 +36,11 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
           .onPostgresChanges(
             table: Task.tableName,
             event: PostgresChangeEvent.all,
-            filter: PostgresChangeFilter(type: PostgresChangeFilterType.eq, column: $TaskImplJsonKeys.id, value: id),
+            filter: PostgresChangeFilter(
+              type: PostgresChangeFilterType.eq,
+              column: $TaskImplJsonKeys.id,
+              value: id,
+            ),
             callback: (final _) => add(const TaskViewerEventLoadRequested()),
           )
           .subscribe(),
@@ -42,7 +49,11 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
           .onPostgresChanges(
             table: Task.executivesTableName,
             event: PostgresChangeEvent.all,
-            filter: PostgresChangeFilter(type: PostgresChangeFilterType.eq, column: $TaskImplJsonKeys.id, value: id),
+            filter: PostgresChangeFilter(
+              type: PostgresChangeFilterType.eq,
+              column: $TaskImplJsonKeys.id,
+              value: id,
+            ),
             callback: (final _) => add(const TaskViewerEventLoadRequested()),
           )
           .subscribe(),
@@ -63,13 +74,21 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
 
   List<RealtimeChannel>? _dbSubscriptions;
 
-  Future<void> _onLoadRequested(final TaskViewerEvent event, final Emitter<TaskViewerState> emit) async {
+  Future<void> _onLoadRequested(
+    final TaskViewerEvent event,
+    final Emitter<TaskViewerState> emit,
+  ) async {
     try {
       if (state.task is StatusOfError) {
         emit(state.copyWith(task: const StatusOfLoading()));
       }
 
-      final task = await db.from(Task.tableName).select(Task.fieldNames).eq($TaskImplJsonKeys.id, state.id).maybeSingle().withConverter(Task.maybeFromJson);
+      final task = await db
+          .from(Task.tableName)
+          .select(Task.fieldNames)
+          .eq($TaskImplJsonKeys.id, state.id)
+          .maybeSingle()
+          .withConverter(Task.maybeFromJson);
 
       if (task == null) {
         emit(state.copyWith(task: const StatusOfError('Görev bulunamadı')));
@@ -82,27 +101,18 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
     }
   }
 
-  Future<void> _onDeleteRequested(final TaskViewerEventDeleteRequested event, final Emitter<TaskViewerState> emit) async {
-    emit(
-      state.copyWith(
-        deleteState: const OperationStatusInProgress(),
-      ),
-    );
+  Future<void> _onDeleteRequested(
+    final TaskViewerEventDeleteRequested event,
+    final Emitter<TaskViewerState> emit,
+  ) async {
+    emit(state.copyWith(deleteState: const OperationStatusInProgress()));
 
     try {
       await db.from(Task.tableName).delete().eq($TaskImplJsonKeys.id, state.id);
 
-      emit(
-        state.copyWith(
-          deleteState: const OperationStatusCompleted(),
-        ),
-      );
+      emit(state.copyWith(deleteState: const OperationStatusCompleted()));
     } catch (e) {
-      emit(
-        state.copyWith(
-          deleteState: OperationStatusError(e.toString()),
-        ),
-      );
+      emit(state.copyWith(deleteState: OperationStatusError(e.toString())));
     }
   }
 

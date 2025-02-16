@@ -21,28 +21,47 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
     final PlannedTask? originalPlannedTask,
     final Task? originalTask,
   }) : super(
-          TaskEditorState(
-            isNew: plannedTaskId == null && taskId == null,
-            id: plannedTaskId ?? taskId ?? -1,
-            loadingState: (originalPlannedTask == null && plannedTaskId != null) || (originalTask == null && taskId != null) ? const StatusLoading() : const StatusCompleted(),
-            isPlanned: plannedTaskId != null,
-            isRepeated: (originalPlannedTask?.weekdays ?? 0) > 0,
-            text: originalPlannedTask?.text ?? originalTask?.text ?? '',
-            textError: null,
-            time: originalPlannedTask?.deadline.toTime() ?? originalTask?.deadline.toTime() ?? DateTime.now().toTime(),
-            date: originalPlannedTask?.deadline ?? originalTask?.deadline ?? DateTime.now(),
-            isImageRequired: originalPlannedTask?.isImageRequired ?? originalTask?.isImageRequired ?? false,
-            weekdays: originalPlannedTask?.weekdays ?? 0,
-            executives: originalPlannedTask?.executives.toList() ?? originalTask?.executives.toList() ?? [],
-            uploadState: const OperationStatusInitial(),
-            deleteState: const OperationStatusInitial(),
-          ),
-        ) {
+         TaskEditorState(
+           isNew: plannedTaskId == null && taskId == null,
+           id: plannedTaskId ?? taskId ?? -1,
+           loadingState:
+               (originalPlannedTask == null && plannedTaskId != null) ||
+                       (originalTask == null && taskId != null)
+                   ? const StatusLoading()
+                   : const StatusCompleted(),
+           isPlanned: plannedTaskId != null,
+           isRepeated: (originalPlannedTask?.weekdays ?? 0) > 0,
+           text: originalPlannedTask?.text ?? originalTask?.text ?? '',
+           textError: null,
+           time:
+               originalPlannedTask?.deadline.toTime() ??
+               originalTask?.deadline.toTime() ??
+               DateTime.now().toTime(),
+           date:
+               originalPlannedTask?.deadline ??
+               originalTask?.deadline ??
+               DateTime.now(),
+           isImageRequired:
+               originalPlannedTask?.isImageRequired ??
+               originalTask?.isImageRequired ??
+               false,
+           weekdays: originalPlannedTask?.weekdays ?? 0,
+           executives:
+               originalPlannedTask?.executives.toList() ??
+               originalTask?.executives.toList() ??
+               [],
+           uploadState: const OperationStatusInitial(),
+           deleteState: const OperationStatusInitial(),
+         ),
+       ) {
     on<TaskEditorEvent>((final event, final emit) async {
       return switch (event) {
         TaskEditorEventLoadRequested() => _onLoadRequested(event, emit),
         TaskEditorEventTextChanged() => _onTextChanged(event, emit),
-        TaskEditorEventIsImageRequiredChanged() => _onIsImageRequiredToggled(event, emit),
+        TaskEditorEventIsImageRequiredChanged() => _onIsImageRequiredToggled(
+          event,
+          emit,
+        ),
         TaskEditorEventTimeChanged() => _onTimeChanged(event, emit),
         TaskEditorEventDateChanged() => _onDateChanged(event, emit),
         TaskEditorEventWeekdayToggled() => _onWeekdayToggled(event, emit),
@@ -58,18 +77,22 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
     }
   }
 
-  Future<void> _onLoadRequested(final TaskEditorEventLoadRequested event, final Emitter<TaskEditorState> emit) async {
+  Future<void> _onLoadRequested(
+    final TaskEditorEventLoadRequested event,
+    final Emitter<TaskEditorState> emit,
+  ) async {
     if (state.isNew) return;
 
-    emit(
-      state.copyWith(
-        loadingState: const StatusLoading(),
-      ),
-    );
+    emit(state.copyWith(loadingState: const StatusLoading()));
 
     try {
       if (state.isPlanned) {
-        final plannedTask = await db.from(PlannedTask.tableName).select(PlannedTask.fieldNames).eq($PlannedTaskImplJsonKeys.id, state.id).single().withConverter(PlannedTask.fromJson);
+        final plannedTask = await db
+            .from(PlannedTask.tableName)
+            .select(PlannedTask.fieldNames)
+            .eq($PlannedTaskImplJsonKeys.id, state.id)
+            .single()
+            .withConverter(PlannedTask.fromJson);
 
         emit(
           state.copyWith(
@@ -84,7 +107,12 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
           ),
         );
       } else {
-        final task = await db.from(Task.tableName).select(Task.fieldNames).eq($TaskImplJsonKeys.id, state.id).single().withConverter(Task.fromJson);
+        final task = await db
+            .from(Task.tableName)
+            .select(Task.fieldNames)
+            .eq($TaskImplJsonKeys.id, state.id)
+            .single()
+            .withConverter(Task.fromJson);
 
         emit(
           state.copyWith(
@@ -101,72 +129,65 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
         );
       }
     } catch (e) {
-      emit(
-        state.copyWith(
-          loadingState: StatusError(e.toString()),
-        ),
-      );
+      emit(state.copyWith(loadingState: StatusError(e.toString())));
     }
   }
 
-  Future<void> _onTextChanged(final TaskEditorEventTextChanged event, final Emitter<TaskEditorState> emit) async {
-    emit(
-      state.copyWith(
-        text: event.text,
-        textError: null,
-      ),
-    );
+  Future<void> _onTextChanged(
+    final TaskEditorEventTextChanged event,
+    final Emitter<TaskEditorState> emit,
+  ) async {
+    emit(state.copyWith(text: event.text, textError: null));
   }
 
-  Future<void> _onIsImageRequiredToggled(final TaskEditorEventIsImageRequiredChanged event, final Emitter<TaskEditorState> emit) async {
-    emit(
-      state.copyWith(
-        isImageRequired: event.value,
-      ),
-    );
+  Future<void> _onIsImageRequiredToggled(
+    final TaskEditorEventIsImageRequiredChanged event,
+    final Emitter<TaskEditorState> emit,
+  ) async {
+    emit(state.copyWith(isImageRequired: event.value));
   }
 
-  Future<void> _onTimeChanged(final TaskEditorEventTimeChanged event, final Emitter<TaskEditorState> emit) async {
-    emit(
-      state.copyWith(
-        time: event.time,
-      ),
-    );
+  Future<void> _onTimeChanged(
+    final TaskEditorEventTimeChanged event,
+    final Emitter<TaskEditorState> emit,
+  ) async {
+    emit(state.copyWith(time: event.time));
   }
 
-  Future<void> _onDateChanged(final TaskEditorEventDateChanged event, final Emitter<TaskEditorState> emit) async {
-    emit(
-      state.copyWith(
-        date: event.date,
-      ),
-    );
+  Future<void> _onDateChanged(
+    final TaskEditorEventDateChanged event,
+    final Emitter<TaskEditorState> emit,
+  ) async {
+    emit(state.copyWith(date: event.date));
   }
 
-  Future<void> _onWeekdayToggled(final TaskEditorEventWeekdayToggled event, final Emitter<TaskEditorState> emit) async {
+  Future<void> _onWeekdayToggled(
+    final TaskEditorEventWeekdayToggled event,
+    final Emitter<TaskEditorState> emit,
+  ) async {
     if (isWeekdaySelected(event.day, state.weekdays) == event.value) return;
 
-    final weekdays = event.value ? state.weekdays | 1 << event.day : state.weekdays & ~(1 << event.day);
+    final weekdays =
+        event.value
+            ? state.weekdays | 1 << event.day
+            : state.weekdays & ~(1 << event.day);
 
+    emit(state.copyWith(weekdays: weekdays, isRepeated: weekdays > 0));
+  }
+
+  Future<void> _onExecutivesAdded(
+    final TaskEditorEventExecutivesAdded event,
+    final Emitter<TaskEditorState> emit,
+  ) async {
     emit(
-      state.copyWith(
-        weekdays: weekdays,
-        isRepeated: weekdays > 0,
-      ),
+      state.copyWith(executives: [...state.executives, ...event.executives]),
     );
   }
 
-  Future<void> _onExecutivesAdded(final TaskEditorEventExecutivesAdded event, final Emitter<TaskEditorState> emit) async {
-    emit(
-      state.copyWith(
-        executives: [
-          ...state.executives,
-          ...event.executives,
-        ],
-      ),
-    );
-  }
-
-  Future<void> _onExecutiveRemoved(final TaskEditorEventExecutiveRemoved event, final Emitter<TaskEditorState> emit) async {
+  Future<void> _onExecutiveRemoved(
+    final TaskEditorEventExecutiveRemoved event,
+    final Emitter<TaskEditorState> emit,
+  ) async {
     emit(
       state.copyWith(
         executives: [
@@ -177,7 +198,10 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
     );
   }
 
-  Future<void> _onSaveRequested(final TaskEditorEventSaveRequested event, final Emitter<TaskEditorState> emit) async {
+  Future<void> _onSaveRequested(
+    final TaskEditorEventSaveRequested event,
+    final Emitter<TaskEditorState> emit,
+  ) async {
     final trimmedText = state.text.trim();
     final isEmpty = trimmedText.isEmpty;
 
@@ -190,24 +214,12 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
 
     if (isEmpty) return;
 
-    emit(
-      state.copyWith(
-        uploadState: const OperationStatusInProgress(),
-      ),
-    );
+    emit(state.copyWith(uploadState: const OperationStatusInProgress()));
 
     if (await _upload(emit: emit)) {
-      emit(
-        state.copyWith(
-          uploadState: const OperationStatusCompleted(),
-        ),
-      );
+      emit(state.copyWith(uploadState: const OperationStatusCompleted()));
     } else {
-      emit(
-        state.copyWith(
-          uploadState: const OperationStatusInitial(),
-        ),
-      );
+      emit(state.copyWith(uploadState: const OperationStatusInitial()));
     }
   }
 
@@ -244,19 +256,35 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
         final int? id;
 
         if (state.isNew) {
-          final addedPlannedTasks = await db.from(PlannedTask.tableName).insert(plannedTask.toJson()).select(PlannedTask.fieldNames).withConverter(PlannedTask.converter);
+          final addedPlannedTasks = await db
+              .from(PlannedTask.tableName)
+              .insert(plannedTask.toJson())
+              .select(PlannedTask.fieldNames)
+              .withConverter(PlannedTask.converter);
 
           id = addedPlannedTasks?.firstOrNull?.id;
           if (id == null) return false;
         } else {
           id = state.id;
 
-          await db.from(PlannedTask.tableName).update(plannedTask.toJson()).eq($PlannedTaskImplJsonKeys.id, plannedTask.id);
+          await db
+              .from(PlannedTask.tableName)
+              .update(plannedTask.toJson())
+              .eq($PlannedTaskImplJsonKeys.id, plannedTask.id);
 
-          await db.from(PlannedTask.executivesTableName).delete().eq($ProfileJoinImplJsonKeys.id, plannedTask.id);
+          await db
+              .from(PlannedTask.executivesTableName)
+              .delete()
+              .eq($ProfileJoinImplJsonKeys.id, plannedTask.id);
         }
 
-        final executivesJoins = state.executives.map((final Profile profile) => ProfileJoin(id: id!, profile: profile.uid).toJson()).toList();
+        final executivesJoins =
+            state.executives
+                .map(
+                  (final Profile profile) =>
+                      ProfileJoin(id: id!, profile: profile.uid).toJson(),
+                )
+                .toList();
 
         await db.from(PlannedTask.executivesTableName).upsert(executivesJoins);
 
@@ -273,11 +301,7 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
       return true;
     } catch (e) {
       emit(
-        currentState.copyWith(
-          uploadState: OperationStatusError(
-            e.toString(),
-          ),
-        ),
+        currentState.copyWith(uploadState: OperationStatusError(e.toString())),
       );
       return false;
     }
@@ -287,46 +311,56 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
     final int? id;
 
     if (state.isNew) {
-      final addedTasks = await db.from(Task.tableName).insert(task.toJson()).select(Task.fieldNames).withConverter(Task.converter);
+      final addedTasks = await db
+          .from(Task.tableName)
+          .insert(task.toJson())
+          .select(Task.fieldNames)
+          .withConverter(Task.converter);
 
       id = addedTasks?.firstOrNull?.id;
       if (id == null) return false;
     } else {
-      await db.from(Task.tableName).update(task.toJson()).eq($TaskImplJsonKeys.id, task.id);
+      await db
+          .from(Task.tableName)
+          .update(task.toJson())
+          .eq($TaskImplJsonKeys.id, task.id);
 
-      await db.from(Task.executivesTableName).delete().eq($ProfileJoinImplJsonKeys.id, task.id);
+      await db
+          .from(Task.executivesTableName)
+          .delete()
+          .eq($ProfileJoinImplJsonKeys.id, task.id);
 
       id = state.id;
     }
 
-    final newExecutives = state.executives.map((final Profile profile) => ProfileJoin(id: id!, profile: profile.uid).toJson()).toList();
+    final newExecutives =
+        state.executives
+            .map(
+              (final Profile profile) =>
+                  ProfileJoin(id: id!, profile: profile.uid).toJson(),
+            )
+            .toList();
 
     await db.from(Task.executivesTableName).upsert(newExecutives);
 
     return true;
   }
 
-  Future<void> _onDeleteRequested(final TaskEditorEventDeleteRequested event, final Emitter<TaskEditorState> emit) async {
-    emit(
-      state.copyWith(
-        deleteState: const OperationStatusInProgress(),
-      ),
-    );
+  Future<void> _onDeleteRequested(
+    final TaskEditorEventDeleteRequested event,
+    final Emitter<TaskEditorState> emit,
+  ) async {
+    emit(state.copyWith(deleteState: const OperationStatusInProgress()));
 
     try {
-      await db.from(state.isPlanned ? PlannedTask.tableName : Task.tableName).delete().eq($TaskImplJsonKeys.id, state.id);
+      await db
+          .from(state.isPlanned ? PlannedTask.tableName : Task.tableName)
+          .delete()
+          .eq($TaskImplJsonKeys.id, state.id);
 
-      emit(
-        state.copyWith(
-          deleteState: const OperationStatusCompleted(),
-        ),
-      );
+      emit(state.copyWith(deleteState: const OperationStatusCompleted()));
     } catch (e) {
-      emit(
-        state.copyWith(
-          deleteState: OperationStatusError(e.toString()),
-        ),
-      );
+      emit(state.copyWith(deleteState: OperationStatusError(e.toString())));
     }
   }
 }

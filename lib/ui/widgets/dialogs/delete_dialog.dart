@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Future<bool> showDeleteDialog({required final String itemName, required final BuildContext context}) async {
+Future<bool> showDeleteDialog({
+  required final String itemName,
+  required final BuildContext context,
+}) async {
   return await showCupertinoDialog<bool?>(
         context: context,
         barrierDismissible: true,

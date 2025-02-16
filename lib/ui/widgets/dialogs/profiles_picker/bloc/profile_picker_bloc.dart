@@ -10,7 +10,8 @@ part 'profile_picker_event.dart';
 part 'profile_picker_state.dart';
 
 class ProfilePickerBloc extends Bloc<ProfilePickerEvent, ProfilePickerState> {
-  ProfilePickerBloc({required final List<Profile> excluded}) : super(ProfilePickerState(excluded: excluded)) {
+  ProfilePickerBloc({required final List<Profile> excluded})
+    : super(ProfilePickerState(excluded: excluded)) {
     on<ProfilePickerEvent>((final event, final emit) async {
       return switch (event) {
         ProfilePickerEventLoadRequested() => onLoadRequested(event, emit),
@@ -24,14 +25,23 @@ class ProfilePickerBloc extends Bloc<ProfilePickerEvent, ProfilePickerState> {
     }
   }
 
-  Future<void> onLoadRequested(final ProfilePickerEventLoadRequested event, final Emitter<ProfilePickerState> emit) async {
+  Future<void> onLoadRequested(
+    final ProfilePickerEventLoadRequested event,
+    final Emitter<ProfilePickerState> emit,
+  ) async {
     try {
       final List<Profile> all;
 
       if (state.excluded.isEmpty) {
-        all = await db.from(Profile.tableName).select(Profile.fieldNames).withConverter(Profile.converter) ?? const [];
+        all =
+            await db
+                .from(Profile.tableName)
+                .select(Profile.fieldNames)
+                .withConverter(Profile.converter) ??
+            const [];
       } else {
-        all = await db
+        all =
+            await db
                 .from(Profile.tableName)
                 .select(Profile.fieldNames)
                 .not(
@@ -49,32 +59,29 @@ class ProfilePickerBloc extends Bloc<ProfilePickerEvent, ProfilePickerState> {
     }
   }
 
-  Future<void> onSelected(final ProfilePickerEventSelected event, final Emitter<ProfilePickerState> emit) async {
+  Future<void> onSelected(
+    final ProfilePickerEventSelected event,
+    final Emitter<ProfilePickerState> emit,
+  ) async {
     switch (state.all) {
-      case StatusOfData(
-          :final data,
-        ):
-        emit(
-          state.copyWith(
-            selected: [
-              ...state.selected,
-              data[event.index],
-            ],
-          ),
-        );
+      case StatusOfData(:final data):
+        emit(state.copyWith(selected: [...state.selected, data[event.index]]));
       default:
     }
   }
 
-  Future<void> onDeselected(final ProfilePickerEventDeselected event, final Emitter<ProfilePickerState> emit) async {
+  Future<void> onDeselected(
+    final ProfilePickerEventDeselected event,
+    final Emitter<ProfilePickerState> emit,
+  ) async {
     switch (state.all) {
-      case StatusOfData(
-          :final data,
-        ):
+      case StatusOfData(:final data):
         emit(
           state.copyWith(
             selected: [
-              ...state.selected.where((final profile) => profile.uid != data[event.index].uid),
+              ...state.selected.where(
+                (final profile) => profile.uid != data[event.index].uid,
+              ),
             ],
           ),
         );

@@ -24,29 +24,32 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     final int? textLineId,
     final Recording? recording,
   }) : super(
-          PlayerState(
-            recordingId: recordingId,
-            currentTextLineId: textLineId,
-            recordingState: recording == null ? const StatusOfLoading() : StatusOfData(recording),
-          ),
-        ) {
-    on<PlayerEvent>(
-      (final event, final emit) async {
-        return switch (event) {
-          PlayerEventLoadRequested() => _onRecordingLoadRequested(event, emit),
-          PlayerEventAudioLoadRequested() => _onAudioLoadRequested(event, emit),
-          PlayerEventTextLoadRequested() => _onTextLoadRequested(event, emit),
-          _PlayerEventDurationChanged() => _onDurationChanged(event, emit),
-          _PlayerEventPlayingChanged() => _onPlayingChanged(event, emit),
-          _PlayerEventError() => _onError(event, emit),
-          _PlayerEventPositionChanged() => _onPositionChanged(event, emit),
-          PlayerEventJumpToLineRequested() => _onJumpedToLine(event, emit),
-          PlayerEventSeekRequested() => _onSeekRequested(event, emit),
-          PlayerEventPlayPauseButtonPressed() => _onPlayPauseButtonPressed(event, emit),
-        };
-      },
-      transformer: concurrent(),
-    );
+         PlayerState(
+           recordingId: recordingId,
+           currentTextLineId: textLineId,
+           recordingState:
+               recording == null
+                   ? const StatusOfLoading()
+                   : StatusOfData(recording),
+         ),
+       ) {
+    on<PlayerEvent>((final event, final emit) async {
+      return switch (event) {
+        PlayerEventLoadRequested() => _onRecordingLoadRequested(event, emit),
+        PlayerEventAudioLoadRequested() => _onAudioLoadRequested(event, emit),
+        PlayerEventTextLoadRequested() => _onTextLoadRequested(event, emit),
+        _PlayerEventDurationChanged() => _onDurationChanged(event, emit),
+        _PlayerEventPlayingChanged() => _onPlayingChanged(event, emit),
+        _PlayerEventError() => _onError(event, emit),
+        _PlayerEventPositionChanged() => _onPositionChanged(event, emit),
+        PlayerEventJumpToLineRequested() => _onJumpedToLine(event, emit),
+        PlayerEventSeekRequested() => _onSeekRequested(event, emit),
+        PlayerEventPlayPauseButtonPressed() => _onPlayPauseButtonPressed(
+          event,
+          emit,
+        ),
+      };
+    }, transformer: concurrent());
 
     _playerSubscriptions = [
       _player.stream.duration.listen(_onPlayerDurationChanged),
@@ -86,24 +89,18 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     if (newPosition == null) return;
 
     switch (state.audioState) {
-      case StatusOfData(
-          :final data,
-        ):
+      case StatusOfData(:final data):
         if (newPosition > data.duration) return;
 
         add(_PlayerEventPositionChanged(position: newPosition));
 
-        if (state.textState
-            case StatusOfData(
-              data: PlayerTextStateOnlyText(
-                    :final textLines,
-                  ) ||
-                  PlayerTextStateTextAndViolations(
-                    :final textLines,
-                  ),
-            )) {
+        if (state.textState case StatusOfData(
+          data: PlayerTextStateOnlyText(:final textLines) ||
+              PlayerTextStateTextAndViolations(:final textLines),
+        )) {
           for (var i = textLines.length - 1; i >= 0; i--) {
-            if (newPosition.inMilliseconds >= textLines[i].time.inMilliseconds) {
+            if (newPosition.inMilliseconds >=
+                textLines[i].time.inMilliseconds) {
               add(PlayerEventJumpToLineRequested(i, seekPlayer: false));
               return;
             }
@@ -124,9 +121,17 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     add(_PlayerEventError(error: error));
   }
 
-  Future<void> _onRecordingLoadRequested(final PlayerEventLoadRequested event, final Emitter<PlayerState> emit) async {
+  Future<void> _onRecordingLoadRequested(
+    final PlayerEventLoadRequested event,
+    final Emitter<PlayerState> emit,
+  ) async {
     try {
-      final recording = await db.from(Recording.tableName).select(Recording.fieldNames).eq($RecordingImplJsonKeys.id, state.recordingId).single().withConverter(Recording.fromJson);
+      final recording = await db
+          .from(Recording.tableName)
+          .select(Recording.fieldNames)
+          .eq($RecordingImplJsonKeys.id, state.recordingId)
+          .single()
+          .withConverter(Recording.fromJson);
       emit(state.copyWith(recordingState: StatusOfData(recording)));
       add(const PlayerEventAudioLoadRequested());
       add(const PlayerEventTextLoadRequested());
@@ -135,11 +140,12 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     }
   }
 
-  Future<void> _onAudioLoadRequested(final PlayerEventAudioLoadRequested event, final Emitter<PlayerState> emit) async {
+  Future<void> _onAudioLoadRequested(
+    final PlayerEventAudioLoadRequested event,
+    final Emitter<PlayerState> emit,
+  ) async {
     switch (state.recordingState) {
-      case StatusOfData(
-          :final data,
-        ):
+      case StatusOfData(:final data):
         try {
           emit(state.copyWith(audioState: const StatusOfLoading()));
 
@@ -165,9 +171,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
           emit(
             state.copyWith(
               audioState: StatusOfData(
-                PlayerAudioState(
-                  duration: _player.state.duration,
-                ),
+                PlayerAudioState(duration: _player.state.duration),
               ),
             ),
           );
@@ -178,33 +182,47 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     }
   }
 
-  Future<void> _onTextLoadRequested(final PlayerEventTextLoadRequested event, final Emitter<PlayerState> emit) async {
+  Future<void> _onTextLoadRequested(
+    final PlayerEventTextLoadRequested event,
+    final Emitter<PlayerState> emit,
+  ) async {
     switch (state.recordingState) {
-      case StatusOfData(
-          :final data,
-        ):
+      case StatusOfData(:final data):
         try {
           emit(state.copyWith(textState: const StatusOfLoading()));
 
           switch (data.processed) {
             case Processing.none:
-              emit(state.copyWith(textState: const StatusOfData(PlayerTextStateNone())));
+              emit(
+                state.copyWith(
+                  textState: const StatusOfData(PlayerTextStateNone()),
+                ),
+              );
               return;
             case Processing.onlyText:
               final textLines = await _loadTextLines();
 
               if (textLines == null || textLines.isEmpty) {
-                emit(state.copyWith(textState: const StatusOfData(PlayerTextStateNone())));
+                emit(
+                  state.copyWith(
+                    textState: const StatusOfData(PlayerTextStateNone()),
+                  ),
+                );
                 return;
               }
 
-              final selectedTextLineIndex = _findCurrentTextLineIndex(textLines);
+              final selectedTextLineIndex = _findCurrentTextLineIndex(
+                textLines,
+              );
 
               emit(
                 state.copyWith(
                   textState: StatusOfData(
                     PlayerTextStateOnlyText(
-                      currentTextLine: selectedTextLineIndex != -1 ? selectedTextLineIndex : 0,
+                      currentTextLine:
+                          selectedTextLineIndex != -1
+                              ? selectedTextLineIndex
+                              : 0,
                       textLines: textLines,
                     ),
                   ),
@@ -214,29 +232,45 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
               final textLines = await _loadTextLines();
 
               if (textLines == null || textLines.isEmpty) {
-                emit(state.copyWith(textState: const StatusOfData(PlayerTextStateNone())));
+                emit(
+                  state.copyWith(
+                    textState: const StatusOfData(PlayerTextStateNone()),
+                  ),
+                );
                 return;
               }
 
-              final selectedTextLineIndex = _findCurrentTextLineIndex(textLines);
+              final selectedTextLineIndex = _findCurrentTextLineIndex(
+                textLines,
+              );
 
               StatusOf<List<Violation>, String> violationsStatus;
 
               try {
-                final violations = await db.from(Violation.tableName).select(Violation.fieldNames).eq($NormalViolationImplJsonKeys.record, state.recordingId).withConverter(Violation.converter);
+                final violations = await db
+                    .from(Violation.tableName)
+                    .select(Violation.fieldNames)
+                    .eq($NormalViolationImplJsonKeys.record, state.recordingId)
+                    .withConverter(Violation.converter);
 
                 violationsStatus = StatusOfData(violations ?? const []);
               } catch (e) {
                 violationsStatus = StatusOfError(e.toString());
               }
 
-              final highlights = _arrangeHighlights(textLines, violationsStatus);
+              final highlights = _arrangeHighlights(
+                textLines,
+                violationsStatus,
+              );
 
               emit(
                 state.copyWith(
                   textState: StatusOfData(
                     PlayerTextStateTextAndViolations(
-                      currentTextLine: selectedTextLineIndex != -1 ? selectedTextLineIndex : 0,
+                      currentTextLine:
+                          selectedTextLineIndex != -1
+                              ? selectedTextLineIndex
+                              : 0,
                       textLines: textLines,
                       highlights: highlights,
                       violations: violationsStatus,
@@ -253,13 +287,20 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   }
 
   Future<List<TextLine>?> _loadTextLines() async {
-    final textLines = await db.from(TextLine.tableName).select(TextLine.fieldNames).eq('record', state.recordingId).order($TextLineImplJsonKeys.time, ascending: true).withConverter(TextLine.converter);
+    final textLines = await db
+        .from(TextLine.tableName)
+        .select(TextLine.fieldNames)
+        .eq('record', state.recordingId)
+        .order($TextLineImplJsonKeys.time, ascending: true)
+        .withConverter(TextLine.converter);
     return textLines;
   }
 
   int _findCurrentTextLineIndex(final List<TextLine> textLines) {
     final selectedTextLineId = state.currentTextLineId;
-    final selectedTextLineIndex = textLines.indexWhere((final textLine) => textLine.id == selectedTextLineId);
+    final selectedTextLineIndex = textLines.indexWhere(
+      (final textLine) => textLine.id == selectedTextLineId,
+    );
 
     if (selectedTextLineIndex != -1) {
       add(PlayerEventSeekRequested(textLines[selectedTextLineIndex].time));
@@ -267,79 +308,98 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     return selectedTextLineIndex;
   }
 
-  List<List<HighlightViolation>> _arrangeHighlights(final List<TextLine> textLines, final StatusOf<List<Violation>, String> violationsStatus) {
+  List<List<HighlightViolation>> _arrangeHighlights(
+    final List<TextLine> textLines,
+    final StatusOf<List<Violation>, String> violationsStatus,
+  ) {
     switch (violationsStatus) {
-      case StatusOfData(
-          :final data,
-        ):
+      case StatusOfData(:final data):
         final allHighlights = data.whereType<HighlightViolation>();
 
         if (allHighlights.isEmpty) {
           continue noHighlights;
         }
 
-        return List.generate(
-          textLines.length,
-          (final i) {
-            final highlights = allHighlights.where((final highlight) => highlight.line.id == textLines[i].id).toList();
+        return List.generate(textLines.length, (final i) {
+          final highlights =
+              allHighlights
+                  .where(
+                    (final highlight) => highlight.line.id == textLines[i].id,
+                  )
+                  .toList();
 
-            return highlights;
-          },
-          growable: false,
-        );
+          return highlights;
+        }, growable: false);
       noHighlights:
       default:
         return List<List<HighlightViolation>>.empty();
     }
   }
 
-  Future<void> _onDurationChanged(final _PlayerEventDurationChanged event, final Emitter<PlayerState> emit) async {
+  Future<void> _onDurationChanged(
+    final _PlayerEventDurationChanged event,
+    final Emitter<PlayerState> emit,
+  ) async {
     switch (state.audioState) {
-      case StatusOfData(
-          :final data,
-        ):
-        emit(state.copyWith(audioState: StatusOfData(data.copyWith(duration: event.duration))));
+      case StatusOfData(:final data):
+        emit(
+          state.copyWith(
+            audioState: StatusOfData(data.copyWith(duration: event.duration)),
+          ),
+        );
       default:
     }
   }
 
-  Future<void> _onPositionChanged(final _PlayerEventPositionChanged event, final Emitter<PlayerState> emit) async {
+  Future<void> _onPositionChanged(
+    final _PlayerEventPositionChanged event,
+    final Emitter<PlayerState> emit,
+  ) async {
     switch (state.audioState) {
-      case StatusOfData(
-          :final data,
-        ):
-        emit(state.copyWith(audioState: StatusOfData(data.copyWith(position: event.position))));
+      case StatusOfData(:final data):
+        emit(
+          state.copyWith(
+            audioState: StatusOfData(data.copyWith(position: event.position)),
+          ),
+        );
       default:
     }
   }
 
-  Future<void> _onPlayingChanged(final _PlayerEventPlayingChanged event, final Emitter<PlayerState> emit) async {
+  Future<void> _onPlayingChanged(
+    final _PlayerEventPlayingChanged event,
+    final Emitter<PlayerState> emit,
+  ) async {
     switch (state.audioState) {
-      case StatusOfData(
-          :final data,
-        ):
-        emit(state.copyWith(audioState: StatusOfData(data.copyWith(isPlaying: event.isPlaying))));
+      case StatusOfData(:final data):
+        emit(
+          state.copyWith(
+            audioState: StatusOfData(data.copyWith(isPlaying: event.isPlaying)),
+          ),
+        );
       default:
     }
   }
 
-  Future<void> _onError(final _PlayerEventError event, final Emitter<PlayerState> emit) async {
+  Future<void> _onError(
+    final _PlayerEventError event,
+    final Emitter<PlayerState> emit,
+  ) async {
     emit(state.copyWith(audioState: StatusOfError(event.error)));
   }
 
-  Future<void> _onJumpedToLine(final PlayerEventJumpToLineRequested event, final Emitter<PlayerState> emit) async {
+  Future<void> _onJumpedToLine(
+    final PlayerEventJumpToLineRequested event,
+    final Emitter<PlayerState> emit,
+  ) async {
     final textState = state.textState;
-    if (textState
-        case StatusOfData(
-          data: PlayerTextStateOnlyText(
-                :final currentTextLine,
-                :final textLines,
-              ) ||
-              PlayerTextStateTextAndViolations(
-                :final currentTextLine,
-                :final textLines,
-              ),
-        )) {
+    if (textState case StatusOfData(
+      data: PlayerTextStateOnlyText(:final currentTextLine, :final textLines) ||
+          PlayerTextStateTextAndViolations(
+            :final currentTextLine,
+            :final textLines,
+          ),
+    )) {
       if (currentTextLine == event.index) return;
       if (event.index < 0) return;
       if (event.index >= textLines.length) return;
@@ -348,18 +408,15 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         state.copyWith(
           currentTextLineId: textLines[event.index].id,
           textState: switch (textState.data) {
-            final PlayerTextStateNone data => StatusOfData<PlayerTextStateNone, String>(
-                data,
+            final PlayerTextStateNone data =>
+              StatusOfData<PlayerTextStateNone, String>(data),
+            final PlayerTextStateOnlyText data =>
+              StatusOfData<PlayerTextStateOnlyText, String>(
+                data.copyWith(currentTextLine: event.index),
               ),
-            final PlayerTextStateOnlyText data => StatusOfData<PlayerTextStateOnlyText, String>(
-                data.copyWith(
-                  currentTextLine: event.index,
-                ),
-              ),
-            final PlayerTextStateTextAndViolations data => StatusOfData<PlayerTextStateTextAndViolations, String>(
-                data.copyWith(
-                  currentTextLine: event.index,
-                ),
+            final PlayerTextStateTextAndViolations data =>
+              StatusOfData<PlayerTextStateTextAndViolations, String>(
+                data.copyWith(currentTextLine: event.index),
               ),
           },
         ),
@@ -371,7 +428,10 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     }
   }
 
-  Future<void> _onSeekRequested(final PlayerEventSeekRequested event, final Emitter<PlayerState> emit) async {
+  Future<void> _onSeekRequested(
+    final PlayerEventSeekRequested event,
+    final Emitter<PlayerState> emit,
+  ) async {
     switch (state.audioState) {
       case StatusOfData():
         await _player.seek(event.position + const Duration(milliseconds: 1));
@@ -379,11 +439,12 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     }
   }
 
-  Future<void> _onPlayPauseButtonPressed(final PlayerEventPlayPauseButtonPressed event, final Emitter<PlayerState> emit) async {
+  Future<void> _onPlayPauseButtonPressed(
+    final PlayerEventPlayPauseButtonPressed event,
+    final Emitter<PlayerState> emit,
+  ) async {
     switch (state.audioState) {
-      case StatusOfData(
-          :final data,
-        ):
+      case StatusOfData(:final data):
         if (data.isPlaying) {
           await _player.pause();
         } else {

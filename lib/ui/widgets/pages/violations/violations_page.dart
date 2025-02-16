@@ -29,16 +29,15 @@ class ViolationsPage extends StatelessWidget {
     return Stack(
       children: [
         Scaffold(
-          appBar: AppBar(
-            title: const Text('İhlaller'),
-          ),
+          appBar: AppBar(title: const Text('İhlaller')),
           body: Lister.cards(
             key: ValueKey(id),
-            blocCreator: () => ViolationsBloc(
-              recordingId: id,
-              violations: violations,
-              sortNewFirst: sortNewFirst,
-            ),
+            blocCreator:
+                () => ViolationsBloc(
+                  recordingId: id,
+                  violations: violations,
+                  sortNewFirst: sortNewFirst,
+                ),
             itemContentBuilder: _Item.new,
             noItemsIcon: Icons.check_circle,
             noItemsText: 'İhlal bulunamadı',
@@ -58,36 +57,25 @@ class _Item extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final subtitle = switch (violation.rule) {
-      WordsRule(
-        :final words
-      ) =>
-        words.join(', '),
+      WordsRule(:final words) => words.join(', '),
       NameRule() => '',
-      CustomRule(
-        :final description,
-        :final details
-      ) =>
-        switch (violation) {
-          NormalViolation() => details,
-          HighlightViolation() => '$description${details.isNotEmpty ? '\n$details' : ''}',
-        },
+      CustomRule(:final description, :final details) => switch (violation) {
+        NormalViolation() => details,
+        HighlightViolation() =>
+          '$description${details.isNotEmpty ? '\n$details' : ''}',
+      },
     };
 
     return ListTile(
       shape: RoundedRectangleBorder(
         borderRadius: kDefaultRadius,
-        side: BorderSide(
-          width: 2,
-          color: violation.rule.color,
-        ),
+        side: BorderSide(width: 2, color: violation.rule.color),
       ),
-      leading: Icon(
-        switch (violation.rule) {
-          WordsRule() => RuleTileContent.iconOf<WordsRule>(),
-          NameRule() => RuleTileContent.iconOf<NameRule>(),
-          CustomRule() => RuleTileContent.iconOf<CustomRule>(),
-        },
-      ),
+      leading: Icon(switch (violation.rule) {
+        WordsRule() => RuleTileContent.iconOf<WordsRule>(),
+        NameRule() => RuleTileContent.iconOf<NameRule>(),
+        CustomRule() => RuleTileContent.iconOf<CustomRule>(),
+      }),
       title: switch (violation) {
         HighlightViolation(
           :final line,
@@ -98,58 +86,42 @@ class _Item extends StatelessWidget {
           Text.rich(
             TextSpan(
               children: [
-                TextSpan(
-                  text: line.text.substring(0, startIndex),
-                ),
+                TextSpan(text: line.text.substring(0, startIndex)),
                 TextSpan(
                   text: line.text.substring(startIndex, endIndex),
                   style: highlightedTextStyle(rule.color),
                 ),
-                TextSpan(
-                  text: line.text.substring(endIndex),
-                ),
+                TextSpan(text: line.text.substring(endIndex)),
               ],
             ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
         NormalViolation() => Text(
-            switch (violation.rule) {
-              WordsRule() => RuleTileContent.textOf<WordsRule>(),
-              NameRule() => RuleTileContent.textOf<NameRule>(),
-              CustomRule(
-                :final description,
-              ) =>
-                description,
-            },
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
+          switch (violation.rule) {
+            WordsRule() => RuleTileContent.textOf<WordsRule>(),
+            NameRule() => RuleTileContent.textOf<NameRule>(),
+            CustomRule(:final description) => description,
+          },
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
       },
-      subtitle: subtitle.isNotEmpty
-          ? Text(
-              subtitle,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            )
-          : null,
+      subtitle:
+          subtitle.isNotEmpty
+              ? Text(subtitle, maxLines: 3, overflow: TextOverflow.ellipsis)
+              : null,
       trailing: switch (violation) {
-        HighlightViolation(
-          :final line,
-        ) =>
-          Text(
-            line.time.toMinutesAndSeconds(),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
+        HighlightViolation(:final line) => Text(
+          line.time.toMinutesAndSeconds(),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
         NormalViolation() => null,
       },
       onTap: () {
         context.pushRoute(
-          ViolationViewerRoute(
-            id: violation.id,
-            violation: violation,
-          ),
+          ViolationViewerRoute(id: violation.id, violation: violation),
         );
       },
     );

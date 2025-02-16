@@ -8,13 +8,12 @@ part of 'home_state.dart';
 
 _$HomeStateImpl _$$HomeStateImplFromJson(Map<String, dynamic> json) =>
     _$HomeStateImpl(
-      history:
-          const Uint8ListConverter().fromJson(json['history'] as Uint8List),
+      history: const Uint8ListConverter().fromJson(
+        json['history'] as Uint8List,
+      ),
     );
 
-const _$$HomeStateImplFieldMap = <String, String>{
-  'history': 'history',
-};
+const _$$HomeStateImplFieldMap = <String, String>{'history': 'history'};
 
 abstract final class $HomeStateImplJsonKeys {
   static const String history = 'history';

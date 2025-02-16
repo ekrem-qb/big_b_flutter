@@ -12,7 +12,8 @@ part of 'planned_task.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 PlannedTask _$PlannedTaskFromJson(Map<String, dynamic> json) {
   return _PlannedTask.fromJson(json);
@@ -44,17 +45,19 @@ mixin _$PlannedTask {
 /// @nodoc
 abstract class $PlannedTaskCopyWith<$Res> {
   factory $PlannedTaskCopyWith(
-          PlannedTask value, $Res Function(PlannedTask) then) =
-      _$PlannedTaskCopyWithImpl<$Res, PlannedTask>;
+    PlannedTask value,
+    $Res Function(PlannedTask) then,
+  ) = _$PlannedTaskCopyWithImpl<$Res, PlannedTask>;
   @useResult
-  $Res call(
-      {@JsonKey(includeToJson: false) int id,
-      String text,
-      DateTime deadline,
-      bool isImageRequired,
-      DateTime updatedAt,
-      int weekdays,
-      @JsonKey(includeToJson: false) List<Profile> executives});
+  $Res call({
+    @JsonKey(includeToJson: false) int id,
+    String text,
+    DateTime deadline,
+    bool isImageRequired,
+    DateTime updatedAt,
+    int weekdays,
+    @JsonKey(includeToJson: false) List<Profile> executives,
+  });
 }
 
 /// @nodoc
@@ -80,36 +83,46 @@ class _$PlannedTaskCopyWithImpl<$Res, $Val extends PlannedTask>
     Object? weekdays = null,
     Object? executives = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-      deadline: null == deadline
-          ? _value.deadline
-          : deadline // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      isImageRequired: null == isImageRequired
-          ? _value.isImageRequired
-          : isImageRequired // ignore: cast_nullable_to_non_nullable
-              as bool,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      weekdays: null == weekdays
-          ? _value.weekdays
-          : weekdays // ignore: cast_nullable_to_non_nullable
-              as int,
-      executives: null == executives
-          ? _value.executives
-          : executives // ignore: cast_nullable_to_non_nullable
-              as List<Profile>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as int,
+            text:
+                null == text
+                    ? _value.text
+                    : text // ignore: cast_nullable_to_non_nullable
+                        as String,
+            deadline:
+                null == deadline
+                    ? _value.deadline
+                    : deadline // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+            isImageRequired:
+                null == isImageRequired
+                    ? _value.isImageRequired
+                    : isImageRequired // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            updatedAt:
+                null == updatedAt
+                    ? _value.updatedAt
+                    : updatedAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+            weekdays:
+                null == weekdays
+                    ? _value.weekdays
+                    : weekdays // ignore: cast_nullable_to_non_nullable
+                        as int,
+            executives:
+                null == executives
+                    ? _value.executives
+                    : executives // ignore: cast_nullable_to_non_nullable
+                        as List<Profile>,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -117,18 +130,20 @@ class _$PlannedTaskCopyWithImpl<$Res, $Val extends PlannedTask>
 abstract class _$$PlannedTaskImplCopyWith<$Res>
     implements $PlannedTaskCopyWith<$Res> {
   factory _$$PlannedTaskImplCopyWith(
-          _$PlannedTaskImpl value, $Res Function(_$PlannedTaskImpl) then) =
-      __$$PlannedTaskImplCopyWithImpl<$Res>;
+    _$PlannedTaskImpl value,
+    $Res Function(_$PlannedTaskImpl) then,
+  ) = __$$PlannedTaskImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(includeToJson: false) int id,
-      String text,
-      DateTime deadline,
-      bool isImageRequired,
-      DateTime updatedAt,
-      int weekdays,
-      @JsonKey(includeToJson: false) List<Profile> executives});
+  $Res call({
+    @JsonKey(includeToJson: false) int id,
+    String text,
+    DateTime deadline,
+    bool isImageRequired,
+    DateTime updatedAt,
+    int weekdays,
+    @JsonKey(includeToJson: false) List<Profile> executives,
+  });
 }
 
 /// @nodoc
@@ -136,8 +151,9 @@ class __$$PlannedTaskImplCopyWithImpl<$Res>
     extends _$PlannedTaskCopyWithImpl<$Res, _$PlannedTaskImpl>
     implements _$$PlannedTaskImplCopyWith<$Res> {
   __$$PlannedTaskImplCopyWithImpl(
-      _$PlannedTaskImpl _value, $Res Function(_$PlannedTaskImpl) _then)
-      : super(_value, _then);
+    _$PlannedTaskImpl _value,
+    $Res Function(_$PlannedTaskImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of PlannedTask
   /// with the given fields replaced by the non-null parameter values.
@@ -152,51 +168,60 @@ class __$$PlannedTaskImplCopyWithImpl<$Res>
     Object? weekdays = null,
     Object? executives = null,
   }) {
-    return _then(_$PlannedTaskImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-      deadline: null == deadline
-          ? _value.deadline
-          : deadline // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      isImageRequired: null == isImageRequired
-          ? _value.isImageRequired
-          : isImageRequired // ignore: cast_nullable_to_non_nullable
-              as bool,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      weekdays: null == weekdays
-          ? _value.weekdays
-          : weekdays // ignore: cast_nullable_to_non_nullable
-              as int,
-      executives: null == executives
-          ? _value._executives
-          : executives // ignore: cast_nullable_to_non_nullable
-              as List<Profile>,
-    ));
+    return _then(
+      _$PlannedTaskImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as int,
+        text:
+            null == text
+                ? _value.text
+                : text // ignore: cast_nullable_to_non_nullable
+                    as String,
+        deadline:
+            null == deadline
+                ? _value.deadline
+                : deadline // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+        isImageRequired:
+            null == isImageRequired
+                ? _value.isImageRequired
+                : isImageRequired // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        updatedAt:
+            null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+        weekdays:
+            null == weekdays
+                ? _value.weekdays
+                : weekdays // ignore: cast_nullable_to_non_nullable
+                    as int,
+        executives:
+            null == executives
+                ? _value._executives
+                : executives // ignore: cast_nullable_to_non_nullable
+                    as List<Profile>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$PlannedTaskImpl implements _PlannedTask {
-  const _$PlannedTaskImpl(
-      {@JsonKey(includeToJson: false) required this.id,
-      required this.text,
-      required this.deadline,
-      required this.isImageRequired,
-      required this.updatedAt,
-      required this.weekdays,
-      @JsonKey(includeToJson: false) required final List<Profile> executives})
-      : _executives = executives;
+  const _$PlannedTaskImpl({
+    @JsonKey(includeToJson: false) required this.id,
+    required this.text,
+    required this.deadline,
+    required this.isImageRequired,
+    required this.updatedAt,
+    required this.weekdays,
+    @JsonKey(includeToJson: false) required final List<Profile> executives,
+  }) : _executives = executives;
 
   factory _$PlannedTaskImpl.fromJson(Map<String, dynamic> json) =>
       _$$PlannedTaskImplFromJson(json);
@@ -214,9 +239,9 @@ class _$PlannedTaskImpl implements _PlannedTask {
   final DateTime updatedAt;
   @override
   final int weekdays;
-// ignore: always_put_required_named_parameters_first
+  // ignore: always_put_required_named_parameters_first
   final List<Profile> _executives;
-// ignore: always_put_required_named_parameters_first
+  // ignore: always_put_required_named_parameters_first
   @override
   @JsonKey(includeToJson: false)
   List<Profile> get executives {
@@ -245,21 +270,24 @@ class _$PlannedTaskImpl implements _PlannedTask {
                 other.updatedAt == updatedAt) &&
             (identical(other.weekdays, weekdays) ||
                 other.weekdays == weekdays) &&
-            const DeepCollectionEquality()
-                .equals(other._executives, _executives));
+            const DeepCollectionEquality().equals(
+              other._executives,
+              _executives,
+            ));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      text,
-      deadline,
-      isImageRequired,
-      updatedAt,
-      weekdays,
-      const DeepCollectionEquality().hash(_executives));
+    runtimeType,
+    id,
+    text,
+    deadline,
+    isImageRequired,
+    updatedAt,
+    weekdays,
+    const DeepCollectionEquality().hash(_executives),
+  );
 
   /// Create a copy of PlannedTask
   /// with the given fields replaced by the non-null parameter values.
@@ -271,22 +299,20 @@ class _$PlannedTaskImpl implements _PlannedTask {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$PlannedTaskImplToJson(
-      this,
-    );
+    return _$$PlannedTaskImplToJson(this);
   }
 }
 
 abstract class _PlannedTask implements PlannedTask {
-  const factory _PlannedTask(
-      {@JsonKey(includeToJson: false) required final int id,
-      required final String text,
-      required final DateTime deadline,
-      required final bool isImageRequired,
-      required final DateTime updatedAt,
-      required final int weekdays,
-      @JsonKey(includeToJson: false)
-      required final List<Profile> executives}) = _$PlannedTaskImpl;
+  const factory _PlannedTask({
+    @JsonKey(includeToJson: false) required final int id,
+    required final String text,
+    required final DateTime deadline,
+    required final bool isImageRequired,
+    required final DateTime updatedAt,
+    required final int weekdays,
+    @JsonKey(includeToJson: false) required final List<Profile> executives,
+  }) = _$PlannedTaskImpl;
 
   factory _PlannedTask.fromJson(Map<String, dynamic> json) =
       _$PlannedTaskImpl.fromJson;

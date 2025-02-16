@@ -22,22 +22,19 @@ class LoginPage extends StatelessWidget {
 }
 
 class LoginView extends StatelessWidget {
-  const LoginView({
-    this.onSignedIn,
-    super.key,
-  });
+  const LoginView({this.onSignedIn, super.key});
 
   final VoidCallback? onSignedIn;
 
   @override
   Widget build(final BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
-      listenWhen: (final previous, final current) => previous.loginStatus != current.loginStatus,
+      listenWhen:
+          (final previous, final current) =>
+              previous.loginStatus != current.loginStatus,
       listener: (final context, final state) {
         switch (state.loginStatus) {
-          case OperationStatusError(
-              :final error,
-            ):
+          case OperationStatusError(:final error):
             showSnackbar(text: error, context: context);
           case OperationStatusCompleted():
             onSignedIn?.call();
@@ -74,14 +71,8 @@ class _EmailField extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      emailError,
-    ) = context.select(
-      (final LoginBloc bloc) => (
-        bloc,
-        bloc.state.emailError,
-      ),
+    final (bloc, emailError) = context.select(
+      (final LoginBloc bloc) => (bloc, bloc.state.emailError),
     );
 
     return TextField(
@@ -102,11 +93,7 @@ class _PasswordField extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      isPasswordVisible,
-      passwordError,
-    ) = context.select(
+    final (bloc, isPasswordVisible, passwordError) = context.select(
       (final LoginBloc bloc) => (
         bloc,
         bloc.state.isPasswordVisible,
@@ -121,7 +108,8 @@ class _PasswordField extends StatelessWidget {
         suffixIcon: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 6),
           child: IconButton(
-            onPressed: () => bloc.add(const LoginEventPasswordVisibilityToggled()),
+            onPressed:
+                () => bloc.add(const LoginEventPasswordVisibilityToggled()),
             icon: Icon(
               isPasswordVisible ? Icons.visibility : Icons.visibility_off,
             ),
@@ -141,23 +129,18 @@ class _LoginButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      loginStatus,
-    ) = context.select(
-      (final LoginBloc bloc) => (
-        bloc,
-        bloc.state.loginStatus,
-      ),
+    final (bloc, loginStatus) = context.select(
+      (final LoginBloc bloc) => (bloc, bloc.state.loginStatus),
     );
 
     return FilledButton.icon(
-      onPressed: loginStatus is OperationStatusInProgress ? null : () => bloc.add(const LoginEventLoginRequested()),
+      onPressed:
+          loginStatus is OperationStatusInProgress
+              ? null
+              : () => bloc.add(const LoginEventLoginRequested()),
       label: const Text('Giriş'),
       icon: const _LoginIcon(),
-      style: const ButtonStyle(
-        visualDensity: VisualDensity.standard,
-      ),
+      style: const ButtonStyle(visualDensity: VisualDensity.standard),
     );
   }
 }
@@ -173,12 +156,12 @@ class _LoginIcon extends StatelessWidget {
 
     return loginStatus is OperationStatusInProgress
         ? SizedBox.square(
-            dimension: IconTheme.of(context).size,
-            child: CircularProgressIndicator(
-              color: IconTheme.of(context).color,
-              strokeWidth: 3,
-            ),
-          )
+          dimension: IconTheme.of(context).size,
+          child: CircularProgressIndicator(
+            color: IconTheme.of(context).color,
+            strokeWidth: 3,
+          ),
+        )
         : const Icon(Icons.login);
   }
 }

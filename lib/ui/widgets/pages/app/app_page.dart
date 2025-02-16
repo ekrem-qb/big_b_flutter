@@ -33,7 +33,9 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         restorationScopeId: 'app',
         routerConfig: appRouter.config(
-          reevaluateListenable: ReevaluateListenable.stream(db.auth.onAuthStateChange),
+          reevaluateListenable: ReevaluateListenable.stream(
+            db.auth.onAuthStateChange,
+          ),
           navRestorationScopeId: 'navigation',
         ),
       ),

@@ -12,13 +12,13 @@ class MouseNavigator extends StatelessWidget {
     return kIsWeb
         ? child
         : Listener(
-            onPointerDown: (final pointerEvent) {
-              if (pointerEvent.buttons == kBackMouseButton) {
-                // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-                WidgetsBinding.instance.handlePopRoute();
-              }
-            },
-            child: child,
-          );
+          onPointerDown: (final pointerEvent) {
+            if (pointerEvent.buttons == kBackMouseButton) {
+              // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+              WidgetsBinding.instance.handlePopRoute();
+            }
+          },
+          child: child,
+        );
   }
 }

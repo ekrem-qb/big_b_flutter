@@ -4,7 +4,13 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../../../theme.dart';
 
-typedef PositionedScrollBuilder = Widget Function(BuildContext context, Widget? child, ScrollOffsetController controller, ScrollPhysics? physics);
+typedef PositionedScrollBuilder =
+    Widget Function(
+      BuildContext context,
+      Widget? child,
+      ScrollOffsetController controller,
+      ScrollPhysics? physics,
+    );
 
 class PositionedSmoothMouseScroll extends StatefulWidget {
   const PositionedSmoothMouseScroll({
@@ -35,11 +41,14 @@ class PositionedSmoothMouseScroll extends StatefulWidget {
   final PositionedScrollBuilder builder;
 
   @override
-  State<PositionedSmoothMouseScroll> createState() => _PositionedSmoothMouseScrollState();
+  State<PositionedSmoothMouseScroll> createState() =>
+      _PositionedSmoothMouseScrollState();
 }
 
-class _PositionedSmoothMouseScrollState extends State<PositionedSmoothMouseScroll> {
-  late final ScrollOffsetController controller = widget.controller ?? ScrollOffsetController();
+class _PositionedSmoothMouseScrollState
+    extends State<PositionedSmoothMouseScroll> {
+  late final ScrollOffsetController controller =
+      widget.controller ?? ScrollOffsetController();
 
   @override
   Widget build(final BuildContext context) {
@@ -60,7 +69,9 @@ class _PositionedSmoothMouseScrollState extends State<PositionedSmoothMouseScrol
             context,
             child,
             controller,
-            WidgetsBinding.instance.mouseTracker.mouseIsConnected ? const NeverScrollableScrollPhysics() : null,
+            WidgetsBinding.instance.mouseTracker.mouseIsConnected
+                ? const NeverScrollableScrollPhysics()
+                : null,
           );
         },
         child: widget.child,

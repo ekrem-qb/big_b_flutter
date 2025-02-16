@@ -20,9 +20,7 @@ class MorePage extends StatelessWidget {
 }
 
 class MoreView extends StatelessWidget {
-  const MoreView({
-    super.key,
-  });
+  const MoreView({super.key});
 
   @override
   Widget build(final BuildContext context) {
@@ -32,10 +30,7 @@ class MoreView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Gene'),
         notificationPredicate: appBar.onScroll,
-        actions: const [
-          _LogoutButton(),
-          SizedBox(width: 8),
-        ],
+        actions: const [_LogoutButton(), SizedBox(width: 8)],
       ),
       body: const Align(
         alignment: Alignment.bottomCenter,
@@ -68,14 +63,8 @@ class _LogoutButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      appBar,
-      isScrolled,
-    ) = context.select(
-      (final AppBarController appBar) => (
-        appBar,
-        appBar.isScrolled,
-      ),
+    final (appBar, isScrolled) = context.select(
+      (final AppBarController appBar) => (appBar, appBar.isScrolled),
     );
 
     return ElevatedButton.icon(
@@ -91,11 +80,7 @@ class _LogoutButton extends StatelessWidget {
 }
 
 class _Button extends StatelessWidget {
-  const _Button({
-    required this.icon,
-    required this.label,
-    required this.route,
-  });
+  const _Button({required this.icon, required this.label, required this.route});
 
   final IconData icon;
   final String label;
@@ -106,20 +91,14 @@ class _Button extends StatelessWidget {
     return ElevatedButton(
       style: ButtonStyle(
         shape: WidgetStatePropertyAll(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
       ),
       onPressed: () => context.pushRoute(route),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16),
         child: Column(
-          children: [
-            Icon(icon),
-            const SizedBox(height: 8),
-            Text(label),
-          ],
+          children: [Icon(icon), const SizedBox(height: 8), Text(label)],
         ),
       ),
     );

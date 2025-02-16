@@ -9,7 +9,10 @@ import '../../../theme.dart';
 import '../../error_panel.dart';
 import 'bloc/profile_picker_bloc.dart';
 
-Future<List<Profile>> showProfilesPicker(final BuildContext context, {required final List<Profile> excluded}) async {
+Future<List<Profile>> showProfilesPicker(
+  final BuildContext context, {
+  required final List<Profile> excluded,
+}) async {
   final profiles = await showCupertinoModalPopup<List<Profile>>(
     context: context,
     builder: (final context) {
@@ -37,20 +40,14 @@ class _ProfilePickerDialog extends StatelessWidget {
               padding: EdgeInsets.all(8),
               child: FractionallySizedBox(
                 heightFactor: 0.5,
-                child: CupertinoPopupSurface(
-                  child: _Profiles(),
-                ),
+                child: CupertinoPopupSurface(child: _Profiles()),
               ),
             ),
           ),
           MediaQuery.removePadding(
             context: context,
             removeTop: true,
-            child: const CupertinoActionSheet(
-              actions: [
-                _Ok(),
-              ],
-            ),
+            child: const CupertinoActionSheet(actions: [_Ok()]),
           ),
         ],
       ),
@@ -63,46 +60,37 @@ class _Profiles extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      _,
-    ) = context.select(
-      (final ProfilePickerBloc bloc) => (
-        bloc,
-        bloc.state.all.runtimeType,
-      ),
+    final (bloc, _) = context.select(
+      (final ProfilePickerBloc bloc) => (bloc, bloc.state.all.runtimeType),
     );
 
     return switch (bloc.state.all) {
-      StatusOfData(
-        :final data,
-      ) =>
+      StatusOfData(:final data) =>
         data.isEmpty
             ? const Material(
-                color: Colors.transparent,
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.person, size: 64),
-                      Text('Başka çalışan yok'),
-                    ],
-                  ),
+              color: Colors.transparent,
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.person, size: 64),
+                    Text('Başka çalışan yok'),
+                  ],
                 ),
-              )
-            : ListView.builder(
-                padding: const EdgeInsets.all(8),
-                itemCount: data.length,
-                itemBuilder: (final BuildContext context, final int index) => _Profile(index),
               ),
+            )
+            : ListView.builder(
+              padding: const EdgeInsets.all(8),
+              itemCount: data.length,
+              itemBuilder:
+                  (final BuildContext context, final int index) =>
+                      _Profile(index),
+            ),
       StatusOfLoading() => const Center(child: CircularProgressIndicator()),
-      StatusOfError(
-        :final error,
-      ) =>
-        ErrorPanel(
-          error: error,
-          onRefresh: () => bloc.add(const ProfilePickerEventLoadRequested()),
-        ),
+      StatusOfError(:final error) => ErrorPanel(
+        error: error,
+        onRefresh: () => bloc.add(const ProfilePickerEventLoadRequested()),
+      ),
     };
   }
 }
@@ -114,17 +102,13 @@ class _Profile extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (
-      bloc,
-      isSelected,
-    ) = context.select(
+    final (bloc, isSelected) = context.select(
       (final ProfilePickerBloc bloc) => (
         bloc,
         switch (bloc.state.all) {
-          StatusOfData(
-            :final data,
-          ) =>
-            bloc.state.selected.contains(data[index]),
+          StatusOfData(:final data) => bloc.state.selected.contains(
+            data[index],
+          ),
           _ => false,
         },
       ),
@@ -133,34 +117,38 @@ class _Profile extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: kDefaultRadius,
-        side: isSelected
-            ? BorderSide(
-                color: Theme.of(context).colorScheme.primary,
-                width: 2,
-              )
-            : BorderSide.none,
+        side:
+            isSelected
+                ? BorderSide(
+                  color: Theme.of(context).colorScheme.primary,
+                  width: 2,
+                )
+                : BorderSide.none,
       ),
       child: switch (bloc.state.all) {
-        StatusOfData(
-          :final data,
-        ) =>
-          ListTile(
-            leading: Icon(data[index].role == Role.manager ? Icons.security : Icons.person),
-            title: Text(data[index].name),
-            selected: isSelected,
-            trailing: AnimatedOpacity(
-              opacity: isSelected ? 1 : 0,
+        StatusOfData(:final data) => ListTile(
+          leading: Icon(
+            data[index].role == Role.manager ? Icons.security : Icons.person,
+          ),
+          title: Text(data[index].name),
+          selected: isSelected,
+          trailing: AnimatedOpacity(
+            opacity: isSelected ? 1 : 0,
+            curve: Curves.easeInOutExpo,
+            duration: Durations.medium1,
+            child: AnimatedScale(
+              scale: isSelected ? 1 : 0,
               curve: Curves.easeInOutExpo,
               duration: Durations.medium1,
-              child: AnimatedScale(
-                scale: isSelected ? 1 : 0,
-                curve: Curves.easeInOutExpo,
-                duration: Durations.medium1,
-                child: const Icon(Icons.check_circle),
-              ),
+              child: const Icon(Icons.check_circle),
             ),
-            onTap: () => isSelected ? bloc.add(ProfilePickerEventDeselected(index)) : bloc.add(ProfilePickerEventSelected(index)),
           ),
+          onTap:
+              () =>
+                  isSelected
+                      ? bloc.add(ProfilePickerEventDeselected(index))
+                      : bloc.add(ProfilePickerEventSelected(index)),
+        ),
         _ => const SizedBox.shrink(),
       },
     );

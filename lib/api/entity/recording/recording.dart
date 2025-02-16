@@ -18,7 +18,8 @@ class Recording with _$Recording implements Entity {
     required final Profile employee,
   }) = _Recording;
 
-  factory Recording.fromJson(final Map<String, dynamic> json) => _$RecordingFromJson(json);
+  factory Recording.fromJson(final Map<String, dynamic> json) =>
+      _$RecordingFromJson(json);
 
   static const tableName = 'records';
   static final joinTables = [
@@ -28,7 +29,9 @@ class Recording with _$Recording implements Entity {
       fieldNames: Profile.fieldNames,
     ),
   ];
-  static final fieldNames = '${joinTables.join(',')},${_$$RecordingImplFieldMap.values.join(',')}';
+  static final fieldNames =
+      '${joinTables.join(',')},${_$$RecordingImplFieldMap.values.join(',')}';
 
-  static List<Recording>? converter(final List<Map<String, dynamic>> data) => data.map(Recording.fromJson).toList();
+  static List<Recording>? converter(final List<Map<String, dynamic>> data) =>
+      data.map(Recording.fromJson).toList();
 }

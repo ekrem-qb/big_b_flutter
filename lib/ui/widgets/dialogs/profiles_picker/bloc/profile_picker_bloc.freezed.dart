@@ -12,7 +12,8 @@ part of 'profile_picker_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ProfilePickerEvent {}
@@ -20,8 +21,9 @@ mixin _$ProfilePickerEvent {}
 /// @nodoc
 abstract class $ProfilePickerEventCopyWith<$Res> {
   factory $ProfilePickerEventCopyWith(
-          ProfilePickerEvent value, $Res Function(ProfilePickerEvent) then) =
-      _$ProfilePickerEventCopyWithImpl<$Res, ProfilePickerEvent>;
+    ProfilePickerEvent value,
+    $Res Function(ProfilePickerEvent) then,
+  ) = _$ProfilePickerEventCopyWithImpl<$Res, ProfilePickerEvent>;
 }
 
 /// @nodoc
@@ -41,20 +43,23 @@ class _$ProfilePickerEventCopyWithImpl<$Res, $Val extends ProfilePickerEvent>
 /// @nodoc
 abstract class _$$ProfilePickerEventLoadRequestedImplCopyWith<$Res> {
   factory _$$ProfilePickerEventLoadRequestedImplCopyWith(
-          _$ProfilePickerEventLoadRequestedImpl value,
-          $Res Function(_$ProfilePickerEventLoadRequestedImpl) then) =
-      __$$ProfilePickerEventLoadRequestedImplCopyWithImpl<$Res>;
+    _$ProfilePickerEventLoadRequestedImpl value,
+    $Res Function(_$ProfilePickerEventLoadRequestedImpl) then,
+  ) = __$$ProfilePickerEventLoadRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
 class __$$ProfilePickerEventLoadRequestedImplCopyWithImpl<$Res>
-    extends _$ProfilePickerEventCopyWithImpl<$Res,
-        _$ProfilePickerEventLoadRequestedImpl>
+    extends
+        _$ProfilePickerEventCopyWithImpl<
+          $Res,
+          _$ProfilePickerEventLoadRequestedImpl
+        >
     implements _$$ProfilePickerEventLoadRequestedImplCopyWith<$Res> {
   __$$ProfilePickerEventLoadRequestedImplCopyWithImpl(
-      _$ProfilePickerEventLoadRequestedImpl _value,
-      $Res Function(_$ProfilePickerEventLoadRequestedImpl) _then)
-      : super(_value, _then);
+    _$ProfilePickerEventLoadRequestedImpl _value,
+    $Res Function(_$ProfilePickerEventLoadRequestedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ProfilePickerEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -90,36 +95,36 @@ abstract class ProfilePickerEventLoadRequested implements ProfilePickerEvent {
 /// @nodoc
 abstract class _$$ProfilePickerEventSelectedImplCopyWith<$Res> {
   factory _$$ProfilePickerEventSelectedImplCopyWith(
-          _$ProfilePickerEventSelectedImpl value,
-          $Res Function(_$ProfilePickerEventSelectedImpl) then) =
-      __$$ProfilePickerEventSelectedImplCopyWithImpl<$Res>;
+    _$ProfilePickerEventSelectedImpl value,
+    $Res Function(_$ProfilePickerEventSelectedImpl) then,
+  ) = __$$ProfilePickerEventSelectedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int index});
 }
 
 /// @nodoc
 class __$$ProfilePickerEventSelectedImplCopyWithImpl<$Res>
-    extends _$ProfilePickerEventCopyWithImpl<$Res,
-        _$ProfilePickerEventSelectedImpl>
+    extends
+        _$ProfilePickerEventCopyWithImpl<$Res, _$ProfilePickerEventSelectedImpl>
     implements _$$ProfilePickerEventSelectedImplCopyWith<$Res> {
   __$$ProfilePickerEventSelectedImplCopyWithImpl(
-      _$ProfilePickerEventSelectedImpl _value,
-      $Res Function(_$ProfilePickerEventSelectedImpl) _then)
-      : super(_value, _then);
+    _$ProfilePickerEventSelectedImpl _value,
+    $Res Function(_$ProfilePickerEventSelectedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ProfilePickerEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? index = null,
-  }) {
-    return _then(_$ProfilePickerEventSelectedImpl(
-      null == index
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+  $Res call({Object? index = null}) {
+    return _then(
+      _$ProfilePickerEventSelectedImpl(
+        null == index
+            ? _value.index
+            : index // ignore: cast_nullable_to_non_nullable
+                as int,
+      ),
+    );
   }
 }
 
@@ -153,8 +158,9 @@ class _$ProfilePickerEventSelectedImpl implements ProfilePickerEventSelected {
   @override
   @pragma('vm:prefer-inline')
   _$$ProfilePickerEventSelectedImplCopyWith<_$ProfilePickerEventSelectedImpl>
-      get copyWith => __$$ProfilePickerEventSelectedImplCopyWithImpl<
-          _$ProfilePickerEventSelectedImpl>(this, _$identity);
+  get copyWith => __$$ProfilePickerEventSelectedImplCopyWithImpl<
+    _$ProfilePickerEventSelectedImpl
+  >(this, _$identity);
 }
 
 abstract class ProfilePickerEventSelected implements ProfilePickerEvent {
@@ -167,42 +173,45 @@ abstract class ProfilePickerEventSelected implements ProfilePickerEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProfilePickerEventSelectedImplCopyWith<_$ProfilePickerEventSelectedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$ProfilePickerEventDeselectedImplCopyWith<$Res> {
   factory _$$ProfilePickerEventDeselectedImplCopyWith(
-          _$ProfilePickerEventDeselectedImpl value,
-          $Res Function(_$ProfilePickerEventDeselectedImpl) then) =
-      __$$ProfilePickerEventDeselectedImplCopyWithImpl<$Res>;
+    _$ProfilePickerEventDeselectedImpl value,
+    $Res Function(_$ProfilePickerEventDeselectedImpl) then,
+  ) = __$$ProfilePickerEventDeselectedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({int index});
 }
 
 /// @nodoc
 class __$$ProfilePickerEventDeselectedImplCopyWithImpl<$Res>
-    extends _$ProfilePickerEventCopyWithImpl<$Res,
-        _$ProfilePickerEventDeselectedImpl>
+    extends
+        _$ProfilePickerEventCopyWithImpl<
+          $Res,
+          _$ProfilePickerEventDeselectedImpl
+        >
     implements _$$ProfilePickerEventDeselectedImplCopyWith<$Res> {
   __$$ProfilePickerEventDeselectedImplCopyWithImpl(
-      _$ProfilePickerEventDeselectedImpl _value,
-      $Res Function(_$ProfilePickerEventDeselectedImpl) _then)
-      : super(_value, _then);
+    _$ProfilePickerEventDeselectedImpl _value,
+    $Res Function(_$ProfilePickerEventDeselectedImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ProfilePickerEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? index = null,
-  }) {
-    return _then(_$ProfilePickerEventDeselectedImpl(
-      null == index
-          ? _value.index
-          : index // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+  $Res call({Object? index = null}) {
+    return _then(
+      _$ProfilePickerEventDeselectedImpl(
+        null == index
+            ? _value.index
+            : index // ignore: cast_nullable_to_non_nullable
+                as int,
+      ),
+    );
   }
 }
 
@@ -237,9 +246,11 @@ class _$ProfilePickerEventDeselectedImpl
   @override
   @pragma('vm:prefer-inline')
   _$$ProfilePickerEventDeselectedImplCopyWith<
-          _$ProfilePickerEventDeselectedImpl>
-      get copyWith => __$$ProfilePickerEventDeselectedImplCopyWithImpl<
-          _$ProfilePickerEventDeselectedImpl>(this, _$identity);
+    _$ProfilePickerEventDeselectedImpl
+  >
+  get copyWith => __$$ProfilePickerEventDeselectedImplCopyWithImpl<
+    _$ProfilePickerEventDeselectedImpl
+  >(this, _$identity);
 }
 
 abstract class ProfilePickerEventDeselected implements ProfilePickerEvent {
@@ -252,8 +263,9 @@ abstract class ProfilePickerEventDeselected implements ProfilePickerEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProfilePickerEventDeselectedImplCopyWith<
-          _$ProfilePickerEventDeselectedImpl>
-      get copyWith => throw _privateConstructorUsedError;
+    _$ProfilePickerEventDeselectedImpl
+  >
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -272,13 +284,15 @@ mixin _$ProfilePickerState {
 /// @nodoc
 abstract class $ProfilePickerStateCopyWith<$Res> {
   factory $ProfilePickerStateCopyWith(
-          ProfilePickerState value, $Res Function(ProfilePickerState) then) =
-      _$ProfilePickerStateCopyWithImpl<$Res, ProfilePickerState>;
+    ProfilePickerState value,
+    $Res Function(ProfilePickerState) then,
+  ) = _$ProfilePickerStateCopyWithImpl<$Res, ProfilePickerState>;
   @useResult
-  $Res call(
-      {List<Profile> excluded,
-      StatusOf<List<Profile>, String> all,
-      List<Profile> selected});
+  $Res call({
+    List<Profile> excluded,
+    StatusOf<List<Profile>, String> all,
+    List<Profile> selected,
+  });
 
   $StatusOfCopyWith<List<Profile>, String, $Res> get all;
 }
@@ -302,20 +316,26 @@ class _$ProfilePickerStateCopyWithImpl<$Res, $Val extends ProfilePickerState>
     Object? all = null,
     Object? selected = null,
   }) {
-    return _then(_value.copyWith(
-      excluded: null == excluded
-          ? _value.excluded
-          : excluded // ignore: cast_nullable_to_non_nullable
-              as List<Profile>,
-      all: null == all
-          ? _value.all
-          : all // ignore: cast_nullable_to_non_nullable
-              as StatusOf<List<Profile>, String>,
-      selected: null == selected
-          ? _value.selected
-          : selected // ignore: cast_nullable_to_non_nullable
-              as List<Profile>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            excluded:
+                null == excluded
+                    ? _value.excluded
+                    : excluded // ignore: cast_nullable_to_non_nullable
+                        as List<Profile>,
+            all:
+                null == all
+                    ? _value.all
+                    : all // ignore: cast_nullable_to_non_nullable
+                        as StatusOf<List<Profile>, String>,
+            selected:
+                null == selected
+                    ? _value.selected
+                    : selected // ignore: cast_nullable_to_non_nullable
+                        as List<Profile>,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of ProfilePickerState
@@ -332,15 +352,17 @@ class _$ProfilePickerStateCopyWithImpl<$Res, $Val extends ProfilePickerState>
 /// @nodoc
 abstract class _$$ProfilePickerStateImplCopyWith<$Res>
     implements $ProfilePickerStateCopyWith<$Res> {
-  factory _$$ProfilePickerStateImplCopyWith(_$ProfilePickerStateImpl value,
-          $Res Function(_$ProfilePickerStateImpl) then) =
-      __$$ProfilePickerStateImplCopyWithImpl<$Res>;
+  factory _$$ProfilePickerStateImplCopyWith(
+    _$ProfilePickerStateImpl value,
+    $Res Function(_$ProfilePickerStateImpl) then,
+  ) = __$$ProfilePickerStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {List<Profile> excluded,
-      StatusOf<List<Profile>, String> all,
-      List<Profile> selected});
+  $Res call({
+    List<Profile> excluded,
+    StatusOf<List<Profile>, String> all,
+    List<Profile> selected,
+  });
 
   @override
   $StatusOfCopyWith<List<Profile>, String, $Res> get all;
@@ -350,9 +372,10 @@ abstract class _$$ProfilePickerStateImplCopyWith<$Res>
 class __$$ProfilePickerStateImplCopyWithImpl<$Res>
     extends _$ProfilePickerStateCopyWithImpl<$Res, _$ProfilePickerStateImpl>
     implements _$$ProfilePickerStateImplCopyWith<$Res> {
-  __$$ProfilePickerStateImplCopyWithImpl(_$ProfilePickerStateImpl _value,
-      $Res Function(_$ProfilePickerStateImpl) _then)
-      : super(_value, _then);
+  __$$ProfilePickerStateImplCopyWithImpl(
+    _$ProfilePickerStateImpl _value,
+    $Res Function(_$ProfilePickerStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ProfilePickerState
   /// with the given fields replaced by the non-null parameter values.
@@ -363,32 +386,37 @@ class __$$ProfilePickerStateImplCopyWithImpl<$Res>
     Object? all = null,
     Object? selected = null,
   }) {
-    return _then(_$ProfilePickerStateImpl(
-      excluded: null == excluded
-          ? _value._excluded
-          : excluded // ignore: cast_nullable_to_non_nullable
-              as List<Profile>,
-      all: null == all
-          ? _value.all
-          : all // ignore: cast_nullable_to_non_nullable
-              as StatusOf<List<Profile>, String>,
-      selected: null == selected
-          ? _value._selected
-          : selected // ignore: cast_nullable_to_non_nullable
-              as List<Profile>,
-    ));
+    return _then(
+      _$ProfilePickerStateImpl(
+        excluded:
+            null == excluded
+                ? _value._excluded
+                : excluded // ignore: cast_nullable_to_non_nullable
+                    as List<Profile>,
+        all:
+            null == all
+                ? _value.all
+                : all // ignore: cast_nullable_to_non_nullable
+                    as StatusOf<List<Profile>, String>,
+        selected:
+            null == selected
+                ? _value._selected
+                : selected // ignore: cast_nullable_to_non_nullable
+                    as List<Profile>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$ProfilePickerStateImpl implements _ProfilePickerState {
-  const _$ProfilePickerStateImpl(
-      {required final List<Profile> excluded,
-      this.all = const StatusOfLoading(),
-      final List<Profile> selected = const []})
-      : _excluded = excluded,
-        _selected = selected;
+  const _$ProfilePickerStateImpl({
+    required final List<Profile> excluded,
+    this.all = const StatusOfLoading(),
+    final List<Profile> selected = const [],
+  }) : _excluded = excluded,
+       _selected = selected;
 
   final List<Profile> _excluded;
   @override
@@ -427,10 +455,11 @@ class _$ProfilePickerStateImpl implements _ProfilePickerState {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_excluded),
-      all,
-      const DeepCollectionEquality().hash(_selected));
+    runtimeType,
+    const DeepCollectionEquality().hash(_excluded),
+    all,
+    const DeepCollectionEquality().hash(_selected),
+  );
 
   /// Create a copy of ProfilePickerState
   /// with the given fields replaced by the non-null parameter values.
@@ -439,14 +468,17 @@ class _$ProfilePickerStateImpl implements _ProfilePickerState {
   @pragma('vm:prefer-inline')
   _$$ProfilePickerStateImplCopyWith<_$ProfilePickerStateImpl> get copyWith =>
       __$$ProfilePickerStateImplCopyWithImpl<_$ProfilePickerStateImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _ProfilePickerState implements ProfilePickerState {
-  const factory _ProfilePickerState(
-      {required final List<Profile> excluded,
-      final StatusOf<List<Profile>, String> all,
-      final List<Profile> selected}) = _$ProfilePickerStateImpl;
+  const factory _ProfilePickerState({
+    required final List<Profile> excluded,
+    final StatusOf<List<Profile>, String> all,
+    final List<Profile> selected,
+  }) = _$ProfilePickerStateImpl;
 
   @override
   List<Profile> get excluded;

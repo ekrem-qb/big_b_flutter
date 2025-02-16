@@ -5,7 +5,9 @@ extension AutoRouteExtension on TabsRouter {
   Future<void> navigateAll(final List<PageRouteInfo> routes) async {
     final firstRoute = routes.first;
     final path = matcher.buildPathTo(firstRoute)?.path;
-    if (path != null && (stackRouterOfIndex(activeIndex)?.currentPath.contains(path) ?? false)) {
+    if (path != null &&
+        (stackRouterOfIndex(activeIndex)?.currentPath.contains(path) ??
+            false)) {
       for (var i = 0; i < routes.length; i++) {
         await navigate(routes[i]);
       }

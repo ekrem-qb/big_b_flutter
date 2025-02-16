@@ -14,9 +14,7 @@ class RecordingsPage extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Kayıtlar'),
-      ),
+      appBar: AppBar(title: const Text('Kayıtlar')),
       body: const Lister<RecordingsBloc, Recording>.cards(
         blocCreator: RecordingsBloc.new,
         itemContentBuilder: _Item.new,
@@ -35,32 +33,26 @@ class _Item extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return ListTile(
-      title: Text(
-        recording.createdAt.toString(),
-      ),
-      subtitle: Text(
-        recording.employee.name,
-      ),
+      title: Text(recording.createdAt.toString()),
+      subtitle: Text(recording.employee.name),
       trailing: SizedBox.square(
         dimension: 24,
         child: switch (recording.processed) {
           Processing.none => const Icon(
-              Icons.font_download_off_outlined,
-              size: 24,
-            ),
+            Icons.font_download_off_outlined,
+            size: 24,
+          ),
           Processing.onlyText => const Icon(
-              Icons.report_off_outlined,
-              size: 24,
-            ),
+            Icons.report_off_outlined,
+            size: 24,
+          ),
           Processing.textAndViolations => null,
         },
       ),
-      onTap: () => context.router.push(
-        PlayerRoute(
-          recordingId: recording.id,
-          recording: recording,
-        ),
-      ),
+      onTap:
+          () => context.router.push(
+            PlayerRoute(recordingId: recording.id, recording: recording),
+          ),
     );
   }
 }

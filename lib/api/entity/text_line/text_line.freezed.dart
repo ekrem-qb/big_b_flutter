@@ -12,7 +12,8 @@ part of 'text_line.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 TextLine _$TextLineFromJson(Map<String, dynamic> json) {
   return _TextLine.fromJson(json);
@@ -64,24 +65,31 @@ class _$TextLineCopyWithImpl<$Res, $Val extends TextLine>
     Object? text = null,
     Object? isEmployee = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      time: null == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-      isEmployee: null == isEmployee
-          ? _value.isEmployee
-          : isEmployee // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as int,
+            time:
+                null == time
+                    ? _value.time
+                    : time // ignore: cast_nullable_to_non_nullable
+                        as Duration,
+            text:
+                null == text
+                    ? _value.text
+                    : text // ignore: cast_nullable_to_non_nullable
+                        as String,
+            isEmployee:
+                null == isEmployee
+                    ? _value.isEmployee
+                    : isEmployee // ignore: cast_nullable_to_non_nullable
+                        as bool,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -89,8 +97,9 @@ class _$TextLineCopyWithImpl<$Res, $Val extends TextLine>
 abstract class _$$TextLineImplCopyWith<$Res>
     implements $TextLineCopyWith<$Res> {
   factory _$$TextLineImplCopyWith(
-          _$TextLineImpl value, $Res Function(_$TextLineImpl) then) =
-      __$$TextLineImplCopyWithImpl<$Res>;
+    _$TextLineImpl value,
+    $Res Function(_$TextLineImpl) then,
+  ) = __$$TextLineImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, Duration time, String text, bool isEmployee});
@@ -101,8 +110,9 @@ class __$$TextLineImplCopyWithImpl<$Res>
     extends _$TextLineCopyWithImpl<$Res, _$TextLineImpl>
     implements _$$TextLineImplCopyWith<$Res> {
   __$$TextLineImplCopyWithImpl(
-      _$TextLineImpl _value, $Res Function(_$TextLineImpl) _then)
-      : super(_value, _then);
+    _$TextLineImpl _value,
+    $Res Function(_$TextLineImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of TextLine
   /// with the given fields replaced by the non-null parameter values.
@@ -114,35 +124,42 @@ class __$$TextLineImplCopyWithImpl<$Res>
     Object? text = null,
     Object? isEmployee = null,
   }) {
-    return _then(_$TextLineImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      time: null == time
-          ? _value.time
-          : time // ignore: cast_nullable_to_non_nullable
-              as Duration,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-      isEmployee: null == isEmployee
-          ? _value.isEmployee
-          : isEmployee // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$TextLineImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as int,
+        time:
+            null == time
+                ? _value.time
+                : time // ignore: cast_nullable_to_non_nullable
+                    as Duration,
+        text:
+            null == text
+                ? _value.text
+                : text // ignore: cast_nullable_to_non_nullable
+                    as String,
+        isEmployee:
+            null == isEmployee
+                ? _value.isEmployee
+                : isEmployee // ignore: cast_nullable_to_non_nullable
+                    as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable(createToJson: false)
 class _$TextLineImpl implements _TextLine {
-  const _$TextLineImpl(
-      {required this.id,
-      required this.time,
-      required this.text,
-      required this.isEmployee});
+  const _$TextLineImpl({
+    required this.id,
+    required this.time,
+    required this.text,
+    required this.isEmployee,
+  });
 
   factory _$TextLineImpl.fromJson(Map<String, dynamic> json) =>
       _$$TextLineImplFromJson(json);
@@ -191,11 +208,12 @@ class _$TextLineImpl implements _TextLine {
 }
 
 abstract class _TextLine implements TextLine {
-  const factory _TextLine(
-      {required final int id,
-      required final Duration time,
-      required final String text,
-      required final bool isEmployee}) = _$TextLineImpl;
+  const factory _TextLine({
+    required final int id,
+    required final Duration time,
+    required final String text,
+    required final bool isEmployee,
+  }) = _$TextLineImpl;
 
   factory _TextLine.fromJson(Map<String, dynamic> json) =
       _$TextLineImpl.fromJson;

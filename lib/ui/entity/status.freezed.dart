@@ -12,7 +12,8 @@ part of 'status.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$OperationStatus<E> {}
@@ -20,8 +21,9 @@ mixin _$OperationStatus<E> {}
 /// @nodoc
 abstract class $OperationStatusCopyWith<E, $Res> {
   factory $OperationStatusCopyWith(
-          OperationStatus<E> value, $Res Function(OperationStatus<E>) then) =
-      _$OperationStatusCopyWithImpl<E, $Res, OperationStatus<E>>;
+    OperationStatus<E> value,
+    $Res Function(OperationStatus<E>) then,
+  ) = _$OperationStatusCopyWithImpl<E, $Res, OperationStatus<E>>;
 }
 
 /// @nodoc
@@ -41,20 +43,20 @@ class _$OperationStatusCopyWithImpl<E, $Res, $Val extends OperationStatus<E>>
 /// @nodoc
 abstract class _$$OperationStatusInitialImplCopyWith<E, $Res> {
   factory _$$OperationStatusInitialImplCopyWith(
-          _$OperationStatusInitialImpl<E> value,
-          $Res Function(_$OperationStatusInitialImpl<E>) then) =
-      __$$OperationStatusInitialImplCopyWithImpl<E, $Res>;
+    _$OperationStatusInitialImpl<E> value,
+    $Res Function(_$OperationStatusInitialImpl<E>) then,
+  ) = __$$OperationStatusInitialImplCopyWithImpl<E, $Res>;
 }
 
 /// @nodoc
 class __$$OperationStatusInitialImplCopyWithImpl<E, $Res>
-    extends _$OperationStatusCopyWithImpl<E, $Res,
-        _$OperationStatusInitialImpl<E>>
+    extends
+        _$OperationStatusCopyWithImpl<E, $Res, _$OperationStatusInitialImpl<E>>
     implements _$$OperationStatusInitialImplCopyWith<E, $Res> {
   __$$OperationStatusInitialImplCopyWithImpl(
-      _$OperationStatusInitialImpl<E> _value,
-      $Res Function(_$OperationStatusInitialImpl<E>) _then)
-      : super(_value, _then);
+    _$OperationStatusInitialImpl<E> _value,
+    $Res Function(_$OperationStatusInitialImpl<E>) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of OperationStatus
   /// with the given fields replaced by the non-null parameter values.
@@ -88,20 +90,24 @@ abstract class OperationStatusInitial<E> implements OperationStatus<E> {
 /// @nodoc
 abstract class _$$OperationStatusInProgressImplCopyWith<E, $Res> {
   factory _$$OperationStatusInProgressImplCopyWith(
-          _$OperationStatusInProgressImpl<E> value,
-          $Res Function(_$OperationStatusInProgressImpl<E>) then) =
-      __$$OperationStatusInProgressImplCopyWithImpl<E, $Res>;
+    _$OperationStatusInProgressImpl<E> value,
+    $Res Function(_$OperationStatusInProgressImpl<E>) then,
+  ) = __$$OperationStatusInProgressImplCopyWithImpl<E, $Res>;
 }
 
 /// @nodoc
 class __$$OperationStatusInProgressImplCopyWithImpl<E, $Res>
-    extends _$OperationStatusCopyWithImpl<E, $Res,
-        _$OperationStatusInProgressImpl<E>>
+    extends
+        _$OperationStatusCopyWithImpl<
+          E,
+          $Res,
+          _$OperationStatusInProgressImpl<E>
+        >
     implements _$$OperationStatusInProgressImplCopyWith<E, $Res> {
   __$$OperationStatusInProgressImplCopyWithImpl(
-      _$OperationStatusInProgressImpl<E> _value,
-      $Res Function(_$OperationStatusInProgressImpl<E>) _then)
-      : super(_value, _then);
+    _$OperationStatusInProgressImpl<E> _value,
+    $Res Function(_$OperationStatusInProgressImpl<E>) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of OperationStatus
   /// with the given fields replaced by the non-null parameter values.
@@ -137,35 +143,36 @@ abstract class OperationStatusInProgress<E> implements OperationStatus<E> {
 /// @nodoc
 abstract class _$$OperationStatusErrorImplCopyWith<E, $Res> {
   factory _$$OperationStatusErrorImplCopyWith(
-          _$OperationStatusErrorImpl<E> value,
-          $Res Function(_$OperationStatusErrorImpl<E>) then) =
-      __$$OperationStatusErrorImplCopyWithImpl<E, $Res>;
+    _$OperationStatusErrorImpl<E> value,
+    $Res Function(_$OperationStatusErrorImpl<E>) then,
+  ) = __$$OperationStatusErrorImplCopyWithImpl<E, $Res>;
   @useResult
   $Res call({E error});
 }
 
 /// @nodoc
 class __$$OperationStatusErrorImplCopyWithImpl<E, $Res>
-    extends _$OperationStatusCopyWithImpl<E, $Res,
-        _$OperationStatusErrorImpl<E>>
+    extends
+        _$OperationStatusCopyWithImpl<E, $Res, _$OperationStatusErrorImpl<E>>
     implements _$$OperationStatusErrorImplCopyWith<E, $Res> {
-  __$$OperationStatusErrorImplCopyWithImpl(_$OperationStatusErrorImpl<E> _value,
-      $Res Function(_$OperationStatusErrorImpl<E>) _then)
-      : super(_value, _then);
+  __$$OperationStatusErrorImplCopyWithImpl(
+    _$OperationStatusErrorImpl<E> _value,
+    $Res Function(_$OperationStatusErrorImpl<E>) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of OperationStatus
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? error = freezed,
-  }) {
-    return _then(_$OperationStatusErrorImpl<E>(
-      freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as E,
-    ));
+  $Res call({Object? error = freezed}) {
+    return _then(
+      _$OperationStatusErrorImpl<E>(
+        freezed == error
+            ? _value.error
+            : error // ignore: cast_nullable_to_non_nullable
+                as E,
+      ),
+    );
   }
 }
 
@@ -200,8 +207,10 @@ class _$OperationStatusErrorImpl<E> implements OperationStatusError<E> {
   @override
   @pragma('vm:prefer-inline')
   _$$OperationStatusErrorImplCopyWith<E, _$OperationStatusErrorImpl<E>>
-      get copyWith => __$$OperationStatusErrorImplCopyWithImpl<E,
-          _$OperationStatusErrorImpl<E>>(this, _$identity);
+  get copyWith => __$$OperationStatusErrorImplCopyWithImpl<
+    E,
+    _$OperationStatusErrorImpl<E>
+  >(this, _$identity);
 }
 
 abstract class OperationStatusError<E> implements OperationStatus<E> {
@@ -214,26 +223,30 @@ abstract class OperationStatusError<E> implements OperationStatus<E> {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OperationStatusErrorImplCopyWith<E, _$OperationStatusErrorImpl<E>>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$OperationStatusCompletedImplCopyWith<E, $Res> {
   factory _$$OperationStatusCompletedImplCopyWith(
-          _$OperationStatusCompletedImpl<E> value,
-          $Res Function(_$OperationStatusCompletedImpl<E>) then) =
-      __$$OperationStatusCompletedImplCopyWithImpl<E, $Res>;
+    _$OperationStatusCompletedImpl<E> value,
+    $Res Function(_$OperationStatusCompletedImpl<E>) then,
+  ) = __$$OperationStatusCompletedImplCopyWithImpl<E, $Res>;
 }
 
 /// @nodoc
 class __$$OperationStatusCompletedImplCopyWithImpl<E, $Res>
-    extends _$OperationStatusCopyWithImpl<E, $Res,
-        _$OperationStatusCompletedImpl<E>>
+    extends
+        _$OperationStatusCopyWithImpl<
+          E,
+          $Res,
+          _$OperationStatusCompletedImpl<E>
+        >
     implements _$$OperationStatusCompletedImplCopyWith<E, $Res> {
   __$$OperationStatusCompletedImplCopyWithImpl(
-      _$OperationStatusCompletedImpl<E> _value,
-      $Res Function(_$OperationStatusCompletedImpl<E>) _then)
-      : super(_value, _then);
+    _$OperationStatusCompletedImpl<E> _value,
+    $Res Function(_$OperationStatusCompletedImpl<E>) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of OperationStatus
   /// with the given fields replaced by the non-null parameter values.
@@ -289,18 +302,20 @@ class _$StatusCopyWithImpl<E, $Res, $Val extends Status<E>>
 
 /// @nodoc
 abstract class _$$StatusLoadingImplCopyWith<E, $Res> {
-  factory _$$StatusLoadingImplCopyWith(_$StatusLoadingImpl<E> value,
-          $Res Function(_$StatusLoadingImpl<E>) then) =
-      __$$StatusLoadingImplCopyWithImpl<E, $Res>;
+  factory _$$StatusLoadingImplCopyWith(
+    _$StatusLoadingImpl<E> value,
+    $Res Function(_$StatusLoadingImpl<E>) then,
+  ) = __$$StatusLoadingImplCopyWithImpl<E, $Res>;
 }
 
 /// @nodoc
 class __$$StatusLoadingImplCopyWithImpl<E, $Res>
     extends _$StatusCopyWithImpl<E, $Res, _$StatusLoadingImpl<E>>
     implements _$$StatusLoadingImplCopyWith<E, $Res> {
-  __$$StatusLoadingImplCopyWithImpl(_$StatusLoadingImpl<E> _value,
-      $Res Function(_$StatusLoadingImpl<E>) _then)
-      : super(_value, _then);
+  __$$StatusLoadingImplCopyWithImpl(
+    _$StatusLoadingImpl<E> _value,
+    $Res Function(_$StatusLoadingImpl<E>) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Status
   /// with the given fields replaced by the non-null parameter values.
@@ -332,9 +347,10 @@ abstract class StatusLoading<E> implements Status<E> {
 
 /// @nodoc
 abstract class _$$StatusErrorImplCopyWith<E, $Res> {
-  factory _$$StatusErrorImplCopyWith(_$StatusErrorImpl<E> value,
-          $Res Function(_$StatusErrorImpl<E>) then) =
-      __$$StatusErrorImplCopyWithImpl<E, $Res>;
+  factory _$$StatusErrorImplCopyWith(
+    _$StatusErrorImpl<E> value,
+    $Res Function(_$StatusErrorImpl<E>) then,
+  ) = __$$StatusErrorImplCopyWithImpl<E, $Res>;
   @useResult
   $Res call({E error});
 }
@@ -344,22 +360,23 @@ class __$$StatusErrorImplCopyWithImpl<E, $Res>
     extends _$StatusCopyWithImpl<E, $Res, _$StatusErrorImpl<E>>
     implements _$$StatusErrorImplCopyWith<E, $Res> {
   __$$StatusErrorImplCopyWithImpl(
-      _$StatusErrorImpl<E> _value, $Res Function(_$StatusErrorImpl<E>) _then)
-      : super(_value, _then);
+    _$StatusErrorImpl<E> _value,
+    $Res Function(_$StatusErrorImpl<E>) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Status
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? error = freezed,
-  }) {
-    return _then(_$StatusErrorImpl<E>(
-      freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as E,
-    ));
+  $Res call({Object? error = freezed}) {
+    return _then(
+      _$StatusErrorImpl<E>(
+        freezed == error
+            ? _value.error
+            : error // ignore: cast_nullable_to_non_nullable
+                as E,
+      ),
+    );
   }
 }
 
@@ -395,7 +412,9 @@ class _$StatusErrorImpl<E> implements StatusError<E> {
   @pragma('vm:prefer-inline')
   _$$StatusErrorImplCopyWith<E, _$StatusErrorImpl<E>> get copyWith =>
       __$$StatusErrorImplCopyWithImpl<E, _$StatusErrorImpl<E>>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class StatusError<E> implements Status<E> {
@@ -412,18 +431,20 @@ abstract class StatusError<E> implements Status<E> {
 
 /// @nodoc
 abstract class _$$StatusCompletedImplCopyWith<E, $Res> {
-  factory _$$StatusCompletedImplCopyWith(_$StatusCompletedImpl<E> value,
-          $Res Function(_$StatusCompletedImpl<E>) then) =
-      __$$StatusCompletedImplCopyWithImpl<E, $Res>;
+  factory _$$StatusCompletedImplCopyWith(
+    _$StatusCompletedImpl<E> value,
+    $Res Function(_$StatusCompletedImpl<E>) then,
+  ) = __$$StatusCompletedImplCopyWithImpl<E, $Res>;
 }
 
 /// @nodoc
 class __$$StatusCompletedImplCopyWithImpl<E, $Res>
     extends _$StatusCopyWithImpl<E, $Res, _$StatusCompletedImpl<E>>
     implements _$$StatusCompletedImplCopyWith<E, $Res> {
-  __$$StatusCompletedImplCopyWithImpl(_$StatusCompletedImpl<E> _value,
-      $Res Function(_$StatusCompletedImpl<E>) _then)
-      : super(_value, _then);
+  __$$StatusCompletedImplCopyWithImpl(
+    _$StatusCompletedImpl<E> _value,
+    $Res Function(_$StatusCompletedImpl<E>) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Status
   /// with the given fields replaced by the non-null parameter values.
@@ -459,8 +480,9 @@ mixin _$StatusOf<D, E> {}
 /// @nodoc
 abstract class $StatusOfCopyWith<D, E, $Res> {
   factory $StatusOfCopyWith(
-          StatusOf<D, E> value, $Res Function(StatusOf<D, E>) then) =
-      _$StatusOfCopyWithImpl<D, E, $Res, StatusOf<D, E>>;
+    StatusOf<D, E> value,
+    $Res Function(StatusOf<D, E>) then,
+  ) = _$StatusOfCopyWithImpl<D, E, $Res, StatusOf<D, E>>;
 }
 
 /// @nodoc
@@ -479,9 +501,10 @@ class _$StatusOfCopyWithImpl<D, E, $Res, $Val extends StatusOf<D, E>>
 
 /// @nodoc
 abstract class _$$StatusOfDataImplCopyWith<D, E, $Res> {
-  factory _$$StatusOfDataImplCopyWith(_$StatusOfDataImpl<D, E> value,
-          $Res Function(_$StatusOfDataImpl<D, E>) then) =
-      __$$StatusOfDataImplCopyWithImpl<D, E, $Res>;
+  factory _$$StatusOfDataImplCopyWith(
+    _$StatusOfDataImpl<D, E> value,
+    $Res Function(_$StatusOfDataImpl<D, E>) then,
+  ) = __$$StatusOfDataImplCopyWithImpl<D, E, $Res>;
   @useResult
   $Res call({D data});
 }
@@ -490,23 +513,24 @@ abstract class _$$StatusOfDataImplCopyWith<D, E, $Res> {
 class __$$StatusOfDataImplCopyWithImpl<D, E, $Res>
     extends _$StatusOfCopyWithImpl<D, E, $Res, _$StatusOfDataImpl<D, E>>
     implements _$$StatusOfDataImplCopyWith<D, E, $Res> {
-  __$$StatusOfDataImplCopyWithImpl(_$StatusOfDataImpl<D, E> _value,
-      $Res Function(_$StatusOfDataImpl<D, E>) _then)
-      : super(_value, _then);
+  __$$StatusOfDataImplCopyWithImpl(
+    _$StatusOfDataImpl<D, E> _value,
+    $Res Function(_$StatusOfDataImpl<D, E>) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of StatusOf
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? data = freezed,
-  }) {
-    return _then(_$StatusOfDataImpl<D, E>(
-      freezed == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as D,
-    ));
+  $Res call({Object? data = freezed}) {
+    return _then(
+      _$StatusOfDataImpl<D, E>(
+        freezed == data
+            ? _value.data
+            : data // ignore: cast_nullable_to_non_nullable
+                as D,
+      ),
+    );
   }
 }
 
@@ -542,7 +566,9 @@ class _$StatusOfDataImpl<D, E> implements StatusOfData<D, E> {
   @pragma('vm:prefer-inline')
   _$$StatusOfDataImplCopyWith<D, E, _$StatusOfDataImpl<D, E>> get copyWith =>
       __$$StatusOfDataImplCopyWithImpl<D, E, _$StatusOfDataImpl<D, E>>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class StatusOfData<D, E> implements StatusOf<D, E> {
@@ -559,18 +585,20 @@ abstract class StatusOfData<D, E> implements StatusOf<D, E> {
 
 /// @nodoc
 abstract class _$$StatusOfLoadingImplCopyWith<D, E, $Res> {
-  factory _$$StatusOfLoadingImplCopyWith(_$StatusOfLoadingImpl<D, E> value,
-          $Res Function(_$StatusOfLoadingImpl<D, E>) then) =
-      __$$StatusOfLoadingImplCopyWithImpl<D, E, $Res>;
+  factory _$$StatusOfLoadingImplCopyWith(
+    _$StatusOfLoadingImpl<D, E> value,
+    $Res Function(_$StatusOfLoadingImpl<D, E>) then,
+  ) = __$$StatusOfLoadingImplCopyWithImpl<D, E, $Res>;
 }
 
 /// @nodoc
 class __$$StatusOfLoadingImplCopyWithImpl<D, E, $Res>
     extends _$StatusOfCopyWithImpl<D, E, $Res, _$StatusOfLoadingImpl<D, E>>
     implements _$$StatusOfLoadingImplCopyWith<D, E, $Res> {
-  __$$StatusOfLoadingImplCopyWithImpl(_$StatusOfLoadingImpl<D, E> _value,
-      $Res Function(_$StatusOfLoadingImpl<D, E>) _then)
-      : super(_value, _then);
+  __$$StatusOfLoadingImplCopyWithImpl(
+    _$StatusOfLoadingImpl<D, E> _value,
+    $Res Function(_$StatusOfLoadingImpl<D, E>) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of StatusOf
   /// with the given fields replaced by the non-null parameter values.
@@ -603,9 +631,10 @@ abstract class StatusOfLoading<D, E> implements StatusOf<D, E> {
 
 /// @nodoc
 abstract class _$$StatusOfErrorImplCopyWith<D, E, $Res> {
-  factory _$$StatusOfErrorImplCopyWith(_$StatusOfErrorImpl<D, E> value,
-          $Res Function(_$StatusOfErrorImpl<D, E>) then) =
-      __$$StatusOfErrorImplCopyWithImpl<D, E, $Res>;
+  factory _$$StatusOfErrorImplCopyWith(
+    _$StatusOfErrorImpl<D, E> value,
+    $Res Function(_$StatusOfErrorImpl<D, E>) then,
+  ) = __$$StatusOfErrorImplCopyWithImpl<D, E, $Res>;
   @useResult
   $Res call({E error});
 }
@@ -614,23 +643,24 @@ abstract class _$$StatusOfErrorImplCopyWith<D, E, $Res> {
 class __$$StatusOfErrorImplCopyWithImpl<D, E, $Res>
     extends _$StatusOfCopyWithImpl<D, E, $Res, _$StatusOfErrorImpl<D, E>>
     implements _$$StatusOfErrorImplCopyWith<D, E, $Res> {
-  __$$StatusOfErrorImplCopyWithImpl(_$StatusOfErrorImpl<D, E> _value,
-      $Res Function(_$StatusOfErrorImpl<D, E>) _then)
-      : super(_value, _then);
+  __$$StatusOfErrorImplCopyWithImpl(
+    _$StatusOfErrorImpl<D, E> _value,
+    $Res Function(_$StatusOfErrorImpl<D, E>) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of StatusOf
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? error = freezed,
-  }) {
-    return _then(_$StatusOfErrorImpl<D, E>(
-      freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as E,
-    ));
+  $Res call({Object? error = freezed}) {
+    return _then(
+      _$StatusOfErrorImpl<D, E>(
+        freezed == error
+            ? _value.error
+            : error // ignore: cast_nullable_to_non_nullable
+                as E,
+      ),
+    );
   }
 }
 
@@ -666,7 +696,9 @@ class _$StatusOfErrorImpl<D, E> implements StatusOfError<D, E> {
   @pragma('vm:prefer-inline')
   _$$StatusOfErrorImplCopyWith<D, E, _$StatusOfErrorImpl<D, E>> get copyWith =>
       __$$StatusOfErrorImplCopyWithImpl<D, E, _$StatusOfErrorImpl<D, E>>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class StatusOfError<D, E> implements StatusOf<D, E> {
