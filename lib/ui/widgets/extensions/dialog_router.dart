@@ -1,20 +1,56 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/physics.dart';
 import 'package:provider/provider.dart';
 
 // The curve and initial scale values were mostly eyeballed from iOS, however
 // they reuse the same animation curve that was modeled after native page
 // transitions.
-final Animatable<double> _dialogScaleTween = Tween<double>(
-  begin: 1.3,
-  end: 1,
-).chain(CurveTween(curve: Curves.linearToEaseOut));
+final Animatable<double> _dialogScaleTween = Tween<double>(begin: 1.3, end: 1);
 const _transitionDuration = Durations.medium1;
 const Color kCupertinoModalBarrierColor = CupertinoDynamicColor.withBrightness(
   color: Color(0x33000000),
   darkColor: Color(0x7A000000),
 );
+// The stiffness used by dialogs and action sheets.
+//
+// The stiffness value is obtained by examining the properties of
+// `CASpringAnimation` in Xcode. The damping value is derived similarly, with
+// additional precision calculated based on `_kStandardStiffness` to ensure a
+// damping ratio of 1 (critically damped): damping = 2 * sqrt(stiffness)
+const double _kStandardStiffness = 522.35;
+const double _kStandardDamping = 45.7099552;
+const SpringDescription _kStandardSpring = SpringDescription(
+  mass: 1,
+  stiffness: _kStandardStiffness,
+  damping: _kStandardDamping,
+);
+// The iOS spring animation duration is 0.404 seconds, based on the properties
+// of `CASpringAnimation` in Xcode. At this point, the spring's position
+// `x(0.404)` is approximately 0.9990000, suggesting that iOS uses a position
+// tolerance of 1e-3 (matching the default `_epsilonDefault` value).
+//
+// However, the spring's velocity `dx(0.404)` is about 0.02, indicating that iOS
+// may not consider velocity when determining the animation's end condition. To
+// account for this, a larger velocity tolerance is applied here for added
+// safety.
+const Tolerance _kStandardTolerance = Tolerance(velocity: 0.03);
+
+Simulation _createCupertinoDialogSimulation({
+  required final bool forward,
+  required final double currentValue,
+}) {
+  final end = forward ? 1.0 : 0.0;
+  return SpringSimulation(
+    _kStandardSpring,
+    currentValue,
+    end,
+    0,
+    tolerance: _kStandardTolerance,
+    snapToEnd: true,
+  );
+}
 
 Widget _buildCupertinoDialogTransitions(
   final BuildContext context,
@@ -22,15 +58,11 @@ Widget _buildCupertinoDialogTransitions(
   final Animation<double> secondaryAnimation,
   final Widget child,
 ) {
-  final fadeAnimation = CurvedAnimation(
-    parent: animation,
-    curve: Curves.easeInOut,
-  );
   if (animation.status == AnimationStatus.reverse) {
-    return FadeTransition(opacity: fadeAnimation, child: child);
+    return FadeTransition(opacity: animation, child: child);
   }
   return FadeTransition(
-    opacity: fadeAnimation,
+    opacity: animation,
     child: ScaleTransition(
       scale: animation.drive(_dialogScaleTween),
       child: child,
@@ -71,7 +103,12 @@ class _DialogRouterState extends State<DialogRouter> {
         final isOpen = context.router.hasEntries;
 
         if (isOpen) {
-          _animationController.forward();
+          _animationController.animateWith(
+            _createCupertinoDialogSimulation(
+              forward: true,
+              currentValue: _animationController.value,
+            ),
+          );
         }
 
         return ListenableProvider.value(
@@ -206,8 +243,14 @@ mixin DialogRouteTransitionMixin<T> on PageRoute<T> {
     return PopScope(
       canPop: false,
       onPopInvokedWithResult:
-          (final didPop, final result) =>
-              animationController?.reverse().then((final _) {
+          (final didPop, final result) => animationController
+              ?.animateBackWith(
+                _createCupertinoDialogSimulation(
+                  forward: false,
+                  currentValue: animationController.value,
+                ),
+              )
+              .then((final _) {
                 if (context.mounted) {
                   context.router.removeLast();
                 }
