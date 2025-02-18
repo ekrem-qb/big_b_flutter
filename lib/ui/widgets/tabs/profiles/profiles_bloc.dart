@@ -22,11 +22,11 @@ class ProfilesBloc extends ListerBloc<Profile> {
   String get idFieldKey => $ProfileImplJsonKeys.uid;
 
   @override
-  List<Profile>? Function(List<Map<String, dynamic>> data) get converter =>
+  List<Profile>? Function(List<Map<String, Object?>> data) get converter =>
       Profile.converter;
 
   @override
-  Profile Function(Map<String, dynamic> json) get fromJson => Profile.fromJson;
+  Profile Function(Map<String, Object?> json) get fromJson => Profile.fromJson;
 
   @override
   bool Function(Profile a, Profile b) get isAfter =>

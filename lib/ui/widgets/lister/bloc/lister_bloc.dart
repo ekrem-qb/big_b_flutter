@@ -82,8 +82,8 @@ abstract class ListerBloc<T extends Entity>
   String get orderBy;
   bool get ascending;
   String get idFieldKey;
-  List<T>? Function(List<Map<String, dynamic>> data) get converter;
-  T Function(Map<String, dynamic> json) get fromJson;
+  List<T>? Function(List<Map<String, Object?>> data) get converter;
+  T Function(Map<String, Object?> json) get fromJson;
   bool Function(T a, T b) get isAfter;
   ListerFilters<T>? get filters;
 
@@ -290,7 +290,7 @@ abstract class ListerBloc<T extends Entity>
   }
 
   List<T>? _deleteFromList(
-    final Map<String, dynamic> oldRecord,
+    final Map<String, Object?> oldRecord,
     final List<T> items,
   ) {
     final id = oldRecord[idFieldKey];

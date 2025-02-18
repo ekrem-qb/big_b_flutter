@@ -20,7 +20,7 @@ class PlannedTask with _$PlannedTask implements Entity {
     @JsonKey(includeToJson: false) required final List<Profile> executives,
   }) = _PlannedTask;
 
-  factory PlannedTask.fromJson(final Map<String, dynamic> json) =>
+  factory PlannedTask.fromJson(final Map<String, Object?> json) =>
       _$PlannedTaskFromJson(json);
 
   static const tableName = 'planned_tasks';
@@ -36,6 +36,6 @@ class PlannedTask with _$PlannedTask implements Entity {
   static final fieldNames =
       '${joinTables.join(',')},${_$$PlannedTaskImplFieldMap.values.toSet().difference(joinTables.map((final e) => e.joinFieldName).toSet()).join(',')}';
 
-  static List<PlannedTask>? converter(final List<Map<String, dynamic>> data) =>
+  static List<PlannedTask>? converter(final List<Map<String, Object?>> data) =>
       data.map(PlannedTask.fromJson).toList();
 }

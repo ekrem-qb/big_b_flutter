@@ -26,10 +26,10 @@ sealed class Violation with _$Violation implements Entity {
     required final int endIndex,
   }) = HighlightViolation;
 
-  factory Violation.fromJson(final Map<String, dynamic> json) =>
+  factory Violation.fromJson(final Map<String, Object?> json) =>
       _$ViolationFromJson(json);
 
-  static Violation? maybeFromJson(final Map<String, dynamic>? json) =>
+  static Violation? maybeFromJson(final Map<String, Object?>? json) =>
       json != null ? _$ViolationFromJson(json) : null;
 
   static const tableName = 'violations';
@@ -53,6 +53,6 @@ sealed class Violation with _$Violation implements Entity {
   static final fieldNames =
       '${joinTables.join(',')},${{..._$$NormalViolationImplFieldMap.values, ..._$$HighlightViolationImplFieldMap.values}.join(',')}';
 
-  static List<Violation>? converter(final List<Map<String, dynamic>> data) =>
+  static List<Violation>? converter(final List<Map<String, Object?>> data) =>
       data.map(Violation.fromJson).toList();
 }

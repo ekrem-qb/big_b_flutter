@@ -22,11 +22,11 @@ class PlannedTasksBloc extends ListerBloc<PlannedTask> {
   String get idFieldKey => $PlannedTaskImplJsonKeys.id;
 
   @override
-  List<PlannedTask>? Function(List<Map<String, dynamic>> data) get converter =>
+  List<PlannedTask>? Function(List<Map<String, Object?>> data) get converter =>
       PlannedTask.converter;
 
   @override
-  PlannedTask Function(Map<String, dynamic> json) get fromJson =>
+  PlannedTask Function(Map<String, Object?> json) get fromJson =>
       PlannedTask.fromJson;
 
   @override

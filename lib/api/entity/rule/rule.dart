@@ -31,7 +31,7 @@ sealed class Rule with _$Rule implements Entity {
     required final Color color,
   }) = CustomRule;
 
-  factory Rule.fromJson(final Map<String, dynamic> json) =>
+  factory Rule.fromJson(final Map<String, Object?> json) =>
       _$RuleFromJson(json);
 
   static const tableName = 'rules';
@@ -42,7 +42,7 @@ sealed class Rule with _$Rule implements Entity {
     ..._$$CustomRuleImplFieldMap.values,
   }.join(',');
 
-  static List<Rule>? converter(final List<Map<String, dynamic>> data) =>
+  static List<Rule>? converter(final List<Map<String, Object?>> data) =>
       data.map(Rule.fromJson).toList();
 }
 

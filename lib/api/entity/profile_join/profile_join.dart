@@ -12,6 +12,6 @@ class ProfileJoin with _$ProfileJoin implements Entity {
     required final String profile,
   }) = _ProfileJoin;
 
-  factory ProfileJoin.fromJson(final Map<String, dynamic> json) =>
+  factory ProfileJoin.fromJson(final Map<String, Object?> json) =>
       _$ProfileJoinFromJson(json);
 }

@@ -21,7 +21,7 @@ class Profile with _$Profile implements Entity {
 
   const Profile._();
 
-  factory Profile.fromJson(final Map<String, dynamic> json) =>
+  factory Profile.fromJson(final Map<String, Object?> json) =>
       _$ProfileFromJson(json);
 
   @override
@@ -31,7 +31,7 @@ class Profile with _$Profile implements Entity {
   static const joinTables = <JoinTable>[];
   static final fieldNames = _$$ProfileImplFieldMap.values.join(',');
 
-  static List<Profile>? converter(final List<Map<String, dynamic>> data) =>
+  static List<Profile>? converter(final List<Map<String, Object?>> data) =>
       data.map(Profile.fromJson).toList();
 }
 

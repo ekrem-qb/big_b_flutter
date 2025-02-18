@@ -22,11 +22,11 @@ class RulesBloc extends ListerBloc<Rule> {
   String get idFieldKey => $CustomRuleImplJsonKeys.id;
 
   @override
-  List<Rule>? Function(List<Map<String, dynamic>> data) get converter =>
+  List<Rule>? Function(List<Map<String, Object?>> data) get converter =>
       Rule.converter;
 
   @override
-  Rule Function(Map<String, dynamic> json) get fromJson => Rule.fromJson;
+  Rule Function(Map<String, Object?> json) get fromJson => Rule.fromJson;
 
   @override
   bool Function(Rule a, Rule b) get isAfter =>

@@ -31,11 +31,11 @@ class ViolationsBloc extends ListerBloc<Violation> {
   String get idFieldKey => $NormalViolationImplJsonKeys.id;
 
   @override
-  List<Violation>? Function(List<Map<String, dynamic>> data) get converter =>
+  List<Violation>? Function(List<Map<String, Object?>> data) get converter =>
       Violation.converter;
 
   @override
-  Violation Function(Map<String, dynamic> json) get fromJson =>
+  Violation Function(Map<String, Object?> json) get fromJson =>
       Violation.fromJson;
 
   @override

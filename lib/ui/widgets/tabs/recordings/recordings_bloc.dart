@@ -22,11 +22,11 @@ class RecordingsBloc extends ListerBloc<Recording> {
   String get idFieldKey => $RecordingImplJsonKeys.id;
 
   @override
-  List<Recording>? Function(List<Map<String, dynamic>> data) get converter =>
+  List<Recording>? Function(List<Map<String, Object?>> data) get converter =>
       Recording.converter;
 
   @override
-  Recording Function(Map<String, dynamic> json) get fromJson =>
+  Recording Function(Map<String, Object?> json) get fromJson =>
       Recording.fromJson;
 
   @override
