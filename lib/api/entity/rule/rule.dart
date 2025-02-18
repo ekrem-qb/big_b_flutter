@@ -2,14 +2,13 @@ import 'dart:ui';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../entity.dart';
 import '../join_table.dart';
 
 part 'rule.freezed.dart';
 part 'rule.g.dart';
 
 @freezed
-sealed class Rule with _$Rule implements Entity {
+sealed class Rule with _$Rule {
   const factory Rule.words({
     @JsonKey(includeToJson: false) required final int id,
     required final Set<String> words,

@@ -19,9 +19,6 @@ class RulesBloc extends ListerBloc<Rule> {
   bool get ascending => false;
 
   @override
-  String get idFieldKey => $CustomRuleImplJsonKeys.id;
-
-  @override
   List<Rule>? Function(List<Map<String, Object?>> data) get converter =>
       Rule.converter;
 
@@ -31,6 +28,10 @@ class RulesBloc extends ListerBloc<Rule> {
   @override
   bool Function(Rule a, Rule b) get isAfter =>
       (final a, final b) => a.id > b.id;
+
+  @override
+  bool Function(Map<String, Object?> a, Rule b) get isSame =>
+      (final a, final b) => a[$CustomRuleImplJsonKeys.id] == b.id;
 
   @override
   ListerFilters<Rule>? get filters => null;

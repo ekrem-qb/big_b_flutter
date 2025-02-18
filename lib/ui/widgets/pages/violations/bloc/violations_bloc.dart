@@ -28,9 +28,6 @@ class ViolationsBloc extends ListerBloc<Violation> {
   bool get ascending => sortNewFirst;
 
   @override
-  String get idFieldKey => $NormalViolationImplJsonKeys.id;
-
-  @override
   List<Violation>? Function(List<Map<String, Object?>> data) get converter =>
       Violation.converter;
 
@@ -41,6 +38,10 @@ class ViolationsBloc extends ListerBloc<Violation> {
   @override
   bool Function(Violation a, Violation b) get isAfter =>
       (final a, final b) => sortNewFirst ? a.id > b.id : a.id < b.id;
+
+  @override
+  bool Function(Map<String, Object?> a, Violation b) get isSame =>
+      (final a, final b) => a[$NormalViolationImplJsonKeys.id] == b.id;
 
   @override
   ListerFilters<Violation>? get filters =>

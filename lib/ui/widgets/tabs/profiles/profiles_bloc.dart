@@ -19,9 +19,6 @@ class ProfilesBloc extends ListerBloc<Profile> {
   bool get ascending => false;
 
   @override
-  String get idFieldKey => $ProfileImplJsonKeys.uid;
-
-  @override
   List<Profile>? Function(List<Map<String, Object?>> data) get converter =>
       Profile.converter;
 
@@ -31,6 +28,10 @@ class ProfilesBloc extends ListerBloc<Profile> {
   @override
   bool Function(Profile a, Profile b) get isAfter =>
       (final a, final b) => a.createdAt.isAfter(b.createdAt);
+
+  @override
+  bool Function(Map<String, Object?> a, Profile b) get isSame =>
+      (final a, final b) => a[$ProfileImplJsonKeys.uid] == b.uid;
 
   @override
   ListerFilters<Profile>? get filters => null;

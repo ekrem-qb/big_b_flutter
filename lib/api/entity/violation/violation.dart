@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../entity.dart';
 import '../join_table.dart';
 import '../recording/recording.dart';
 import '../rule/rule.dart';
@@ -10,7 +9,7 @@ part 'violation.freezed.dart';
 part 'violation.g.dart';
 
 @Freezed(toJson: false)
-sealed class Violation with _$Violation implements Entity {
+sealed class Violation with _$Violation {
   factory Violation.normal({
     required final int id,
     required final Rule rule,

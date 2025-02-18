@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../api/entity/entity.dart';
 import '../../entity/status.dart';
 import '../error_panel.dart';
 import '../extensions/fade_transition_builder.dart';
@@ -17,8 +16,7 @@ typedef ItemContentBuilder<TItem> = Widget Function(TItem);
 typedef ListBuilder<TBloc, TItem> =
     Widget Function(int totalCount, ItemBuilder<TItem> itemBuilder);
 
-class Lister<TBloc extends ListerBloc<TItem>, TItem extends Entity>
-    extends StatelessWidget {
+class Lister<TBloc extends ListerBloc<TItem>, TItem> extends StatelessWidget {
   const Lister({
     required this.blocCreator,
     required this.listBuilder,
@@ -62,10 +60,10 @@ class Lister<TBloc extends ListerBloc<TItem>, TItem extends Entity>
     };
   }
 
-  static Widget buildCardsList<
-    TBloc extends ListerBloc<TItem>,
-    TItem extends Entity
-  >(final int totalCount, final ItemBuilder<TItem> itemBuilder) {
+  static Widget buildCardsList<TBloc extends ListerBloc<TItem>, TItem>(
+    final int totalCount,
+    final ItemBuilder<TItem> itemBuilder,
+  ) {
     return SmoothMouseScroll(
       builder: (final context, final child, final controller, final physics) {
         return ListView.builder(
@@ -95,7 +93,7 @@ class Lister<TBloc extends ListerBloc<TItem>, TItem extends Entity>
   }
 }
 
-class _ItemsList<TBloc extends ListerBloc<TItem>, TItem extends Entity>
+class _ItemsList<TBloc extends ListerBloc<TItem>, TItem>
     extends StatelessWidget {
   const _ItemsList(
     this.listBuilder,
@@ -137,7 +135,7 @@ class _ItemsList<TBloc extends ListerBloc<TItem>, TItem extends Entity>
   }
 }
 
-class _ItemsListContent<TBloc extends ListerBloc<TItem>, TItem extends Entity>
+class _ItemsListContent<TBloc extends ListerBloc<TItem>, TItem>
     extends StatelessWidget {
   const _ItemsListContent(
     this.listBuilder,
@@ -171,8 +169,7 @@ class _ItemsListContent<TBloc extends ListerBloc<TItem>, TItem extends Entity>
   }
 }
 
-class _Item<TBloc extends ListerBloc<TItem>, TItem extends Entity>
-    extends StatelessWidget {
+class _Item<TBloc extends ListerBloc<TItem>, TItem> extends StatelessWidget {
   const _Item(final BuildContext _, this.index, this.itemBuilder);
 
   final int index;
@@ -212,7 +209,7 @@ class _Item<TBloc extends ListerBloc<TItem>, TItem extends Entity>
   }
 }
 
-class _ItemContent<TBloc extends ListerBloc<TItem>, TItem extends Entity>
+class _ItemContent<TBloc extends ListerBloc<TItem>, TItem>
     extends StatelessWidget {
   const _ItemContent(this.index, this.itemBuilder);
 

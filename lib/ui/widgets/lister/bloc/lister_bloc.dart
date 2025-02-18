@@ -6,7 +6,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../../api/database.dart';
-import '../../../../api/entity/entity.dart';
 import '../../../../api/entity/join_table.dart';
 import '../../../../extensions/hash_generator.dart';
 import '../../../entity/status.dart';
@@ -21,7 +20,7 @@ typedef ListerFilters<E> =
       bool Function(E item),
     );
 
-abstract class ListerBloc<T extends Entity>
+abstract class ListerBloc<T>
     extends Bloc<ListerEvent, StatusOf<ListerState<T>, String>> {
   ListerBloc({final List<T>? cachedItems})
     : super(
@@ -81,10 +80,10 @@ abstract class ListerBloc<T extends Entity>
   String get fieldNames;
   String get orderBy;
   bool get ascending;
-  String get idFieldKey;
   List<T>? Function(List<Map<String, Object?>> data) get converter;
   T Function(Map<String, Object?> json) get fromJson;
   bool Function(T a, T b) get isAfter;
+  bool Function(Map<String, Object?> a, T b) get isSame;
   ListerFilters<T>? get filters;
 
   List<RealtimeChannel>? _dbSubscriptions;
@@ -293,10 +292,8 @@ abstract class ListerBloc<T extends Entity>
     final Map<String, Object?> oldRecord,
     final List<T> items,
   ) {
-    final id = oldRecord[idFieldKey];
-
     for (var i = 0; i < items.length; i++) {
-      if (id == items[i].id) {
+      if (isSame(oldRecord, items[i])) {
         return [...items.sublist(0, i), ...items.sublist(i + 1)];
       }
     }

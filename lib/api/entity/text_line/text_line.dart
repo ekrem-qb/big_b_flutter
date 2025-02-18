@@ -1,12 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../entity.dart';
-
 part 'text_line.freezed.dart';
 part 'text_line.g.dart';
 
 @Freezed(toJson: false)
-class TextLine with _$TextLine implements Entity {
+class TextLine with _$TextLine {
   const factory TextLine({
     required final int id,
 

@@ -19,9 +19,6 @@ class PlannedTasksBloc extends ListerBloc<PlannedTask> {
   bool get ascending => false;
 
   @override
-  String get idFieldKey => $PlannedTaskImplJsonKeys.id;
-
-  @override
   List<PlannedTask>? Function(List<Map<String, Object?>> data) get converter =>
       PlannedTask.converter;
 
@@ -32,6 +29,10 @@ class PlannedTasksBloc extends ListerBloc<PlannedTask> {
   @override
   bool Function(PlannedTask a, PlannedTask b) get isAfter =>
       (final a, final b) => a.updatedAt.isAfter(b.updatedAt);
+
+  @override
+  bool Function(Map<String, Object?> a, PlannedTask b) get isSame =>
+      (final a, final b) => a[$PlannedTaskImplJsonKeys.id] == b.id;
 
   @override
   ListerFilters<PlannedTask>? get filters => null;

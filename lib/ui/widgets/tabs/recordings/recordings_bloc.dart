@@ -19,9 +19,6 @@ class RecordingsBloc extends ListerBloc<Recording> {
   bool get ascending => false;
 
   @override
-  String get idFieldKey => $RecordingImplJsonKeys.id;
-
-  @override
   List<Recording>? Function(List<Map<String, Object?>> data) get converter =>
       Recording.converter;
 
@@ -32,6 +29,10 @@ class RecordingsBloc extends ListerBloc<Recording> {
   @override
   bool Function(Recording a, Recording b) get isAfter =>
       (final a, final b) => a.createdAt.isAfter(b.createdAt);
+
+  @override
+  bool Function(Map<String, Object?> a, Recording b) get isSame =>
+      (final a, final b) => a[$RecordingImplJsonKeys.id] == b.id;
 
   @override
   ListerFilters<Recording>? get filters => null;

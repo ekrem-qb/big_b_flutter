@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../enums/processing.dart';
-import '../entity.dart';
 import '../join_table.dart';
 import '../profile/profile.dart';
 
@@ -9,7 +8,7 @@ part 'recording.freezed.dart';
 part 'recording.g.dart';
 
 @Freezed(toJson: false)
-class Recording with _$Recording implements Entity {
+class Recording with _$Recording {
   const factory Recording({
     required final int id,
     @JsonKey(name: 'url') required final String audioUrl,

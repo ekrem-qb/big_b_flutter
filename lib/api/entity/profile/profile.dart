@@ -1,14 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../enums/role.dart';
-import '../entity.dart';
 import '../join_table.dart';
 
 part 'profile.freezed.dart';
 part 'profile.g.dart';
 
 @freezed
-class Profile with _$Profile implements Entity {
+class Profile with _$Profile {
   const factory Profile({
     @JsonKey(includeToJson: false) required final String uid,
     required final String name,
@@ -23,9 +22,6 @@ class Profile with _$Profile implements Entity {
 
   factory Profile.fromJson(final Map<String, Object?> json) =>
       _$ProfileFromJson(json);
-
-  @override
-  Object get id => uid;
 
   static const tableName = 'profiles';
   static const joinTables = <JoinTable>[];
