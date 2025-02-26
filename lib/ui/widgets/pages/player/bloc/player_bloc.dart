@@ -12,6 +12,7 @@ import '../../../../../api/entity/recording/recording.dart';
 import '../../../../../api/entity/text_line/text_line.dart';
 import '../../../../../api/entity/violation/violation.dart';
 import '../../../../../api/enums/processing.dart';
+import '../../../../../extensions/duration.dart';
 import '../../../../entity/status.dart';
 
 part 'player_bloc.freezed.dart';
@@ -404,6 +405,14 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       if (event.index < 0) return;
       if (event.index >= textLines.length) return;
 
+      final clampedPosition = textLines[event.index].time.clamp(
+        Duration.zero,
+        switch (state.audioState) {
+          StatusOfData(data: PlayerAudioState(:final duration)) => duration,
+          _ => Duration.zero,
+        },
+      );
+
       emit(
         state.copyWith(
           currentTextLineId: textLines[event.index].id,
@@ -419,11 +428,18 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
                 data.copyWith(currentTextLine: event.index),
               ),
           },
+          audioState: switch (state.audioState) {
+            StatusOfData(:final data) when event.seekPlayer =>
+              StatusOfData<PlayerAudioState, String>(
+                data.copyWith(position: clampedPosition),
+              ),
+            _ => state.audioState,
+          },
         ),
       );
 
       if (event.seekPlayer) {
-        add(PlayerEventSeekRequested(textLines[event.index].time));
+        add(PlayerEventSeekRequested(clampedPosition));
       }
     }
   }
