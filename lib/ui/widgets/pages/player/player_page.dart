@@ -371,6 +371,8 @@ class _TextListState extends State<_TextList> {
   final _scrollController = ItemScrollController();
   late final StackRouter _router;
 
+  bool _isApplyingNavigation = false;
+
   @override
   void initState() {
     _router = context.router;
@@ -379,6 +381,11 @@ class _TextListState extends State<_TextList> {
   }
 
   void _onRouteChanged() {
+    if (_isApplyingNavigation) {
+      _isApplyingNavigation = false;
+      return;
+    }
+
     final args = switch (_router.current.args) {
       final PlayerRouteArgs args => args,
       _ => null,
@@ -469,6 +476,7 @@ class _TextListState extends State<_TextList> {
             );
           }
 
+          _isApplyingNavigation = true;
           await context.tabsRouter.navigate(
             PlayerRoute(
               recordingId: state.recordingId,
