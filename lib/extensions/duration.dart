@@ -12,4 +12,13 @@ extension DurationFormatter on Duration {
     final time = '$hours:$minutes';
     return time;
   }
+
+  Duration clamp(final Duration min, final Duration max) {
+    return Duration(
+      microseconds: inMicroseconds.clamp(
+        min.inMicroseconds,
+        max.inMicroseconds,
+      ),
+    );
+  }
 }
