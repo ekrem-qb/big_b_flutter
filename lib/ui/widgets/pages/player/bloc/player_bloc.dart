@@ -79,6 +79,8 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
   late final List<StreamSubscription<Object>> _playerSubscriptions;
 
+  bool _didJump = false;
+
   void _onPlayerDurationChanged(final Duration? newDuration) {
     if (newDuration == null) return;
     if (newDuration == Duration.zero) return;
@@ -88,6 +90,10 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
   void _onPlayerPositionChanged(final Duration? newPosition) {
     if (newPosition == null) return;
+    if (_didJump) {
+      _didJump = false;
+      return;
+    }
 
     switch (state.audioState) {
       case StatusOfData(:final data):
@@ -393,6 +399,8 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     final PlayerEventJumpToLineRequested event,
     final Emitter<PlayerState> emit,
   ) async {
+    if (_didJump) return;
+
     final textState = state.textState;
     if (textState case StatusOfData(
       data: PlayerTextStateOnlyText(:final currentTextLine, :final textLines) ||
@@ -440,6 +448,9 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
       if (event.seekPlayer) {
         add(PlayerEventSeekRequested(clampedPosition));
+        if (state.audioState is StatusOfData) {
+          _didJump = true;
+        }
       }
     }
   }
@@ -450,7 +461,11 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   ) async {
     switch (state.audioState) {
       case StatusOfData():
-        await _player.seek(event.position + const Duration(milliseconds: 1));
+        if (event.position == _player.state.position) {
+          _didJump = false;
+        } else {
+          await _player.seek(event.position + const Duration(milliseconds: 1));
+        }
       default:
     }
   }
