@@ -129,7 +129,7 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
         );
       }
     } catch (e) {
-      emit(state.copyWith(loadingState: StatusError(e.toString())));
+      emit(state.copyWith(loadingState: StatusError(e)));
     }
   }
 
@@ -300,9 +300,7 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
       }
       return true;
     } catch (e) {
-      emit(
-        currentState.copyWith(uploadState: OperationStatusError(e.toString())),
-      );
+      emit(currentState.copyWith(uploadState: OperationStatusError(e)));
       return false;
     }
   }
@@ -360,7 +358,7 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
 
       emit(state.copyWith(deleteState: const OperationStatusCompleted()));
     } catch (e) {
-      emit(state.copyWith(deleteState: OperationStatusError(e.toString())));
+      emit(state.copyWith(deleteState: OperationStatusError(e)));
     }
   }
 }

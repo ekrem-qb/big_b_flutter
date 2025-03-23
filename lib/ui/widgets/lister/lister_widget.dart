@@ -127,7 +127,7 @@ class _ItemsList<TBloc extends ListerBloc<TItem>, TItem>
           noItemsText,
         ),
         StatusOfError(:final error) => ErrorPanel(
-          error: error,
+          error: error.toString(),
           onRefresh: () => bloc.add(const ListerEventLoadRequested()),
         ),
       },

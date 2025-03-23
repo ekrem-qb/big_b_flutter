@@ -99,8 +99,7 @@ abstract class ViolationViewerEventLoadRequested
 /// @nodoc
 mixin _$ViolationViewerState {
   int get id => throw _privateConstructorUsedError;
-  StatusOf<Violation, String> get violation =>
-      throw _privateConstructorUsedError;
+  StatusOf<Violation> get violation => throw _privateConstructorUsedError;
 
   /// Create a copy of ViolationViewerState
   /// with the given fields replaced by the non-null parameter values.
@@ -116,9 +115,9 @@ abstract class $ViolationViewerStateCopyWith<$Res> {
     $Res Function(ViolationViewerState) then,
   ) = _$ViolationViewerStateCopyWithImpl<$Res, ViolationViewerState>;
   @useResult
-  $Res call({int id, StatusOf<Violation, String> violation});
+  $Res call({int id, StatusOf<Violation> violation});
 
-  $StatusOfCopyWith<Violation, String, $Res> get violation;
+  $StatusOfCopyWith<Violation, $Res> get violation;
 }
 
 /// @nodoc
@@ -150,7 +149,7 @@ class _$ViolationViewerStateCopyWithImpl<
                 null == violation
                     ? _value.violation
                     : violation // ignore: cast_nullable_to_non_nullable
-                        as StatusOf<Violation, String>,
+                        as StatusOf<Violation>,
           )
           as $Val,
     );
@@ -160,10 +159,8 @@ class _$ViolationViewerStateCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StatusOfCopyWith<Violation, String, $Res> get violation {
-    return $StatusOfCopyWith<Violation, String, $Res>(_value.violation, (
-      value,
-    ) {
+  $StatusOfCopyWith<Violation, $Res> get violation {
+    return $StatusOfCopyWith<Violation, $Res>(_value.violation, (value) {
       return _then(_value.copyWith(violation: value) as $Val);
     });
   }
@@ -178,10 +175,10 @@ abstract class _$$ViolationViewerStateImplCopyWith<$Res>
   ) = __$$ViolationViewerStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, StatusOf<Violation, String> violation});
+  $Res call({int id, StatusOf<Violation> violation});
 
   @override
-  $StatusOfCopyWith<Violation, String, $Res> get violation;
+  $StatusOfCopyWith<Violation, $Res> get violation;
 }
 
 /// @nodoc
@@ -209,7 +206,7 @@ class __$$ViolationViewerStateImplCopyWithImpl<$Res>
             null == violation
                 ? _value.violation
                 : violation // ignore: cast_nullable_to_non_nullable
-                    as StatusOf<Violation, String>,
+                    as StatusOf<Violation>,
       ),
     );
   }
@@ -223,7 +220,7 @@ class _$ViolationViewerStateImpl implements _ViolationViewerState {
   @override
   final int id;
   @override
-  final StatusOf<Violation, String> violation;
+  final StatusOf<Violation> violation;
 
   @override
   String toString() {
@@ -259,13 +256,13 @@ class _$ViolationViewerStateImpl implements _ViolationViewerState {
 abstract class _ViolationViewerState implements ViolationViewerState {
   const factory _ViolationViewerState({
     required final int id,
-    required final StatusOf<Violation, String> violation,
+    required final StatusOf<Violation> violation,
   }) = _$ViolationViewerStateImpl;
 
   @override
   int get id;
   @override
-  StatusOf<Violation, String> get violation;
+  StatusOf<Violation> get violation;
 
   /// Create a copy of ViolationViewerState
   /// with the given fields replaced by the non-null parameter values.

@@ -88,7 +88,7 @@ class _Profiles extends StatelessWidget {
             ),
       StatusOfLoading() => const Center(child: CircularProgressIndicator()),
       StatusOfError(:final error) => ErrorPanel(
-        error: error,
+        error: error.toString(),
         onRefresh: () => bloc.add(const ProfilePickerEventLoadRequested()),
       ),
     };

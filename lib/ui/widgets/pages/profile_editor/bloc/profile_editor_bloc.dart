@@ -72,7 +72,7 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
         ),
       );
     } catch (e) {
-      emit(currentState.copyWith(loadingState: StatusError(e.toString())));
+      emit(currentState.copyWith(loadingState: StatusError(e)));
     }
   }
 
@@ -203,7 +203,7 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
 
       return true;
     } catch (e) {
-      emit(state.copyWith(uploadState: OperationStatusError(e.toString())));
+      emit(state.copyWith(uploadState: OperationStatusError(e)));
       return false;
     }
   }
@@ -234,9 +234,7 @@ class ProfileEditorBloc extends Bloc<ProfileEditorEvent, ProfileEditorState> {
         currentState.copyWith(deleteState: const OperationStatusCompleted()),
       );
     } catch (e) {
-      emit(
-        currentState.copyWith(deleteState: OperationStatusError(e.toString())),
-      );
+      emit(currentState.copyWith(deleteState: OperationStatusError(e)));
     }
   }
 }

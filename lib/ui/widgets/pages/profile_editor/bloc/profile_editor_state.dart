@@ -4,15 +4,13 @@ part of 'profile_editor_bloc.dart';
 sealed class ProfileEditorState with _$ProfileEditorState {
   const factory ProfileEditorState.edit({
     required final String uid,
-    required final Status<String> loadingState,
+    required final Status loadingState,
     required final String name,
     required final String login,
     required final Role role,
     final String? nameError,
-    @Default(OperationStatusInitial())
-    final OperationStatus<String> uploadState,
-    @Default(OperationStatusInitial())
-    final OperationStatus<String> deleteState,
+    @Default(OperationStatusInitial()) final OperationStatus uploadState,
+    @Default(OperationStatusInitial()) final OperationStatus deleteState,
   }) = ProfileEditorStateEdit;
 
   const factory ProfileEditorState.create({
@@ -24,7 +22,6 @@ sealed class ProfileEditorState with _$ProfileEditorState {
     @Default('') final String password,
     final String? passwordError,
     @Default(false) final bool isPasswordVisible,
-    @Default(OperationStatusInitial())
-    final OperationStatus<String> uploadState,
+    @Default(OperationStatusInitial()) final OperationStatus uploadState,
   }) = ProfileEditorStateCreate;
 }

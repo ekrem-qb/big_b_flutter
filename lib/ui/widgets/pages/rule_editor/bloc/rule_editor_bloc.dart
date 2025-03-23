@@ -72,7 +72,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
           ),
         );
       } catch (e) {
-        emit(copyWith(editState: StatusOfError(e.toString())));
+        emit(copyWith(editState: StatusOfError(e)));
       }
     }
   }
@@ -390,7 +390,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
     } catch (e) {
       switch (state) {
         case RuleEditorStateCreate(:final copyWith):
-          emit(copyWith(uploadState: OperationStatusError(e.toString())));
+          emit(copyWith(uploadState: OperationStatusError(e)));
         case RuleEditorStateEdit(
           editState: StatusOfData(:final data),
           :final copyWith,
@@ -398,7 +398,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
           emit(
             copyWith(
               editState: StatusOfData(
-                data.copyWith(uploadState: OperationStatusError(e.toString())),
+                data.copyWith(uploadState: OperationStatusError(e)),
               ),
             ),
           );
@@ -442,7 +442,7 @@ class RuleEditorBloc extends Bloc<RuleEditorEvent, RuleEditorState> {
         emit(
           copyWith(
             editState: StatusOfData(
-              data.copyWith(deleteState: OperationStatusError(e.toString())),
+              data.copyWith(deleteState: OperationStatusError(e)),
             ),
           ),
         );

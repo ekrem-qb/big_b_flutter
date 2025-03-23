@@ -21,7 +21,7 @@ typedef ListerFilters<E> =
     );
 
 abstract class ListerBloc<T>
-    extends Bloc<ListerEvent, StatusOf<ListerState<T>, String>> {
+    extends Bloc<ListerEvent, StatusOf<ListerState<T>>> {
   ListerBloc({final List<T>? cachedItems})
     : super(
         cachedItems != null
@@ -98,7 +98,7 @@ abstract class ListerBloc<T>
   }
 
   Future<void> _onLoadRequested(
-    final Emitter<StatusOf<ListerState<T>, String>> emit,
+    final Emitter<StatusOf<ListerState<T>>> emit,
     final ListerEventLoadRequested event,
   ) async {
     try {
@@ -123,12 +123,12 @@ abstract class ListerBloc<T>
 
       emit(StatusOfData(ListerState(totalCount: count, items: items)));
     } catch (e) {
-      emit(StatusOfError(e.toString()));
+      emit(StatusOfError(e));
     }
   }
 
   Future<void> _onLoadAfterRequested(
-    final Emitter<StatusOf<ListerState<T>, String>> emit,
+    final Emitter<StatusOf<ListerState<T>>> emit,
     final ListerEventLoadAfterRequested event,
   ) async {
     try {
@@ -154,12 +154,12 @@ abstract class ListerBloc<T>
           return;
       }
     } catch (e) {
-      emit(StatusOfError(e.toString()));
+      emit(StatusOfError(e));
     }
   }
 
   Future<void> _onDataUpdated(
-    final Emitter<StatusOf<ListerState<T>, String>> emit,
+    final Emitter<StatusOf<ListerState<T>>> emit,
     final _ListerEventDataUpdated event,
   ) async {
     final currentState = state;
@@ -180,8 +180,8 @@ abstract class ListerBloc<T>
     }
   }
 
-  StatusOfData<ListerState<T>, String>? _insert(
-    final StatusOfData<ListerState<T>, String> currentState,
+  StatusOfData<ListerState<T>>? _insert(
+    final StatusOfData<ListerState<T>> currentState,
     final PostgresChangePayload payload,
   ) {
     final newItem = fromJson(payload.newRecord);
@@ -202,8 +202,8 @@ abstract class ListerBloc<T>
     );
   }
 
-  StatusOfData<ListerState<T>, String>? _update(
-    final StatusOfData<ListerState<T>, String> currentState,
+  StatusOfData<ListerState<T>>? _update(
+    final StatusOfData<ListerState<T>> currentState,
     final PostgresChangePayload payload,
   ) {
     final newItem = fromJson(payload.newRecord);
@@ -255,8 +255,8 @@ abstract class ListerBloc<T>
         : null;
   }
 
-  StatusOfData<ListerState<T>, String> _delete(
-    final StatusOfData<ListerState<T>, String> currentState,
+  StatusOfData<ListerState<T>> _delete(
+    final StatusOfData<ListerState<T>> currentState,
     final PostgresChangePayload payload,
   ) {
     final newItems = _deleteFromList(

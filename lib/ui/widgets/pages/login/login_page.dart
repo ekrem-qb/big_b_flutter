@@ -35,7 +35,7 @@ class LoginView extends StatelessWidget {
       listener: (final context, final state) {
         switch (state.loginStatus) {
           case OperationStatusError(:final error):
-            showSnackbar(text: error, context: context);
+            showSnackbar(text: error.toString(), context: context);
           case OperationStatusCompleted():
             onSignedIn?.call();
           default:

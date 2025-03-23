@@ -75,7 +75,7 @@ class RuleEditorView extends StatelessWidget {
               case OperationStatusCompleted():
                 Navigator.pop(context);
               case OperationStatusError(:final error):
-                showSnackbar(text: error, context: context);
+                showSnackbar(text: error.toString(), context: context);
               default:
             }
             switch (state) {
@@ -88,7 +88,7 @@ class RuleEditorView extends StatelessWidget {
                   case OperationStatusCompleted():
                     Navigator.pop(context);
                   case OperationStatusError(:final error):
-                    showSnackbar(text: error, context: context);
+                    showSnackbar(text: error.toString(), context: context);
                   default:
                 }
               default:
@@ -107,7 +107,7 @@ class RuleEditorView extends StatelessWidget {
               child: CircularProgressIndicator(),
             ),
             StatusOfError(:final error) => ErrorPanel(
-              error: error,
+              error: error.toString(),
               onRefresh: () => bloc.add(const RuleEditorEventLoadRequested()),
             ),
             _ => _Body(isNew: isNew),

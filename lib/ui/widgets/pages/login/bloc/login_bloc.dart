@@ -74,7 +74,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       emit(state.copyWith(loginStatus: const OperationStatusCompleted()));
     } catch (e) {
-      emit(state.copyWith(loginStatus: OperationStatusError(e.toString())));
+      emit(state.copyWith(loginStatus: OperationStatusError(e)));
     } finally {
       emit(state.copyWith(loginStatus: const OperationStatusInitial()));
     }

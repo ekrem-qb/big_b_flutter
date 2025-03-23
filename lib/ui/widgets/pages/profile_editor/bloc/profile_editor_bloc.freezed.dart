@@ -626,7 +626,7 @@ mixin _$ProfileEditorState {
   String get login => throw _privateConstructorUsedError;
   Role get role => throw _privateConstructorUsedError;
   String? get nameError => throw _privateConstructorUsedError;
-  OperationStatus<String> get uploadState => throw _privateConstructorUsedError;
+  OperationStatus get uploadState => throw _privateConstructorUsedError;
 
   /// Create a copy of ProfileEditorState
   /// with the given fields replaced by the non-null parameter values.
@@ -647,10 +647,10 @@ abstract class $ProfileEditorStateCopyWith<$Res> {
     String login,
     Role role,
     String? nameError,
-    OperationStatus<String> uploadState,
+    OperationStatus uploadState,
   });
 
-  $OperationStatusCopyWith<String, $Res> get uploadState;
+  $OperationStatusCopyWith<$Res> get uploadState;
 }
 
 /// @nodoc
@@ -700,7 +700,7 @@ class _$ProfileEditorStateCopyWithImpl<$Res, $Val extends ProfileEditorState>
                 null == uploadState
                     ? _value.uploadState
                     : uploadState // ignore: cast_nullable_to_non_nullable
-                        as OperationStatus<String>,
+                        as OperationStatus,
           )
           as $Val,
     );
@@ -710,8 +710,8 @@ class _$ProfileEditorStateCopyWithImpl<$Res, $Val extends ProfileEditorState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $OperationStatusCopyWith<String, $Res> get uploadState {
-    return $OperationStatusCopyWith<String, $Res>(_value.uploadState, (value) {
+  $OperationStatusCopyWith<$Res> get uploadState {
+    return $OperationStatusCopyWith<$Res>(_value.uploadState, (value) {
       return _then(_value.copyWith(uploadState: value) as $Val);
     });
   }
@@ -728,19 +728,19 @@ abstract class _$$ProfileEditorStateEditImplCopyWith<$Res>
   @useResult
   $Res call({
     String uid,
-    Status<String> loadingState,
+    Status loadingState,
     String name,
     String login,
     Role role,
     String? nameError,
-    OperationStatus<String> uploadState,
-    OperationStatus<String> deleteState,
+    OperationStatus uploadState,
+    OperationStatus deleteState,
   });
 
-  $StatusCopyWith<String, $Res> get loadingState;
+  $StatusCopyWith<$Res> get loadingState;
   @override
-  $OperationStatusCopyWith<String, $Res> get uploadState;
-  $OperationStatusCopyWith<String, $Res> get deleteState;
+  $OperationStatusCopyWith<$Res> get uploadState;
+  $OperationStatusCopyWith<$Res> get deleteState;
 }
 
 /// @nodoc
@@ -777,7 +777,7 @@ class __$$ProfileEditorStateEditImplCopyWithImpl<$Res>
             null == loadingState
                 ? _value.loadingState
                 : loadingState // ignore: cast_nullable_to_non_nullable
-                    as Status<String>,
+                    as Status,
         name:
             null == name
                 ? _value.name
@@ -802,12 +802,12 @@ class __$$ProfileEditorStateEditImplCopyWithImpl<$Res>
             null == uploadState
                 ? _value.uploadState
                 : uploadState // ignore: cast_nullable_to_non_nullable
-                    as OperationStatus<String>,
+                    as OperationStatus,
         deleteState:
             null == deleteState
                 ? _value.deleteState
                 : deleteState // ignore: cast_nullable_to_non_nullable
-                    as OperationStatus<String>,
+                    as OperationStatus,
       ),
     );
   }
@@ -816,8 +816,8 @@ class __$$ProfileEditorStateEditImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StatusCopyWith<String, $Res> get loadingState {
-    return $StatusCopyWith<String, $Res>(_value.loadingState, (value) {
+  $StatusCopyWith<$Res> get loadingState {
+    return $StatusCopyWith<$Res>(_value.loadingState, (value) {
       return _then(_value.copyWith(loadingState: value));
     });
   }
@@ -826,8 +826,8 @@ class __$$ProfileEditorStateEditImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $OperationStatusCopyWith<String, $Res> get deleteState {
-    return $OperationStatusCopyWith<String, $Res>(_value.deleteState, (value) {
+  $OperationStatusCopyWith<$Res> get deleteState {
+    return $OperationStatusCopyWith<$Res>(_value.deleteState, (value) {
       return _then(_value.copyWith(deleteState: value));
     });
   }
@@ -850,7 +850,7 @@ class _$ProfileEditorStateEditImpl implements ProfileEditorStateEdit {
   @override
   final String uid;
   @override
-  final Status<String> loadingState;
+  final Status loadingState;
   @override
   final String name;
   @override
@@ -861,10 +861,10 @@ class _$ProfileEditorStateEditImpl implements ProfileEditorStateEdit {
   final String? nameError;
   @override
   @JsonKey()
-  final OperationStatus<String> uploadState;
+  final OperationStatus uploadState;
   @override
   @JsonKey()
-  final OperationStatus<String> deleteState;
+  final OperationStatus deleteState;
 
   @override
   String toString() {
@@ -919,17 +919,17 @@ class _$ProfileEditorStateEditImpl implements ProfileEditorStateEdit {
 abstract class ProfileEditorStateEdit implements ProfileEditorState {
   const factory ProfileEditorStateEdit({
     required final String uid,
-    required final Status<String> loadingState,
+    required final Status loadingState,
     required final String name,
     required final String login,
     required final Role role,
     final String? nameError,
-    final OperationStatus<String> uploadState,
-    final OperationStatus<String> deleteState,
+    final OperationStatus uploadState,
+    final OperationStatus deleteState,
   }) = _$ProfileEditorStateEditImpl;
 
   String get uid;
-  Status<String> get loadingState;
+  Status get loadingState;
   @override
   String get name;
   @override
@@ -939,8 +939,8 @@ abstract class ProfileEditorStateEdit implements ProfileEditorState {
   @override
   String? get nameError;
   @override
-  OperationStatus<String> get uploadState;
-  OperationStatus<String> get deleteState;
+  OperationStatus get uploadState;
+  OperationStatus get deleteState;
 
   /// Create a copy of ProfileEditorState
   /// with the given fields replaced by the non-null parameter values.
@@ -968,11 +968,11 @@ abstract class _$$ProfileEditorStateCreateImplCopyWith<$Res>
     String password,
     String? passwordError,
     bool isPasswordVisible,
-    OperationStatus<String> uploadState,
+    OperationStatus uploadState,
   });
 
   @override
-  $OperationStatusCopyWith<String, $Res> get uploadState;
+  $OperationStatusCopyWith<$Res> get uploadState;
 }
 
 /// @nodoc
@@ -1046,7 +1046,7 @@ class __$$ProfileEditorStateCreateImplCopyWithImpl<$Res>
             null == uploadState
                 ? _value.uploadState
                 : uploadState // ignore: cast_nullable_to_non_nullable
-                    as OperationStatus<String>,
+                    as OperationStatus,
       ),
     );
   }
@@ -1090,7 +1090,7 @@ class _$ProfileEditorStateCreateImpl implements ProfileEditorStateCreate {
   final bool isPasswordVisible;
   @override
   @JsonKey()
-  final OperationStatus<String> uploadState;
+  final OperationStatus uploadState;
 
   @override
   String toString() {
@@ -1154,7 +1154,7 @@ abstract class ProfileEditorStateCreate implements ProfileEditorState {
     final String password,
     final String? passwordError,
     final bool isPasswordVisible,
-    final OperationStatus<String> uploadState,
+    final OperationStatus uploadState,
   }) = _$ProfileEditorStateCreateImpl;
 
   @override
@@ -1170,7 +1170,7 @@ abstract class ProfileEditorStateCreate implements ProfileEditorState {
   String? get passwordError;
   bool get isPasswordVisible;
   @override
-  OperationStatus<String> get uploadState;
+  OperationStatus get uploadState;
 
   /// Create a copy of ProfileEditorState
   /// with the given fields replaced by the non-null parameter values.

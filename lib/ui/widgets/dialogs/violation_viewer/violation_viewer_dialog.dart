@@ -70,7 +70,7 @@ class _Violation extends StatelessWidget {
       StatusOfData() => const _ViolationContent(),
       StatusOfLoading() => const Center(child: CircularProgressIndicator()),
       StatusOfError(:final error) => ErrorPanel(
-        error: error,
+        error: error.toString(),
         onRefresh: () => bloc.add(const ViolationViewerEventLoadRequested()),
       ),
     };

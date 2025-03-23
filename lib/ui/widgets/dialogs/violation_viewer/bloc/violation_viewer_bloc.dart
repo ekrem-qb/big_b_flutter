@@ -83,15 +83,12 @@ class ViolationViewerBloc
           .withConverter(Violation.maybeFromJson);
 
       if (violation == null) {
-        emit(
-          state.copyWith(violation: const StatusOfError('İhlal bulunamadı')),
-        );
-        return;
+        throw Exception('İhlal bulunamadı');
       }
 
       emit(state.copyWith(violation: StatusOfData(violation)));
     } catch (e) {
-      emit(state.copyWith(violation: StatusOfError(e.toString())));
+      emit(state.copyWith(violation: StatusOfError(e)));
     }
   }
 

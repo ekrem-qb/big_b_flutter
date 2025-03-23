@@ -67,7 +67,7 @@ class PlayerView extends StatelessWidget {
               },
       listener: (final context, final state) {
         if (state.audioState case StatusOfError(:final error)) {
-          showSnackbar(text: error, context: context);
+          showSnackbar(text: error.toString(), context: context);
         }
       },
       child: Scaffold(
@@ -143,7 +143,7 @@ class _Player extends StatelessWidget {
     return switch (bloc.state.recordingState) {
       StatusOfLoading() => const Center(child: CircularProgressIndicator()),
       StatusOfError(:final error) => ErrorPanel(
-        error: error,
+        error: error.toString(),
         onRefresh: () => bloc.add(const PlayerEventLoadRequested()),
       ),
       StatusOfData() => CallbackShortcuts(
@@ -283,7 +283,7 @@ class _Text extends StatelessWidget {
             ),
           ),
           StatusOfError(:final error) => ErrorPanel(
-            error: error,
+            error: error.toString(),
             onRefresh: () => bloc.add(const PlayerEventTextLoadRequested()),
           ),
           StatusOfData() => const _LoadedText(),

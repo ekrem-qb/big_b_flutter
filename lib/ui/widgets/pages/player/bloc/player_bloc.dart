@@ -143,7 +143,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       add(const PlayerEventAudioLoadRequested());
       add(const PlayerEventTextLoadRequested());
     } catch (e) {
-      emit(state.copyWith(recordingState: StatusOfError(e.toString())));
+      emit(state.copyWith(recordingState: StatusOfError(e)));
     }
   }
 
@@ -183,7 +183,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
             ),
           );
         } catch (e) {
-          emit(state.copyWith(audioState: StatusOfError(e.toString())));
+          emit(state.copyWith(audioState: StatusOfError(e)));
         }
       default:
     }
@@ -251,7 +251,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
                 textLines,
               );
 
-              StatusOf<List<Violation>, String> violationsStatus;
+              StatusOf<List<Violation>> violationsStatus;
 
               try {
                 final violations = await db
@@ -262,7 +262,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
                 violationsStatus = StatusOfData(violations ?? const []);
               } catch (e) {
-                violationsStatus = StatusOfError(e.toString());
+                violationsStatus = StatusOfError(e);
               }
 
               final highlights = _arrangeHighlights(
@@ -287,7 +287,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
               );
           }
         } catch (e) {
-          emit(state.copyWith(textState: StatusOfError(e.toString())));
+          emit(state.copyWith(textState: StatusOfError(e)));
         }
       default:
     }
@@ -317,7 +317,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
   List<List<HighlightViolation>> _arrangeHighlights(
     final List<TextLine> textLines,
-    final StatusOf<List<Violation>, String> violationsStatus,
+    final StatusOf<List<Violation>> violationsStatus,
   ) {
     switch (violationsStatus) {
       case StatusOfData(:final data):
@@ -425,20 +425,21 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         state.copyWith(
           currentTextLineId: textLines[event.index].id,
           textState: switch (textState.data) {
-            final PlayerTextStateNone data =>
-              StatusOfData<PlayerTextStateNone, String>(data),
+            final PlayerTextStateNone data => StatusOfData<PlayerTextStateNone>(
+              data,
+            ),
             final PlayerTextStateOnlyText data =>
-              StatusOfData<PlayerTextStateOnlyText, String>(
+              StatusOfData<PlayerTextStateOnlyText>(
                 data.copyWith(currentTextLine: event.index),
               ),
             final PlayerTextStateTextAndViolations data =>
-              StatusOfData<PlayerTextStateTextAndViolations, String>(
+              StatusOfData<PlayerTextStateTextAndViolations>(
                 data.copyWith(currentTextLine: event.index),
               ),
           },
           audioState: switch (state.audioState) {
             StatusOfData(:final data) when event.seekPlayer =>
-              StatusOfData<PlayerAudioState, String>(
+              StatusOfData<PlayerAudioState>(
                 data.copyWith(position: clampedPosition),
               ),
             _ => state.audioState,

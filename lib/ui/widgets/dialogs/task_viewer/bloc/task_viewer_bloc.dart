@@ -91,13 +91,12 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
           .withConverter(Task.maybeFromJson);
 
       if (task == null) {
-        emit(state.copyWith(task: const StatusOfError('Görev bulunamadı')));
-        return;
+        throw Exception('Görev bulunamadı');
       }
 
       emit(state.copyWith(task: StatusOfData(task)));
     } catch (e) {
-      emit(state.copyWith(task: StatusOfError(e.toString())));
+      emit(state.copyWith(task: StatusOfError(e)));
     }
   }
 
@@ -112,7 +111,7 @@ class TaskViewerBloc extends Bloc<TaskViewerEvent, TaskViewerState> {
 
       emit(state.copyWith(deleteState: const OperationStatusCompleted()));
     } catch (e) {
-      emit(state.copyWith(deleteState: OperationStatusError(e.toString())));
+      emit(state.copyWith(deleteState: OperationStatusError(e)));
     }
   }
 
