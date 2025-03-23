@@ -13,35 +13,35 @@ class ViolationsBloc extends ListerBloc<Violation> {
   final bool sortNewFirst;
 
   @override
-  String get tableName => Violation.tableName;
+  String tableName = Violation.tableName;
 
   @override
-  List<JoinTable> get joinTables => Violation.joinTables;
+  List<JoinTable> joinTables = Violation.joinTables;
 
   @override
-  String get fieldNames => Violation.fieldNames;
+  String fieldNames = Violation.fieldNames;
 
   @override
-  String get orderBy => $NormalViolationImplJsonKeys.id;
+  String orderBy = $NormalViolationImplJsonKeys.id;
 
   @override
   bool get ascending => sortNewFirst;
 
   @override
-  List<Violation>? Function(List<Map<String, Object?>> data) get converter =>
-      Violation.converter;
+  List<Violation>? converter(final List<Map<String, Object?>> data) =>
+      Violation.converter(data);
 
   @override
-  Violation Function(Map<String, Object?> json) get fromJson =>
-      Violation.fromJson;
+  Violation fromJson(final Map<String, Object?> json) =>
+      Violation.fromJson(json);
 
   @override
-  bool Function(Violation a, Violation b) get isAfter =>
-      (final a, final b) => sortNewFirst ? a.id > b.id : a.id < b.id;
+  bool isAfter(final Violation a, final Violation b) =>
+      sortNewFirst ? a.id > b.id : a.id < b.id;
 
   @override
-  bool Function(Map<String, Object?> a, Violation b) get isSame =>
-      (final a, final b) => a[$NormalViolationImplJsonKeys.id] == b.id;
+  bool isSame(final Map<String, Object?> a, final Violation b) =>
+      a[$NormalViolationImplJsonKeys.id] == b.id;
 
   @override
   ListerFilters<Violation>? get filters =>

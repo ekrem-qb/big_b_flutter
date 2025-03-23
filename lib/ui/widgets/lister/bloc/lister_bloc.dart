@@ -80,11 +80,11 @@ abstract class ListerBloc<T>
   String get fieldNames;
   String get orderBy;
   bool get ascending;
-  List<T>? Function(List<Map<String, Object?>> data) get converter;
-  T Function(Map<String, Object?> json) get fromJson;
-  bool Function(T a, T b) get isAfter;
-  bool Function(Map<String, Object?> a, T b) get isSame;
   ListerFilters<T>? get filters;
+  List<T>? converter(final List<Map<String, Object?>> data);
+  T fromJson(final Map<String, Object?> json);
+  bool isAfter(final T a, final T b);
+  bool isSame(final Map<String, Object?> a, final T b);
 
   List<RealtimeChannel>? _dbSubscriptions;
 

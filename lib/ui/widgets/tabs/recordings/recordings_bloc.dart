@@ -4,36 +4,36 @@ import '../../lister/bloc/lister_bloc.dart';
 
 class RecordingsBloc extends ListerBloc<Recording> {
   @override
-  String get tableName => Recording.tableName;
+  String tableName = Recording.tableName;
 
   @override
-  List<JoinTable> get joinTables => Recording.joinTables;
+  List<JoinTable> joinTables = Recording.joinTables;
 
   @override
-  String get fieldNames => Recording.fieldNames;
+  String fieldNames = Recording.fieldNames;
 
   @override
-  String get orderBy => $RecordingImplJsonKeys.createdAt;
+  String orderBy = $RecordingImplJsonKeys.createdAt;
 
   @override
-  bool get ascending => false;
+  bool ascending = false;
 
   @override
-  List<Recording>? Function(List<Map<String, Object?>> data) get converter =>
-      Recording.converter;
+  List<Recording>? converter(final List<Map<String, Object?>> data) =>
+      Recording.converter(data);
 
   @override
-  Recording Function(Map<String, Object?> json) get fromJson =>
-      Recording.fromJson;
+  Recording fromJson(final Map<String, Object?> json) =>
+      Recording.fromJson(json);
 
   @override
-  bool Function(Recording a, Recording b) get isAfter =>
-      (final a, final b) => a.createdAt.isAfter(b.createdAt);
+  bool isAfter(final Recording a, final Recording b) =>
+      a.createdAt.isAfter(b.createdAt);
 
   @override
-  bool Function(Map<String, Object?> a, Recording b) get isSame =>
-      (final a, final b) => a[$RecordingImplJsonKeys.id] == b.id;
+  bool isSame(final Map<String, Object?> a, final Recording b) =>
+      a[$RecordingImplJsonKeys.id] == b.id;
 
   @override
-  ListerFilters<Recording>? get filters => null;
+  ListerFilters<Recording>? filters;
 }

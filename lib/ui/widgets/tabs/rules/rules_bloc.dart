@@ -4,35 +4,34 @@ import '../../lister/bloc/lister_bloc.dart';
 
 class RulesBloc extends ListerBloc<Rule> {
   @override
-  String get tableName => Rule.tableName;
+  String tableName = Rule.tableName;
 
   @override
-  List<JoinTable> get joinTables => Rule.joinTables;
+  List<JoinTable> joinTables = Rule.joinTables;
 
   @override
-  String get fieldNames => Rule.fieldNames;
+  String fieldNames = Rule.fieldNames;
 
   @override
-  String get orderBy => $CustomRuleImplJsonKeys.id;
+  String orderBy = $CustomRuleImplJsonKeys.id;
 
   @override
-  bool get ascending => false;
+  bool ascending = false;
 
   @override
-  List<Rule>? Function(List<Map<String, Object?>> data) get converter =>
-      Rule.converter;
+  List<Rule>? converter(final List<Map<String, Object?>> data) =>
+      Rule.converter(data);
 
   @override
-  Rule Function(Map<String, Object?> json) get fromJson => Rule.fromJson;
+  Rule fromJson(final Map<String, Object?> json) => Rule.fromJson(json);
 
   @override
-  bool Function(Rule a, Rule b) get isAfter =>
-      (final a, final b) => a.id > b.id;
+  bool isAfter(final Rule a, final Rule b) => a.id > b.id;
 
   @override
-  bool Function(Map<String, Object?> a, Rule b) get isSame =>
-      (final a, final b) => a[$CustomRuleImplJsonKeys.id] == b.id;
+  bool isSame(final Map<String, Object?> a, final Rule b) =>
+      a[$CustomRuleImplJsonKeys.id] == b.id;
 
   @override
-  ListerFilters<Rule>? get filters => null;
+  ListerFilters<Rule>? filters;
 }

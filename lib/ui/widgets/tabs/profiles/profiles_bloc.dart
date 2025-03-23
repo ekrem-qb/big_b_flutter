@@ -4,35 +4,35 @@ import '../../lister/bloc/lister_bloc.dart';
 
 class ProfilesBloc extends ListerBloc<Profile> {
   @override
-  String get tableName => Profile.tableName;
+  String tableName = Profile.tableName;
 
   @override
-  List<JoinTable> get joinTables => Profile.joinTables;
+  List<JoinTable> joinTables = Profile.joinTables;
 
   @override
-  String get fieldNames => Profile.fieldNames;
+  String fieldNames = Profile.fieldNames;
 
   @override
-  String get orderBy => $ProfileImplJsonKeys.createdAt;
+  String orderBy = $ProfileImplJsonKeys.createdAt;
 
   @override
-  bool get ascending => false;
+  bool ascending = false;
 
   @override
-  List<Profile>? Function(List<Map<String, Object?>> data) get converter =>
-      Profile.converter;
+  List<Profile>? converter(final List<Map<String, Object?>> data) =>
+      Profile.converter(data);
 
   @override
-  Profile Function(Map<String, Object?> json) get fromJson => Profile.fromJson;
+  Profile fromJson(final Map<String, Object?> json) => Profile.fromJson(json);
 
   @override
-  bool Function(Profile a, Profile b) get isAfter =>
-      (final a, final b) => a.createdAt.isAfter(b.createdAt);
+  bool isAfter(final Profile a, final Profile b) =>
+      a.createdAt.isAfter(b.createdAt);
 
   @override
-  bool Function(Map<String, Object?> a, Profile b) get isSame =>
-      (final a, final b) => a[$ProfileImplJsonKeys.uid] == b.uid;
+  bool isSame(final Map<String, Object?> a, final Profile b) =>
+      a[$ProfileImplJsonKeys.uid] == b.uid;
 
   @override
-  ListerFilters<Profile>? get filters => null;
+  ListerFilters<Profile>? filters;
 }

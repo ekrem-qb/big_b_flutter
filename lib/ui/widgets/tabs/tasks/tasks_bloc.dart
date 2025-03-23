@@ -4,35 +4,34 @@ import '../../lister/bloc/lister_bloc.dart';
 
 class TasksBloc extends ListerBloc<Task> {
   @override
-  String get tableName => Task.tableName;
+  String tableName = Task.tableName;
 
   @override
-  List<JoinTable> get joinTables => Task.joinTables;
+  List<JoinTable> joinTables = Task.joinTables;
 
   @override
-  String get fieldNames => Task.fieldNames;
+  String fieldNames = Task.fieldNames;
 
   @override
-  String get orderBy => $TaskImplJsonKeys.updatedAt;
+  String orderBy = $TaskImplJsonKeys.updatedAt;
 
   @override
-  bool get ascending => false;
+  bool ascending = false;
 
   @override
-  List<Task>? Function(List<Map<String, Object?>> data) get converter =>
-      Task.converter;
+  List<Task>? converter(final List<Map<String, Object?>> data) =>
+      Task.converter(data);
 
   @override
-  Task Function(Map<String, Object?> json) get fromJson => Task.fromJson;
+  Task fromJson(final Map<String, Object?> json) => Task.fromJson(json);
 
   @override
-  bool Function(Task a, Task b) get isAfter =>
-      (final a, final b) => a.updatedAt.isAfter(b.updatedAt);
+  bool isAfter(final Task a, final Task b) => a.updatedAt.isAfter(b.updatedAt);
 
   @override
-  bool Function(Map<String, Object?> a, Task b) get isSame =>
-      (final a, final b) => a[$TaskImplJsonKeys.id] == b.id;
+  bool isSame(final Map<String, Object?> a, final Task b) =>
+      a[$TaskImplJsonKeys.id] == b.id;
 
   @override
-  ListerFilters<Task>? get filters => null;
+  ListerFilters<Task>? filters;
 }
