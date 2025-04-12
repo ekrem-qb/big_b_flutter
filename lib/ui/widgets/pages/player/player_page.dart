@@ -93,7 +93,13 @@ class _ViolationsButton extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final (bloc, isViolationsProcessed) = context.select(
-      (final PlayerBloc bloc) => (bloc, bloc.state.textState is StatusOfData),
+      (final PlayerBloc bloc) => (
+        bloc,
+        switch (bloc.state.textState) {
+          StatusOfData(data: PlayerTextStateTextAndViolations()) => true,
+          _ => false,
+        },
+      ),
     );
 
     return ElevatedButton.icon(
