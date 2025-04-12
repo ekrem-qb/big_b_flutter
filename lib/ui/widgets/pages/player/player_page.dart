@@ -661,29 +661,32 @@ class _TextLineTextState extends State<_TextLineText> {
     }
 
     var charIndex = 0;
-    for (var j = 0; j < highlights.length; j += 2) {
-      if (charIndex < highlights[j].startIndex) {
-        final substring = text.substring(charIndex, highlights[j].startIndex);
-        yield TextSpan(text: substring);
+    for (var i = 0; i < highlights.length; i++) {
+      if (charIndex < highlights[i].startIndex) {
+        final beforeHighlight = text.substring(
+          charIndex,
+          highlights[i].startIndex,
+        );
+        yield TextSpan(text: beforeHighlight);
       }
 
-      final substring2 = text.substring(
-        highlights[j].startIndex,
-        highlights[j].endIndex,
+      final highlight = text.substring(
+        highlights[i].startIndex,
+        highlights[i].endIndex,
       );
 
       yield TextSpan(
-        style: highlightedTextStyle(highlights[j].rule.color),
-        text: substring2,
-        recognizer: _createRecognizer(violation: highlights[j]),
+        style: highlightedTextStyle(highlights[i].rule.color),
+        text: highlight,
+        recognizer: _createRecognizer(violation: highlights[i]),
       );
 
-      charIndex = highlights[j].endIndex;
+      charIndex = highlights[i].endIndex;
     }
 
     if (charIndex < text.length) {
-      final substring = text.substring(charIndex);
-      yield TextSpan(text: substring);
+      final afterHighlight = text.substring(charIndex);
+      yield TextSpan(text: afterHighlight);
     }
   }
 
