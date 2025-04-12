@@ -258,6 +258,10 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
                     .from(Violation.tableName)
                     .select(Violation.fieldNames)
                     .eq($NormalViolationImplJsonKeys.record, state.recordingId)
+                    .order(
+                      $HighlightViolationImplJsonKeys.startIndex,
+                      ascending: true,
+                    )
                     .withConverter(Violation.converter);
 
                 violationsStatus = StatusOfData(violations ?? const []);
