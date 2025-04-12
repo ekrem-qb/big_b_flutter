@@ -649,6 +649,44 @@ class _TextLineTextState extends State<_TextLineText> {
     super.dispose();
   }
 
+  Iterable<InlineSpan> generateTextSpans(
+    final String? text,
+    final List<HighlightViolation>? highlights,
+  ) sync* {
+    if (text == null) return;
+
+    if (highlights == null) {
+      yield TextSpan(text: text);
+      return;
+    }
+
+    var charIndex = 0;
+    for (var j = 0; j < highlights.length; j += 2) {
+      if (charIndex < highlights[j].startIndex) {
+        final substring = text.substring(charIndex, highlights[j].startIndex);
+        yield TextSpan(text: substring);
+      }
+
+      final substring2 = text.substring(
+        highlights[j].startIndex,
+        highlights[j].endIndex,
+      );
+
+      yield TextSpan(
+        style: highlightedTextStyle(highlights[j].rule.color),
+        text: substring2,
+        recognizer: _createRecognizer(violation: highlights[j]),
+      );
+
+      charIndex = highlights[j].endIndex;
+    }
+
+    if (charIndex < text.length) {
+      final substring = text.substring(charIndex);
+      yield TextSpan(text: substring);
+    }
+  }
+
   @override
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
@@ -673,46 +711,10 @@ class _TextLineTextState extends State<_TextLineText> {
       };
     });
 
-    Iterable<InlineSpan> generateTextSpans() sync* {
-      if (textLine == null) return;
-
-      if (highlights == null) {
-        yield TextSpan(text: textLine.text);
-        return;
-      }
-
-      var charIndex = 0;
-      for (var j = 0; j < highlights.length; j += 2) {
-        if (charIndex < highlights[j].startIndex) {
-          final substring = textLine.text.substring(
-            charIndex,
-            highlights[j].startIndex,
-          );
-          yield TextSpan(text: substring);
-        }
-
-        final substring2 = textLine.text.substring(
-          highlights[j].startIndex,
-          highlights[j].endIndex,
-        );
-
-        yield TextSpan(
-          style: highlightedTextStyle(highlights[j].rule.color),
-          text: substring2,
-          recognizer: _createRecognizer(violation: highlights[j]),
-        );
-
-        charIndex = highlights[j].endIndex;
-      }
-
-      if (charIndex < textLine.text.length) {
-        final substring = textLine.text.substring(charIndex);
-        yield TextSpan(text: substring);
-      }
-    }
-
     return Text.rich(
-      TextSpan(children: generateTextSpans().toList()),
+      TextSpan(
+        children: generateTextSpans(textLine?.text, highlights).toList(),
+      ),
       style: theme.textTheme.bodyLarge,
     );
   }
