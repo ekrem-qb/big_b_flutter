@@ -107,7 +107,7 @@ class _Day extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             border: Border.fromBorderSide(
-              BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
+              BorderSide(color: ColorScheme.of(context).outlineVariant),
             ),
           ),
           child: ConstrainedBox(

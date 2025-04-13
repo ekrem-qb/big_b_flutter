@@ -187,7 +187,7 @@ class _Item<TBloc extends ListerBloc<TItem>, TItem> extends StatelessWidget {
         _ => (bloc, false, false),
       };
     });
-    final colorScheme = Theme.of(context).colorScheme;
+    final colorScheme = ColorScheme.of(context);
 
     if (exists && !isLoaded) {
       bloc.add(ListerEventLoadAfterRequested(index));

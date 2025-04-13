@@ -9,7 +9,7 @@ class ListViewShimmer extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final colorScheme = ColorScheme.of(context);
 
     return Shimmer.fromColors(
       baseColor: colorScheme.surfaceContainerLow,

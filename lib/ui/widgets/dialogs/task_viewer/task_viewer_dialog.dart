@@ -182,7 +182,7 @@ class _Image extends StatelessWidget {
                 final frame,
                 final wasSynchronouslyLoaded,
               ) {
-                final colorScheme = Theme.of(context).colorScheme;
+                final colorScheme = ColorScheme.of(context);
                 final isLoaded = frame != null;
 
                 return AnimatedSize(
@@ -268,7 +268,7 @@ class _Deadline extends StatelessWidget {
         Flexible(
           child: Text(
             deadline.toString(),
-            style: Theme.of(context).textTheme.titleMedium,
+            style: TextTheme.of(context).titleMedium,
           ),
         ),
       ],
@@ -309,7 +309,7 @@ class _Delay extends StatelessWidget {
                 delay == Duration.zero
                     ? 'Tam zamanında yapıldı'
                     : '${delay?.abs()} Geç yapıldı',
-                style: Theme.of(context).textTheme.titleMedium,
+                style: TextTheme.of(context).titleMedium,
               ),
             ),
           ],

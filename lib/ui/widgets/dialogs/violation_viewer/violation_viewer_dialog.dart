@@ -82,7 +82,7 @@ class _ViolationContent extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final textTheme = TextTheme.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -128,7 +128,7 @@ class _Text extends StatelessWidget {
         _ => null,
       };
     });
-    final textTheme = Theme.of(context).textTheme;
+    final textTheme = TextTheme.of(context);
 
     return violation != null
         ? Card(
@@ -197,7 +197,7 @@ class _HighlightTitle extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final textTheme = TextTheme.of(context);
 
     return violation.startIndex >= violation.line.text.length ||
             violation.endIndex >= violation.line.text.length

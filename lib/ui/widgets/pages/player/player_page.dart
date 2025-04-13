@@ -233,7 +233,8 @@ class _Text extends StatelessWidget {
       (final PlayerBloc bloc) => (bloc, bloc.state.textState.runtimeType),
     );
 
-    final theme = Theme.of(context);
+    final textTheme = TextTheme.of(context);
+    final colorScheme = ColorScheme.of(context);
 
     return Expanded(
       child: AnimatedSwitcher(
@@ -243,11 +244,11 @@ class _Text extends StatelessWidget {
           StatusOfLoading() => Shimmer.fromColors(
             baseColor:
                 Color.lerp(
-                  theme.colorScheme.onSurface,
-                  theme.colorScheme.surfaceContainerLow,
+                  colorScheme.onSurface,
+                  colorScheme.surfaceContainerLow,
                   0.85,
                 )!,
-            highlightColor: theme.colorScheme.onSurface,
+            highlightColor: colorScheme.onSurface,
             child: ShaderMask(
               shaderCallback: _gradient.createShader,
               blendMode: BlendMode.dstIn,
@@ -277,7 +278,7 @@ class _Text extends StatelessWidget {
                             ),
                             child: Text(
                               'Hello' * (index + 1),
-                              style: theme.textTheme.bodyLarge,
+                              style: textTheme.bodyLarge,
                             ),
                           ),
                         ),
@@ -561,7 +562,7 @@ class _TextLineContent extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final theme = Theme.of(context);
+    final colorScheme = ColorScheme.of(context);
 
     return FractionallySizedBox(
       alignment: isEmployee ? Alignment.centerRight : Alignment.centerLeft,
@@ -574,15 +575,15 @@ class _TextLineContent extends StatelessWidget {
             borderRadius: kDefaultRadius,
             side:
                 isCurrent
-                    ? BorderSide(color: theme.colorScheme.primary, width: 2)
+                    ? BorderSide(color: colorScheme.primary, width: 2)
                     : BorderSide.none,
           ),
           color:
               isEmployee
                   ? null
                   : Color.lerp(
-                    theme.colorScheme.surfaceContainer,
-                    theme.colorScheme.primaryContainer,
+                    colorScheme.surfaceContainer,
+                    colorScheme.primaryContainer,
                     0.5,
                   ),
           child: InkWell(
@@ -692,7 +693,7 @@ class _TextLineTextState extends State<_TextLineText> {
 
   @override
   Widget build(final BuildContext context) {
-    final theme = Theme.of(context);
+    final textTheme = TextTheme.of(context);
 
     final (textLine, highlights) = context.select((final PlayerBloc bloc) {
       return switch (bloc.state.textState) {
@@ -719,10 +720,10 @@ class _TextLineTextState extends State<_TextLineText> {
         TextSpan(
           children: generateTextSpans(textLine?.text, highlights).toList(),
         ),
-        style: theme.textTheme.bodyLarge,
+        style: textTheme.bodyLarge,
       );
     } catch (e) {
-      return Text(textLine?.text ?? '', style: theme.textTheme.bodyLarge);
+      return Text(textLine?.text ?? '', style: textTheme.bodyLarge);
     }
   }
 }

@@ -119,10 +119,7 @@ class _Profile extends StatelessWidget {
         borderRadius: kDefaultRadius,
         side:
             isSelected
-                ? BorderSide(
-                  color: Theme.of(context).colorScheme.primary,
-                  width: 2,
-                )
+                ? BorderSide(color: ColorScheme.of(context).primary, width: 2)
                 : BorderSide.none,
       ),
       child: switch (bloc.state.all) {

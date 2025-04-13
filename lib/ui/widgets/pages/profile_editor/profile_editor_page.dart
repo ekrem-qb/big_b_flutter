@@ -426,7 +426,7 @@ class _RoleChip extends StatelessWidget {
                 icon,
                 color:
                     isSelected
-                        ? Theme.of(context).colorScheme.onSecondaryContainer
+                        ? ColorScheme.of(context).onSecondaryContainer
                         : null,
               ),
               const SizedBox(width: 8),

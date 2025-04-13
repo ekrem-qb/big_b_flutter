@@ -267,7 +267,7 @@ class _ImageToggle extends StatelessWidget {
     return Material(
       shape: RoundedRectangleBorder(
         borderRadius: kBorderRadius,
-        side: BorderSide(color: Theme.of(context).colorScheme.outline),
+        side: BorderSide(color: ColorScheme.of(context).outline),
       ),
       clipBehavior: Clip.antiAlias,
       child: CheckboxListTile(
