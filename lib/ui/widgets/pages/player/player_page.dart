@@ -655,7 +655,7 @@ class _TextLineTextState extends State<_TextLineText> {
   ) sync* {
     if (text == null) return;
 
-    if (highlights == null) {
+    if (highlights == null || highlights.isEmpty) {
       yield TextSpan(text: text);
       return;
     }
@@ -714,12 +714,16 @@ class _TextLineTextState extends State<_TextLineText> {
       };
     });
 
-    return Text.rich(
-      TextSpan(
-        children: generateTextSpans(textLine?.text, highlights).toList(),
-      ),
-      style: theme.textTheme.bodyLarge,
-    );
+    try {
+      return Text.rich(
+        TextSpan(
+          children: generateTextSpans(textLine?.text, highlights).toList(),
+        ),
+        style: theme.textTheme.bodyLarge,
+      );
+    } catch (e) {
+      return Text(textLine?.text ?? '', style: theme.textTheme.bodyLarge);
+    }
   }
 }
 

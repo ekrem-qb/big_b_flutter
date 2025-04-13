@@ -83,20 +83,22 @@ class _Item extends StatelessWidget {
           :final endIndex,
           :final rule,
         ) =>
-          Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(text: line.text.substring(0, startIndex)),
+          startIndex >= line.text.length || endIndex >= line.text.length
+              ? Text(line.text)
+              : Text.rich(
                 TextSpan(
-                  text: line.text.substring(startIndex, endIndex),
-                  style: highlightedTextStyle(rule.color),
+                  children: [
+                    TextSpan(text: line.text.substring(0, startIndex)),
+                    TextSpan(
+                      text: line.text.substring(startIndex, endIndex),
+                      style: highlightedTextStyle(rule.color),
+                    ),
+                    TextSpan(text: line.text.substring(endIndex)),
+                  ],
                 ),
-                TextSpan(text: line.text.substring(endIndex)),
-              ],
-            ),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
         NormalViolation() => Text(
           switch (violation.rule) {
             WordsRule() => RuleTileContent.textOf<WordsRule>(),
