@@ -94,7 +94,7 @@ class _ViolationContent extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text('İhlal edilen kural:', style: textTheme.titleMedium),
         const SizedBox(height: 8),
