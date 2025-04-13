@@ -82,15 +82,6 @@ class _ViolationContent extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final (bloc, _) = context.select(
-      (final ViolationViewerBloc bloc) => (
-        bloc,
-        switch (bloc.state.violation) {
-          StatusOfData(:final data) => data.runtimeType,
-          _ => null,
-        },
-      ),
-    );
     final textTheme = Theme.of(context).textTheme;
 
     return Column(
@@ -99,14 +90,10 @@ class _ViolationContent extends StatelessWidget {
         Text('İhlal edilen kural:', style: textTheme.titleMedium),
         const SizedBox(height: 8),
         const _Rule(),
-        if (bloc.state.violation case StatusOfData(
-          data: HighlightViolation(),
-        )) ...[
-          const SizedBox(height: 16),
-          Text('İhlal yapılan yer:', style: textTheme.titleMedium),
-          const SizedBox(height: 8),
-          const _Text(),
-        ],
+        const SizedBox(height: 16),
+        Text('İhlal yapılan yer:', style: textTheme.titleMedium),
+        const SizedBox(height: 8),
+        const _Text(),
       ],
     );
   }
@@ -137,7 +124,7 @@ class _Text extends StatelessWidget {
   Widget build(final BuildContext context) {
     final violation = context.select((final ViolationViewerBloc bloc) {
       return switch (bloc.state.violation) {
-        StatusOfData(data: final HighlightViolation violation) => violation,
+        StatusOfData(data: final violation) => violation,
         _ => null,
       };
     });
@@ -150,41 +137,39 @@ class _Text extends StatelessWidget {
             borderRadius: kDefaultRadius,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text.rich(
-                    TextSpan(
+              child: switch (violation) {
+                NormalViolation() => Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  spacing: 8,
+                  children: [
+                    Text(
+                      violation.record.createdAt.toString(),
+                      style: textTheme.bodyLarge,
+                    ),
+                    Text(violation.record.employee.name),
+                  ],
+                ),
+                final HighlightViolation highlightViolation => Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  spacing: 8,
+                  children: [
+                    _HighlightTitle(highlightViolation),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TextSpan(
-                          text: violation.line.text.substring(
-                            0,
-                            violation.startIndex,
-                          ),
+                        Text(
+                          violation.record.employee.name,
+                          style: textTheme.labelSmall,
                         ),
-                        TextSpan(
-                          text: violation.line.text.substring(
-                            violation.startIndex,
-                            violation.endIndex,
-                          ),
-                          style: highlightedTextStyle(violation.rule.color),
-                        ),
-                        TextSpan(
-                          text: violation.line.text.substring(
-                            violation.endIndex,
-                          ),
+                        Text(
+                          violation.line.time.toMinutesAndSeconds(),
+                          style: textTheme.labelSmall,
                         ),
                       ],
                     ),
-                    style: textTheme.bodyLarge,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    violation.line.time.toMinutesAndSeconds(),
-                    style: textTheme.labelSmall,
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              },
             ),
             onTap: () {
               context.tabsRouter.navigateAll([
@@ -192,12 +177,48 @@ class _Text extends StatelessWidget {
                 PlayerRoute(
                   recordingId: violation.record.id,
                   recording: violation.record,
-                  textLineId: violation.line.id,
+                  textLineId: switch (violation) {
+                    NormalViolation() => null,
+                    HighlightViolation() => violation.line.id,
+                  },
                 ),
               ]);
             },
           ),
         )
         : const SizedBox.shrink();
+  }
+}
+
+class _HighlightTitle extends StatelessWidget {
+  const _HighlightTitle(this.violation);
+
+  final HighlightViolation violation;
+
+  @override
+  Widget build(final BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return violation.startIndex >= violation.line.text.length ||
+            violation.endIndex >= violation.line.text.length
+        ? Text(violation.line.text, style: textTheme.bodyLarge)
+        : Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: violation.line.text.substring(0, violation.startIndex),
+              ),
+              TextSpan(
+                text: violation.line.text.substring(
+                  violation.startIndex,
+                  violation.endIndex,
+                ),
+                style: highlightedTextStyle(violation.rule.color),
+              ),
+              TextSpan(text: violation.line.text.substring(violation.endIndex)),
+            ],
+          ),
+          style: textTheme.bodyLarge,
+        );
   }
 }
