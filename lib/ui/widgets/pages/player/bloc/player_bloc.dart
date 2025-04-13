@@ -332,12 +332,9 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         }
 
         return List.generate(textLines.length, (final i) {
-          final highlights =
-              allHighlights
-                  .where(
-                    (final highlight) => highlight.line.id == textLines[i].id,
-                  )
-                  .toList();
+          final highlights = allHighlights
+              .where((final highlight) => highlight.line.id == textLines[i].id)
+              .toList(growable: false);
 
           return highlights;
         }, growable: false);

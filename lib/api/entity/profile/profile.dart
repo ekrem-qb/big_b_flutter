@@ -28,7 +28,7 @@ class Profile with _$Profile {
   static final fieldNames = _$$ProfileImplFieldMap.values.join(',');
 
   static List<Profile>? converter(final List<Map<String, Object?>> data) =>
-      data.map(Profile.fromJson).toList();
+      data.map(Profile.fromJson).toList(growable: false);
 }
 
 String _removeMail(final String email) {

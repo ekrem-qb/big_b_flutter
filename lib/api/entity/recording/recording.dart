@@ -32,5 +32,5 @@ class Recording with _$Recording {
       '${joinTables.join(',')},${_$$RecordingImplFieldMap.values.join(',')}';
 
   static List<Recording>? converter(final List<Map<String, Object?>> data) =>
-      data.map(Recording.fromJson).toList();
+      data.map(Recording.fromJson).toList(growable: false);
 }

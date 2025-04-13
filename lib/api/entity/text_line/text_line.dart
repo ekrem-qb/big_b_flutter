@@ -23,5 +23,5 @@ class TextLine with _$TextLine {
   static final fieldNames = _$$TextLineImplFieldMap.values.join(',');
 
   static List<TextLine>? converter(final List<Map<String, Object?>> data) =>
-      data.map(TextLine.fromJson).toList();
+      data.map(TextLine.fromJson).toList(growable: false);
 }

@@ -42,7 +42,7 @@ sealed class Rule with _$Rule {
   }.join(',');
 
   static List<Rule>? converter(final List<Map<String, Object?>> data) =>
-      data.map(Rule.fromJson).toList();
+      data.map(Rule.fromJson).toList(growable: false);
 }
 
 int _floatToInt8(final double x) => (x * 255.0).round() & 0xff;

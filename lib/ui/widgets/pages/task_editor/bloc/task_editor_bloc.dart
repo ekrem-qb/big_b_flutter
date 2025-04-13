@@ -47,8 +47,8 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
                false,
            weekdays: originalPlannedTask?.weekdays ?? 0,
            executives:
-               originalPlannedTask?.executives.toList() ??
-               originalTask?.executives.toList() ??
+               originalPlannedTask?.executives.toList(growable: true) ??
+               originalTask?.executives.toList(growable: true) ??
                [],
            uploadState: const OperationStatusInitial(),
            deleteState: const OperationStatusInitial(),
@@ -278,13 +278,12 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
               .eq($ProfileJoinImplJsonKeys.id, plannedTask.id);
         }
 
-        final executivesJoins =
-            state.executives
-                .map(
-                  (final Profile profile) =>
-                      ProfileJoin(id: id!, profile: profile.uid).toJson(),
-                )
-                .toList();
+        final executivesJoins = state.executives
+            .map(
+              (final Profile profile) =>
+                  ProfileJoin(id: id!, profile: profile.uid).toJson(),
+            )
+            .toList(growable: false);
 
         await db.from(PlannedTask.executivesTableName).upsert(executivesJoins);
 
@@ -331,13 +330,12 @@ class TaskEditorBloc extends Bloc<TaskEditorEvent, TaskEditorState> {
       id = state.id;
     }
 
-    final newExecutives =
-        state.executives
-            .map(
-              (final Profile profile) =>
-                  ProfileJoin(id: id!, profile: profile.uid).toJson(),
-            )
-            .toList();
+    final newExecutives = state.executives
+        .map(
+          (final Profile profile) =>
+              ProfileJoin(id: id!, profile: profile.uid).toJson(),
+        )
+        .toList(growable: false);
 
     await db.from(Task.executivesTableName).upsert(newExecutives);
 

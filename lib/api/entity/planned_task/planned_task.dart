@@ -36,5 +36,5 @@ class PlannedTask with _$PlannedTask {
       '${joinTables.join(',')},${_$$PlannedTaskImplFieldMap.values.toSet().difference(joinTables.map((final e) => e.joinFieldName).toSet()).join(',')}';
 
   static List<PlannedTask>? converter(final List<Map<String, Object?>> data) =>
-      data.map(PlannedTask.fromJson).toList();
+      data.map(PlannedTask.fromJson).toList(growable: false);
 }

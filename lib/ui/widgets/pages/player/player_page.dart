@@ -718,7 +718,10 @@ class _TextLineTextState extends State<_TextLineText> {
     try {
       return Text.rich(
         TextSpan(
-          children: generateTextSpans(textLine?.text, highlights).toList(),
+          children: generateTextSpans(
+            textLine?.text,
+            highlights,
+          ).toList(growable: false),
         ),
         style: textTheme.bodyLarge,
       );

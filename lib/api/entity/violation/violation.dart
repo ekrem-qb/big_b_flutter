@@ -53,5 +53,5 @@ sealed class Violation with _$Violation {
       '${joinTables.join(',')},${{..._$$NormalViolationImplFieldMap.values, ..._$$HighlightViolationImplFieldMap.values}.join(',')}';
 
   static List<Violation>? converter(final List<Map<String, Object?>> data) =>
-      data.map(Violation.fromJson).toList();
+      data.map(Violation.fromJson).toList(growable: false);
 }
